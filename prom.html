@@ -220,8 +220,8 @@
 </div>
 
 <script>
-// ⚠️ 원장님의 구글 앱스 스크립트 웹 앱 URL을 여기에 붙여넣어 주세요!
-const scriptURL = 'https://script.google.com/macros/s/AKfycbym853yEBM5rn4iAm1Xz78eKihTAE0htiEybBfQheJfJF2KTWU1-WPRnkLwQkyK-0g/exec'; 
+// ⚠️ 원장님의 새 구글 앱스 스크립트 웹 앱 URL을 아래 큰따옴표 안에 넣어주세요!
+const scriptURL = 'https://script.google.com/macros/s/AKfycbyhDrl6XvNP4eTUAU-6sUPfxYp6jZHUKW7q_307Nd7f_ApqjWewH5o2GtAdpdGLzV0J/exec'; 
 
 const DATA_SURVEY = {
     NDI: {
@@ -311,7 +311,6 @@ const DATA_SURVEY = {
     HOOS: {
         title: "고관절 기능 지수 (HOOS - 15문항)",
         sections: [
-            // 💡 '드물게' ➔ '거의 없음(어쩌다)'으로 어휘 개선
             { subTitle: "1. 증상 관련", opts: ["전혀 없음", "거의 없음(어쩌다)", "가끔 있음", "자주 있음", "항상 있음"], qs: ["고관절에서 삐걱거리는 느낌이나 '뚝' 소리가 나나요?", "다리를 옆으로 넓게 벌리는 것이 어려우신가요?", "걸을 때 보폭을 크게 내딛는 것이 어려우신가요?"] },
             { subTitle: "2. 뻣뻣함 관련", opts: ["전혀 없음", "약간 뻣뻣함", "보통", "심하게 뻣뻣함", "매우 극심함"], qs: ["아침에 자고 일어났을 때 고관절이 얼마나 뻣뻣한가요?", "낮에 앉거나 누워 있다가 다시 움직일 때 얼마나 뻣뻣한가요?"] },
             { subTitle: "3. 통증 관련", opts: ["전혀 없음", "약간 있음", "보통", "자주 아픔", "항상/극심함"], qs: ["평소 고관절 통증을 얼마나 자주 느끼시나요?", "고관절을 끝까지 똑바로 펼 때 통증이 있나요?", "고관절을 끝까지 굽힐(접을) 때 통증이 있나요?", "평평한 곳을 걸을 때 통증은 어떠신가요?", "계단을 오르내릴 때 통증은 어떠신가요?", "밤에 침대에 누워 있을 때 통증은 어떠신가요?", "앉아 있거나 누워 있을 때 통증은 어떠신가요?", "똑바로 서 있을 때 통증은 어떠신가요?", "딱딱한 길을 걸을 때 통증이 있나요?", "울퉁불퉁한 길을 걸을 때 통증이 있나요?"] }
@@ -320,7 +319,6 @@ const DATA_SURVEY = {
     KOOS: {
         title: "무릎 기능 지수 (KOOS - 17문항)",
         sections: [
-            // 💡 '드물게' ➔ '거의 없음(어쩌다)'으로 어휘 개선
             { subTitle: "1. 증상 관련", opts: ["전혀 없음", "거의 없음(어쩌다)", "가끔 있음", "자주 있음", "항상 있음"], qs: ["무릎이 붓거나 열감이 느껴지시나요?", "무릎 안에서 소리가 나거나 걸리는 느낌이 있나요?", "움직일 때 무릎에 갑자기 힘이 빠지거나 어긋나는 느낌이 있나요?", "무릎을 끝까지 똑바로 펴기가 힘든가요?", "무릎을 끝까지 굽히기가 힘든가요?"] },
             { subTitle: "2. 뻣뻣함 관련", opts: ["전혀 없음", "약간 뻣뻣함", "보통", "심하게 뻣뻣함", "매우 극심함"], qs: ["아침에 자고 일어났을 때 무릎이 얼마나 뻣뻣한가요?", "낮에 앉거나 누워 있다가 움직일 때 얼마나 뻣뻣한가요?"] },
             { subTitle: "3. 통증 관련", opts: ["전혀 없음", "약간 있음", "보통", "자주 아픔", "항상/극심함"], qs: ["평소 무릎 통증을 얼마나 자주 느끼시나요?", "무릎을 똑바로 펼 때 통증이 있나요?", "무릎을 완전히 굽힐 때 통증이 있나요?", "평평한 곳을 걸을 때 통증은 어떠신가요?", "계단을 오르내릴 때 통증은 어떠신가요?", "밤에 침대에 누워 있을 때 통증은 어떠신가요?", "앉아 있거나 누워 있을 때 통증은 어떠신가요?", "똑바로 서 있을 때 통증은 어떠신가요?", "딱딱한 바닥을 걸을 때 통증이 있나요?", "울퉁불퉁한 길을 걸을 때 통증이 있나요?"] }
@@ -350,7 +348,6 @@ const DATA_SURVEY = {
     },
     PCS: {
         title: "통증 파국화 지수 (PCS - 13문항)",
-        // 💡 '심하게'와 '매우'의 애매했던 구분을 직관적으로 수정
         labels: ["전혀 없음", "가끔 그러함", "자주 그러함", "대부분 그러함", "항상/극심함"],
         qs: [
             "나는 통증이 멈추지 않을까 봐 항상 걱정하게 된다.",
@@ -371,7 +368,6 @@ const DATA_SURVEY = {
     MENTAL: [
         {
             category: "지각된 스트레스 검사 (PSS-10 - 10문항)",
-            // 💡 '드물게' ➔ '거의 없음(어쩌다)'으로 수정
             labels: ["전혀 없음", "거의 없음(어쩌다)", "가끔 있음", "자주 있음", "항상 있음"],
             shuffle: true,
             qs: [
@@ -408,7 +404,7 @@ const DATA_SURVEY = {
             qs: [
                 "일하거나 취미 활동을 하는 데 흥미나 즐거움을 느끼지 못했다.",
                 "기분이 침울하거나 우울하거나 희망이 없다고 느꼈다.",
-                "잠들기 어렵거나 자주 꼈다, 혹은 잠을 너무 많이 자기도 했다.",
+                "잠들기 어렵거나 자주 깼다, 혹은 잠을 너무 많이 자기도 했다.",
                 "피곤하다고 느끼거나 기운이 없었다.",
                 "식욕이 줄었거나 반대로 너무 많이 먹었다.",
                 "나 자신이 실패자처럼 느껴지거나 자신과 가족을 실망시켰다고 느꼈다.",
@@ -420,7 +416,6 @@ const DATA_SURVEY = {
     ]
 };
 
-// 🎲 배열을 무작위로 섞어주는 피셔-예이츠 셔플 함수
 function shuffleArray(array) {
     let arr = [...array];
     for (let i = arr.length - 1; i > 0; i--) {
@@ -520,6 +515,7 @@ function initAddressSearch() {
     });
 }
 
+// 🟢 제출 폼 이벤트 핸들러 (CORS 에러 방지용 text/plain 전송 로직 적용)
 document.getElementById('wellnessForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const btn = document.getElementById('submitBtn');
@@ -546,6 +542,7 @@ document.getElementById('wellnessForm').addEventListener('submit', async functio
     const pNameVal = document.getElementById('pName').value;
     const pAgeVal = document.getElementById('pAge').value;
 
+    // 💡 구글 시트의 A~I열 한글 순서와 100% 대응되는 전송 구조
     const payload = {
         savedAt: new Date().toLocaleString('ko-KR'),
         patientName: `${pNameVal} (${pAgeVal}세)`,
@@ -563,8 +560,7 @@ document.getElementById('wellnessForm').addEventListener('submit', async functio
     try {
         await fetch(scriptURL, { 
             method: 'POST', 
-            mode: 'no-cors', 
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
             body: JSON.stringify(payload) 
         });
 
