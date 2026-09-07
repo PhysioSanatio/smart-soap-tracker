@@ -278,7 +278,6 @@
         }
         .step-title { font-weight: bold; color: #1e293b; margin-bottom: 3px; }
         
-        /* 🔌 극성 기반 동적 글자 색상 클래스 */
         .tag-anode { color: #ea580c; font-weight: bold; }   /* 양극(+): 주황색 계열 */
         .tag-cathode { color: #2563eb; font-weight: bold; } /* 음극(-): 파란색 계열 */
         
@@ -434,6 +433,7 @@
                 </select>
             </div>
 
+            <!-- 🎯 OLD CHARTS 영역 (Temporal Pattern 및 Severity 추가 반영) -->
             <div class="oldcharts-grid">
                 <div>
                     <label>Onset (발병 시점)</label>
@@ -472,6 +472,27 @@
                         <option value="없음">없음 (국소 통증)</option>
                         <option value="있음 (팔/손가락 저림)" selected>있음 (팔/손가락 저림)</option>
                         <option value="있음 (다리 저림)">있음 (다리 저림)</option>
+                    </select>
+                </div>
+                <!-- 🆕 추가 1: Temporal Pattern (시간적 패턴) -->
+                <div>
+                    <label>Temporal Pattern (시간적 패턴)</label>
+                    <select id="oc-temporal" onchange="evaluateSOAP()">
+                        <option value="아침에 악화 (일어나서 뻐근함)">아침에 악화 (기상 시)</option>
+                        <option value="오후/저녁에 악화 (사용할수록 증가)" selected>오후/저녁에 악화 (누적)</option>
+                        <option value="밤/수면 중 악화 (야간통)">밤/수면 중 악화 (야간통)</option>
+                        <option value="하루 종일 일정함">하루 종일 일정함</option>
+                    </select>
+                </div>
+                <!-- 🆕 추가 2: Severity (통증 강도 / NRS) -->
+                <div>
+                    <label>Severity (통증 강도 / NRS)</label>
+                    <select id="oc-severity" onchange="evaluateSOAP()">
+                        <option value="NRS 1~2 (약한 통증)">NRS 1~2점 (약한 통증)</option>
+                        <option value="NRS 3~4 (보통 통증)" selected>NRS 3~4점 (보통 통증)</option>
+                        <option value="NRS 5~6 (중증도 통증)">NRS 5~6점 (중증도 통증)</option>
+                        <option value="NRS 7~8 (심한 통증)">NRS 7~8점 (심한 통증)</option>
+                        <option value="NRS 9~10 (극심한 통증)">NRS 9~10점 (극심한 통증)</option>
                     </select>
                 </div>
             </div>
@@ -589,6 +610,7 @@
 </div>
 
 <script>
+// 🎯 지정해주신 구글 앱스 스크립트 웹 앱 URL 업데이트 완료
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzBJSdZstvTh3Pjb7QLSnD8Dv4z5hNSvyGiIp4P7dBS8OSj-VscCroWMRcwSnJw5AvT/exec";
 
 // 🎯 부위별 표준 기능 장애 진단 척도 명칭 맵
@@ -811,6 +833,8 @@ function evaluateSOAP() {
     const ocChar = document.getElementById('oc-character').value;
     const ocAgg = document.getElementById('oc-agg').value;
     const ocLoc = document.getElementById('oc-location').value;
+    const ocTemporal = document.getElementById('oc-temporal').value; // 🆕 시간적 패턴
+    const ocSeverity = document.getElementById('oc-severity').value; // 🆕 통증 강도
     
     const redBanner = document.getElementById('red-flag-banner');
     const yellowBanner = document.getElementById('yellow-flag-banner');
@@ -831,11 +855,9 @@ function evaluateSOAP() {
 
     if(isYellowTriggered) { yellowBanner.style.display = 'block'; } else { yellowBanner.style.display = 'none'; }
 
-    // 🎯 제조사 기본 사양: 주황색(-), 흰색(+) / 반전 시: 주황색(+), 흰색(-)
     let negName = (cablePolarity === "NORMAL") ? "주황색(-)" : "흰색(-)";
     let posName = (cablePolarity === "NORMAL") ? "흰색(+)" : "주황색(+)";
 
-    // 🎯 케이블 극성 변경 시 HTML 안의 글자색을 동적으로 일치시키는 매핑 태그
     let posTag = (cablePolarity === "NORMAL") ? `<span class="tag-cathode">${posName}</span>` : `<span class="tag-anode">${posName}</span>`;
     let negTag = (cablePolarity === "NORMAL") ? `<span class="tag-anode">${negName}</span>` : `<span class="tag-cathode">${negName}</span>`;
 
@@ -988,7 +1010,8 @@ function evaluateSOAP() {
 
     icfAssessment += `1. b (Body Functions) & s (Body Structures):\n`;
     icfAssessment += `   - 신체 구조/원인 조직: ${causeTissue}\n`;
-    icfAssessment += `   - 통증 양상: ${ocChar} (주호소 부위: ${ocLoc})\n\n`;
+    icfAssessment += `   - 통증 양상: ${ocChar} (주호소 부위: ${ocLoc})\n`;
+    icfAssessment += `   - 통증 강도(NRS): ${ocSeverity} | 시간적 패턴: ${ocTemporal}\n\n`;
 
     icfAssessment += `2. d (Activities & Participation):\n`;
     icfAssessment += `   - ${promFullName}: ${bodyScore}점\n`;
@@ -1059,7 +1082,6 @@ function initTrackingModule() {
     generateClientReport();
 }
 
-// 🎯 [수정 1] 회차 클릭 시 선택한 회차에 체크 표시(✓)가 동적으로 이동하도록 수정
 function renderSessionBadges() {
     const container = document.getElementById('session-badges');
     if(!container) return;
@@ -1124,7 +1146,6 @@ function updateCharts() {
     tskChart.innerHTML = tskHtml;
 }
 
-// 🎯 [수정 2] 세션 리포트 작성 시 부위별 표준 기능 장애 설문지 명칭 정밀 반영
 function generateClientReport() {
     const ptNameElem = document.getElementById('pt-name');
     const outAssessmentElem = document.getElementById('out-assessment');
@@ -1135,7 +1156,6 @@ function generateClientReport() {
     const ptName = ptNameElem.value;
     const rawAssessment = outAssessmentElem.innerText;
     const regionKey = regionSelect.value;
-    const promFullName = PROM_NAME_MAP[regionKey] || "신체 기능 장애 지수";
     
     let clientTxt = `[${ptName} 님 맞춤 컨디셔닝 & 경과 리포트 - ${currentSessionNum}회차]\n\n`;
     clientTxt += `📌 오늘의 체형 & 컨디셔닝 관리 소견\n`;
