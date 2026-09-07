@@ -2,533 +2,148 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>1:1 프라이빗 맞춤 바디 밸런싱 사전 문진</title>
-    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1:1 맞춤 바디 밸런싱 사전 문진표</title>
     <style>
         :root {
-            --bg-main: #fdfbf7;
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --bg: #f8fafc;
             --card-bg: #ffffff;
-            --primary: #52796f;
-            --primary-light: #e8f1ee;
-            --accent: #84a98c;
-            --rose-point: #b5838d;
-            --text-main: #2f3e46;
-            --text-sub: #6c757d;
-            --border-light: #f0eae1;
-            --border-active: #84a98c;
-            --shadow-soft: 0 10px 30px rgba(132, 169, 140, 0.08);
+            --border: #cbd5e1;
         }
-
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { 
-            font-family: 'Pretendard', -apple-system, sans-serif; 
-            background: var(--bg-main); 
-            color: var(--text-main); 
-            margin: 0; 
-            padding: 30px 15px; 
-            line-height: 1.6; 
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--primary);
+            margin: 0;
+            padding: 20px 15px;
+            line-height: 1.5;
         }
-        
-        .container { 
-            max-width: 680px; 
-            margin: 0 auto; 
-            background: var(--card-bg); 
-            border-radius: 28px; 
-            padding: 35px 24px; 
-            box-shadow: var(--shadow-soft); 
-            border: 1px solid var(--border-light);
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
-        
-        .header { text-align: center; margin-bottom: 32px; border-bottom: 1.5px dashed var(--border-light); padding-bottom: 24px; }
-        .header-badge { display: inline-block; background: var(--primary-light); color: var(--primary); font-size: 13px; font-weight: 700; padding: 6px 14px; border-radius: 20px; margin-bottom: 10px; }
-        .header h1 { font-size: 23px; font-weight: 800; color: var(--text-main); margin: 0 0 8px 0; letter-spacing: -0.5px; }
-        .header p { font-size: 14px; color: var(--text-sub); margin: 0; }
-
-        .sec-title { 
-            font-size: 16px; 
-            font-weight: 800; 
-            color: var(--primary); 
-            background: var(--primary-light); 
-            padding: 14px 20px; 
-            border-radius: 16px; 
-            margin: 36px 0 18px 0; 
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        h1 { font-size: 1.3rem; color: var(--accent); margin-top: 0; text-align: center; }
+        p.sub { font-size: 0.85rem; color: #64748b; text-align: center; margin-bottom: 24px; }
+        .form-group { margin-bottom: 18px; }
+        label { font-size: 0.88rem; font-weight: bold; display: block; margin-bottom: 6px; color: #334155; }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            box-sizing: border-box;
         }
-        .sec-title.psych { background: #fdf0f0; color: #a45a64; }
-        .sec-title.mental { background: #f4f6f0; color: #4a6b5d; }
-
-        .guide-box { font-size: 14px; color: var(--text-sub); background: #f9f6f0; padding: 14px 18px; border-radius: 14px; margin-bottom: 18px; border-left: 4px solid var(--accent); }
-
-        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        @media (max-width: 500px) { .input-grid { grid-template-columns: 1fr; } }
-        
-        .full-width { grid-column: 1 / -1; }
-
-        input[type="text"], input[type="tel"], input[type="number"], select {
-            width: 100%; 
-            padding: 16px 18px; 
-            border-radius: 14px; 
-            border: 1.5px solid var(--border-light); 
-            font-size: 15px; 
-            background: #fdfdfd; 
-            color: var(--text-main); 
-            appearance: none;
-            transition: all 0.2s ease;
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
         }
-        input:focus, select:focus { outline: none; border-color: var(--accent); background: #fff; box-shadow: 0 0 0 3px rgba(132, 169, 140, 0.15); }
-
-        .q-card { background: #fff; border: 1.5px solid var(--border-light); border-radius: 20px; padding: 20px; margin-bottom: 16px; transition: 0.2s; }
-        .q-num { font-size: 13px; font-weight: 800; color: var(--rose-point); display: block; margin-bottom: 6px; }
-        .q-text { font-size: 16px; font-weight: 700; color: var(--text-main); margin-bottom: 16px; word-break: keep-all; line-height: 1.5; }
-        
-        .opt-group { display: flex; flex-direction: column; gap: 9px; }
-        .opt-label {
-            border: 1.5px solid var(--border-light); 
-            border-radius: 14px; 
-            padding: 15px 18px; 
-            font-size: 15px; 
-            font-weight: 600; 
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            background: #faf8f5; 
-            transition: all 0.2s ease;
-            color: var(--text-main);
-        }
-        .opt-label input[type="radio"] { width: 20px; height: 20px; margin-right: 14px; accent-color: var(--primary); }
-        .opt-label:has(input:checked) { 
-            border-color: var(--border-active); 
-            background: var(--primary-light); 
-            color: var(--primary); 
-            font-weight: 700;
-            transform: translateY(-1px);
-        }
-
-        .submit-btn {
-            width: 100%; 
-            padding: 20px; 
-            background: var(--primary); 
-            color: white; 
-            border: none; 
-            border-radius: 18px; 
-            font-size: 18px; 
-            font-weight: 800; 
-            cursor: pointer; 
-            margin-top: 35px; 
-            box-shadow: 0 8px 20px rgba(82, 121, 111, 0.25);
-            transition: all 0.2s ease;
-        }
-        .submit-btn:active { transform: scale(0.99); }
-        .submit-btn:disabled { background: #d3d3d3; box-shadow: none; }
+        .btn-submit:hover { opacity: 0.95; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="header">
-        <span class="header-badge">🌿 100% Private Wellness Care</span>
-        <h1>1:1 맞춤 바디 밸런싱 사전 문진</h1>
-        <p>고급 세션 진행을 위한 전문 자가 컨디션 진단표입니다.</p>
-    </div>
+    <h1>📝 맞춤 바디 밸런싱 사전 문진표</h1>
+    <p class="sub">정밀한 맞춤 관리를 위해 아래 문항을 작성해 주세요.</p>
 
-    <form id="wellnessForm">
-        <div class="sec-title">👤 기본 인적 사항</div>
-        <div class="input-grid">
-            <div>
-                <input type="text" id="pName" placeholder="성함 (예: 홍길동)" required>
-            </div>
-            <div>
-                <input type="number" id="pAge" placeholder="나이 (예: 35)" min="1" max="120" required>
-            </div>
-            <div>
-                <select id="pGender" required>
-                    <option value="">성별</option>
-                    <option value="남성">남성</option>
-                    <option value="여성">여성</option>
-                </select>
-            </div>
-            <div>
-                <select id="pJob" required>
-                    <option value="">직업 / 주요 작업 형태</option>
-                    <option value="사무직/컴퓨터사용">사무직 (장시간 컴퓨터 작업)</option>
-                    <option value="육아/가사노동">육아 / 가사 노동 (반복 굴곡)</option>
-                    <option value="현장/육체노동">현장 / 육체 노동 (중량물 취급)</option>
-                    <option value="서비스/오래서있음">서비스직 (장시간 서 있기)</option>
-                    <option value="학생/운전기사">운전 / 고정 자세 유지</option>
-                    <option value="기타/일반">기타 / 일반</option>
-                </select>
-            </div>
-            <div class="full-width">
-                <input type="tel" id="pPhone" placeholder="연락처 (010-0000-0000)" required>
-            </div>
-            <div class="full-width">
-                <input type="text" id="pAddress" placeholder="주소 검색 (터치하여 검색해 주세요)" readonly required style="cursor: pointer; background-color: #faf8f5;">
-            </div>
+    <form id="promForm" onsubmit="submitProm(event)">
+        <div class="form-group">
+            <label for="pName">성함</label>
+            <input type="text" id="pName" placeholder="예: 홍길동" required>
         </div>
 
-        <div class="sec-title">🎯 가장 불편한 신체 부위 정밀 진단</div>
-        <div class="guide-box">현재 가장 통증이나 움직임 제한이 심한 부위 1곳을 선택해 주세요.</div>
-        <select id="areaSelect" onchange="loadAreaQuestions()" required style="font-weight: 700; border-color: var(--accent);">
-            <option value="">-- 불편하신 부위를 선택하세요 --</option>
-            <option value="NDI">목 (뒷목, 목덜미, 두통)</option>
-            <option value="SPADI">어깨 (통증 및 움직임 장애)</option>
-            <option value="PRTEE">팔꿈치 (테니스/골프 엘보, 저림)</option>
-            <option value="ODI">허리 (요통, 다리 저림)</option>
-            <option value="HOOS">고관절 (사타구니, 엉덩이 관절)</option>
-            <option value="KOOS">무릎 (통증, 붓기, 소리)</option>
-            <option value="FAAM">발목 및 발바닥</option>
-        </select>
+        <div class="form-group">
+            <label for="pAge">연령 (세)</label>
+            <input type="number" id="pAge" placeholder="예: 35" required>
+        </div>
 
-        <div id="body-survey-area"></div>
+        <div class="form-group">
+            <label for="pPhone">연락처</label>
+            <input type="tel" id="pPhone" placeholder="예: 01012345678" required>
+        </div>
 
-        <div class="sec-title psych">🧠 움직임 공포 & 통증 반응 (TSK-11 / PCS)</div>
-        <div id="psych-survey-area"></div>
+        <div class="form-group">
+            <label for="pJob">주요 직업 및 일상 자격 형태</label>
+            <select id="pJob" required>
+                <option value="사무직/컴퓨터사용">사무직 (장시간 좌식 / 컴퓨터 사용)</option>
+                <option value="육아/가사노동">육아 및 가사노동 (반복 굴곡 / 손목 부하)</option>
+                <option value="현장/육체노동">현장 및 육체노동 (중량물 취급 / 요추 부하)</option>
+                <option value="서비스/오래서있음">서비스직 (장시간 서있음 / 족부 부하)</option>
+                <option value="전문운전/고정자세">전문 운전 (진동 및 요천추 고정 부하)</option>
+                <option value="헤어/미용/디자이너">미용/디자이너 (상지 지속 들기/견갑 부하)</option>
+                <option value="치과의사/의료보조">의료계 (경추 굴곡 / 요방경근 부하)</option>
+                <option value="스포츠/운동선수">운동선수/트레이너 (과사용 및 충격 부하)</option>
+            </select>
+        </div>
 
-        <div class="sec-title mental">🌿 마음 컨디션 (스트레스 · 불안 · 우울)</div>
-        <div id="mental-survey-area"></div>
+        <div class="form-group">
+            <label for="area">가장 불편하신 부위</label>
+            <select id="area" required>
+                <option value="NDI">목 / 어깨 (NDI)</option>
+                <option value="ODI">허리 / 요추 (ODI)</option>
+                <option value="PRTEE">팔꿈치 / 손목 (PRTEE)</option>
+                <option value="HOOS">고관절 / 장요근 (HOOS)</option>
+                <option value="KOOS">무릎 관절 (KOOS)</option>
+                <option value="FAAM">발목 / 발바닥 (FAAM)</option>
+            </select>
+        </div>
 
-        <button type="submit" id="submitBtn" class="submit-btn">문진 작성 완료 및 전송하기</button>
+        <div class="form-group">
+            <label for="bodyScore">불편함 정도 점수 (0점: 안아픔 ~ 50점: 극심함)</label>
+            <input type="number" id="bodyScore" min="0" max="50" value="25" required>
+        </div>
+
+        <div class="form-group">
+            <label for="tsk">움직임 시 두려움/부담감 (TSK-11 점수: 11~44점)</label>
+            <input type="number" id="tsk" min="11" max="44" value="22" required>
+        </div>
+
+        <div class="form-group">
+            <label for="pcs">통증에 대한 걱정/집중도 (PCS 점수: 0~52점)</label>
+            <input type="number" id="pcs" min="0" max="52" value="20" required>
+        </div>
+
+        <button type="submit" class="btn-submit">사전 문진표 제출하기 🚀</button>
     </form>
 </div>
 
 <script>
-const scriptURL = 'https://script.google.com/macros/s/AKfycbxWQO-hVT-Nbf-xywFMx_Okv64T51zsITFILqwHuu4yWKyik30youiIs8MZaCyRewV2/exec'; 
-
-const DATA_SURVEY = {
-    NDI: {
-        title: "목 기능 장애 지수 (NDI - 10문항)",
-        opts: ["통증/지장 없음", "아주 조금 지장 있음", "보통 정도로 지장 있음", "상당히 지장 있음", "매우 심하게 지장 있음", "아파서 전혀 불가능함"],
-        qs: [
-            "현재 목의 통증 정도는 어떠신가요?",
-            "씻거나 옷을 입는 등의 개인 위생 관리 상태는 어떠신가요?",
-            "물건을 들어 올리는 활동은 어떠신가요?",
-            "책이나 스마트폰, TV를 보는 독서 활동은 어떠신가요?",
-            "두통이 나타나는 정도는 어떠신가요?",
-            "업무나 공부에 집중하는 능력은 어떠신가요?",
-            "직장 업무나 가사 노동 활동은 어떠신가요?",
-            "운전을 하실 때의 상태는 어떠신가요?",
-            "잠을 자는 수면 상태는 어떠신가요?",
-            "여행이나 운동 같은 여가 활동은 어떠신가요?"
-        ]
-    },
-    SPADI: {
-        title: "어깨 통증 및 장애 지수 (SPADI - 13문항)",
-        sections: [
-            {
-                subTitle: "▶ 통증 척도 (Pain Scale - 5문항)",
-                opts: ["0 (없음)", "1", "2", "3", "4", "5 (보통)", "6", "7", "8", "9", "10 (극심함)"],
-                qs: ["가장 심할 때 통증", "통증이 있는 쪽으로 누울 때", "높은 선반의 물건에 팔을 뻗을 때", "목 뒤를 잡을 때", "통증이 있는 팔로 밀 때"]
-            },
-            {
-                subTitle: "▶ 장애 척도 (Disability Scale - 8문항)",
-                opts: ["0 (없음)", "1", "2", "3", "4", "5 (보통)", "6", "7", "8", "9", "10 (불가능)"],
-                qs: ["머리를 감을 때", "등을 닦을 때", "내의나 겉옷을 입을 때", "앞에 단추가 있는 셔츠를 입을 때", "바지를 입을 때", "높은 선반 위에 물건을 놓을 때", "4.5kg(10파운드)의 무거운 물체를 들어 나를 때", "바지 뒷주머니에서 무엇인가를 꺼낼 때"]
-            }
-        ]
-    },
-    // 팔꿈치(PRTEE) 표준 15문항 척도 추가
-    PRTEE: {
-        title: "팔꿈치 장애 지수 (PRTEE - 15문항)",
-        sections: [
-            {
-                subTitle: "▶ 통증 척도 (Pain Scale - 5문항)",
-                opts: ["0 (통증 없음)", "1", "2", "3", "4", "5 (보통)", "6", "7", "8", "9", "10 (극심함)"],
-                qs: [
-                    "팔꿈치를 쉬게 하거나 가만히 있을 때의 통증",
-                    "팔을 움직이거나 일을 할 때의 통증",
-                    "가장 심했을 때의 팔꿈치 통증",
-                    "무거운 물건을 들어 올리거나 잡을 때의 통증",
-                    "팔꿈치를 반복적으로 움직일 때의 통증"
-                ]
-            },
-            {
-                subTitle: "▶ Specific Activities - 특정 동작 장애 (6문항)",
-                opts: ["0 (어려움 없음)", "1", "2", "3", "4", "5 (보통)", "6", "7", "8", "9", "10 (불가능)"],
-                qs: [
-                    "문고리를 잡고 돌리는 동작",
-                    "새 병의 뚜껑을 따거나 잼 병을 열 때",
-                    "무거운 장바구니나 가방을 손으로 들 때",
-                    "우유팩이나 음료수 팩의 입구를 열 때",
-                    "옷의 단추를 채우거나 지퍼를 올릴 때",
-                    "드라이버나 나사를 잡고 돌리는 동작"
-                ]
-            },
-            {
-                subTitle: "▶ Usual Activities - 일상 생활 장애 (4문항)",
-                opts: ["0 (어려움 없음)", "1", "2", "3", "4", "5 (보통)", "6", "7", "8", "9", "10 (불가능)"],
-                qs: [
-                    "개인 위생 관리 (씻기, 빗질, 옷 입기 등)",
-                    "직장 업무 또는 주요 일상 가사 노동",
-                    "가볍고 단순한 가사 활동",
-                    "스포츠, 여가 활동 또는 취미 생활"
-                ]
-            }
-        ]
-    },
-    ODI: {
-        title: "허리 기능 장애 지수 (ODI - 10문항)",
-        qs: [
-            { q: "제 1 항 - 통증 정도", opts: ["현재 통증이 전혀 없다.", "현재 매우 가벼운 통증이 있다.", "현재 통증이 조금 있다.", "현재 통증이 조금 심하다.", "현재 통증이 아주 심하다.", "현재 통증이 상상할 수 없이 심하다."] },
-            { q: "제 2 항 - 개인 위생 (씻기, 옷 입기 등)", opts: ["별다른 통증 없이 나 자신을 챙길 수 있다.", "보통 나 자신을 챙길 수 있으나 통증이 있다.", "통증 때문에 고통스러워서 천천히 조심스럽게 해야 한다.", "통증 때문에 어느 정도 도움이 필요하거나, 혼자서 할 수는 있다.", "매일 도움이 없이는 나 자신을 챙기기 어렵다.", "옷을 입거나 씻는 게 어렵고 보통은 누워있다."] },
-            { q: "제 3 항 - 물건 들기", opts: ["무거운 물건을 통증 없이 들 수 있다.", "무거운 물건을 들 수 있으나 약간 통증이 있다.", "통증 때문에 바닥의 무거운 건 못 들지만, 들기 쉬운 곳에 있으면 들 수 있다.", "무거운 건 못 들지만, 들기 쉬운 곳의 무겁지 않은 물건은 들 수 있다.", "아주 가벼운 물건만 들 수 있다.", "아무것도 들거나 나를 수 없다."] },
-            { q: "제 4 항 - 걷기", opts: ["걷는 데 아무런 지장이 없다.", "통증 때문에 1km 이상 걷지 못한다.", "통증 때문에 500m 이상 걷지 못한다.", "통증 때문에 100m 이상 걷지 못한다.", "지팡이나 목발이 있어야만 걷는다.", "대부분 자리에 누워있으며 화장실도 기어가야 한다."] },
-            { q: "제 5 항 - 앉기", opts: ["어떤 의자에서든지 오래 앉아 있을 수 있다.", "편한 의자라면 오래 앉아 있을 수 있다.", "통증 때문에 1시간 이상 앉아 있을 수 없다.", "통증 때문에 30분 이상 앉아 있을 수 없다.", "통증 때문에 10분 이상 앉아 있을 수 없다.", "통증 때문에 전혀 앉아 있을 수 없다."] },
-            { q: "제 6 항 - 서 있기", opts: ["통증 없이 얼마든지 서 있을 수 있다.", "오래 서 있을 수 있으나 약간 통증이 있다.", "통증 때문에 1시간 이상 서 있을 수 없다.", "통증 때문에 30분 이상 서 있을 수 없다.", "통증 때문에 10분 이상 서 있을 수 없다.", "통증 때문에 전혀 서 있을 수 없다."] },
-            { q: "제 7 항 - 잠자기 (수면)", opts: ["통증 없이 잘 잔다.", "통증 때문에 가끔 잠자는 데 방해를 받는다.", "통증 때문에 6시간 이상 잠을 자지 못한다.", "통증 때문에 4시간 이상 잠을 자지 못한다.", "통증 때문에 2시간 이상 잠을 자지 못한다.", "통증 때문에 전혀 잠을 자지 못한다."] },
-            { q: "제 8 항 - 성생활 (해당 시)", opts: ["정상적으로 성생활을 하고 통증이 없다.", "정상적으로 성생활을 하나 가끔 통증을 느낀다.", "거의 정상적으로 성생활을 하나 통증을 심하게 느낀다.", "통증 때문에 성생활이 매우 제한적이다.", "통증 때문에 성생활을 거의 할 수 없다.", "통증 때문에 성 관계를 전혀 갖지 않는다."] },
-            { q: "제 9 항 - 사회생활", opts: ["밖에서 사람들과 어울리는 데 지장이 없다.", "어울리는 데 지장은 없으나 그로 인해 통증이 심해진다.", "어울리는 데 지장은 없으나 통증 때문에 운동에는 지장이 있다.", "통증 때문에 어울리는 데 지장이 있으며 자주 외출하지 못한다.", "통증 때문에 집에서만 사람들과 어울린다.", "통증 때문에 사람들과 전혀 어울리지 못한다."] },
-            { q: "제 10 항 - 여행 (차 타기)", opts: ["통증 없이 어디든 여행할 수 있다.", "어디든 여행할 수 있으나 약간 통증이 있다.", "통증은 있으나 2시간 이상 차를 탈 수는 있다.", "통증 때문에 1시간 이상 차를 탈 수 없다.", "통증 때문에 30분 이상 차를 탈 수 없다.", "통증 때문에 치료받으러 가는 일 외에는 차를 탈 수 없다."] }
-        ]
-    },
-    HOOS: {
-        title: "고관절 기능 지수 (HOOS - 15문항)",
-        sections: [
-            { subTitle: "1. 증상 관련", opts: ["전혀 없음", "드물게", "가끔", "자주", "항상"], qs: ["고관절에서 삐걱거리는 느낌이나 '뚝' 소리가 나나요?", "다리를 옆으로 넓게 벌리는 것이 어려우신가요?", "걸을 때 보폭을 크게 내딛는 것이 어려우신가요?"] },
-            { subTitle: "2. 뻣뻣함 관련", opts: ["없음", "약간", "보통", "심함", "매우 심함"], qs: ["아침에 자고 일어났을 때 고관절이 얼마나 뻣뻣한가요?", "낮에 앉거나 누워 있다가 움직일 때 얼마나 뻣뻣한가요?"] },
-            { subTitle: "3. 통증 관련", opts: ["없음", "약간", "보통", "심함", "매우 심함"], qs: ["평소 고관절 통증을 얼마나 자주 느끼시나요?", "고관절을 끝까지 똑바로 펼 때 통증이 있나요?", "고관절을 끝까지 굽힐(접을) 때 통증이 있나요?", "평평한 곳을 걸을 때 통증은 어떠신가요?", "계단을 오르내릴 때 통증은 어떠신가요?", "밤에 침대에 누워 있을 때 통증은 어떠신가요?", "앉아 있거나 누워 있을 때 통증은 어떠신가요?", "똑바로 서 있을 때 통증은 어떠신가요?", "딱딱한 길을 걸을 때 통증이 있나요?", "울퉁불퉁한 길을 걸을 때 통증이 있나요?"] }
-        ]
-    },
-    KOOS: {
-        title: "무릎 기능 지수 (KOOS - 17문항)",
-        sections: [
-            { subTitle: "1. 증상 관련", opts: ["전혀 없음", "드물게", "가끔", "자주", "항상"], qs: ["무릎이 붓거나 열감이 느껴지시나요?", "무릎 안에서 소리가 나거나 걸리는 느낌이 있나요?", "움직일 때 무릎에 갑자기 힘이 빠지거나 어긋나는 느낌이 있나요?", "무릎을 끝까지 똑바로 펴기가 힘든가요?", "무릎을 끝까지 굽히기가 힘든가요?"] },
-            { subTitle: "2. 뻣뻣함 관련", opts: ["없음", "약간", "보통", "심함", "매우 심함"], qs: ["아침에 자고 일어났을 때 무릎이 얼마나 뻣뻣한가요?", "낮에 앉거나 누워 있다가 움직일 때 얼마나 뻣뻣한가요?"] },
-            { subTitle: "3. 통증 관련", opts: ["없음", "약간", "보통", "심함", "매우 심함"], qs: ["평소 무릎 통증을 얼마나 자주 느끼시나요?", "무릎을 똑바로 펼 때 통증이 있나요?", "무릎을 완전히 굽힐 때 통증이 있나요?", "평평한 곳을 걸을 때 통증은 어떠신가요?", "계단을 오르내릴 때 통증은 어떠신가요?", "밤에 침대에 누워 있을 때 통증은 어떠신가요?", "앉아 있거나 누워 있을 때 통증은 어떠신가요?", "똑바로 서 있을 때 통증은 어떠신가요?", "딱딱한 바닥을 걸을 때 통증이 있나요?", "울퉁불퉁한 길을 걸을 때 통증이 있나요?"] }
-        ]
-    },
-    FAAM: {
-        title: "발목 기능 지수 (FAAM - 15문항)",
-        opts: ["어려움 없음", "약간 어려움", "보통", "많이 어려움", "전혀 못 함"],
-        questions: ["가만히 서 있기", "평평한 길 걷기", "신발 벗고 평평한 길 걷기", "오르막길 걷기", "내리막길 걷기", "계단 올라가기", "계단 내려가기", "울퉁불퉁한 길 걷기", "보도블록 턱 오르내리기", "쪼그려 앉기", "까치발 들고 서기", "처음 걷기 시작할 때", "5분 이내로 짧게 걷기", "10분 정도 보통으로 걷기", "15분 이상 오래 걷기"]
-    },
-    TSK: {
-        title: "움직임 공포 지수 (TSK-11 - 11문항)",
-        labels: ["전혀 아님", "아닌 편임", "그러함", "매우 그러함"],
-        qs: [
-            "운동을 하다가 몸을 더 다칠까 봐 걱정된다.",
-            "아픈 걸 참고 움직여 보려 하면 통증이 더 심해질 것 같다.",
-            "내 몸 어딘가에 위험하고 심각한 문제가 생긴 것 같다.",
-            "주변 사람들이 내 아픈 상태를 대수롭지 않게 생각하는 것 같다.",
-            "이번 통증 때문에 평생 내 몸이 약해질까 봐 겁난다.",
-            "통증이 느껴지는 건 내 몸 어딘가가 다쳤다는 뜻이다.",
-            "안 아프려면 가급적 안 움직이고 조심하는 게 제일 안전하다.",
-            "몸속에 뭔가 큰 병이 있는 게 아니라면 이렇게 아플 리가 없다.",
-            "통증은 더 다치기 전에 운동을 멈추라고 알려주는 신호다.",
-            "나는 남들처럼 다 하면 쉽게 다칠 것 같아서 똑같이 못 하겠다.",
-            "몸이 아픈 상태에서는 어떤 운동도 해서는 안 된다."
-        ]
-    },
-    PCS: {
-        title: "통증 파국화 지수 (PCS - 13문항)",
-        labels: ["전혀 아님", "약간 그러함", "보통 그러함", "심하게 그러함", "매우 그러함"],
-        qs: [
-            "나는 통증이 멈추지 않을까 봐 항상 걱정하게 된다.",
-            "나는 더 견딜 수 없을 것 같다고 느껴진다.",
-            "통증이 너무 고통스러워서 절대 나아지지 않을 것 같다.",
-            "너무 괴롭고 감당할 수 없을 것 같다고 느껴진다.",
-            "나는 더 이상 통증을 견딜 수 없을 것 같다.",
-            "나는 통증이 점점 심해질 것 같아 걱정이 된다.",
-            "나는 과거에 유사한 통증이 있었던 때를 자꾸 생각하게 된다.",
-            "나는 통증이 사라지길 간절히 바라게 된다.",
-            "나는 통증에 대한 생각을 떨칠 수가 없다.",
-            "나는 얼마나 아픈지를 계속 생각하게 된다.",
-            "나는 통증이 이젠 제발 멈췄으면 하는 생각을 계속하게 된다.",
-            "나는 통증을 줄이기 위해 내가 할 수 있는 일이 아무것도 없다.",
-            "나는 뭔가 심각한 일이 일어나지 않을까 하는 걱정을 하게 된다."
-        ]
-    },
-    MENTAL: [
-        {
-            category: "지각된 스트레스 검사 (PSS-10 - 10문항)",
-            labels: ["전혀 없음", "거의 없음", "가끔 있음", "자주 있음", "매우 자주 있음"],
-            qs: [
-                "예상치 못한 일 때문에 기분이 나빴던 적이 얼마나 자주 있었나요?",
-                "인생에서 중요한 일들을 제어할 수 없다고 느낀 적이 얼마나 자주 있었나요?",
-                "초조하거나 스트레스를 받고 있다고 느낀 적이 얼마나 자주 있었나요?",
-                "개인적인 문제들을 잘 처리하고 있다고 느낀 적이 얼마나 자주 있었나요?",
-                "일들이 내가 원하는 방향으로 잘 진행되고 있다고 느낀 적이 얼마나 자주 있었나요?",
-                "처리해야 할 일들이 너무 많이 쌓여서 해결할 수 없다고 느낀 적이 얼마나 자주 있었나요?",
-                "일상의 짜증스러움을 잘 통제할 수 있다고 느낀 적이 얼마나 자주 있었나요?",
-                "내가 모든 일을 잘 해내고 있다고 느낀 적이 얼마나 자주 있었나요?",
-                "내가 컨트롤할 수 없는 일 때문에 화가 난 적이 얼마나 자주 있었나요?",
-                "어려운 일이 너무 많이 쌓여서 극복할 수 없다고 느낀 적이 얼마나 자주 있었나요?"
-            ]
-        },
-        {
-            category: "불안 자가 진단 (GAD-7 - 7문항)",
-            labels: ["전혀 안 든다", "며칠 동안 든다", "일주일 이상 든다", "거의 매일 든다"],
-            qs: [
-                "초조하거나 불안하거나 마음이 편하지 않았다.",
-                "걱정하는 것을 멈추거나 제어할 수가 없었다.",
-                "여러 가지 것들에 대해 걱정을 너무 많이 하였다.",
-                "편하게 있으기가 어려웠다.",
-                "너무 안절부절못하여 가만히 있기가 힘들었다.",
-                "쉽게 짜증이 나거나 성질이 났다.",
-                "무서운 일이 일어날 것 같아 두려웠다."
-            ]
-        },
-        {
-            category: "우울 자가 진단 (PHQ-9 - 9문항)",
-            labels: ["전혀 안 든다", "며칠 동안 든다", "일주일 이상 든다", "거의 매일 든다"],
-            qs: [
-                "일하거나 취미 활동을 하는 데 흥미나 즐거움을 느끼지 못했다.",
-                "기분이 침울하거나 우울하거나 희망이 없다고 느꼈다.",
-                "잠들기 어렵거나 자주 꼈다, 혹은 잠을 너무 많이 자기도 했다.",
-                "피곤하다고 느끼거나 기운이 없었다.",
-                "식욕이 줄었거나 반대로 너무 많이 먹었다.",
-                "내 자신이 실패자처럼 느끼거나 자신과 가족을 실망시켰다고 느꼈다.",
-                "신문이나 TV를 볼 때 집중하기가 어려웠다.",
-                "남들이 알아채 줄 정도로 행동이나 말하는 것이 느렸다, 혹은 너무 안절부절못했다.",
-                "차라리 죽는 것이 낫겠다거나 자해를 하려는 생각이 들었다."
-            ]
-        }
-    ]
-};
-
-function loadAreaQuestions() {
-    const area = document.getElementById('areaSelect').value;
-    const container = document.getElementById('body-survey-area');
-    container.innerHTML = "";
-
-    if (!area || !DATA_SURVEY[area]) return;
-
-    const data = DATA_SURVEY[area];
-    let html = `<div style="font-weight:800; color:var(--primary); margin: 20px 0 12px 0; font-size:16px;">[ ${data.title} ]</div>`;
-
-    if (data.sections) {
-        data.sections.forEach((sec, sIdx) => {
-            html += `<div style="margin:18px 0 10px 0; font-weight:700; color:var(--text-main);">${sec.subTitle}</div>`;
-            sec.qs.forEach((qText, qIdx) => {
-                html += createQuestionCard(`body_${sIdx}_${qIdx}`, qIdx + 1, qText, sec.opts);
-            });
-        });
-    } else {
-        const questionsList = data.qs || data.questions;
-        questionsList.forEach((qObj, idx) => {
-            const qText = (typeof qObj === 'object') ? qObj.q : qObj;
-            const opts = (typeof qObj === 'object') ? qObj.opts : data.opts;
-            html += createQuestionCard(`body_${idx}`, idx + 1, qText, opts);
-        });
-    }
-
-    container.innerHTML = html;
-}
-
-function loadPsychQuestions() {
-    const container = document.getElementById('psych-survey-area');
-    let html = `<div style="font-weight:800; color:#a45a64; margin: 15px 0 10px 0;">[ ${DATA_SURVEY.TSK.title} ]</div>`;
-    DATA_SURVEY.TSK.qs.forEach((qText, idx) => {
-        html += createQuestionCard(`tsk_${idx}`, idx + 1, qText, DATA_SURVEY.TSK.labels);
-    });
-
-    html += `<div style="font-weight:800; color:#a45a64; margin: 28px 0 10px 0;">[ ${DATA_SURVEY.PCS.title} ]</div>`;
-    DATA_SURVEY.PCS.qs.forEach((qText, idx) => {
-        html += createQuestionCard(`pcs_${idx}`, idx + 1, qText, DATA_SURVEY.PCS.labels);
-    });
-
-    container.innerHTML = html;
-}
-
-function loadMentalQuestions() {
-    const container = document.getElementById('mental-survey-area');
-    let html = "";
-
-    DATA_SURVEY.MENTAL.forEach((section, sIdx) => {
-        html += `<div style="font-weight:800; color:#4a6b5d; margin: 22px 0 10px 0;">※ ${section.category}</div>`;
-        section.qs.forEach((qText, idx) => {
-            html += createQuestionCard(`mental_${sIdx}_${idx}`, idx + 1, qText, section.labels);
-        });
-    });
-
-    container.innerHTML = html;
-}
-
-function createQuestionCard(name, num, text, options) {
-    let card = `<div class="q-card"><span class="q-num">Q${num}</span><div class="q-text">${text}</div><div class="opt-group">`;
-    options.forEach((opt, idx) => {
-        card += `<label class="opt-label"><input type="radio" name="${name}" value="${idx}" required><span>${opt}</span></label>`;
-    });
-    card += `</div></div>`;
-    return card;
-}
-
-function initAddressSearch() {
-    const addrInput = document.getElementById('pAddress');
-    addrInput.addEventListener('click', function() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                let addr = data.userSelectedType === 'R' ? data.roadAddress : data.jibunAddress;
-                if (data.buildingName !== '') { addr += ' (' + data.buildingName + ')'; }
-                addrInput.value = addr;
-                document.getElementById('areaSelect').focus();
-            }
-        }).open();
-    });
-}
-
-document.getElementById('wellnessForm').addEventListener('submit', function(e) {
+function submitProm(e) {
     e.preventDefault();
-    const btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    btn.innerText = "데이터 전송 중...";
 
-    let bodyScore = 0;
-    document.querySelectorAll('#body-survey-area input[type="radio"]:checked').forEach(r => { bodyScore += parseInt(r.value); });
+    const pName = encodeURIComponent(document.getElementById('pName').value);
+    const pAge = document.getElementById('pAge').value;
+    const pPhone = document.getElementById('pPhone').value;
+    const pJob = encodeURIComponent(document.getElementById('pJob').value);
+    const area = document.getElementById('area').value;
+    const bodyScore = document.getElementById('bodyScore').value;
+    const tsk = document.getElementById('tsk').value;
+    const pcs = document.getElementById('pcs').value;
 
-    let tskTotal = 0;
-    document.querySelectorAll('input[name^="tsk_"]:checked').forEach(r => { tskTotal += (parseInt(r.value) + 1); });
+    // 메인 SOAP 차트 페이지로 데이터 파라미터 전달 연결
+    const targetUrl = `https://smart-soap-tracker.vercel.app/?pName=${pName}&pAge=${pAge}&pPhone=${pPhone}&pJob=${pJob}&area=${area}&bodyScore=${bodyScore}&tsk=${tsk}&pcs=${pcs}`;
 
-    let pcsTotal = 0;
-    document.querySelectorAll('input[name^="pcs_"]:checked').forEach(r => { pcsTotal += parseInt(r.value); });
-
-    const jobElem = document.getElementById('pJob');
-    const jobVal = jobElem ? jobElem.value : '기타/일반';
-
-    const payload = {
-        name: document.getElementById('pName').value,
-        age: document.getElementById('pAge').value,
-        job: jobVal,
-        phone: document.getElementById('pPhone').value,
-        gender: document.getElementById('pGender').value,
-        address: document.getElementById('pAddress').value,
-        area: document.getElementById('areaSelect').value,
-        bodyScore: bodyScore,
-        tsk: tskTotal,
-        pcs: pcsTotal,
-        at: new Date().toLocaleString('ko-KR')
-    };
-
-    fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) })
-    .then(() => {
-        alert(`[문진 제출 완료]\n\n${payload.name}님, 사전 문진이 완료되었습니다.\n현장 차팅 시스템으로 이동합니다.`);
-        
-        const targetSoapUrl = "soap_chart.html"; 
-        
-        const queryParams = `?pName=${encodeURIComponent(payload.name)}`
-                          + `&pAge=${payload.age}`
-                          + `&pJob=${encodeURIComponent(payload.job)}`
-                          + `&area=${encodeURIComponent(payload.area)}`
-                          + `&bodyScore=${payload.bodyScore}`
-                          + `&tsk=${payload.tsk}`
-                          + `&pcs=${payload.pcs}`;
-
-        window.location.href = targetSoapUrl + queryParams;
-    })
-    .catch(err => {
-        alert("전송 중 오류가 발생했습니다.");
-        btn.disabled = false;
-        btn.innerText = "문진 작성 완료 및 전송하기";
-    });
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    loadPsychQuestions();
-    loadMentalQuestions();
-    initAddressSearch();
-});
+    alert("문진표 제출이 완료되었습니다! 안내 페이지로 이동합니다.");
+    window.location.href = targetUrl;
+}
 </script>
+
 </body>
 </html>
