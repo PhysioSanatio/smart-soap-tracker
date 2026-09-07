@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>1:1 맞춤 바디 밸런싱 사전 문진표</title>
+    <!-- 카카오 우편번호 서비스 스크립트 -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <style>
         :root {
             --primary: #0f172a;
@@ -33,13 +35,28 @@
         p.sub { font-size: 0.85rem; color: #64748b; text-align: center; margin-bottom: 24px; }
         .form-group { margin-bottom: 18px; }
         label { font-size: 0.88rem; font-weight: bold; display: block; margin-bottom: 6px; color: #334155; }
-        input, select, textarea {
+        input, select {
             width: 100%;
             padding: 10px 12px;
             border: 1px solid var(--border);
             border-radius: 8px;
             font-size: 0.9rem;
             box-sizing: border-box;
+        }
+        .address-group {
+            display: flex;
+            gap: 8px;
+        }
+        .btn-search {
+            padding: 10px 16px;
+            background: #475569;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            cursor: pointer;
+            white-space: nowrap;
         }
         .btn-submit {
             width: 100%;
@@ -77,6 +94,15 @@
         <div class="form-group">
             <label for="pPhone">연락처</label>
             <input type="tel" id="pPhone" placeholder="예: 01012345678" required>
+        </div>
+
+        <div class="form-group">
+            <label>주소 (거주지)</label>
+            <div class="address-group">
+                <input type="text" id="pAddress" placeholder="주소 검색 버튼을 눌러주세요" readonly required>
+                <button type="button" class="btn-search" onclick="openKakaoAddress()">주소 검색</button>
+            </div>
+            <input type="text" id="pAddressDetail" placeholder="상세주소 (동/호수 등)" style="margin-top: 6px;">
         </div>
 
         <div class="form-group">
@@ -125,20 +151,34 @@
 </div>
 
 <script>
+function openKakaoAddress() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            document.getElementById('pAddress').value = data.address;
+            document.getElementById('pAddressDetail').focus();
+        }
+    }).open();
+}
+
 function submitProm(e) {
     e.preventDefault();
 
     const pName = encodeURIComponent(document.getElementById('pName').value);
     const pAge = document.getElementById('pAge').value;
     const pPhone = document.getElementById('pPhone').value;
+    
+    const baseAddr = document.getElementById('pAddress').value;
+    const detailAddr = document.getElementById('pAddressDetail').value;
+    const fullAddr = baseAddr + (detailAddr ? " " + detailAddr : "");
+    const pAddress = encodeURIComponent(fullAddr);
+
     const pJob = encodeURIComponent(document.getElementById('pJob').value);
     const area = document.getElementById('area').value;
     const bodyScore = document.getElementById('bodyScore').value;
     const tsk = document.getElementById('tsk').value;
     const pcs = document.getElementById('pcs').value;
 
-    // 메인 SOAP 차트 페이지로 데이터 파라미터 전달 연결
-    const targetUrl = `https://smart-soap-tracker.vercel.app/?pName=${pName}&pAge=${pAge}&pPhone=${pPhone}&pJob=${pJob}&area=${area}&bodyScore=${bodyScore}&tsk=${tsk}&pcs=${pcs}`;
+    const targetUrl = `https://smart-soap-tracker.vercel.app/?pName=${pName}&pAge=${pAge}&pPhone=${pPhone}&pAddress=${pAddress}&pJob=${pJob}&area=${area}&bodyScore=${bodyScore}&tsk=${tsk}&pcs=${pcs}`;
 
     alert("문진표 제출이 완료되었습니다! 안내 페이지로 이동합니다.");
     window.location.href = targetUrl;
