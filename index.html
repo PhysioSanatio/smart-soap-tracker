@@ -405,16 +405,21 @@
                 <input type="tel" id="pt-phone" placeholder="회원 연락처(숫자만)" value="01012345678" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px;">
             </div>
 
+            <!-- 🏠 주소 입력 칸 추가 -->
+            <div style="margin-bottom: 8px;">
+                <input type="text" id="pt-address" placeholder="회원 주소" value="" style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; box-sizing: border-box;">
+            </div>
+
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
                 <select id="pt-job" onchange="evaluateSOAP()" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; font-weight:bold; color:#0284c7;">
-                    <option value="사무직 (장시간 좌식/거북목)" selected>직업: 사무직 (장시간 좌식/거북목)</option>
-                    <option value="육아/가사 (반복 굴곡/손목부하)">직업: 육아/가사 (반복 굴곡/손목부하)</option>
-                    <option value="육체노동 (중량물 취급/요추부하)">직업: 육체노동 (중량물 취급/요추부하)</option>
-                    <option value="서비스직 (장시간 서있음/족부부하)">직업: 서비스직 (장시간 서있음/족부부하)</option>
-                    <option value="전문운전 (진동/요천추 고정)">직업: 전문운전 (진동/요천추 고정)</option>
-                    <option value="미용/디자이너 (상지 들기/견갑부하)">직업: 미용/디자이너 (상지 들기/견갑부하)</option>
-                    <option value="치과/의료계 (경추 굴곡/요방형근)">직업: 치과/의료계 (경추 굴곡/요방형근)</option>
-                    <option value="운동선수/트레이너 (과사용/충격)">직업: 운동선수/트레이너 (과사용/충격)</option>
+                    <option value="사무직">직업: 사무직</option>
+                    <option value="육아/가사">직업: 육아/가사</option>
+                    <option value="육체노동">직업: 육체노동</option>
+                    <option value="서비스직">직업: 서비스직</option>
+                    <option value="전문운전">직업: 전문운전</option>
+                    <option value="미용/디자이너">직업: 미용/디자이너</option>
+                    <option value="치과/의료계">직업: 치과/의료계</option>
+                    <option value="운동선수/트레이너">직업: 운동선수/트레이너</option>
                 </select>
                 <select id="pt-region" onchange="resetAndRun()" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; font-weight:bold; color:var(--accent);">
                     <option value="cervical" selected>목 (뒷목, 목덜미, 두통)</option>
@@ -611,6 +616,7 @@ async function searchPatientFromSheet() {
             if (target) {
                 document.getElementById('pt-name').value = target.patientName || '';
                 document.getElementById('pt-phone').value = target.patientPhone || '';
+                document.getElementById('pt-address').value = target.patientAddress || ''; // 🏠 주소 연동 추가
                 document.getElementById('pt-body-score').value = target.bodyScore || 0;
                 document.getElementById('pt-tsk').value = target.tskScore || 0;
                 document.getElementById('pt-pcs').value = target.pcsScore || 0;
@@ -640,7 +646,7 @@ async function searchPatientFromSheet() {
                 }
 
                 document.getElementById('prom-info').innerHTML = 
-                    `📥 <b>${target.patientName}</b> [연락처: <b>${target.patientPhone || '-'}</b>] 사전 문진 데이터 조회 성공! ` +
+                    `📥 <b>${target.patientName}</b> [연락처: <b>${target.patientPhone || '-'}</b> | 주소: <b>${target.patientAddress || '미입력'}</b>] 사전 문진 데이터 조회 성공!<br>` +
                     `[ 척도/부위: <b>${target.region || '-'}</b> (${target.bodyScore || 0}점) | TSK: <b>${target.tskScore || 0}점</b> | PCS: <b>${target.pcsScore || 0}점</b> ]`;
 
                 evaluateSOAP();
@@ -665,6 +671,7 @@ function loadUrlParams() {
     const pName = urlParams.get('pName');
     const pAge = urlParams.get('pAge');
     const pPhone = urlParams.get('pPhone');
+    const pAddress = urlParams.get('pAddress'); // 🏠 URL 주소 파라미터 추가
     const pJob = urlParams.get('pJob');
     const area = urlParams.get('area');
     const bodyScore = urlParams.get('bodyScore');
@@ -676,13 +683,14 @@ function loadUrlParams() {
         if(pAge) nameText += ` (${pAge}세)`;
         document.getElementById('pt-name').value = nameText;
         if(pPhone) document.getElementById('pt-phone').value = pPhone;
+        if(pAddress) document.getElementById('pt-address').value = decodeURIComponent(pAddress); // 🏠 주소 연동
         if(pJob) document.getElementById('pt-job').value = decodeURIComponent(pJob);
         if(bodyScore) document.getElementById('pt-body-score').value = bodyScore;
         if(tsk) document.getElementById('pt-tsk').value = tsk;
         if(pcs) document.getElementById('pt-pcs').value = pcs;
 
         document.getElementById('prom-info').innerHTML = 
-            `📥 <b>${nameText}</b> [연락처: <b>${pPhone || '-'}</b> | 직업: <b>${decodeURIComponent(pJob) || '미지정'}</b>] 사전 문진 수신 완료! ` +
+            `📥 <b>${nameText}</b> [연락처: <b>${pPhone || '-'}</b> | 주소: <b>${decodeURIComponent(pAddress) || '미입력'}</b> | 직업: <b>${decodeURIComponent(pJob) || '미지정'}</b>] 사전 문진 수신 완료!<br>` +
             `[ 척도: <b>${area}</b> (${bodyScore}점) | TSK: <b>${tsk}점</b> | PCS: <b>${pcs}점</b> ]`;
     }
 }
@@ -1176,6 +1184,7 @@ async function handleOneClickConfirm() {
     const btn = document.getElementById('btn-save-main');
     const ptName = document.getElementById('pt-name').value;
     const ptPhone = document.getElementById('pt-phone').value;
+    const ptAddress = document.getElementById('pt-address').value; // 🏠 주소 수집
     const bodyScore = parseInt(document.getElementById('pt-body-score').value) || 0;
     const tsk = parseInt(document.getElementById('pt-tsk').value) || 0;
     const pcs = parseInt(document.getElementById('pt-pcs').value) || 0;
@@ -1188,6 +1197,7 @@ async function handleOneClickConfirm() {
         savedAt: new Date().toLocaleString('ko-KR'),
         patientName: ptName,
         patientPhone: ptPhone,
+        patientAddress: ptAddress, // 🏠 구글 시트 저장용 데이터에 주소 포함
         sessionNum: currentSessionNum,
         region: regionText,
         bodyScore: bodyScore,
