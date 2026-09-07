@@ -406,24 +406,27 @@
                 <input type="tel" id="pt-phone" placeholder="회원 연락처(숫자만)" value="01012345678" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px;">
             </div>
 
+            <!-- 🎯 스크린샷 기준 1: 디테일한 직업 분류 8가지 반영 -->
+            <!-- 🎯 스크린샷 기준 2: 직관적인 신체 부위 분류 7가지 반영 -->
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
                 <select id="pt-job" onchange="evaluateSOAP()" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; font-weight:bold; color:#0284c7;">
-                    <option value="사무직/컴퓨터사용">직업: 사무직 (장시간 좌식/거북목)</option>
-                    <option value="육아/가사노동">직업: 육아/가사 (반복 굴곡/손목부하)</option>
-                    <option value="현장/육체노동">직업: 육체노동 (중량물 취급/요추부하)</option>
-                    <option value="서비스/오래서있음">직업: 서비스직 (장시간 서있음/족부부하)</option>
-                    <option value="전문운전/고정자세">직업: 전문운전 (진동/요천추 고정)</option>
-                    <option value="헤어/미용/디자이너">직업: 미용/디자이너 (상지 들기/견갑부하)</option>
-                    <option value="치과의사/의료보조">직업: 치과/의료계 (경추 굴곡/요방경근)</option>
-                    <option value="스포츠/운동선수">직업: 운동선수/트레이너 (과사용/충격)</option>
+                    <option value="사무직 (장시간 좌식/거북목)" selected>직업: 사무직 (장시간 좌식/거북목)</option>
+                    <option value="육아/가사 (반복 굴곡/손목부하)">직업: 육아/가사 (반복 굴곡/손목부하)</option>
+                    <option value="육체노동 (중량물 취급/요추부하)">직업: 육체노동 (중량물 취급/요추부하)</option>
+                    <option value="서비스직 (장시간 서있음/족부부하)">직업: 서비스직 (장시간 서있음/족부부하)</option>
+                    <option value="전문운전 (진동/요천추 고정)">직업: 전문운전 (진동/요천추 고정)</option>
+                    <option value="미용/디자이너 (상지 들기/견갑부하)">직업: 미용/디자이너 (상지 들기/견갑부하)</option>
+                    <option value="치과/의료계 (경추 굴곡/요방경근)">직업: 치과/의료계 (경추 굴곡/요방경근)</option>
+                    <option value="운동선수/트레이너 (과사용/충격)">직업: 운동선수/트레이너 (과사용/충격)</option>
                 </select>
                 <select id="pt-region" onchange="resetAndRun()" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; font-weight:bold; color:var(--accent);">
-                    <option value="cervical" selected>목/어깨 (NDI)</option>
-                    <option value="lumbar">허리/요추 (ODI)</option>
-                    <option value="elbow">팔꿈치 (PRTEE)</option>
-                    <option value="psoas">장요근/내전근 (HOOS)</option>
-                    <option value="knee">무릎 (KOOS)</option>
-                    <option value="ankle">발목 (FAAM)</option>
+                    <option value="cervical" selected>목 (뒷목, 목덜미, 두통)</option>
+                    <option value="spadi">어깨 (통증 및 움직임 장애)</option>
+                    <option value="elbow">팔꿈치 (테니스/골프 엘보, 저림)</option>
+                    <option value="lumbar">허리 (요통, 다리 저림)</option>
+                    <option value="psoas">고관절 (사타구니, 엉덩이 관절)</option>
+                    <option value="knee">무릎 (통증, 붓기, 소리)</option>
+                    <option value="ankle">발목 및 발바닥</option>
                 </select>
             </div>
 
@@ -535,7 +538,6 @@
     </div>
 </div>
 
-<!-- ==================== [통합] 10회권 경과 추적 & 원클릭 확정 전송 카드 ==================== -->
 <div class="layout" style="margin-top:0;">
     <div style="grid-column: 1 / -1;">
         <div class="tracking-card">
@@ -550,9 +552,7 @@
                 <div id="sess-progress-fill" class="progress-bar-fill" style="width: 10%;"></div>
             </div>
 
-            <div class="session-badge-group" id="session-badges">
-                <!-- 회차 버튼 자동 생성 -->
-            </div>
+            <div class="session-badge-group" id="session-badges"></div>
 
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; margin-bottom: 15px;">
                 <div>
@@ -565,7 +565,6 @@
                 </div>
             </div>
 
-            <!-- 카톡 미리보기 & 원클릭 확정 박스 -->
             <div style="background:#f0f9ff; padding:14px; border-radius:10px; border:1.5px solid #bae6fd;">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                     <h3 style="margin:0; font-size:0.9rem; color:#0369a1;">📱 카카오톡 회원 맞춤 간이 리포트 미리보기</h3>
@@ -576,7 +575,6 @@
                     세션 데이터를 기록하시거나 수치를 조정하시면 회원 전송용 순화 문구가 생성됩니다.
                 </div>
 
-                <!-- 🟢 단 하나의 메인 버튼으로 모든 프로세스 완결 -->
                 <button class="btn-one-click-save" id="btn-save-main" onclick="handleOneClickConfirm()">
                     💾 [데이터 확정] 구글시트 DB 저장 & 카카오톡 자동 전송 🚀
                 </button>
@@ -586,10 +584,7 @@
 </div>
 
 <script>
-// ⚠️ 지정해주신 원장님의 구글 앱스 스크립트 웹 앱 URL 적용
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyJG7TWSj6YFXAVw18S_ZTPg2DERNgJyhnqOhwhQMHtDKon_EmZsUpyHRtDHUcHrWNp/exec";
-
-let currentAreaName = "NDI";
 
 // 🔍 구글 시트 사전 문진 데이터 조회 함수
 async function searchPatientFromSheet() {
@@ -611,25 +606,41 @@ async function searchPatientFromSheet() {
         const result = await response.json();
 
         if (result.result === "success" && result.data) {
-            // 가장 최근 제출된 데이터 우선 찾기 (역순 검색)
             const target = result.data.reverse().find(p => 
                 (p.patientName && p.patientName.includes(query)) || 
                 (p.patientPhone && p.patientPhone.includes(query))
             );
 
             if (target) {
-                // SOAP 폼에 자동 데이터 바인딩
                 document.getElementById('pt-name').value = target.patientName || '';
                 document.getElementById('pt-phone').value = target.patientPhone || '';
                 document.getElementById('pt-body-score').value = target.bodyScore || 0;
                 document.getElementById('pt-tsk').value = target.tskScore || 0;
                 document.getElementById('pt-pcs').value = target.pcsScore || 0;
 
+                // 신체부위 선택지 매핑
                 if (target.region) {
-                    const areaMap = { 'NDI': 'cervical', 'SPADI': 'cervical', 'ODI': 'lumbar', 'HOOS': 'psoas', 'KOOS': 'knee', 'FAAM': 'ankle', 'PRTEE': 'elbow' };
-                    if (areaMap[target.region]) {
-                        document.getElementById('pt-region').value = areaMap[target.region];
-                        currentAreaName = target.region;
+                    const regionSelect = document.getElementById('pt-region');
+                    for (let i = 0; i < regionSelect.options.length; i++) {
+                        if (regionSelect.options[i].text.includes(target.region) || target.region.includes(regionSelect.options[i].text.split(' ')[0])) {
+                            regionSelect.selectedIndex = i;
+                            break;
+                        }
+                    }
+                }
+
+                // 직업 선택지 매핑
+                if (target.rawSOAPAssessment && target.rawSOAPAssessment.includes("직업:")) {
+                    const jobMatch = target.rawSOAPAssessment.match(/- 직업:\s*([^\n]+)/);
+                    if (jobMatch && jobMatch[1]) {
+                        const jobSelect = document.getElementById('pt-job');
+                        const matchedJob = jobMatch[1].trim();
+                        for (let i = 0; i < jobSelect.options.length; i++) {
+                            if (jobSelect.options[i].value.includes(matchedJob) || matchedJob.includes(jobSelect.options[i].value.split(' ')[0])) {
+                                jobSelect.selectedIndex = i;
+                                break;
+                            }
+                        }
                     }
                 }
 
@@ -654,7 +665,6 @@ async function searchPatientFromSheet() {
     }
 }
 
-// 사전문진 URL 파라미터 자동 로드 및 바인딩
 function loadUrlParams() {
     const urlParams = new URLSearchParams(window.location.search);
     const pName = urlParams.get('pName');
@@ -676,16 +686,13 @@ function loadUrlParams() {
         if(tsk) document.getElementById('pt-tsk').value = tsk;
         if(pcs) document.getElementById('pt-pcs').value = pcs;
 
-        currentAreaName = area;
-        const areaMap = { 'NDI': 'cervical', 'SPADI': 'cervical', 'ODI': 'lumbar', 'HOOS': 'psoas', 'KOOS': 'knee', 'FAAM': 'ankle', 'PRTEE': 'elbow' };
-        if (areaMap[area]) document.getElementById('pt-region').value = areaMap[area];
-
         document.getElementById('prom-info').innerHTML = 
             `📥 <b>${nameText}</b> [연락처: <b>${pPhone || '-'}</b> | 직업: <b>${decodeURIComponent(pJob) || '미지정'}</b>] 사전 문진 수신 완료! ` +
             `[ 척도: <b>${area}</b> (${bodyScore}점) | TSK: <b>${tsk}점</b> | PCS: <b>${pcs}점</b> ]`;
     }
 }
 
+// 7가지 전체 부위 알고리즘 트리 (생략 없음)
 const algoTree = {
     cervical: [
         { id: "red_cervical", isRed: true, title: "🚨 [Red Flag] 뇌혈관 및 중추신경 신호", question: "어지럼증, 안구 떨림, 구토, 하지 마비가 있나요?", options: [{label: "네 (의학적 위험)", value: "RED"}, {label: "아니요 (안전)", value: "GREEN"}] },
@@ -693,17 +700,22 @@ const algoTree = {
         { id: "cv_facet", isRed: false, title: "[2단계] 경추 후관절 증후군 감별", question: "목을 뒤로 젖히며 옆으로 회전할 때 뒷목 관절 깊은 곳이 뻐근하게 아픈가요?", options: [{label: "네 (후관절낭 문제)", value: "FACET"}, {label: "아니요", value: "NO"}] },
         { id: "cv_tos", isRed: false, title: "[3단계] 견갑거근 / 흉출구 포착 감별", question: "고개를 숙이거나 팔을 들어올릴 때 견갑골 상각 및 쇄골 부위가 집히듯 아픈가요?", options: [{label: "네 (견갑거근/흉출구 포착)", value: "TOS"}, {label: "아니요", value: "NO"}] }
     ],
-    lumbar: [
-        { id: "red_lumbar", isRed: true, title: "🚨 [Red Flag] 응급 마미증후군 및 척추 위험", question: "소변/대변 조절 불가, 회음부 마목, 발목 마비가 있나요?", options: [{label: "네 (의학적 위험)", value: "RED"}, {label: "아니요 (안전)", value: "GREEN"}] },
-        { id: "lm_disc", isRed: false, title: "[1단계] 요추 디스크 / 신경근 압박 감별", question: "허리를 숙이거나 기침할 때 다리 쪽으로 찌릿한 방사통이 내려오나요?", options: [{label: "네 (요추 디스크/신경근)", value: "DISC"}, {label: "아니요", value: "NO"}] },
-        { id: "lm_stenosis", isRed: false, title: "[2단계] 척추관 협착증 감별", question: "10분 이상 걸으면 다리가 터질 듯 저려서 허리를 숙이고 쉬었다 가야 하나요?", options: [{label: "네 (척추관 협착증)", value: "STENOSIS"}, {label: "아니요", value: "NO"}] },
-        { id: "lm_ql", isRed: false, title: "[3단계] 요방경근 / 천장관절 유착 감별", question: "몸통을 옆으로 숙이거나 골반을 누를 때 허리 깊은 곳이나 엉치 관절이 아픈가요?", options: [{label: "네 (요방경근/천장관절)", value: "QL_SIJ"}, {label: "아니요", value: "NO"}] }
+    spadi: [
+        { id: "red_spadi", isRed: true, title: "🚨 [Red Flag] 급성 회전근개 대파열 및 탈구", question: "팔을 아예 들어올릴 수 없거나 관절의 심한 변형이 있나요?", options: [{label: "네 (의학적 위험)", value: "RED"}, {label: "아니요 (안전)", value: "GREEN"}] },
+        { id: "sp_impinge", isRed: false, title: "[1단계] 어깨 충돌증후군 감별", question: "팔을 옆으로 올릴 때(60~120도) 어깨 앞/옆쪽에 집히는 통증이 발생하나요?", options: [{label: "네 (견봉하 충돌)", value: "IMPINGE"}, {label: "아니요", value: "NO"}] },
+        { id: "sp_frozen", isRed: false, title: "[2단계] 동결건 (오십견) 감별", question: "남이 팔을 올려주어도 통증과 함께 관절이 굳어 안 올려지나요?", options: [{label: "네 (동결건/관절낭 유착)", value: "FROZEN"}, {label: "아니요", value: "NO"}] }
     ],
     elbow: [
         { id: "red_elbow", isRed: true, title: "🚨 [Red Flag] 관절 변형 및 급성 인대 손상", question: "팔꿈치 관절의 변형이나 급성 기계적 걸림 현상이 있나요?", options: [{label: "네 (의학적 위험)", value: "RED"}, {label: "아니요 (안전)", value: "GREEN"}] },
         { id: "eb_tennis", isRed: false, title: "[1단계] 외측상과염 (테니스 엘보) 감별", question: "손목을 뒤로 젖히거나 물건을 들어올릴 때 팔꿈치 바깥쪽이 아픈가요?", options: [{label: "네 (외측상과염)", value: "TENNIS"}, {label: "아니요", value: "NO"}] },
         { id: "eb_golf", isRed: false, title: "[2단계] 내측상과염 (골프 엘보) 감별", question: "손목을 안으로 굽히거나 손가락을 꽉 쥘 때 팔꿈치 안쪽이 아픈가요?", options: [{label: "네 (내측상과염)", value: "GOLF"}, {label: "아니요", value: "NO"}] },
         { id: "eb_tunnel", isRed: false, title: "[3단계] 주관절 터널 (척골신경 포착) 감별", question: "팔꿈치를 오랫동안 구부리고 있으면 약지나 새끼손가락이 저린가요?", options: [{label: "네 (척골신경 포착)", value: "CUBITAL"}, {label: "아니요", value: "NO"}] }
+    ],
+    lumbar: [
+        { id: "red_lumbar", isRed: true, title: "🚨 [Red Flag] 응급 마미증후군 및 척추 위험", question: "소변/대변 조절 불가, 회음부 마목, 발목 마비가 있나요?", options: [{label: "네 (의학적 위험)", value: "RED"}, {label: "아니요 (안전)", value: "GREEN"}] },
+        { id: "lm_disc", isRed: false, title: "[1단계] 요추 디스크 / 신경근 압박 감별", question: "허리를 숙이거나 기침할 때 다리 쪽으로 찌릿한 방사통이 내려오나요?", options: [{label: "네 (요추 디스크/신경근)", value: "DISC"}, {label: "아니요", value: "NO"}] },
+        { id: "lm_stenosis", isRed: false, title: "[2단계] 척추관 협착증 감별", question: "10분 이상 걸으면 다리가 터질 듯 저려서 허리를 숙이고 쉬었다 가야 하나요?", options: [{label: "네 (척추관 협착증)", value: "STENOSIS"}, {label: "아니요", value: "NO"}] },
+        { id: "lm_ql", isRed: false, title: "[3단계] 요방경근 / 천장관절 유착 감별", question: "몸통을 옆으로 숙이거나 골반을 누를 때 허리 깊은 곳이나 엉치 관절이 아픈가요?", options: [{label: "네 (요방경근/천장관절)", value: "QL_SIJ"}, {label: "아니요", value: "NO"}] }
     ],
     psoas: [
         { id: "red_psoas", isRed: true, title: "🚨 [Red Flag] 고관절 무혈성 괴사 및 척추 탈출", question: "고관절 체중 지지 시 극심한 통증이나 하지 마비감이 있나요?", options: [{label: "네 (의학적 위험)", value: "RED"}, {label: "아니요 (안전)", value: "GREEN"}] },
@@ -761,7 +773,9 @@ function selectAnswer(stepId, value) { userAnswers[stepId] = value; renderAlgori
 function evaluateSOAP() {
     const name = document.getElementById('pt-name').value;
     const job = document.getElementById('pt-job').value;
-    const region = document.getElementById('pt-region').value;
+    const regionSelect = document.getElementById('pt-region');
+    const regionKey = regionSelect.value;
+    const regionText = regionSelect.options[regionSelect.selectedIndex].text;
     const cablePolarity = document.getElementById('cable-polarity').value;
     const bodyScore = parseInt(document.getElementById('pt-body-score').value) || 0;
     const tsk = parseInt(document.getElementById('pt-tsk').value) || 0;
@@ -798,7 +812,7 @@ function evaluateSOAP() {
 
     let icfAssessment = `[ICF 체계 기반 Assessment & 임상 소견]\n\n`;
 
-    if (region === 'ankle') {
+    if (regionKey === 'ankle') {
         causeTissue = "전경골근, 비골근, 내/외측 복사뼈 인대 유착 및 경골 신경 분지 포착";
         document.getElementById('therapy-header-title').innerText = "4. 발목 정밀 6단계 대경TENS 수기-전류 프로토콜";
         
@@ -818,7 +832,7 @@ function evaluateSOAP() {
             <div style="font-size:0.78rem;">• <b>통전 시간/매질:</b> 15분 / 고주파 전도성 크림 도포</div>
             <div style="font-size:0.78rem;">• <b>임상 목표:</b> 족저근막 및 내/외측 복사뼈 심부 심줄 순환 증진</div>
         `;
-    } else if (region === 'knee') {
+    } else if (regionKey === 'knee') {
         causeTissue = "대퇴사두근(내/외측광근), 슬개건, 내측 측부인대(MCL) 및 내측 햄스트링 유착";
         document.getElementById('therapy-header-title').innerText = "4. 무릎 정밀 8단계 대경TENS 수기-전류 프로토콜";
 
@@ -838,7 +852,7 @@ function evaluateSOAP() {
             <div style="font-size:0.78rem;">• <b>통전 시간/매질:</b> 12분 / 무릎 관절 전면부 전도매질 수분포 도포</div>
             <div style="font-size:0.78rem;">• <b>임상 목표:</b> 슬개골 트랙킹 부종 완화 및 관절액 삼투 이완</div>
         `;
-    } else if (region === 'elbow') {
+    } else if (regionKey === 'elbow') {
         causeTissue = "외측상과, 삼두/이두근, Distal Radioulnar/Radius/Ulna 및 수근부 굴근 유착";
         document.getElementById('therapy-header-title').innerText = "4. 팔꿈치 정밀 8단계 대경TENS 수기-전류 프로토콜";
 
@@ -860,7 +874,7 @@ function evaluateSOAP() {
             <div style="font-size:0.78rem;">• <b>통전 시간/매질:</b> 10분 / 외측/내측 상과 고주파 크림 얇게 도포</div>
             <div style="font-size:0.78rem;">• <b>임상 목표:</b> 건 부착부 세포 재생 유도 및 과수축 포착 해소</div>
         `;
-    } else if (region === 'psoas') {
+    } else if (regionKey === 'psoas') {
         causeTissue = "장요근, 대퇴직근 기시부, 서혜부 삼각, 대전차 중둔근 및 외측 햄스트링 유착";
         document.getElementById('therapy-header-title').innerText = "4. 장요근/내전근 정밀 4단계 수기-전류 프로토콜";
 
@@ -878,7 +892,7 @@ function evaluateSOAP() {
             <div style="font-size:0.78rem;">• <b>통전 시간/매질:</b> 15분 / 복부 하단 서혜부 매질 도포</div>
             <div style="font-size:0.78rem;">• <b>임상 목표:</b> 고관절 굴근 신경근 자율신경 이완</div>
         `;
-    } else if (region === 'lumbar') {
+    } else if (regionKey === 'lumbar') {
         causeTissue = "요추 신경근, 요방경근, 천장관절 유착 및 좌골신경 포착";
         document.getElementById('therapy-header-title').innerText = "4. 요추 정밀 10단계 대경TENS 수기-전류 프로토콜";
         stepsHtml = `
@@ -900,9 +914,23 @@ function evaluateSOAP() {
             <div style="font-size:0.78rem;">• <b>통전 시간/매질:</b> 15분 / 요방경근 영역 고주파 전도크림</div>
             <div style="font-size:0.78rem;">• <b>임상 목표:</b> 요추 심부 다열근 및 요방경근 유착 세포 이완</div>
         `;
+    } else if (regionKey === 'spadi') {
+        causeTissue = "회전근개(극상근/극하근), 삼각근, 견봉하 점액낭 및 오목위팔관절 유착";
+        document.getElementById('therapy-header-title').innerText = "4. 어깨 정밀 수기-전류 프로토콜";
+        stepsHtml = `
+            <div style="font-size:0.8rem; font-weight:bold; color:#6d28d9; margin-bottom:8px;">⚡ [어깨 정밀 수기-전류 매핑]</div>
+            <div class="step-card"><div class="step-title">1단계: 극상근 기시부-건 부착부 통전</div><div>• 극상근유두 <span class="tag-neg">${negName}</span> | 대결절 부착부 <span class="tag-pos">${posName}</span></div></div>
+            <div class="step-card"><div class="step-title">2단계: 삼각근-견봉하 점액낭 이완</div><div>• 견봉 아래 <span class="tag-neg">${negName}</span> | 삼각근 조유 <span class="tag-pos">${posName}</span></div></div>
+        `;
+
+        etherapyHtml = `
+            <div style="font-size:0.8rem; font-weight:bold; color:#0284c7;">🌊 [E-Therapy 어깨 관절낭 고주파 세팅]</div>
+            <div style="font-size:0.78rem; margin-top:4px;">• <b>적용 파형:</b> 관절낭 유착 이완 고주파 파형</div>
+            <div style="font-size:0.78rem;">• <b>통전 시간/매질:</b> 12분 / 어깨 전·후면 전도크림 도포</div>
+        `;
     } else {
         causeTissue = "후두하근, 두경부 측두근막, C3-C5 신경근, 견갑거근 및 견갑골 수축/하강 유착";
-        document.getElementById('therapy-header-title').innerText = "4. 목/어깨 정밀 10단계 대경TENS 수기-전류 프로토콜";
+        document.getElementById('therapy-header-title').innerText = "4. 목 정밀 10단계 대경TENS 수기-전류 프로토콜";
         stepsHtml = `
             <div style="font-size:0.8rem; font-weight:bold; color:#6d28d9; margin-bottom:8px;">⚡ [경추 & 어깨 정밀 10단계 수기-전류 매핑]</div>
             <div class="step-card"><div class="step-title">1단계: 두통 & 후두하근 영역 이완</div><div>• 후두하근 <span class="tag-neg">${negName}</span> | 하부 경추 <span class="tag-pos">${posName}</span> | <span class="tag-ma">최대 2 mA</span> (정수리 감각 유도)</div></div>
@@ -929,7 +957,7 @@ function evaluateSOAP() {
     icfAssessment += `   - 통증 양상: ${ocChar} (주호소 부위: ${ocLoc})\n\n`;
 
     icfAssessment += `2. d (Activities & Participation):\n`;
-    icfAssessment += `   - 기능 장애 척도: ${currentAreaName} ${bodyScore}점\n`;
+    icfAssessment += `   - 기능 장애 척도: ${regionText} ${bodyScore}점\n`;
     icfAssessment += `   - 제한 활동 / 악화 동작: ${ocAgg}\n\n`;
 
     icfAssessment += `3. e (Environmental) & p (Personal Factors):\n`;
@@ -942,21 +970,24 @@ function evaluateSOAP() {
     document.getElementById('out-etherapy').innerHTML = etherapyHtml;
 
     let track1 = [], track2 = [], track3 = [];
-    if (region === 'ankle') {
+    if (regionKey === 'ankle') {
         track1.push({ name: "발목 배굴(Dorsiflexion) & 비골근 등척성 강화", fitt: "주 5회 / RPE 3-4", target: "발목 관절 가동성 및 안정성 회복", yt: "https://www.youtube.com/watch?v=fdWEqXk6iDE" });
         track2.push({ name: "보행 시 발뒤꿈치-발가락 롤링 보행 재학습", fitt: "매일 보행 시 적용", target: "보행 패턴 정상화 및 충격 분산", yt: "https://www.youtube.com/watch?v=qhy4FHVk1rg" });
-    } else if (region === 'knee') {
+    } else if (regionKey === 'knee') {
         track1.push({ name: "대퇴사두근(VMO) 슬개골 트랙킹 & 내측 햄스트링 강화", fitt: "주 4회 / RPE 4", target: "슬개골 맞춤 트랙킹 회복", yt: "https://www.youtube.com/watch?v=fdWEqXk6iDE" });
         track2.push({ name: "계단 오르내리기 및 스쿼트 힙힌지 재학습", fitt: "매일 / 작업 중", target: "슬관절 압박 부하 감소", yt: "https://www.youtube.com/watch?v=NV_BXjFZEDs" });
-    } else if (region === 'elbow') {
+    } else if (regionKey === 'elbow') {
         track1.push({ name: "전완 굴근/신근 원심성(Eccentric) 강화 훈련", fitt: "주 4회 / RPE 3", target: "상과 부착부 힘줄 변성 회복", yt: "https://www.youtube.com/shorts/Tgfri2GjKJM" });
         track2.push({ name: "물건 들기 및 키보드 작업 시 손목 중립재학습", fitt: "작업 중 지속", target: "외측상과 반복 자극 차단", yt: "https://www.youtube.com/shorts/Tgfri2GjKJM" });
-    } else if (region === 'psoas') {
+    } else if (regionKey === 'psoas') {
         track1.push({ name: "장요근 신전 가동성 & 둔근 수축 연동 훈련", fitt: "주 4회 / RPE 4", target: "서혜부 포착 해소 및 골반 정렬", yt: "https://www.youtube.com/watch?v=NV_BXjFZEDs" });
         track2.push({ name: "앉았다 일어서기 시 고관절 굴곡 재학습", fitt: "매일 연습", target: "고관절 찝힘 스트레스 감소", yt: "https://www.youtube.com/watch?v=qhy4FHVk1rg" });
-    } else if (region === 'lumbar') {
+    } else if (regionKey === 'lumbar') {
         track1.push({ name: "요추 안정화 & 골반 경사 둔근 활성화 훈련", fitt: "주 4회 / RPE 4", target: "요천추 유착 해소 후 안정성 확보", yt: "https://www.youtube.com/watch?v=qhy4FHVk1rg" });
         track2.push({ name: "앉기/고개 숙이기 시 요추 골반 힙 힌지 재학습", fitt: "매일 / 50분마다", target: "요통 유발 부하 감소", yt: "https://www.youtube.com/watch?v=NV_BXjFZEDs" });
+    } else if (regionKey === 'spadi') {
+        track1.push({ name: "견관절 가동범위 회복 및 회전근개 등척성 훈련", fitt: "주 4회 / RPE 3", target: "견봉하 공간 확보", yt: "https://www.youtube.com/watch?v=aSXJnapLywE" });
+        track2.push({ name: "팔 올리기 동작 시 견갑골 상방회전 재학습", fitt: "매일 연습", target: "어깨 충돌 예방", yt: "https://www.youtube.com/watch?v=zWjFS42Ihuw" });
     } else {
         track1.push({ name: "경추 리트랙션 & 견갑골 안정화(Retraction/Depression) 훈련", fitt: "주 5회 / RPE 3-4", target: "후두하근 긴장 해소 및 견갑골 위치 회복", yt: "https://www.youtube.com/watch?v=aSXJnapLywE" });
         track2.push({ name: "모니터 시선 맞춤 과제 지향 경추 굴곡 훈련", fitt: "매일 / 50분마다", target: "거북목 및 경추 부하 감소", yt: "https://www.youtube.com/watch?v=zWjFS42Ihuw" });
@@ -985,7 +1016,6 @@ function evaluateSOAP() {
     generateClientReport();
 }
 
-// ==================== [10회권 경과 추적 & 순화 리포트 로직] ====================
 let currentSessionNum = 1;
 let sessionHistory = JSON.parse(localStorage.getItem('pt_session_history')) || {};
 
@@ -1110,11 +1140,8 @@ function generateClientReport() {
     previewElem.innerText = clientTxt;
 }
 
-// ==================== 🟢 실제 구글 시트 DB 저장 & 카카오 연동 모듈 ====================
-
 const DatabaseService = {
     async saveToDatabase(payload) {
-        // 로컬스토리지 임시 보관
         sessionHistory[payload.sessionNum] = {
             bodyScore: payload.bodyScore,
             tsk: payload.tskScore,
@@ -1122,7 +1149,6 @@ const DatabaseService = {
         };
         localStorage.setItem('pt_session_history', JSON.stringify(sessionHistory));
 
-        // 구글 시트 앱스 스크립트로 실제 데이터 전송 (CORS 우회용 text/plain 전송)
         await fetch(GOOGLE_SCRIPT_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -1135,13 +1161,11 @@ const DatabaseService = {
 
 const KakaoService = {
     sendKakaoReport(clientPhone, clientText) {
-        // 클립보드 복사 후 카카오톡 전송 창 열기
         navigator.clipboard.writeText(clientText);
         window.open(`https://sharer.kakao.com/talk/friends/picker/link`, '_blank');
     }
 };
 
-// 🟢 [원클릭 메인 실행 함수]
 async function handleOneClickConfirm() {
     const btn = document.getElementById('btn-save-main');
     const ptName = document.getElementById('pt-name').value;
@@ -1149,7 +1173,8 @@ async function handleOneClickConfirm() {
     const bodyScore = parseInt(document.getElementById('pt-body-score').value) || 0;
     const tsk = parseInt(document.getElementById('pt-tsk').value) || 0;
     const pcs = parseInt(document.getElementById('pt-pcs').value) || 0;
-    const region = document.getElementById('pt-region').value;
+    const regionSelect = document.getElementById('pt-region');
+    const regionText = regionSelect.options[regionSelect.selectedIndex].text;
     const rawAssessment = document.getElementById('out-assessment').innerText;
     const clientReportText = document.getElementById('client-report-preview').innerText;
 
@@ -1158,7 +1183,7 @@ async function handleOneClickConfirm() {
         patientName: ptName,
         patientPhone: ptPhone,
         sessionNum: currentSessionNum,
-        region: region,
+        region: regionText,
         bodyScore: bodyScore,
         tskScore: tsk,
         pcsScore: pcs,
@@ -1175,7 +1200,7 @@ async function handleOneClickConfirm() {
         updateCharts();
         KakaoService.sendKakaoReport(ptPhone, clientReportText);
 
-        alert(`✅ [처리가 완료되었습니다]\n\n- ${currentSessionNum}회차 SOAP 데이터 구글 시트 기록 보관 완료\n- 클립보드 복사 및 카카오톡 연동 완료`);
+        alert(`✅ [처리가 완료되었습니다]\n\n- ${currentSessionNum}회차 SOAP 데이터 구글 시트 신규 행 추가 완료\n- 클립보드 복사 및 카카오톡 연동 완료`);
 
     } catch (error) {
         console.error("저장 에러:", error);
