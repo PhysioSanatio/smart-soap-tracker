@@ -43,6 +43,61 @@
         .header h1 { font-size: 1.3rem; margin: 0; color: var(--accent); }
         .header p { font-size: 0.85rem; margin: 4px 0 0 0; color: #64748b; }
 
+        /* 🔍 구글 시트 회원 검색 패널 스타일 */
+        .patient-search-card {
+            background: #ffffff;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin: 0 auto 15px auto;
+            max-width: 1500px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+        .search-header {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: #2563eb;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .search-input-group {
+            display: flex;
+            gap: 10px;
+        }
+        .search-input-group input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .search-input-group input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        .search-input-group button {
+            padding: 10px 18px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .search-input-group button:hover {
+            background: #1d4ed8;
+        }
+        .search-input-group button:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+
         .layout {
             display: grid;
             grid-template-columns: 1.1fr 0.9fr;
@@ -51,7 +106,10 @@
             margin: 0 auto;
         }
 
-        @media (max-width: 950px) { .layout { grid-template-columns: 1fr; } }
+        @media (max-width: 950px) { 
+            .layout { grid-template-columns: 1fr; } 
+            .search-input-group { flex-direction: column; }
+        }
 
         .card {
             background: var(--card-bg);
@@ -309,7 +367,7 @@
 
         @media print {
             body { background: white; padding: 0; }
-            .header p, .tracking-card { display: none; }
+            .header p, .tracking-card, .patient-search-card { display: none; }
             .layout { display: block; }
             .card { box-shadow: none; border: 1px solid #ccc; page-break-inside: avoid; }
         }
@@ -322,12 +380,25 @@
     <p>사전 문진 ➔ 정밀 감별 ➔ ICF 평가 ➔ 정밀 전류 테라피 / CPG 운동 처방</p>
 </div>
 
+<!-- 🔍 구글 시트 사전 문진 검색 패널 -->
+<div class="patient-search-card">
+    <div class="search-header">
+        <span>📋 구글 시트 사전 문진표 연동 및 조회</span>
+    </div>
+    <div class="search-input-group">
+        <input type="text" id="sheetSearchQuery" placeholder="회원 성함 또는 연락처 입력 (예: 홍길동 / 01012345678)" onkeyup="if(event.key==='Enter') searchPatientFromSheet()">
+        <button type="button" id="btnSearchPatient" onclick="searchPatientFromSheet()">
+            🔍 사전 문진 데이터 불러오기
+        </button>
+    </div>
+</div>
+
 <div class="layout">
     <div>
         <div class="card">
             <h2>1. Subjective (기본정보 & OLD CHARTS)</h2>
             <div id="prom-info" class="prom-summary">
-                🔄 사전 문진 수신 대기 중입니다...
+                🔄 사전 문진 수신 대기 중입니다... (상단 패널에서 검색이 가능합니다)
             </div>
 
             <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 8px; margin-bottom: 8px;">
@@ -506,8 +577,8 @@
                 </div>
 
                 <!-- 🟢 단 하나의 메인 버튼으로 모든 프로세스 완결 -->
-                <button class="btn-one-click-save" onclick="handleOneClickConfirm()">
-                    💾 [데이터 확정] 노션/구글시트 DB 저장 & 카카오톡 자동 전송 🚀
+                <button class="btn-one-click-save" id="btn-save-main" onclick="handleOneClickConfirm()">
+                    💾 [데이터 확정] 구글시트 DB 저장 & 카카오톡 자동 전송 🚀
                 </button>
             </div>
         </div>
@@ -515,7 +586,73 @@
 </div>
 
 <script>
+// ⚠️ 지정해주신 원장님의 구글 앱스 스크립트 웹 앱 URL 적용
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyJG7TWSj6YFXAVw18S_ZTPg2DERNgJyhnqOhwhQMHtDKon_EmZsUpyHRtDHUcHrWNp/exec";
+
 let currentAreaName = "NDI";
+
+// 🔍 구글 시트 사전 문진 데이터 조회 함수
+async function searchPatientFromSheet() {
+    const queryInput = document.getElementById('sheetSearchQuery');
+    const query = queryInput.value.trim();
+    const btn = document.getElementById('btnSearchPatient');
+
+    if (!query) {
+        alert("검색할 회원 성함이나 연락처를 입력해 주세요.");
+        queryInput.focus();
+        return;
+    }
+
+    btn.disabled = true;
+    btn.innerText = "⏳ 조회 중...";
+
+    try {
+        const response = await fetch(GOOGLE_SCRIPT_URL, { method: "GET" });
+        const result = await response.json();
+
+        if (result.result === "success" && result.data) {
+            // 가장 최근 제출된 데이터 우선 찾기 (역순 검색)
+            const target = result.data.reverse().find(p => 
+                (p.patientName && p.patientName.includes(query)) || 
+                (p.patientPhone && p.patientPhone.includes(query))
+            );
+
+            if (target) {
+                // SOAP 폼에 자동 데이터 바인딩
+                document.getElementById('pt-name').value = target.patientName || '';
+                document.getElementById('pt-phone').value = target.patientPhone || '';
+                document.getElementById('pt-body-score').value = target.bodyScore || 0;
+                document.getElementById('pt-tsk').value = target.tskScore || 0;
+                document.getElementById('pt-pcs').value = target.pcsScore || 0;
+
+                if (target.region) {
+                    const areaMap = { 'NDI': 'cervical', 'SPADI': 'cervical', 'ODI': 'lumbar', 'HOOS': 'psoas', 'KOOS': 'knee', 'FAAM': 'ankle', 'PRTEE': 'elbow' };
+                    if (areaMap[target.region]) {
+                        document.getElementById('pt-region').value = areaMap[target.region];
+                        currentAreaName = target.region;
+                    }
+                }
+
+                document.getElementById('prom-info').innerHTML = 
+                    `📥 <b>${target.patientName}</b> [연락처: <b>${target.patientPhone || '-'}</b>] 사전 문진 데이터 조회 성공! ` +
+                    `[ 척도/부위: <b>${target.region || '-'}</b> (${target.bodyScore || 0}점) | TSK: <b>${target.tskScore || 0}점</b> | PCS: <b>${target.pcsScore || 0}점</b> ]`;
+
+                evaluateSOAP();
+                alert(`✅ [${target.patientName}]님의 사전 문진 데이터가 성공적으로 로드되었습니다!`);
+            } else {
+                alert(`'${query}' 검색 결과와 일치하는 회원 사전 문진 기록이 없습니다.`);
+            }
+        } else {
+            alert("구글 시트 데이터를 불러오는 데 실패했습니다.");
+        }
+    } catch (error) {
+        console.error("회원 검색 중 오류 발생:", error);
+        alert("구글 시트 연동 중 오류가 발생했습니다. 앱스 스크립트 웹 앱 URL을 확인하세요.");
+    } finally {
+        btn.disabled = false;
+        btn.innerText = "🔍 사전 문진 데이터 불러오기";
+    }
+}
 
 // 사전문진 URL 파라미터 자동 로드 및 바인딩
 function loadUrlParams() {
@@ -973,32 +1110,40 @@ function generateClientReport() {
     previewElem.innerText = clientTxt;
 }
 
-// ==================== 🟢 DB 저장 & 카카오 자동 연동 모듈 ====================
+// ==================== 🟢 실제 구글 시트 DB 저장 & 카카오 연동 모듈 ====================
 
-const MockDatabaseService = {
+const DatabaseService = {
     async saveToDatabase(payload) {
-        sessionHistory[payload.sessionNum] = payload;
+        // 로컬스토리지 임시 보관
+        sessionHistory[payload.sessionNum] = {
+            bodyScore: payload.bodyScore,
+            tsk: payload.tskScore,
+            pcs: payload.pcsScore
+        };
         localStorage.setItem('pt_session_history', JSON.stringify(sessionHistory));
 
-        console.log("==========================================");
-        console.log("🚀 [서버 연동 준비완료] 아래 데이터가 Notion / Google Sheet API로 전송됩니다.");
-        console.log(JSON.stringify(payload, null, 2));
-        console.log("==========================================");
+        // 구글 시트 앱스 스크립트로 실제 데이터 전송 (CORS 우회용 text/plain 전송)
+        await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(payload)
+        });
 
-        return { success: true, message: "내부 DB 저장 완료" };
+        return { success: true };
     }
 };
 
-const MockKakaoService = {
+const KakaoService = {
     sendKakaoReport(clientPhone, clientText) {
+        // 클립보드 복사 후 카카오톡 전송 창 열기
         navigator.clipboard.writeText(clientText);
         window.open(`https://sharer.kakao.com/talk/friends/picker/link`, '_blank');
-        console.log(`📱 [알림톡 패킷] 수신자: ${clientPhone} | 메시지 길이: ${clientText.length}자`);
     }
 };
 
 // 🟢 [원클릭 메인 실행 함수]
 async function handleOneClickConfirm() {
+    const btn = document.getElementById('btn-save-main');
     const ptName = document.getElementById('pt-name').value;
     const ptPhone = document.getElementById('pt-phone').value;
     const bodyScore = parseInt(document.getElementById('pt-body-score').value) || 0;
@@ -1009,6 +1154,7 @@ async function handleOneClickConfirm() {
     const clientReportText = document.getElementById('client-report-preview').innerText;
 
     const payload = {
+        savedAt: new Date().toLocaleString('ko-KR'),
         patientName: ptName,
         patientPhone: ptPhone,
         sessionNum: currentSessionNum,
@@ -1017,20 +1163,26 @@ async function handleOneClickConfirm() {
         tskScore: tsk,
         pcsScore: pcs,
         rawSOAPAssessment: rawAssessment,
-        clientReportText: clientReportText,
-        savedAt: new Date().toLocaleString()
+        clientReportText: clientReportText
     };
 
+    btn.disabled = true;
+    btn.innerText = "⏳ 구글 시트 저장 및 카카오톡 연동 중...";
+
     try {
-        await MockDatabaseService.saveToDatabase(payload);
+        await DatabaseService.saveToDatabase(payload);
         renderSessionBadges();
         updateCharts();
-        MockKakaoService.sendKakaoReport(ptPhone, clientReportText);
+        KakaoService.sendKakaoReport(ptPhone, clientReportText);
 
-        alert(`✅ [처리가 완료되었습니다]\n\n- ${currentSessionNum}회차 SOAP 데이터 기록 보관 완료\n- 회원 전송용 카카오톡 연동 완료`);
+        alert(`✅ [처리가 완료되었습니다]\n\n- ${currentSessionNum}회차 SOAP 데이터 구글 시트 기록 보관 완료\n- 클립보드 복사 및 카카오톡 연동 완료`);
 
     } catch (error) {
-        alert("⚠️ 데이터 처리 중 오류가 발생했습니다: " + error.message);
+        console.error("저장 에러:", error);
+        alert("⚠️ 데이터 저장 중 오류가 발생했습니다: " + error.message);
+    } finally {
+        btn.disabled = false;
+        btn.innerText = "💾 [데이터 확정] 구글시트 DB 저장 & 카카오톡 자동 전송 🚀";
     }
 }
 
