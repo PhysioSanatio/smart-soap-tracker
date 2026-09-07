@@ -2,1063 +2,589 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1:1 맞춤 바디 밸런싱 SMART SOAP & Outcome Tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>1:1 프라이빗 맞춤 바디 밸런싱 사전 문진</title>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <style>
         :root {
-            --primary: #0f172a;
-            --primary-light: #f1f5f9;
-            --accent: #2563eb;
-            --danger: #dc2626;
-            --danger-bg: #fef2f2;
-            --warning-yellow: #d97706;
-            --warning-bg: #fffbe2;
-            --success: #16a34a;
-            --therapy-purple: #6d28d9;
-            --therapy-bg: #f5f3ff;
-            --etherapy-blue: #0284c7;
-            --etherapy-bg: #f0f9ff;
-            --bg: #f8fafc;
+            --bg-main: #fdfbf7;
             --card-bg: #ffffff;
-            --border: #cbd5e1;
+            --primary: #52796f;
+            --primary-light: #e8f1ee;
+            --accent: #84a98c;
+            --rose-point: #b5838d;
+            --text-main: #2f3e46;
+            --text-sub: #6c757d;
+            --border-light: #f0eae1;
+            --border-active: #84a98c;
+            --shadow-soft: 0 10px 30px rgba(132, 169, 140, 0.08);
+            --success: #16a34a;
         }
 
-        body {
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-            background-color: var(--bg);
-            color: var(--primary);
-            margin: 0;
-            padding: 15px;
-            line-height: 1.4;
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { 
+            font-family: 'Pretendard', -apple-system, sans-serif; 
+            background: var(--bg-main); 
+            color: var(--text-main); 
+            margin: 0; 
+            padding: 30px 15px; 
+            line-height: 1.6; 
         }
-
-        .header {
-            text-align: center;
-            margin-bottom: 15px;
-            padding: 12px;
-            background: var(--card-bg);
-            border-radius: 12px;
-            border: 1px solid var(--border);
-        }
-        .header h1 { font-size: 1.3rem; margin: 0; color: var(--accent); }
-        .header p { font-size: 0.85rem; margin: 4px 0 0 0; color: #64748b; }
-
-        .layout {
-            display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: 15px;
-            max-width: 1500px;
-            margin: 0 auto;
-        }
-
-        @media (max-width: 950px) { .layout { grid-template-columns: 1fr; } }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 16px;
-            border: 1px solid var(--border);
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-            margin-bottom: 15px;
-        }
-
-        h2 { font-size: 1.05rem; color: var(--accent); margin-top: 0; border-bottom: 2px solid var(--primary-light); padding-bottom: 6px; }
-
-        .red-flag-alert {
-            background: var(--danger-bg);
-            border: 2px solid var(--danger);
-            border-radius: 8px;
-            padding: 12px;
-            color: #991b1b;
-            font-weight: bold;
-            margin-bottom: 12px;
-            display: none;
-        }
-
-        .yellow-flag-alert {
-            background: var(--warning-bg);
-            border: 2px solid var(--warning-yellow);
-            border-radius: 8px;
-            padding: 12px;
-            color: #b45309;
-            font-weight: bold;
-            margin-bottom: 12px;
-            display: none;
-        }
-
-        .prom-summary {
-            background: #eff6ff;
-            border: 1.5px solid #bfdbfe;
-            border-radius: 10px;
-            padding: 10px 14px;
-            font-size: 0.83rem;
-            margin-bottom: 15px;
-            color: #1e40af;
-            line-height: 1.4;
-        }
-
-        .oldcharts-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            background: #f8fafc;
-            padding: 12px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            margin-bottom: 12px;
-        }
-        .oldcharts-grid label {
-            font-size: 0.75rem;
-            font-weight: bold;
-            color: #475569;
-            display: block;
-            margin-bottom: 3px;
-        }
-        .oldcharts-grid input, .oldcharts-grid select {
-            width: 100%;
-            padding: 7px 10px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 0.82rem;
-            box-sizing: border-box;
-        }
-
-        .algo-step {
-            background: #f8fafc;
-            border-left: 4px solid var(--accent);
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 12px;
-            border: 1px solid var(--border);
-            border-left-width: 4px;
-        }
-        .algo-step.red-step { border-left-color: var(--danger); background: #fff5f5; }
-        .algo-title { font-weight: bold; font-size: 0.9rem; margin-bottom: 6px; color: #1e293b; }
         
-        .btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
-        .btn-choice {
-            flex: 1;
-            min-width: 110px;
-            padding: 9px;
-            background: white;
-            border: 1.5px solid var(--border);
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.82rem;
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.15s ease;
+        .container { 
+            max-width: 680px; 
+            margin: 0 auto; 
+            background: var(--card-bg); 
+            border-radius: 28px; 
+            padding: 35px 24px; 
+            box-shadow: var(--shadow-soft); 
+            border: 1px solid var(--border-light);
         }
-        .btn-choice:hover { background: var(--primary-light); }
-        .btn-choice.selected-red { background: var(--danger); color: white; border-color: var(--danger); }
-        .btn-choice.selected-green { background: var(--success); color: white; border-color: var(--success); }
-        .btn-choice.selected-neutral { background: var(--accent); color: white; border-color: var(--accent); }
+        
+        .header { text-align: center; margin-bottom: 32px; border-bottom: 1.5px dashed var(--border-light); padding-bottom: 24px; }
+        .header-badge { display: inline-block; background: var(--primary-light); color: var(--primary); font-size: 13px; font-weight: 700; padding: 6px 14px; border-radius: 20px; margin-bottom: 10px; }
+        .header h1 { font-size: 23px; font-weight: 800; color: var(--text-main); margin: 0 0 8px 0; letter-spacing: -0.5px; }
+        .header p { font-size: 14px; color: var(--text-sub); margin: 0; }
 
-        .out-box {
-            background: #f8fafc;
-            border: 1px solid var(--border);
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 0.82rem;
-            white-space: pre-wrap;
-            font-family: monospace;
-            max-height: 220px;
-            overflow-y: auto;
+        .sec-title { 
+            font-size: 16px; 
+            font-weight: 800; 
+            color: var(--primary); 
+            background: var(--primary-light); 
+            padding: 14px 20px; 
+            border-radius: 16px; 
+            margin: 36px 0 18px 0; 
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
+        .sec-title.psych { background: #fdf0f0; color: #a45a64; }
+        .sec-title.mental { background: #f4f6f0; color: #4a6b5d; }
 
-        .therapy-box {
-            background: var(--therapy-bg);
-            border: 1.5px solid #ddd6fe;
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 15px;
-        }
+        .guide-box { font-size: 14px; color: var(--text-sub); background: #f9f6f0; padding: 14px 18px; border-radius: 14px; margin-bottom: 18px; border-left: 4px solid var(--accent); }
 
-        .etherapy-box {
-            background: var(--etherapy-bg);
-            border: 1.5px solid #7dd3fc;
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 15px;
-        }
+        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        @media (max-width: 500px) { .input-grid { grid-template-columns: 1fr; } }
+        
+        .full-width { grid-column: 1 / -1; }
 
-        .btn-one-click-save {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #16a34a, #059669);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-weight: bold;
-            font-size: 1.05rem;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(22, 163, 74, 0.25);
+        input[type="text"], input[type="tel"], input[type="number"], select {
+            width: 100%; 
+            padding: 16px 18px; 
+            border-radius: 14px; 
+            border: 1.5px solid var(--border-light); 
+            font-size: 15px; 
+            background: #fdfdfd; 
+            color: var(--text-main); 
+            appearance: none;
             transition: all 0.2s ease;
         }
-        .btn-one-click-save:hover {
+        input:focus, select:focus { outline: none; border-color: var(--accent); background: #fff; box-shadow: 0 0 0 3px rgba(132, 169, 140, 0.15); }
+
+        .q-card { background: #fff; border: 1.5px solid var(--border-light); border-radius: 20px; padding: 20px; margin-bottom: 16px; transition: 0.2s; }
+        .q-num { font-size: 13px; font-weight: 800; color: var(--rose-point); display: block; margin-bottom: 6px; }
+        .q-text { font-size: 16px; font-weight: 700; color: var(--text-main); margin-bottom: 16px; word-break: keep-all; line-height: 1.5; }
+        
+        .opt-group { display: flex; flex-direction: column; gap: 9px; }
+        .opt-label {
+            border: 1.5px solid var(--border-light); 
+            border-radius: 14px; 
+            padding: 15px 18px; 
+            font-size: 15px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            background: #faf8f5; 
+            transition: all 0.2s ease;
+            color: var(--text-main);
+        }
+        .opt-label input[type="radio"] { width: 20px; height: 20px; margin-right: 14px; accent-color: var(--primary); }
+        .opt-label:has(input:checked) { 
+            border-color: var(--border-active); 
+            background: var(--primary-light); 
+            color: var(--primary); 
+            font-weight: 700;
             transform: translateY(-1px);
-            box-shadow: 0 6px 14px rgba(22, 163, 74, 0.35);
         }
 
-        .fitt-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.78rem;
-            margin-top: 8px;
-            margin-bottom: 12px;
+        .submit-btn {
+            width: 100%; 
+            padding: 20px; 
+            background: var(--primary); 
+            color: white; 
+            border: none; 
+            border-radius: 18px; 
+            font-size: 18px; 
+            font-weight: 800; 
+            cursor: pointer; 
+            margin-top: 35px; 
+            box-shadow: 0 8px 20px rgba(82, 121, 111, 0.25);
+            transition: all 0.2s ease;
         }
-        .fitt-table th, .fitt-table td { border: 1px solid var(--border); padding: 6px 8px; text-align: left; }
-        .fitt-table th { background: var(--primary-light); color: var(--accent); }
-        .track-header { font-weight: bold; color: var(--accent); font-size: 0.85rem; margin-top: 10px; border-left: 3px solid var(--accent); padding-left: 6px; }
+        .submit-btn:active { transform: scale(0.99); }
+        .submit-btn:disabled { background: #d3d3d3; box-shadow: none; }
 
-        .step-card {
-            background: #ffffff;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            padding: 8px 10px;
-            margin-bottom: 6px;
-            font-size: 0.78rem;
+        /* 제출 완료 카드 전용 스타일 */
+        #success-card {
+            display: none;
+            text-align: center;
+            padding: 50px 20px;
         }
-        .step-title { font-weight: bold; color: #1e293b; margin-bottom: 3px; }
-        .tag-neg { color: #2563eb; font-weight: bold; }
-        .tag-pos { color: #ea580c; font-weight: bold; }
-        .tag-ma { color: #16a34a; font-weight: bold; }
-        .tag-mod { color: #7c3aed; font-weight: bold; }
-        .tag-warn { color: #d97706; font-weight: bold; }
-
-        .yt-link {
-            display: inline-block;
-            background: #ff0000;
-            color: white;
-            padding: 3px 7px;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 0.7rem;
-            text-decoration: none;
-        }
-
-        .tracking-card {
-            background: #ffffff;
-            border: 2px solid #2563eb;
-            border-radius: 14px;
-            padding: 18px;
-            margin-top: 10px;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
-        }
-        .session-badge-group {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            margin: 10px 0;
-        }
-        .session-badge {
-            padding: 6px 12px;
-            background: #f1f5f9;
-            border: 1px solid #cbd5e1;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .session-badge.active {
-            background: #2563eb;
-            color: white;
-            border-color: #2563eb;
-        }
-        .progress-bar-bg {
-            width: 100%;
-            background: #e2e8f0;
-            height: 10px;
-            border-radius: 5px;
-            overflow: hidden;
-            margin: 8px 0;
-        }
-        .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #2563eb, #16a34a);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-        .chart-container {
-            display: flex;
-            align-items: flex-end;
-            height: 110px;
-            gap: 8px;
-            background: #f8fafc;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-            margin-top: 8px;
-        }
-        .chart-bar-group {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100%;
-            justify-content: flex-end;
-        }
-        .chart-bar {
-            width: 100%;
-            max-width: 22px;
-            background: #2563eb;
-            border-radius: 4px 4px 0 0;
-            transition: height 0.3s ease;
-        }
-        .chart-label { font-size: 0.7rem; color: #64748b; margin-top: 4px; text-align: center; }
-
-        @media print {
-            body { background: white; padding: 0; }
-            .header p, .tracking-card { display: none; }
-            .layout { display: block; }
-            .card { box-shadow: none; border: 1px solid #ccc; page-break-inside: avoid; }
-        }
+        .success-icon { font-size: 4rem; margin-bottom: 15px; }
+        .success-title { font-size: 1.5rem; font-weight: 800; color: var(--primary); margin-bottom: 12px; }
+        .success-desc { font-size: 1rem; color: var(--text-sub); line-height: 1.7; word-break: keep-all; }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <h1>🩺 1:1 맞춤 바디 밸런싱 SMART SOAP</h1>
-    <p>사전 문진 ➔ 정밀 감별 ➔ ICF 평가 ➔ 정밀 전류 테라피 / CPG 운동 처방</p>
-</div>
+<div class="container">
+    <!-- 문진표 작성 폼 영역 -->
+    <div id="form-wrapper">
+        <div class="header">
+            <span class="header-badge">🌿 100% Private Wellness Care</span>
+            <h1>1:1 맞춤 바디 밸런싱 사전 문진</h1>
+            <p>고급 세션 진행을 위한 전문 자가 컨디션 진단표입니다.</p>
+        </div>
 
-<div class="layout">
-    <div>
-        <div class="card">
-            <h2>1. Subjective (기본정보 & OLD CHARTS)</h2>
-            <div id="prom-info" class="prom-summary">
-                🔄 사전 문진 수신 대기 중입니다...
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
-                <input type="text" id="pt-name" placeholder="회원명" value="최수연 (35세)" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px;">
-                <input type="tel" id="pt-phone" placeholder="회원 연락처(숫자만)" value="01012345678" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px;">
-            </div>
-
-            <!-- 🏠 사전문진 카카오 주소 수신 및 표시 칸 -->
-            <div style="margin-bottom: 8px;">
-                <input type="text" id="pt-address" placeholder="회원 주소" value="미입력" style="width:100%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; box-sizing: border-box;">
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
-                <select id="pt-job" onchange="evaluateSOAP()" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; font-weight:bold; color:#0284c7;">
-                    <option value="사무직/컴퓨터사용">직업: 사무직 (장시간 좌식/거북목)</option>
-                    <option value="육아/가사노동">직업: 육아/가사 (반복 굴곡/손목부하)</option>
-                    <option value="현장/육체노동">직업: 육체노동 (중량물 취급/요추부하)</option>
-                    <option value="서비스/오래서있음">직업: 서비스직 (장시간 서있음/족부부하)</option>
-                    <option value="전문운전/고정자세">직업: 전문운전 (진동/요천추 고정)</option>
-                    <option value="헤어/미용/디자이너">직업: 미용/디자이너 (상지 들기/견갑부하)</option>
-                    <option value="치과의사/의료보조">직업: 치과/의료계 (경추 굴곡/요방경근)</option>
-                    <option value="스포츠/운동선수">직업: 운동선수/트레이너 (과사용/충격)</option>
-                </select>
-                <select id="pt-region" onchange="resetAndRun()" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; font-weight:bold; color:var(--accent);">
-                    <option value="cervical" selected>목/어깨 (NDI)</option>
-                    <option value="lumbar">허리/요추 (ODI)</option>
-                    <option value="elbow">팔꿈치 (PRTEE)</option>
-                    <option value="psoas">장요근/내전근 (HOOS)</option>
-                    <option value="knee">무릎 (KOOS)</option>
-                    <option value="ankle">발목 (FAAM)</option>
-                </select>
-            </div>
-
-            <div class="oldcharts-grid">
+        <form id="wellnessForm">
+            <div class="sec-title">👤 기본 인적 사항</div>
+            <div class="input-grid">
                 <div>
-                    <label>Onset (발병 시점)</label>
-                    <select id="oc-onset" onchange="evaluateSOAP()">
-                        <option value="급성 (1주 이내)">급성 (1주 이내)</option>
-                        <option value="아급성 (1~3개월)" selected>아급성 (1~3개월)</option>
-                        <option value="만성 (3개월 이상)">만성 (3개월 이상)</option>
+                    <input type="text" id="pName" placeholder="성함 (예: 홍길동)" required>
+                </div>
+                <div>
+                    <input type="number" id="pAge" placeholder="나이 (예: 35)" min="1" max="120" required>
+                </div>
+                <div>
+                    <select id="pGender" required>
+                        <option value="">성별 선택</option>
+                        <option value="남성">남성</option>
+                        <option value="여성">여성</option>
                     </select>
                 </div>
                 <div>
-                    <label>Location (주호소 부위 / CC)</label>
-                    <input type="text" id="oc-location" value="목 뒤쪽 뻐근함, 두통 및 견갑골 긴장" oninput="evaluateSOAP()">
-                </div>
-                <div>
-                    <label>Duration (지속성)</label>
-                    <select id="oc-duration" onchange="evaluateSOAP()">
-                        <option value="간헐적">간헐적 (자세 바꿀 때)</option>
-                        <option value="지속적" selected>지속적 (하루 종일)</option>
+                    <select id="pJob" required>
+                        <option value="">직업 / 주요 작업 형태</option>
+                        <option value="사무직/컴퓨터사용">사무직 (장시간 컴퓨터 작업)</option>
+                        <option value="육아/가사노동">육아 / 가사 노동 (반복 굴곡)</option>
+                        <option value="현장/육체노동">현장 / 육체 노동 (중량물 취급)</option>
+                        <option value="서비스/오래서있음">서비스직 (장시간 서 있기)</option>
+                        <option value="학생/운전기사">운전 / 고정 자세 유지</option>
+                        <option value="기타/일반">기타 / 일반</option>
                     </select>
                 </div>
-                <div>
-                    <label>Character (통증 양상)</label>
-                    <select id="oc-character" onchange="evaluateSOAP()">
-                        <option value="묵직함/뻐근함">묵직함 / 뻐근함</option>
-                        <option value="찌릿함/전기통함">찌릿함 / 전기 통함 (신경성)</option>
-                        <option value="날카롭게 찌름">날카롭게 찌름</option>
-                    </select>
+                <div class="full-width">
+                    <input type="tel" id="pPhone" placeholder="연락처 (010-0000-0000)" required>
                 </div>
-                <div>
-                    <label>Aggravating (악화 요인)</label>
-                    <input type="text" id="oc-agg" value="모니터 오래 보기 / 고개 숙일 때" oninput="evaluateSOAP()">
-                </div>
-                <div>
-                    <label>Radiation (방사통)</label>
-                    <select id="oc-radiation" onchange="evaluateSOAP()">
-                        <option value="없음">없음 (국소 통증)</option>
-                        <option value="있음 (팔/손가락 저림)" selected>있음 (팔/손가락 저림)</option>
-                        <option value="있음 (다리 저림)">있음 (다리 저림)</option>
-                    </select>
+                <div class="full-width">
+                    <input type="text" id="pAddress" placeholder="주소 검색 (터치하여 검색해 주세요)" readonly required style="cursor: pointer; background-color: #faf8f5;">
                 </div>
             </div>
 
-            <div style="background: #f1f5f9; padding: 10px; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--border);">
-                <label style="font-size:0.75rem; font-weight:bold; color:var(--primary);">🔌 대경TENS 케이블 색상 극성 설정:</label>
-                <select id="cable-polarity" onchange="evaluateSOAP()" style="width:100%; padding:6px; margin-top:2px; border-radius:6px; font-size:0.78rem; font-weight:bold; color:#ea580c;">
-                    <option value="NORMAL" selected>기본 배선: 주황색(+), 흰색(-)</option>
-                    <option value="REVERSE">제조사 반전: 주황색(-), 흰색(+)</option>
-                </select>
-            </div>
+            <div class="sec-title">🎯 가장 불편한 신체 부위 정밀 진단</div>
+            <div class="guide-box">현재 가장 통증이나 움직임 제한이 심한 부위 1곳을 선택해 주세요.</div>
+            <select id="areaSelect" onchange="loadAreaQuestions()" required style="font-weight: 700; border-color: var(--accent);">
+                <option value="">-- 불편하신 부위를 선택하세요 --</option>
+                <option value="NDI">목 (뒷목, 목덜미, 두통)</option>
+                <option value="SPADI">어깨 (통증 및 움직임 장애)</option>
+                <option value="PRTEE">팔꿈치 (테니스/골프 엘보, 저림)</option>
+                <option value="ODI">허리 (요통, 다리 저림)</option>
+                <option value="HOOS">고관절 (사타구니, 엉덩이 관절)</option>
+                <option value="KOOS">무릎 (통증, 붓기, 소리)</option>
+                <option value="FAAM">발목 및 발바닥</option>
+            </select>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
-                <div>
-                    <label style="font-size:0.75rem; color:#64748b;">장애 점수</label>
-                    <input type="number" id="pt-body-score" value="33" oninput="evaluateSOAP()" style="padding: 6px; border: 1px solid var(--border); border-radius: 6px; width:100%;">
-                </div>
-                <div>
-                    <label style="font-size:0.75rem; color:#64748b;">TSK-11 (공포-회피)</label>
-                    <input type="number" id="pt-tsk" value="33" oninput="evaluateSOAP()" style="padding: 6px; border: 1px solid var(--border); border-radius: 6px; width:100%;">
-                </div>
-                <div>
-                    <label style="font-size:0.75rem; color:#64748b;">PCS (파국화)</label>
-                    <input type="number" id="pt-pcs" value="39" oninput="evaluateSOAP()" style="padding: 6px; border: 1px solid var(--border); border-radius: 6px; width:100%;">
-                </div>
-            </div>
-        </div>
+            <div id="body-survey-area"></div>
 
-        <div id="red-flag-banner" class="red-flag-alert">
-            🚨 [Red Flag 경고] 응급 및 신경학적 고위험 신호 감지! 전문의 진료 회송이 필요합니다.
-        </div>
-        <div id="yellow-flag-banner" class="yellow-flag-alert">
-            ⚠️ [Yellow Flag 자동 감지 (Hodge CPG)] 사전 문진 결과 TSK-11/PCS 점수 30점 이상! 공포-회피 및 통증 파국화 고위험군입니다. 인지 행동적 통증 교육(Pain Education) 및 점진적 노출 운동이 필수입니다.
-        </div>
+            <div class="sec-title psych">🧠 움직임 공포 & 통증 반응 (TSK-11 / PCS)</div>
+            <div id="psych-survey-area"></div>
 
-        <div class="card">
-            <h2>2. 대화형 정밀 감별 문진 알고리즘</h2>
-            <div id="algorithm-container"></div>
-        </div>
+            <div class="sec-title mental">🌿 마음 컨디션 (스트레스 · 불안 · 우울)</div>
+            <div id="mental-survey-area"></div>
+
+            <button type="submit" id="submitBtn" class="submit-btn">문진 작성 완료 및 전송하기 🚀</button>
+        </form>
     </div>
 
-    <div>
-        <div class="card">
-            <h2>3. Assessment (ICF 체계 기반 종합 평가)</h2>
-            <div id="out-assessment" class="out-box">분석 결과가 출력됩니다.</div>
-        </div>
-
-        <div class="card" style="border-color: #6d28d9;">
-            <h2 id="therapy-header-title" style="color: #6d28d9;">4. 선택 부위 정밀 수기-전류 핸즈온 프로토콜</h2>
-            <div id="out-therapy" class="therapy-box" style="max-height: 280px; overflow-y: auto;">
-                <p style="color: #64748b; font-size: 0.85rem; text-align: center; margin:0;">감별 완료 시 핸즈온 가이드가 도출됩니다.</p>
-            </div>
-        </div>
-
-        <div class="card" style="border-color: #0284c7;">
-            <h2 style="color: #0284c7;">⚡ E-Therapy (고주파/엑셀 파형) 처방 세팅</h2>
-            <div id="out-etherapy" class="etherapy-box">
-                <p style="color: #64748b; font-size: 0.85rem; text-align: center; margin:0;">증상별 E-Therapy 설정값이 도출됩니다.</p>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>5. CPG 검증 가이드라인 운동 처방 & 고유 영상</h2>
-            <div id="out-fitt">
-                <p style="color: #64748b; font-size: 0.85rem; text-align: center;">운동 처방전이 생성됩니다.</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ==================== [통합] 10회권 경과 추적 & 원클릭 확정 전송 카드 ==================== -->
-<div class="layout" style="margin-top:0;">
-    <div style="grid-column: 1 / -1;">
-        <div class="tracking-card">
-            <h2 style="color:#2563eb; margin-bottom: 12px;">📈 10회권 경과 추적 (Outcome Tracking) & 원클릭 데이터 처리</h2>
-            
-            <div style="display:flex; justify-content:space-between; align-items:center; background:#f8fafc; padding:10px 14px; border-radius:8px; border:1px solid #e2e8f0; margin-bottom:10px;">
-                <span style="font-size:0.88rem; font-weight:bold;">프로그램 진행률: <span id="sess-count-txt" style="color:#2563eb;">1</span> / 10회차</span>
-                <span style="font-size:0.8rem; color:#64748b;">선택된 회차의 SOAP 데이터를 관리합니다.</span>
-            </div>
-
-            <div class="progress-bar-bg">
-                <div id="sess-progress-fill" class="progress-bar-fill" style="width: 10%;"></div>
-            </div>
-
-            <div class="session-badge-group" id="session-badges">
-                <!-- 회차 버튼 자동 생성 -->
-            </div>
-
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; margin-bottom: 15px;">
-                <div>
-                    <span style="font-size:0.8rem; font-weight:bold; color:#475569;">[신체 기능 불편도 점수 추이]</span>
-                    <div class="chart-container" id="score-chart"></div>
-                </div>
-                <div>
-                    <span style="font-size:0.8rem; font-weight:bold; color:#475569;">[움직임 부담감(TSK) 추이]</span>
-                    <div class="chart-container" id="tsk-chart"></div>
-                </div>
-            </div>
-
-            <!-- 카톡 미리보기 & 원클릭 확정 박스 -->
-            <div style="background:#f0f9ff; padding:14px; border-radius:10px; border:1.5px solid #bae6fd;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                    <h3 style="margin:0; font-size:0.9rem; color:#0369a1;">📱 카카오톡 회원 맞춤 간이 리포트 미리보기</h3>
-                    <span style="font-size:0.75rem; color:#0284c7; font-weight:600;">※ 의학용어 순화 및 CPG 운동 영상 자동 연결</span>
-                </div>
-                
-                <div id="client-report-preview" style="font-size:0.82rem; color:#334155; white-space:pre-wrap; background:white; padding:12px; border-radius:8px; border:1px solid #cbd5e1; max-height:160px; overflow-y:auto; line-height:1.5; margin-bottom:12px;">
-                    세션 데이터를 기록하시거나 수치를 조정하시면 회원 전송용 순화 문구가 생성됩니다.
-                </div>
-
-                <!-- 🟢 단 하나의 메인 버튼으로 모든 프로세스 완결 -->
-                <button class="btn-one-click-save" onclick="handleOneClickConfirm()">
-                    💾 [데이터 확정] 구글시트 DB 자동 기록 & 카카오톡 자동 전송 🚀
-                </button>
-            </div>
-        </div>
+    <!-- 회원 전용 완료 안내 카드 (SOAP 페이지로 넘어가지 않음) -->
+    <div id="success-card">
+        <div class="success-icon">🌿</div>
+        <div class="success-title">사전 문진 작성이 완료되었습니다</div>
+        <p class="success-desc">
+            작성해 주신 소중한 자가 진단 정보가 전송되었습니다.<br><br>
+            방문 시 원장님께서 데이터를 바탕으로<br>
+            <b>1:1 맞춤 바디 밸런싱 세션</b>을 더욱 정밀하게 준비해 드리겠습니다.
+        </p>
     </div>
 </div>
 
 <script>
-let currentAreaName = "NDI";
+// ⚠️ 원장님의 구글 앱스 스크립트 웹 앱 URL을 여기에 붙여넣어 주세요!
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxWQO-hVT-Nbf-xywFMx_Okv64T51zsITFILqwHuu4yWKyik30youiIs8MZaCyRewV2/exec'; 
 
-// 사전문진 URL 파라미터 자동 로드 및 바인딩 (주소 항목 포함)
-function loadUrlParams() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const pName = urlParams.get('pName');
-    const pAge = urlParams.get('pAge');
-    const pPhone = urlParams.get('pPhone');
-    const pAddress = urlParams.get('pAddress') || urlParams.get('address');
-    const pJob = urlParams.get('pJob');
-    const area = urlParams.get('area');
-    const bodyScore = urlParams.get('bodyScore');
-    const tsk = urlParams.get('tsk');
-    const pcs = urlParams.get('pcs');
-
-    if (pName && area) {
-        let nameText = decodeURIComponent(pName);
-        if(pAge) nameText += ` (${pAge}세)`;
-        document.getElementById('pt-name').value = nameText;
-        if(pPhone) document.getElementById('pt-phone').value = pPhone;
-        if(pAddress) document.getElementById('pt-address').value = decodeURIComponent(pAddress);
-        if(pJob) document.getElementById('pt-job').value = decodeURIComponent(pJob);
-        if(bodyScore) document.getElementById('pt-body-score').value = bodyScore;
-        if(tsk) document.getElementById('pt-tsk').value = tsk;
-        if(pcs) document.getElementById('pt-pcs').value = pcs;
-
-        currentAreaName = area;
-        const areaMap = { 'NDI': 'cervical', 'SPADI': 'cervical', 'ODI': 'lumbar', 'HOOS': 'psoas', 'KOOS': 'knee', 'FAAM': 'ankle', 'PRTEE': 'elbow' };
-        if (areaMap[area]) document.getElementById('pt-region').value = areaMap[area];
-
-        document.getElementById('prom-info').innerHTML = 
-            `📥 <b>${nameText}</b> [연락처: <b>${pPhone || '-'}</b> | 주소: <b>${pAddress ? decodeURIComponent(pAddress) : '-'}</b>] 사전 문진 수신 완료! ` +
-            `[ 척도: <b>${area}</b> (${bodyScore}점) | TSK: <b>${tsk}점</b> | PCS: <b>${pcs}점</b> ]`;
-    }
-}
-
-const algoTree = {
-    cervical: [
-        { id: "red_cervical", isRed: true, title: "🚨 [Red Flag] 뇌혈관 및 중추신경 신호", question: "어지럼증, 안구 떨림, 구토, 하지 마비가 있나요?", options: [{label: "네 (의학적 위험)", value: "RED"}, {label: "아니요 (안전)", value: "GREEN"}] },
-        { id: "cv_disc", isRed: false, title: "[1단계] 경추 디스크 / 신경근병증 감별", question: "목을 뒤로 젖히고 누를 때(Spurling test) 팔이나 손가락으로 찌릿한 전기가 통하나요?", options: [{label: "네 (경추 디스크/신경 포착)", value: "DISC"}, {label: "아니요", value: "NO"}] },
-        { id: "cv_facet", isRed: false, title: "[2단계] 경추 후관절 증후군 감별", question: "목을 뒤로 젖히며 옆으로 회전할 때 뒷목 관절 깊은 곳이 뻐근하게 아픈가요?", options: [{label: "네 (후관절낭 문제)", value: "FACET"}, {label: "아니요", value: "NO"}] },
-        { id: "cv_tos", isRed: false, title: "[3단계] 견갑거근 / 흉출구 포착 감별", question: "고개를 숙이거나 팔을 들어올릴 때 견갑골 상각 및 쇄골 부위가 집히듯 아픈가요?", options: [{label: "네 (견갑거근/흉출구 포착)", value: "TOS"}, {label: "아니요", value: "NO"}] }
-    ],
-    lumbar: [
-        { id: "red_lumbar", isRed: true, title: "🚨 [Red Flag] 응급 마미증후군 및 척추 위험", question: "소변/대변 조절 불가, 회음부 마목, 발목 마비가 있나요?", options: [{label: "네 (의학적 위험)", value: "RED"}, {label: "아니요 (안전)", value: "GREEN"}] },
-        { id: "lm_disc", isRed: false, title: "[1단계] 요추 디스크 / 신경근 압박 감별", question: "허리를 숙이거나 기침할 때 다리 쪽으로 찌릿한 방사통이 내려오나요?", options: [{label: "네 (요추 디스크/신경근)", value: "DISC"}, {label: "아니요", value: "NO"}] },
-        { id: "lm_stenosis", isRed: false, title: "[2단계] 척추관 협착증 감별", question: "10분 이상 걸으면 다리가 터질 듯 저려서 허리를 숙이고 쉬었다 가야 하나요?", options: [{label: "네 (척추관 협착증)", value: "STENOSIS"}, {label: "아니요", value: "NO"}] },
-        { id: "lm_ql", isRed: false, title: "[3단계] 요방경근 / 천장관절 유착 감별", question: "몸통을 옆으로 숙이거나 골반을 누를 때 허리 깊은 곳이나 엉치 관절이 아픈가요?", options: [{label: "네 (요방경근/천장관절)", value: "QL_SIJ"}, {label: "아니요", value: "NO"}] }
-    ],
-    elbow: [
-        { id: "red_elbow", isRed: true, title: "🚨 [Red Flag] 관절 변형 및 급성 인대 손상", question: "팔꿈치 관절의 변형이나 급성 기계적 걸림 현상이 있나요?", options: [{label: "네 (의학적 위험)", value: "RED"}, {label: "아니요 (안전)", value: "GREEN"}] },
-        { id: "eb_tennis", isRed: false, title: "[1단계] 외측상과염 (테니스 엘보) 감별", question: "손목을 뒤로 젖히거나 물건을 들어올릴 때 팔꿈치 바깥쪽이 아픈가요?", options: [{label: "네 (외측상과염)", value: "TENNIS"}, {label: "아니요", value: "NO"}] },
-        { id: "eb_golf", isRed: false, title: "[2단계] 내측상과염 (골프 엘보) 감별", question: "손목을 안으로 굽히거나 손가락을 꽉 쥘 때 팔꿈치 안쪽이 아픈가요?", options: [{label: "네 (내측상과염)", value: "GOLF"}, {label: "아니요", value: "NO"}] },
-        { id: "eb_tunnel", isRed: false, title: "[3단계] 주관절 터널 (척골신경 포착) 감별", question: "팔꿈치를 오랫동안 구부리고 있으면 약지나 새끼손가락이 저린가요?", options: [{label: "네 (척골신경 포착)", value: "CUBITAL"}, {label: "아니요", value: "NO"}] }
-    ],
-    psoas: [
-        { id: "red_psoas", isRed: true, title: "🚨 [Red Flag] 고관절 무혈성 괴사 및 척추 탈출", question: "고관절 체중 지지 시 극심한 통증이나 하지 마비감이 있나요?", options: [{label: "네 (의학적 위험)", value: "RED"}, {label: "아니요 (안전)", value: "GREEN"}] },
-        { id: "ps_psoas", isRed: false, title: "[1단계] 장요근 단축 & 서혜부 찝힘 감별", question: "다리를 뒤로 펴거나(신전) 앉았다 일어날 때 서혜부 앞쪽이 찝히듯 아픈가요?", options: [{label: "네 (장요근 단축/포착)", value: "PSOAS"}, {label: "아니요", value: "NO"}] },
-        { id: "ps_adductor", isRed: false, title: "[2단계] 내전근 건염 / 스포츠 허니아 감별", question: "다리를 안으로 모으거나 서혜부 삼각 라인을 누를 때 통증이 있나요?", options: [{label: "네 (내전근 긴장)", value: "ADDUCTOR"}, {label: "아니요", value: "NO"}] }
-    ],
-    knee: [
-        { id: "red_knee", isRed: true, title: "🚨 [Red Flag] 감염 및 급성 인대 파열", question: "무릎 관절의 심한 열감, 부종, 체중 지지 불가 상태인가요?", options: [{label: "네 (의학적 위험)", value: "RED"}, {label: "아니요 (안전)", value: "GREEN"}] },
-        { id: "kn_pfps", isRed: false, title: "[1단계] 슬개대퇴통증증후군 (PFPS) 감별", question: "계단을 오르내리거나 오래 앉아있을 때 슬개골 전면부가 뻐근하게 아픈가요?", options: [{label: "네 (슬개대퇴 연골부하)", value: "PFPS"}, {label: "아니요", value: "NO"}] },
-        { id: "kn_meniscus", isRed: false, title: "[2단계] 반월상 연골판 / 측부인대 감별", question: "무릎을 비틀거나 구부릴 때 관절 안쪽에 걸리는 느낌(Clicking)이 있나요?", options: [{label: "네 (연골판/측부인대)", value: "MENISCUS"}, {label: "아니요", value: "NO"}] }
-    ],
-    ankle: [
-        { id: "red_ankle", isRed: true, title: "🚨 [Red Flag] 골절(Ottawa Ankle Rule)", question: "복사뼈 부위 압통이 심하고 4걸음 이상 체중 지지가 불가능한가요?", options: [{label: "네 (골절 의심)", value: "RED"}, {label: "아니요 (안전)", value: "GREEN"}] },
-        { id: "ak_sprain", isRed: false, title: "[1단계] 전거비인대 (ATFL) 손상 감별", question: "발목이 안으로 꺾이면서 외측 복사뼈 앞쪽을 누를 때 아픈가요?", options: [{label: "네 (외측 인대 유착)", value: "ATFL"}, {label: "아니요", value: "NO"}] },
-        { id: "ak_fascia", isRed: false, title: "[2단계] 족저근막염 / 타살터널 감별", question: "아침에 첫 발을 디딜 때 뒤꿈치나 발바닥 안쪽으로 찌릿한 통증이 오나요?", options: [{label: "네 (족저근막/족부신경)", value: "PLANTAR"}, {label: "아니요", value: "NO"}] }
+const DATA_SURVEY = {
+    NDI: {
+        title: "목 기능 장애 지수 (NDI - 10문항)",
+        opts: ["통증/지장 없음", "아주 조금 지장 있음", "보통 정도로 지장 있음", "상당히 지장 있음", "매우 심하게 지장 있음", "아파서 전혀 불가능함"],
+        qs: [
+            "현재 목의 통증 정도는 어떠신가요?",
+            "씻거나 옷을 입는 등 개인위생 관리를 할 때 목 통증의 영향은 어떠신가요?",
+            "무거운 물건을 들어 올릴 때의 목 상태는 어떠신가요?",
+            "책, 스마트폰, TV를 보는 독서 및 모니터 주시 활동은 어떠신가요?",
+            "목 통증으로 인한 두통이 나타나는 정도는 어떠신가요?",
+            "업무나 공부에 집중하는 능력은 어떠신가요?",
+            "직장 업무나 가사 노동을 수행할 때는 어떠신가요?",
+            "운전을 하실 때 고개를 돌리거나 유지하는 상태는 어떠신가요?",
+            "밤에 잠을 자는 수면 상태는 어떠신가요?",
+            "여행, 여가 활동, 운동을 즐기시는 상태는 어떠신가요?"
+        ]
+    },
+    SPADI: {
+        title: "어깨 통증 및 장애 지수 (SPADI - 13문항)",
+        sections: [
+            {
+                subTitle: "▶ 통증 척도 (Pain Scale - 5문항)",
+                opts: ["0 (없음)", "1", "2", "3", "4", "5 (보통)", "6", "7", "8", "9", "10 (극심함)"],
+                qs: ["통증이 가장 심할 때의 정도", "통증이 있는 쪽으로 누울 때의 통증", "높은 선반에 있는 물건에 팔을 뻗을 때", "목 뒤나 뒷덜미를 잡을 때", "통증이 있는 팔로 물건을 밀 때"]
+            },
+            {
+                subTitle: "▶ 장애 척도 (Disability Scale - 8문항)",
+                opts: ["0 (없음)", "1", "2", "3", "4", "5 (보통)", "6", "7", "8", "9", "10 (불가능)"],
+                qs: ["머리를 감을 때", "등을 닦을 때", "내의나 겉옷을 입을 때", "앞에 단추가 있는 셔츠를 입을 때", "바지를 입을 때", "높은 선반 위에 물건을 올려놓을 때", "약 4.5kg의 무거운 물체를 들어 나를 때", "바지 뒷주머니에서 물건을 꺼낼 때"]
+            }
+        ]
+    },
+    PRTEE: {
+        title: "팔꿈치 장애 지수 (PRTEE - 15문항)",
+        sections: [
+            {
+                subTitle: "▶ 통증 척도 (Pain Scale - 5문항)",
+                opts: ["0 (통증 없음)", "1", "2", "3", "4", "5 (보통)", "6", "7", "8", "9", "10 (극심함)"],
+                qs: [
+                    "팔꿈치를 움직이지 않고 가만히 쉬고 있을 때의 통증",
+                    "팔을 움직이거나 작업을 할 때의 통증",
+                    "가장 심했을 때의 팔꿈치 통증",
+                    "무거운 물건을 들어 올리거나 꽉 잡을 때의 통증",
+                    "팔꿈치를 반복적으로 구부리거나 쓸 때의 통증"
+                ]
+            },
+            {
+                subTitle: "▶ 특정 동작 장애 (Specific Activities - 6문항)",
+                opts: ["0 (어려움 없음)", "1", "2", "3", "4", "5 (보통)", "6", "7", "8", "9", "10 (불가능)"],
+                qs: [
+                    "문고리를 잡고 힘주어 돌리는 동작",
+                    "새 잼 병이나 음료수 병의 뚜껑을 열 때",
+                    "무거운 장바구니나 가방을 손으로 들 때",
+                    "우유팩이나 음료 팩의 입구를 따서 열 때",
+                    "옷의 단추를 채우거나 지퍼를 올릴 때",
+                    "드라이버나 공구를 잡고 회전시키는 동작"
+                ]
+            },
+            {
+                subTitle: "▶ 일상 생활 장애 (Usual Activities - 4문항)",
+                opts: ["0 (어려움 없음)", "1", "2", "3", "4", "5 (보통)", "6", "7", "8", "9", "10 (불가능)"],
+                qs: [
+                    "개인위생 관리 (씻기, 빗질, 옷 입기 등)",
+                    "직장 업무 또는 주요 일상 가사 노동",
+                    "가볍고 단순한 집안일",
+                    "스포츠, 여가 활동 또는 취미 생활"
+                ]
+            }
+        ]
+    },
+    ODI: {
+        title: "허리 기능 장애 지수 (ODI - 10문항)",
+        qs: [
+            { q: "제 1 항 - 통증 정도", opts: ["현재 통증이 전혀 없다.", "현재 매우 가벼운 통증이 있다.", "현재 통증이 조금 있다.", "현재 통증이 조금 심하다.", "현재 통증이 아주 심하다.", "현재 통증이 상상할 수 없이 심하다."] },
+            { q: "제 2 항 - 개인 위생 (씻기, 옷 입기 등)", opts: ["별다른 통증 없이 스스로 조율할 수 있다.", "보통 스스로 조율할 수 있으나 약간의 통증이 있다.", "통증으로 인해 천천히 조심스럽게 해야 한다.", "통증 때문에 어느 정도 도움이 필요하다.", "매일 도움이 없이는 혼자 하기 어렵다.", "옷을 입거나 씻는 게 어려워 대부분 누워있다."] },
+            { q: "제 3 항 - 물건 들기", opts: ["무거운 물건을 통증 없이 들 수 있다.", "무거운 물건을 들 수 있으나 약간 통증이 있다.", "바닥의 무거운 것은 못 들지만, 들기 편한 위치에 있으면 들 수 있다.", "들기 편한 위치의 무겁지 않은 물건 정도만 들 수 있다.", "아주 가벼운 물건만 들 수 있다.", "아무것도 들거나 나를 수 없다."] },
+            { q: "제 4 항 - 걷기", opts: ["걷는 데 아무런 지장이 없다.", "통증 때문에 1km 이상 걷지 못한다.", "통증 때문에 500m 이상 걷지 못한다.", "통증 때문에 100m 이상 걷지 못한다.", "지팡이나 보조기구가 있어야만 걸을 수 있다.", "대부분 누워있으며 이동이 매우 제한적이다."] },
+            { q: "제 5 항 - 앉기", opts: ["어떤 의자에서든지 오래 앉아 있을 수 있다.", "편한 의자라면 오래 앉아 있을 수 있다.", "통증 때문에 1시간 이상 앉아 있기 어렵다.", "통증 때문에 30분 이상 앉아 있기 어렵다.", "통증 때문에 10분 이상 앉아 있기 어렵다.", "통증 때문에 전혀 앉아 있을 수 없다."] },
+            { q: "제 6 항 - 서 있기", opts: ["통증 없이 얼마든지 서 있을 수 있다.", "오래 서 있을 수 있으나 약간 통증이 있다.", "통증 때문에 1시간 이상 서 있기 어렵다.", "통증 때문에 30분 이상 서 있기 어렵다.", "통증 때문에 10분 이상 서 있기 어렵다.", "통증 때문에 전혀 서 있을 수 없다."] },
+            { q: "제 7 항 - 잠자기 (수면)", opts: ["통증 없이 잘 잔다.", "통증 때문에 가끔 잠자는 데 방해를 받는다.", "통증 때문에 6시간 이상 잠을 자지 못한다.", "통증 때문에 4시간 이상 잠을 자지 못한다.", "통증 때문에 2시간 이상 잠을 자지 못한다.", "통증 때문에 전혀 잠을 자지 못한다."] },
+            { q: "제 8 항 - 성생활 (해당 시)", opts: ["정상적으로 성생활을 하고 통증이 없다.", "정상적으로 성생활을 하나 가끔 통증을 느낀다.", "거의 정상적으로 성생활을 하나 통증을 심하게 느낀다.", "통증 때문에 성생활이 매우 제한적이다.", "통증 때문에 성생활을 거의 할 수 없다.", "통증 때문에 성 관계를 전혀 갖지 않는다."] },
+            { q: "제 9 항 - 사회생활", opts: ["사람들과 어울리는 외부 활동에 지장이 없다.", "어울리는 데 지장은 없으나 통증이 심해진다.", "외부 활동은 하나 통증으로 운동 등 활동적인 일에는 지장이 있다.", "통증 때문에 어울리는 데 지장이 있으며 자주 외출하지 못한다.", "통증 때문에 집에서만 소수와 어울린다.", "통증 때문에 사람들과 전혀 어울리지 못한다."] },
+            { q: "제 10 항 - 여행 (차 타기)", opts: ["통증 없이 어디든 이동 및 여행을 할 수 있다.", "어디든 여행할 수 있으나 약간 통증이 있다.", "통증은 있으나 2시간 이상 차를 탈 수는 있다.", "통증 때문에 1시간 이상 차를 탈 수 없다.", "통증 때문에 30분 이상 차를 탈 수 없다.", "통증 때문에 치료받으러 가는 일 외에는 차를 탈 수 없다."] }
+        ]
+    },
+    HOOS: {
+        title: "고관절 기능 지수 (HOOS - 15문항)",
+        sections: [
+            { subTitle: "1. 증상 관련", opts: ["전혀 없음", "드물게", "가끔", "자주", "항상"], qs: ["고관절에서 삐걱거리는 느낌이나 '뚝' 소리가 나나요?", "다리를 옆으로 넓게 벌리는 것이 어려우신가요?", "걸을 때 보폭을 크게 내딛는 것이 어려우신가요?"] },
+            { subTitle: "2. 뻣뻣함 관련", opts: ["없음", "약간", "보통", "심함", "매우 심함"], qs: ["아침에 자고 일어났을 때 고관절이 얼마나 뻣뻣한가요?", "낮에 앉거나 누워 있다가 다시 움직일 때 얼마나 뻣뻣한가요?"] },
+            { subTitle: "3. 통증 관련", opts: ["없음", "약간", "보통", "심함", "매우 심함"], qs: ["평소 고관절 통증을 얼마나 자주 느끼시나요?", "고관절을 끝까지 똑바로 펼 때 통증이 있나요?", "고관절을 끝까지 굽힐(접을) 때 통증이 있나요?", "평평한 곳을 걸을 때 통증은 어떠신가요?", "계단을 오르내릴 때 통증은 어떠신가요?", "밤에 침대에 누워 있을 때 통증은 어떠신가요?", "앉아 있거나 누워 있을 때 통증은 어떠신가요?", "똑바로 서 있을 때 통증은 어떠신가요?", "딱딱한 길을 걸을 때 통증이 있나요?", "울퉁불퉁한 길을 걸을 때 통증이 있나요?"] }
+        ]
+    },
+    KOOS: {
+        title: "무릎 기능 지수 (KOOS - 17문항)",
+        sections: [
+            { subTitle: "1. 증상 관련", opts: ["전혀 없음", "드물게", "가끔", "자주", "항상"], qs: ["무릎이 붓거나 열감이 느껴지시나요?", "무릎 안에서 소리가 나거나 걸리는 느낌이 있나요?", "움직일 때 무릎에 갑자기 힘이 빠지거나 어긋나는 느낌이 있나요?", "무릎을 끝까지 똑바로 펴기가 힘든가요?", "무릎을 끝까지 굽히기가 힘든가요?"] },
+            { subTitle: "2. 뻣뻣함 관련", opts: ["없음", "약간", "보통", "심함", "매우 심함"], qs: ["아침에 자고 일어났을 때 무릎이 얼마나 뻣뻣한가요?", "낮에 앉거나 누워 있다가 움직일 때 얼마나 뻣뻣한가요?"] },
+            { subTitle: "3. 통증 관련", opts: ["없음", "약간", "보통", "심함", "매우 심함"], qs: ["평소 무릎 통증을 얼마나 자주 느끼시나요?", "무릎을 똑바로 펼 때 통증이 있나요?", "무릎을 완전히 굽힐 때 통증이 있나요?", "평평한 곳을 걸을 때 통증은 어떠신가요?", "계단을 오르내릴 때 통증은 어떠신가요?", "밤에 침대에 누워 있을 때 통증은 어떠신가요?", "앉아 있거나 누워 있을 때 통증은 어떠신가요?", "똑바로 서 있을 때 통증은 어떠신가요?", "딱딱한 바닥을 걸을 때 통증이 있나요?", "울퉁불퉁한 길을 걸을 때 통증이 있나요?"] }
+        ]
+    },
+    FAAM: {
+        title: "발목 기능 지수 (FAAM - 15문항)",
+        opts: ["어려움 없음", "약간 어려움", "보통", "많이 어려움", "전혀 못 함"],
+        questions: ["가만히 서 있기", "평평한 길 걷기", "신발 벗고 평평한 길 걷기", "오르막길 걷기", "내리막길 걷기", "계단 올라가기", "계단 내려가기", "울퉁불퉁한 길 걷기", "보도블록 턱 오르내리기", "쪼그려 앉기", "까치발 들고 서기", "처음 걷기 시작할 때", "5분 이내로 짧게 걷기", "10분 정도 보통으로 걷기", "15분 이상 오래 걷기"]
+    },
+    TSK: {
+        title: "움직임 공포 지수 (TSK-11 - 11문항)",
+        labels: ["전혀 아님", "아닌 편임", "그러함", "매우 그러함"],
+        qs: [
+            "운동을 하다가 몸을 더 다칠까 봐 걱정된다.",
+            "아픈 걸 참고 움직여 보려 하면 통증이 더 심해질 것 같다.",
+            "내 몸 어딘가에 위험하고 심각한 문제가 생긴 것 같다.",
+            "주변 사람들이 내 아픈 상태를 대수롭지 않게 생각하는 것 같다.",
+            "이번 통증 때문에 평생 내 몸이 약해질까 봐 겁난다.",
+            "통증이 느껴지는 건 내 몸 어딘가가 다쳤다는 뜻이다.",
+            "안 아프려면 가급적 안 움직이고 조심하는 게 제일 안전하다.",
+            "몸속에 뭔가 큰 병이 있는 게 아니라면 이렇게 아플 리가 없다.",
+            "통증은 더 다치기 전에 운동을 멈추라고 알려주는 신호다.",
+            "나는 남들처럼 다 하면 쉽게 다칠 것 같아서 똑같이 못 하겠다.",
+            "몸이 아픈 상태에서는 어떤 운동도 해서는 안 된다."
+        ]
+    },
+    PCS: {
+        title: "통증 파국화 지수 (PCS - 13문항)",
+        labels: ["전혀 아님", "약간 그러함", "보통 그러함", "심하게 그러함", "매우 그러함"],
+        qs: [
+            "나는 통증이 멈추지 않을까 봐 항상 걱정하게 된다.",
+            "나는 더 견딜 수 없을 것 같다고 느껴진다.",
+            "통증이 너무 고통스러워서 절대 나아지지 않을 것 같다.",
+            "너무 괴롭고 감당할 수 없을 것 같다고 느껴진다.",
+            "나는 더 이상 통증을 견딜 수 없을 것 같다.",
+            "나는 통증이 점점 심해질 것 같아 걱정이 된다.",
+            "나는 과거에 유사한 통증이 있었던 때를 자꾸 생각하게 된다.",
+            "나는 통증이 사라지길 간절히 바라게 된다.",
+            "나는 통증에 대한 생각을 떨칠 수가 없다.",
+            "나는 얼마나 아픈지를 계속 생각하게 된다.",
+            "나는 통증이 이젠 제발 멈췄으면 하는 생각을 계속하게 된다.",
+            "나는 통증을 줄이기 위해 내가 할 수 있는 일이 아무것도 없다.",
+            "나는 뭔가 심각한 일이 일어나지 않을까 하는 걱정을 하게 된다."
+        ]
+    },
+    MENTAL: [
+        {
+            category: "지각된 스트레스 검사 (PSS-10 - 10문항)",
+            labels: ["전혀 없음", "거의 없음", "가끔 있음", "자주 있음", "매우 자주 있음"],
+            qs: [
+                "예상치 못한 일 때문에 기분이 나빴던 적이 얼마나 자주 있었나요?",
+                "인생에서 중요한 일들을 제어할 수 없다고 느낀 적이 얼마나 자주 있었나요?",
+                "초조하거나 스트레스를 받고 있다고 느낀 적이 얼마나 자주 있었나요?",
+                "개인적인 문제들을 잘 처리하고 있다고 느낀 적이 얼마나 자주 있었나요?",
+                "일들이 내가 원하는 방향으로 잘 진행되고 있다고 느낀 적이 얼마나 자주 있었나요?",
+                "처리해야 할 일들이 너무 많이 쌓여서 해결할 수 없다고 느낀 적이 얼마나 자주 있었나요?",
+                "일상의 짜증스러움을 잘 통제할 수 있다고 느낀 적이 얼마나 자주 있었나요?",
+                "내가 모든 일을 잘 해내고 있다고 느낀 적이 얼마나 자주 있었나요?",
+                "내가 컨트롤할 수 없는 일 때문에 화가 난 적이 얼마나 자주 있었나요?",
+                "어려운 일이 너무 많이 쌓여서 극복할 수 없다고 느낀 적이 얼마나 자주 있었나요?"
+            ]
+        },
+        {
+            category: "불안 자가 진단 (GAD-7 - 7문항)",
+            labels: ["전혀 안 든다", "며칠 동안 든다", "일주일 이상 든다", "거의 매일 든다"],
+            qs: [
+                "초조하거나 불안하거나 마음이 편하지 않았다.",
+                "걱정하는 것을 멈추거나 제어할 수가 없었다.",
+                "여러 가지 것들에 대해 걱정을 너무 많이 하였다.",
+                "편안하게 쉬기가 어려웠다.",
+                "너무 안절부절못하여 가만히 있기가 힘들었다.",
+                "쉽게 짜증이 나거나 성질이 났다.",
+                "무서운 일이 일어날 것 같아 두려웠다."
+            ]
+        },
+        {
+            category: "우울 자가 진단 (PHQ-9 - 9문항)",
+            labels: ["전혀 안 든다", "며칠 동안 든다", "일주일 이상 든다", "거의 매일 든다"],
+            qs: [
+                "일하거나 취미 활동을 하는 데 흥미나 즐거움을 느끼지 못했다.",
+                "기분이 침울하거나 우울하거나 희망이 없다고 느꼈다.",
+                "잠들기 어렵거나 자주 깼다, 혹은 잠을 너무 많이 자기도 했다.",
+                "피곤하다고 느끼거나 기운이 없었다.",
+                "식욕이 줄었거나 반대로 너무 많이 먹었다.",
+                "나 자신이 실패자처럼 느껴지거나 자신과 가족을 실망시켰다고 느꼈다.",
+                "신문이나 TV를 볼 때 집중하기가 어려웠다.",
+                "남들이 알아채 줄 정도로 행동이나 말하는 것이 느렸다, 혹은 너무 안절부절못했다.",
+                "차라리 죽는 것이 낫겠다거나 자해를 하려는 생각이 들었다."
+            ]
+        }
     ]
 };
 
-let userAnswers = {};
-
-function resetAndRun() { userAnswers = {}; renderAlgorithm(); evaluateSOAP(); }
-
-function renderAlgorithm() {
-    const region = document.getElementById('pt-region').value;
-    const steps = algoTree[region] || algoTree['cervical'];
-    const container = document.getElementById('algorithm-container');
-    
-    let html = '';
-    steps.forEach((step) => {
-        const currentAns = userAnswers[step.id];
-        let stepClass = step.isRed ? "algo-step red-step" : "algo-step";
-
-        html += `
-            <div class="${stepClass}">
-                <div class="algo-title">${step.title}</div>
-                <div style="font-size: 0.88rem; margin-bottom: 8px; font-weight:500;">${step.question}</div>
-                <div class="btn-group">
-                    ${step.options.map(opt => {
-                        let btnClass = 'btn-choice';
-                        if(currentAns === opt.value) {
-                            if(opt.value === 'RED') btnClass += ' selected-red';
-                            else if(opt.value === 'GREEN') btnClass += ' selected-green';
-                            else btnClass += ' selected-neutral';
-                        }
-                        return `<button class="${btnClass}" onclick="selectAnswer('${step.id}', '${opt.value}')">${opt.label}</button>`;
-                    }).join('')}
-                </div>
-            </div>`;
-    });
-    container.innerHTML = html;
+// 🎲 배열을 무작위로 섞어주는 피셔-예이츠 셔플 함수
+function shuffleArray(array) {
+    let arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
 }
 
-function selectAnswer(stepId, value) { userAnswers[stepId] = value; renderAlgorithm(); evaluateSOAP(); }
-
-function evaluateSOAP() {
-    const name = document.getElementById('pt-name').value;
-    const job = document.getElementById('pt-job').value;
-    const region = document.getElementById('pt-region').value;
-    const cablePolarity = document.getElementById('cable-polarity').value;
-    const bodyScore = parseInt(document.getElementById('pt-body-score').value) || 0;
-    const tsk = parseInt(document.getElementById('pt-tsk').value) || 0;
-    const pcs = parseInt(document.getElementById('pt-pcs').value) || 0;
-    const ocChar = document.getElementById('oc-character').value;
-    const ocAgg = document.getElementById('oc-agg').value;
-    const ocLoc = document.getElementById('oc-location').value;
-    
-    const redBanner = document.getElementById('red-flag-banner');
-    const yellowBanner = document.getElementById('yellow-flag-banner');
-
-    let isRedTriggered = false;
-    let isYellowTriggered = (tsk >= 30 || pcs >= 30);
-
-    Object.keys(userAnswers).forEach(key => { 
-        if(key.startsWith('red_') && userAnswers[key] === 'RED') isRedTriggered = true; 
+// 🎯 답안 순서를 무작위로 섞으면서 원래 점수(data-score)를 온전히 보존하여 카드 생성
+function createQuestionCard(name, num, text, options) {
+    // 각 답안에 원래 순서의 고유 점수(score) 부여
+    let optionObjects = options.map((optText, idx) => {
+        return { text: optText, score: idx };
     });
 
-    if(isRedTriggered) {
-        redBanner.style.display = 'block';
-        document.getElementById('out-assessment').innerText = `[RED FLAG DETECTED]\n전문의 의학 진료 회송 필요.`;
-        document.getElementById('out-fitt').innerHTML = `<div style="color:red; font-weight:bold; text-align:center;">🛑 Red Flag 감지: 수업 중단 및 회송</div>`;
-        return;
-    } else { redBanner.style.display = 'none'; }
+    // 답안 순서 무작위 믹스
+    let shuffledOptions = shuffleArray(optionObjects);
 
-    if(isYellowTriggered) { yellowBanner.style.display = 'block'; } else { yellowBanner.style.display = 'none'; }
-
-    let negName = (cablePolarity === "NORMAL") ? "흰색(-)" : "주황색(-)";
-    let posName = (cablePolarity === "NORMAL") ? "주황색(+)" : "흰색(+)";
-
-    let causeTissue = "";
-    let stepsHtml = "";
-    let etherapyHtml = "";
-
-    let icfAssessment = `[ICF 체계 기반 Assessment & 임상 소견]\n\n`;
-
-    if (region === 'ankle') {
-        causeTissue = "전경골근, 비골근, 내/외측 복사뼈 인대 유착 및 경골 신경 분지 포착";
-        document.getElementById('therapy-header-title').innerText = "4. 발목 정밀 6단계 대경TENS 수기-전류 프로토콜";
-        
-        stepsHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:#6d28d9; margin-bottom:8px;">⚡ [발목 정밀 수기-전류 매핑] <span class="tag-warn">(⚠️ 필수: 쥐 나는 느낌 피드백 모니터링)</span></div>
-            <div class="step-card"><div class="step-title">1단계: 전경골근 & 발가락 신전 유도</div><div>• Dorsiflexion 선 가운데 <span class="tag-pos">${posName}</span> | 전경골근 <span class="tag-neg">${negName}</span> | 발가락 Extension 인상</div></div>
-            <div class="step-card"><div class="step-title">2단계: 외측 복사뼈 & 갈퀴발(Claw Toe) 유도</div><div>• 외측복사뼈 1마디 위 <span class="tag-pos">${posName}</span> | 2마디 위 <span class="tag-neg">${negName}</span> | 갈퀴발 수축 유도</div></div>
-            <div class="step-card"><div class="step-title">3단계: Proximal 비골근-전경골근 미세 각도 조절</div><div>• Proximal 사이 <span class="tag-neg">${negName}</span> | Distal 사이 <span class="tag-pos">${posName}</span> | Inversion/Eversion 중간각 조절</div></div>
-            <div class="step-card"><div class="step-title">4단계: 외측 복사뼈 발등 전류 통전</div><div>• 외측복사뼈 아래 <span class="tag-pos">${posName}</span> | 위 <span class="tag-neg">${negName}</span> | 발등 전류 확인</div></div>
-            <div class="step-card"><div class="step-title">5단계: 내측 복사뼈 & 발가락 굴곡 유도</div><div>• 내측복사뼈 위 <span class="tag-pos">${posName}</span> | 2마디 위 <span class="tag-neg">${negName}</span> | 발가락 굴곡 확인</div></div>
-            <div class="step-card"><div class="step-title">6단계: 내측 복사뼈 발바닥 전류 통전</div><div>• 내측복사뼈 아래 <span class="tag-pos">${posName}</span> | 위 <span class="tag-neg">${negName}</span> | 발바닥 전류 확인</div></div>
-        `;
-
-        etherapyHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:#0284c7;">🌊 [E-Therapy 족부/발목 고주파 세팅]</div>
-            <div style="font-size:0.78rem; margin-top:4px;">• <b>적용 파형:</b> 엑셀 인버전 이완 파형 (Deep Tissues Frequency)</div>
-            <div style="font-size:0.78rem;">• <b>통전 시간/매질:</b> 15분 / 고주파 전도성 크림 도포</div>
-            <div style="font-size:0.78rem;">• <b>임상 목표:</b> 족저근막 및 내/외측 복사뼈 심부 심줄 순환 증진</div>
-        `;
-    } else if (region === 'knee') {
-        causeTissue = "대퇴사두근(내/외측광근), 슬개건, 내측 측부인대(MCL) 및 내측 햄스트링 유착";
-        document.getElementById('therapy-header-title').innerText = "4. 무릎 정밀 8단계 대경TENS 수기-전류 프로토콜";
-
-        stepsHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:#6d28d9; margin-bottom:8px;">⚡ [무릎 정밀 수기-전류 매핑]</div>
-            <div class="step-card"><div class="step-title">1단계: 내/외측광근 근수축 유도</div><div>• 내측광근-Patella 사이 <span class="tag-neg">${negName}</span> | 외측광근-Patella 사이 <span class="tag-pos">${posName}</span></div></div>
-            <div class="step-card"><div class="step-title">2단계: Patella 정가운데 양옆 압박감 유도</div><div>• Patella 내측 <span class="tag-neg">${negName}</span> | 외측 <span class="tag-pos">${posName}</span> | (무릎 누르는 압력 피드백)</div></div>
-            <div class="step-card"><div class="step-title">3단계: Patellar Tendon 양옆 자극</div><div>• Patellar tendon 내측 <span class="tag-neg">${negName}</span> | 외측 <span class="tag-pos">${posName}</span></div></div>
-            <div class="step-card"><div class="step-title">4~6단계: 1~3단계 극성 반전 교차 실시</div><div>• <span class="tag-mod">극성 교차:</span> 내측에 <span class="tag-pos">${posName}</span> | 외측에 <span class="tag-neg">${negName}</span> 교차 적용</div></div>
-            <div class="step-card"><div class="step-title">7단계: 내측 측부인대(MCL) & 거위발 건 부착부</div><div>• 내측 측부인대 <span class="tag-pos">${posName}</span> | 내측광근/Sartorius 사이 <span class="tag-neg">${negName}</span></div></div>
-            <div class="step-card"><div class="step-title">8단계: 내측 햄스트링 & 하지 전파 감각</div><div>• 무릎 아래 내측 햄스트링 <span class="tag-pos">${posName}</span> | 내측 측부인대 <span class="tag-neg">${negName}</span></div></div>
-        `;
-
-        etherapyHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:#0284c7;">🌊 [E-Therapy 무릎 관절낭 고주파 세팅]</div>
-            <div style="font-size:0.78rem; margin-top:4px;">• <b>적용 파형:</b> 관절 심부 순환 엑셀 파형 (Joint Capsule Wave)</div>
-            <div style="font-size:0.78rem;">• <b>통전 시간/매질:</b> 12분 / 무릎 관절 전면부 전도매질 수분포 도포</div>
-            <div style="font-size:0.78rem;">• <b>임상 목표:</b> 슬개골 트랙킹 부종 완화 및 관절액 삼투 이완</div>
-        `;
-    } else if (region === 'elbow') {
-        causeTissue = "외측상과, 삼두/이두근, Distal Radioulnar/Radius/Ulna 및 수근부 굴근 유착";
-        document.getElementById('therapy-header-title').innerText = "4. 팔꿈치 정밀 8단계 대경TENS 수기-전류 프로토콜";
-
-        stepsHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:#6d28d9; margin-bottom:8px;">⚡ [팔꿈치 정밀 수기-전류 매핑] <span class="tag-warn">(👋 과수축 시 시술자 눌러주기 보조)</span></div>
-            <div class="step-card"><div class="step-title">1단계: Deltoid tuberosity 45도 내측 & 손목 Extension 탐색</div><div>• Proximal <span class="tag-neg">${negName}</span> | Distal <span class="tag-pos">${posName}</span> | Extension 탐색</div></div>
-            <div class="step-card"><div class="step-title">2단계: 삼두/이두 통전 & 수기 완화</div><div>• 삼두 <span class="tag-neg">${negName}</span> | 이두 <span class="tag-pos">${posName}</span> | 손목 과꺾임 시 시술자 아래로 눌러 완화</div></div>
-            <div class="step-card"><div class="step-title">3단계: 삼두-외측상과 자극</div><div>• 삼두 <span class="tag-neg">${negName}</span> | 외측상과 <span class="tag-pos">${posName}</span> | 누름 보조 후 유지</div></div>
-            <div class="step-card"><div class="step-title">4단계: 외측상과 상/하 자극</div><div>• 외측상과 위 <span class="tag-neg">${negName}</span> | 외측상과 아래 <span class="tag-pos">${posName}</span></div></div>
-            <div class="step-card"><div class="step-title">5단계: 외측상과-Extensor 이완 (저강도)</div><div>• 외측상과 <span class="tag-neg">${negName}</span> | Extensor 부위 <span class="tag-pos">${posName}</span> | <span class="tag-ma">저강도 유지</span></div></div>
-            <div class="step-card"><div class="step-title">6단계: Distal Radius 측면 자극</div><div>• Distal Radioulnar Joint <span class="tag-pos">${posName}</span> | Distal Radius 측면 <span class="tag-neg">${negName}</span></div></div>
-            <div class="step-card"><div class="step-title">7단계: Distal Ulna 측면 자극</div><div>• Distal Radioulnar Joint <span class="tag-pos">${posName}</span> | Distal Ulna 측면 <span class="tag-neg">${negName}</span></div></div>
-            <div class="step-card"><div class="step-title">8단계: 손바닥 수근부 & 손가락/손목 굴곡 유도</div><div>• 수근부 <span class="tag-pos">${posName}</span> | 2마디 위 <span class="tag-neg">${negName}</span> | (과수축 시 누름 보조)</div></div>
-        `;
-
-        etherapyHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:#0284c7;">🌊 [E-Therapy 상과염(Epicondylitis) 파형 세팅]</div>
-            <div style="font-size:0.78rem; margin-top:4px;">• <b>적용 파형:</b> 건 부착부 이완 고주파 파형 (Tendon Repair Wave)</div>
-            <div style="font-size:0.78rem;">• <b>통전 시간/매질:</b> 10분 / 외측/내측 상과 고주파 크림 얇게 도포</div>
-            <div style="font-size:0.78rem;">• <b>임상 목표:</b> 건 부착부 세포 재생 유도 및 과수축 포착 해소</div>
-        `;
-    } else if (region === 'psoas') {
-        causeTissue = "장요근, 대퇴직근 기시부, 서혜부 삼각, 대전차 중둔근 및 외측 햄스트링 유착";
-        document.getElementById('therapy-header-title').innerText = "4. 장요근/내전근 정밀 4단계 수기-전류 프로토콜";
-
-        stepsHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:#6d28d9; margin-bottom:8px;">⚡ [장요근 & 내전근 정밀 수기-전류 매핑]</div>
-            <div class="step-card"><div class="step-title">1단계: ASIS 내측 집게 압박 & 무릎 폄 유도</div><div>• ASIS 내측 <span class="tag-neg">${negName}</span> | 중둔근 <span class="tag-pos">${posName}</span> | 무릎 펴질 때까지 유지</div></div>
-            <div class="step-card"><div class="step-title">2단계: 4자 자세(Figure-4) & 반대다리 고경 수동 저항</div><div>• L4~S1 <span class="tag-pos">${posName}</span> | 서혜부 삼각 <span class="tag-neg">${negName}</span> | <b>"반대 다리로 베개 강하게 누르도록"</b> 지시</div></div>
-            <div class="step-card"><div class="step-title">3단계: 대퇴직근 기시부-허벅지 중간</div><div>• 대퇴직근 기시부 <span class="tag-neg">${negName}</span> | 앞허벅지 중간 <span class="tag-pos">${posName}</span></div></div>
-            <div class="step-card"><div class="step-title">4단계: 외측 햄스트링-비골두 반응</div><div>• 외측 햄스트링 <span class="tag-neg">${negName}</span> | 비골 머리부위 <span class="tag-pos">${posName}</span></div></div>
-        `;
-
-        etherapyHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:#0284c7;">🌊 [E-Therapy 심부 고관절/장요근 파형 세팅]</div>
-            <div style="font-size:0.78rem; margin-top:4px;">• <b>적용 파형:</b> 심부 장요근 이완 고주파 (Deep Psoas Frequency)</div>
-            <div style="font-size:0.78rem;">• <b>통전 시간/매질:</b> 15분 / 복부 하단 서혜부 매질 도포</div>
-            <div style="font-size:0.78rem;">• <b>임상 목표:</b> 고관절 굴근 신경근 자율신경 이완</div>
-        `;
-    } else if (region === 'lumbar') {
-        causeTissue = "요추 신경근, 요방경근, 천장관절 유착 및 좌골신경 포착";
-        document.getElementById('therapy-header-title').innerText = "4. 요추 정밀 10단계 대경TENS 수기-전류 프로토콜";
-        stepsHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:#6d28d9; margin-bottom:8px;">⚡ [60Hz 요추 정밀 10단계 수기-전류 매핑]</div>
-            <div class="step-card"><div class="step-title">1단계: 상부 요추 분절 (L1~L3) 자극</div><div>• L1 근처 <span class="tag-neg">${negName}</span> | L3 방향 <span class="tag-pos">${posName}</span> | <span class="tag-ma">3 mA</span></div></div>
-            <div class="step-card"><div class="step-title">2단계: 하부 요추 분절 (L2~L5) 자극</div><div>• L2 근처 <span class="tag-neg">${negName}</span> | L5 방향 <span class="tag-pos">${posName}</span> | <span class="tag-ma">3 mA</span></div></div>
-            <div class="step-card"><div class="step-title">3단계: 복횡근·복사근 연동 (두부 방향 압박)</div><div>• PSIS 근처 <span class="tag-neg">${negName}</span> | 장골능 <span class="tag-pos">${posName}</span> | <span class="tag-ma">3 mA</span> (두부 방향)</div></div>
-            <div class="step-card"><div class="step-title">4단계: 복횡근·복사근 연동 (족부 방향 압박)</div><div>• PSIS 근처 <span class="tag-neg">${negName}</span> | 장골능 <span class="tag-pos">${posName}</span> | <span class="tag-ma">3 mA</span> (족부 방향)</div></div>
-            <div class="step-card"><div class="step-title">5단계: 요천추 이행부 (L5-PSIS 나란히)</div><div>• 좌측 <span class="tag-neg">${negName}</span> | 우측 <span class="tag-pos">${posName}</span> | <span class="tag-ma">2 ➔ 5 mA Titration</span></div></div>
-            <div class="step-card"><div class="step-title">6단계: 천골 연관 영역 (PSIS ~ Sacral Apex)</div><div>• PSIS 근처 <span class="tag-neg">${negName}</span> | 천골 끝(Apex) <span class="tag-pos">${posName}</span> | <span class="tag-ma">2 ➔ 5 mA</span></div></div>
-            <div class="step-card"><div class="step-title">7단계: 중둔근 & 대전자 연결부</div><div>• 대전자~ASIS 사이 <span class="tag-neg">${negName}</span> | PSIS 옆 중둔근 <span class="tag-pos">${posName}</span> | <span class="tag-ma">3 mA~</span></div></div>
-            <div class="step-card"><div class="step-title">8단계: 이상근 & 좌골신경 순방향 자극</div><div>• PSIS 영역 <span class="tag-neg">${negName}</span> | 좌골신경 출구 <span class="tag-pos">${posName}</span></div></div>
-            <div class="step-card"><div class="step-title">9단계: 이상근 & 좌골신경 역방향 (운동 반응)</div><div>• PSIS <span class="tag-pos">${posName}</span> | 좌골신경 출구 <span class="tag-neg">${negName}</span> | (<b>발바닥 굽힘 반응</b> 유도)</div></div>
-        `;
-
-        etherapyHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:#0284c7;">🌊 [E-Therapy 요부 심부 고주파 세팅]</div>
-            <div style="font-size:0.78rem; margin-top:4px;">• <b>적용 파형:</b> 흉요근막 심부 진동 엑셀 파형 (Lumbar Core Wave)</div>
-            <div style="font-size:0.78rem;">• <b>통전 시간/매질:</b> 15분 / 요방경근 영역 고주파 전도크림</div>
-            <div style="font-size:0.78rem;">• <b>임상 목표:</b> 요추 심부 다열근 및 요방경근 유착 세포 이완</div>
-        `;
-    } else {
-        causeTissue = "후두하근, 두경부 측두근막, C3-C5 신경근, 견갑거근 및 견갑골 수축/하강 유착";
-        document.getElementById('therapy-header-title').innerText = "4. 목/어깨 정밀 10단계 대경TENS 수기-전류 프로토콜";
-        stepsHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:#6d28d9; margin-bottom:8px;">⚡ [경추 & 어깨 정밀 10단계 수기-전류 매핑]</div>
-            <div class="step-card"><div class="step-title">1단계: 두통 & 후두하근 영역 이완</div><div>• 후두하근 <span class="tag-neg">${negName}</span> | 하부 경추 <span class="tag-pos">${posName}</span> | <span class="tag-ma">최대 2 mA</span> (정수리 감각 유도)</div></div>
-            <div class="step-card"><div class="step-title">2단계: 측두부/두부 감각 & 30Hz 펄스 타격 (좌)</div><div>• Styloid-Splenius <span class="tag-neg">${negName}</span> | 하부 경추 <span class="tag-pos">${posName}</span> | <span class="tag-mod">30Hz(4초) ↔ 60Hz 변조</span> (입안 쇠맛 감각)</div></div>
-            <div class="step-card"><div class="step-title">3단계: 측두부/두부 감각 & 30Hz 펄스 타격 (우)</div><div>• 우측 영역 동일 교차 적용</div></div>
-            <div class="step-card"><div class="step-title">4단계: 중부-하부 경추 축 (C3~C5 ➔ C7~T3)</div><div>• C3~C5 <span class="tag-neg">${negName}</span> | C7~T3 <span class="tag-pos">${posName}</span> | <span class="tag-ma">2 mA</span></div></div>
-            <div class="step-card"><div class="step-title">5단계: 견갑거근 국소 유착 해소</div><div>• Superior Angle~C7 견갑거근 <span class="tag-neg">${negName}</span> | T5~T8 <span class="tag-pos">${posName}</span> | <span class="tag-ma">2 mA</span></div></div>
-            <div class="step-card"><div class="step-title">6단계: 견관절 & 상부 승모근 영역</div><div>• Acromion 승모근 <span class="tag-neg">${negName}</span> | C7~T3 <span class="tag-pos">${posName}</span> | <span class="tag-ma">2 mA</span></div></div>
-            <div class="step-card"><div class="step-title">7단계: 견갑골 후전 (Scapular Retraction) 유도</div><div>• Scapula Medial Border <span class="tag-neg">${negName}</span> | T5~T8 <span class="tag-pos">${posName}</span> | Retraction 수축 유도</div></div>
-            <div class="step-card"><div class="step-title">8단계: 견갑골 하강 (Scapular Depression) 유도</div><div>• Scapula Inferior Angle <span class="tag-neg">${negName}</span> | T5~T8 <span class="tag-pos">${posName}</span> | Depression 수축 유도</div></div>
-            <div class="step-card"><div class="step-title">9~10단계: 우측 견갑골 & 승모근 대칭 적용</div><div>• 4~8단계 우측 대칭 완료</div></div>
-        `;
-
-        etherapyHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:#0284c7;">🌊 [E-Therapy 두경부/견갑 고주파 세팅]</div>
-            <div style="font-size:0.78rem; margin-top:4px;">• <b>적용 파형:</b> C3-C5 신경근 및 두경부 고주파 이완 파형</div>
-            <div style="font-size:0.78rem;">• <b>통전 시간/매질:</b> 12분 / 후두하근 및 승모근 고주파 전도크림</div>
-            <div style="font-size:0.78rem;">• <b>임상 목표:</b> 긴장성 두통 완화 및 견갑골 주변근 순환 촉진</div>
-        `;
-    }
-
-    icfAssessment += `1. b (Body Functions) & s (Body Structures):\n`;
-    icfAssessment += `   - 신체 구조/원인 조직: ${causeTissue}\n`;
-    icfAssessment += `   - 통증 양상: ${ocChar} (주호소 부위: ${ocLoc})\n\n`;
-
-    icfAssessment += `2. d (Activities & Participation):\n`;
-    icfAssessment += `   - 기능 장애 척도: ${currentAreaName} ${bodyScore}점\n`;
-    icfAssessment += `   - 제한 활동 / 악화 동작: ${ocAgg}\n\n`;
-
-    icfAssessment += `3. e (Environmental) & p (Personal Factors):\n`;
-    icfAssessment += `   - 세부 직업 환경 부하: ${job}\n`;
-    icfAssessment += `   - Yellow Flag 위험도: ${isYellowTriggered ? '⚠️ [사전문진 고위험] 공포-회피/파국화 경향' : '✅ [양호] 적응적 대응'}\n`;
-    icfAssessment += `   - 심리·인지 요인: TSK-11(${tsk}점) | PCS(${pcs}점)`;
-
-    document.getElementById('out-assessment').innerText = icfAssessment;
-    document.getElementById('out-therapy').innerHTML = stepsHtml;
-    document.getElementById('out-etherapy').innerHTML = etherapyHtml;
-
-    let track1 = [], track2 = [], track3 = [];
-    if (region === 'ankle') {
-        track1.push({ name: "발목 배굴(Dorsiflexion) & 비골근 등척성 강화", fitt: "주 5회 / RPE 3-4", target: "발목 관절 가동성 및 안정성 회복", yt: "https://www.youtube.com/watch?v=fdWEqXk6iDE" });
-        track2.push({ name: "보행 시 발뒤꿈치-발가락 롤링 보행 재학습", fitt: "매일 보행 시 적용", target: "보행 패턴 정상화 및 충격 분산", yt: "https://www.youtube.com/watch?v=qhy4FHVk1rg" });
-    } else if (region === 'knee') {
-        track1.push({ name: "대퇴사두근(VMO) 슬개골 트랙킹 & 내측 햄스트링 강화", fitt: "주 4회 / RPE 4", target: "슬개골 맞춤 트랙킹 회복", yt: "https://www.youtube.com/watch?v=fdWEqXk6iDE" });
-        track2.push({ name: "계단 오르내리기 및 스쿼트 힙힌지 재학습", fitt: "매일 / 작업 중", target: "슬관절 압박 부하 감소", yt: "https://www.youtube.com/watch?v=NV_BXjFZEDs" });
-    } else if (region === 'elbow') {
-        track1.push({ name: "전완 굴근/신근 원심성(Eccentric) 강화 훈련", fitt: "주 4회 / RPE 3", target: "상과 부착부 힘줄 변성 회복", yt: "https://www.youtube.com/shorts/Tgfri2GjKJM" });
-        track2.push({ name: "물건 들기 및 키보드 작업 시 손목 중립재학습", fitt: "작업 중 지속", target: "외측상과 반복 자극 차단", yt: "https://www.youtube.com/shorts/Tgfri2GjKJM" });
-    } else if (region === 'psoas') {
-        track1.push({ name: "장요근 신전 가동성 & 둔근 수축 연동 훈련", fitt: "주 4회 / RPE 4", target: "서혜부 포착 해소 및 골반 정렬", yt: "https://www.youtube.com/watch?v=NV_BXjFZEDs" });
-        track2.push({ name: "앉았다 일어서기 시 고관절 굴곡 재학습", fitt: "매일 연습", target: "고관절 찝힘 스트레스 감소", yt: "https://www.youtube.com/watch?v=qhy4FHVk1rg" });
-    } else if (region === 'lumbar') {
-        track1.push({ name: "요추 안정화 & 골반 경사 둔근 활성화 훈련", fitt: "주 4회 / RPE 4", target: "요천추 유착 해소 후 안정성 확보", yt: "https://www.youtube.com/watch?v=qhy4FHVk1rg" });
-        track2.push({ name: "앉기/고개 숙이기 시 요추 골반 힙 힌지 재학습", fitt: "매일 / 50분마다", target: "요통 유발 부하 감소", yt: "https://www.youtube.com/watch?v=NV_BXjFZEDs" });
-    } else {
-        track1.push({ name: "경추 리트랙션 & 견갑골 안정화(Retraction/Depression) 훈련", fitt: "주 5회 / RPE 3-4", target: "후두하근 긴장 해소 및 견갑골 위치 회복", yt: "https://www.youtube.com/watch?v=aSXJnapLywE" });
-        track2.push({ name: "모니터 시선 맞춤 과제 지향 경추 굴곡 훈련", fitt: "매일 / 50분마다", target: "거북목 및 경추 부하 감소", yt: "https://www.youtube.com/watch?v=zWjFS42Ihuw" });
-    }
-
-    if (isYellowTriggered) {
-        track3.push({ name: "🧠 [Hodge CPG] 통증 재교육 & 점진적 노출 (Graded Exposure)", fitt: "매일 세션 전 10분", target: "사전문진 Yellow Flag 중화 및 뇌 신경계 민감화 이완", yt: "https://www.youtube.com/watch?v=aSXJnapLywE" });
-    } else {
-        track3.push({ name: "횡격막 호흡 & 바른 수면 자세 가이드", fitt: "매일 5분", target: "자율신경계 이완", yt: "https://www.youtube.com/watch?v=qhy4FHVk1rg" });
-    }
-
-    function buildTable(list) {
-        if(list.length === 0) return `<p style="font-size:0.75rem; color:#94a3b8; margin:4px 0;">특이사항 없음</p>`;
-        return `
-            <table class="fitt-table">
-                <thead><tr><th>중재 항목</th><th>FITT 용량</th><th>ICF 임상 목표</th><th>검증 가이드</th></tr></thead>
-                <tbody>${list.map(f => `<tr><td><b>${f.name}</b></td><td>${f.fitt}</td><td>${f.target}</td><td><a href="${f.yt}" target="_blank" class="yt-link">🎥 영상보기</a></td></tr>`).join('')}</tbody>
-            </table>`;
-    }
-
-    let fittHtml = `<div class="track-header">Track 1. 신체 기능/구조 중재 (Body Function/Structure)</div>` + buildTable(track1)
-                 + `<div class="track-header">Track 2. 활동/과제 중심 재학습 (Activity / Task-Oriented)</div>` + buildTable(track2)
-                 + `<div class="track-header">Track 3. 환경 피드백 & 심리/Yellow Flag 중재 (Environment & Personal)</div>` + buildTable(track3);
-
-    document.getElementById('out-fitt').innerHTML = fittHtml;
-    generateClientReport();
+    let card = `<div class="q-card"><span class="q-num">Q${num}</span><div class="q-text">${text}</div><div class="opt-group">`;
+    shuffledOptions.forEach((optObj) => {
+        card += `<label class="opt-label">
+                    <input type="radio" name="${name}" value="${optObj.score}" data-score="${optObj.score}" required>
+                    <span>${optObj.text}</span>
+                 </label>`;
+    });
+    card += `</div></div>`;
+    return card;
 }
 
-// ==================== [10회권 경과 추적 & 순화 리포트 로직] ====================
-let currentSessionNum = 1;
-let sessionHistory = JSON.parse(localStorage.getItem('pt_session_history')) || {};
+function loadAreaQuestions() {
+    const area = document.getElementById('areaSelect').value;
+    const container = document.getElementById('body-survey-area');
+    container.innerHTML = "";
 
-function initTrackingModule() {
-    renderSessionBadges();
-    updateCharts();
-    generateClientReport();
-}
+    if (!area || !DATA_SURVEY[area]) return;
 
-function renderSessionBadges() {
-    const container = document.getElementById('session-badges');
-    if(!container) return;
-    let html = '';
-    for(let i = 1; i <= 10; i++) {
-        const isSaved = sessionHistory[i] ? '✓' : '';
-        const activeClass = (i === currentSessionNum) ? 'active' : '';
-        html += `<div class="session-badge ${activeClass}" onclick="switchSession(${i})">${i}회차 ${isSaved}</div>`;
-    }
-    container.innerHTML = html;
-    
-    document.getElementById('sess-count-txt').innerText = currentSessionNum;
-    document.getElementById('sess-progress-fill').style.width = (currentSessionNum * 10) + '%';
-}
+    const data = DATA_SURVEY[area];
+    let html = `<div style="font-weight:800; color:var(--primary); margin: 20px 0 12px 0; font-size:16px;">[ ${data.title} ]</div>`;
 
-function switchSession(num) {
-    currentSessionNum = num;
-    renderSessionBadges();
-    
-    if(sessionHistory[num]) {
-        const data = sessionHistory[num];
-        document.getElementById('pt-body-score').value = data.bodyScore;
-        document.getElementById('pt-tsk').value = data.tsk;
-        document.getElementById('pt-pcs').value = data.pcs;
-        evaluateSOAP();
-    }
-    generateClientReport();
-}
-
-function updateCharts() {
-    const scoreChart = document.getElementById('score-chart');
-    const tskChart = document.getElementById('tsk-chart');
-    if(!scoreChart || !tskChart) return;
-    
-    let scoreHtml = '';
-    let tskHtml = '';
-
-    for(let i = 1; i <= 10; i++) {
-        const data = sessionHistory[i];
-        const scoreVal = data ? data.bodyScore : 0;
-        const tskVal = data ? data.tsk : 0;
-
-        const scoreHeight = Math.min(100, Math.max(10, (scoreVal / 60) * 100));
-        const tskHeight = Math.min(100, Math.max(10, (tskVal / 50) * 100));
-
-        scoreHtml += `
-            <div class="chart-bar-group">
-                <div class="chart-bar" style="height:${data ? scoreHeight : 5}%; background:${data ? '#2563eb' : '#cbd5e1'};"></div>
-                <div class="chart-label">${i}회<br>${data ? scoreVal + '점' : '-'}</div>
-            </div>`;
-
-        tskHtml += `
-            <div class="chart-bar-group">
-                <div class="chart-bar" style="height:${data ? tskHeight : 5}%; background:${data ? '#6d28d9' : '#cbd5e1'};"></div>
-                <div class="chart-label">${i}회<br>${data ? tskVal + '점' : '-'}</div>
-            </div>`;
-    }
-
-    scoreChart.innerHTML = scoreHtml;
-    tskChart.innerHTML = tskHtml;
-}
-
-function generateClientReport() {
-    const ptNameElem = document.getElementById('pt-name');
-    const outAssessmentElem = document.getElementById('out-assessment');
-    const previewElem = document.getElementById('client-report-preview');
-    if(!ptNameElem || !outAssessmentElem || !previewElem) return;
-
-    const ptName = ptNameElem.value;
-    const rawAssessment = outAssessmentElem.innerText;
-    
-    let clientTxt = `[${ptName} 님 맞춤 컨디셔닝 & 경과 리포트 - ${currentSessionNum}회차]\n\n`;
-    clientTxt += `📌 오늘의 체형 & 컨디셔닝 관리 소견\n`;
-    
-    let cleanText = rawAssessment
-        .replace(/\[ICF 체계 기반 Assessment & 임상 소견\]/g, "")
-        .replace(/신경근 포착/g, "신경 자극 및 주변 긴장")
-        .replace(/신경 포착/g, "신경 자극")
-        .replace(/포착/g, "자극 및 긴장")
-        .replace(/유착/g, "근막 뭉침 및 타이트함")
-        .replace(/디스크/g, "체형 불균형 신호")
-        .replace(/Red Flag/g, "전문의 상담 필요 신호")
-        .replace(/Yellow Flag/g, "통증 민감도 높음")
-        .replace(/1\. b \(Body Functions\) & s \(Body Structures\):/g, "1. 신체 밸런스 및 통증 부위:")
-        .replace(/2\. d \(Activities & Participation\):/g, "2. 일상 동작 불편도:")
-        .replace(/3\. e \(Environmental\) & p \(Personal Factors\):/g, "3. 생활 환경 및 피로도:")
-        .replace(/기능 장애 척도/g, "신체 기능 불편도")
-        .replace(/장애 점수/g, "불편도 점수")
-        .replace(/공포-회피/g, "움직임 부담감")
-        .replace(/파국화/g, "통증 집중도");
-
-    clientTxt += cleanText.trim() + "\n\n";
-    clientTxt += `⚡ 오늘 적용된 전류 테라피:\n해당 부위의 심부 순환을 촉진하고 정밀한 전류 자극으로 타이트해진 근육의 긴장을 완화해 드렸습니다.\n\n`;
-    clientTxt += `🏋️ 오늘의 맞춤 홈케어 가이드 (영상 링크):\n`;
-
-    const exerciseRows = document.querySelectorAll('#out-fitt table tbody tr');
-    if (exerciseRows.length > 0) {
-        exerciseRows.forEach(row => {
-            const cols = row.querySelectorAll('td');
-            if (cols.length >= 4) {
-                const exName = cols[0].innerText.trim();
-                const exFitt = cols[1].innerText.trim();
-                const exLinkElem = cols[3].querySelector('a');
-                const exLink = exLinkElem ? exLinkElem.href : '';
-
-                clientTxt += `• ${exName} (${exFitt})\n  🔗 영상보기: ${exLink}\n`;
-            }
+    if (data.sections) {
+        data.sections.forEach((sec, sIdx) => {
+            html += `<div style="margin:18px 0 10px 0; font-weight:700; color:var(--text-main);">${sec.subTitle}</div>`;
+            sec.qs.forEach((qText, qIdx) => {
+                html += createQuestionCard(`body_${sIdx}_${qIdx}`, qIdx + 1, qText, sec.opts);
+            });
         });
     } else {
-        clientTxt += `아래 가이드에 맞춰 가벼운 스트레칭과 움직임을 병행해 주세요!\n`;
+        const questionsList = data.qs || data.questions;
+        questionsList.forEach((qObj, idx) => {
+            const qText = (typeof qObj === 'object') ? qObj.q : qObj;
+            const opts = (typeof qObj === 'object') ? qObj.opts : data.opts;
+            html += createQuestionCard(`body_${idx}`, idx + 1, qText, opts);
+        });
     }
 
-    previewElem.innerText = clientTxt;
+    container.innerHTML = html;
 }
 
-// ==================== 🟢 구글 시트 DB 자동 연동 모듈 ====================
+function loadPsychQuestions() {
+    const container = document.getElementById('psych-survey-area');
+    let html = `<div style="font-weight:800; color:#a45a64; margin: 15px 0 10px 0;">[ ${DATA_SURVEY.TSK.title} ]</div>`;
+    DATA_SURVEY.TSK.qs.forEach((qText, idx) => {
+        html += createQuestionCard(`tsk_${idx}`, idx + 1, qText, DATA_SURVEY.TSK.labels);
+    });
 
-// ⚠️ 아래 큰따옴표 안에 1단계에서 얻은 구글 앱스 스크립트 웹 앱 URL을 꼭 붙여넣어 주세요!
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwBQLTZj1U3UDENPsjjuMa6mg7eatcd6pfImwdFZdb1t9s3oANgzvzrZuOAfYdGGbE1/exec";
+    html += `<div style="font-weight:800; color:#a45a64; margin: 28px 0 10px 0;">[ ${DATA_SURVEY.PCS.title} ]</div>`;
+    DATA_SURVEY.PCS.qs.forEach((qText, idx) => {
+        html += createQuestionCard(`pcs_${idx}`, idx + 1, qText, DATA_SURVEY.PCS.labels);
+    });
 
-const MockDatabaseService = {
-    async saveToDatabase(payload) {
-        sessionHistory[payload.sessionNum] = payload;
-        localStorage.setItem('pt_session_history', JSON.stringify(sessionHistory));
+    container.innerHTML = html;
+}
 
-        try {
-            await fetch(GOOGLE_SCRIPT_URL, {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            });
-            console.log("✅ 구글 시트에 주소를 포함한 데이터 전송 완료");
-            return { success: true };
-        } catch (error) {
-            console.error("❌ 구글 시트 저장 실패:", error);
-            throw error;
-        }
-    }
-};
+function loadMentalQuestions() {
+    const container = document.getElementById('mental-survey-area');
+    let html = "";
 
-const MockKakaoService = {
-    sendKakaoReport(clientPhone, clientText) {
-        navigator.clipboard.writeText(clientText);
-        window.open(`https://sharer.kakao.com/talk/friends/picker/link`, '_blank');
-        console.log(`📱 [알림톡 패킷] 수신자: ${clientPhone} | 메시지 길이: ${clientText.length}자`);
-    }
-};
+    DATA_SURVEY.MENTAL.forEach((section, sIdx) => {
+        html += `<div style="font-weight:800; color:#4a6b5d; margin: 22px 0 10px 0;">※ ${section.category}</div>`;
+        section.qs.forEach((qText, idx) => {
+            html += createQuestionCard(`mental_${sIdx}_${idx}`, idx + 1, qText, section.labels);
+        });
+    });
 
-// 🟢 [원클릭 메인 실행 함수]
-async function handleOneClickConfirm() {
-    const ptName = document.getElementById('pt-name').value;
-    const ptPhone = document.getElementById('pt-phone').value;
-    const ptAddress = document.getElementById('pt-address').value;
-    const bodyScore = parseInt(document.getElementById('pt-body-score').value) || 0;
-    const tsk = parseInt(document.getElementById('pt-tsk').value) || 0;
-    const pcs = parseInt(document.getElementById('pt-pcs').value) || 0;
-    const region = document.getElementById('pt-region').value;
-    const rawAssessment = document.getElementById('out-assessment').innerText;
-    const clientReportText = document.getElementById('client-report-preview').innerText;
+    container.innerHTML = html;
+}
+
+function initAddressSearch() {
+    const addrInput = document.getElementById('pAddress');
+    addrInput.addEventListener('click', function() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                let addr = data.userSelectedType === 'R' ? data.roadAddress : data.jibunAddress;
+                if (data.buildingName !== '') { addr += ' (' + data.buildingName + ')'; }
+                addrInput.value = addr;
+                document.getElementById('areaSelect').focus();
+            }
+        }).open();
+    });
+}
+
+// 🟢 제출 폼 이벤트 핸들러 (구글 시트 저장 후 완료 카드 전환)
+document.getElementById('wellnessForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.innerText = "데이터 안전 전송 중...";
+
+    // 1. 신체 장애 점수 (바인딩된 원래 점수 기반 채점)
+    let bodyScore = 0;
+    document.querySelectorAll('#body-survey-area input[type="radio"]:checked').forEach(r => { 
+        bodyScore += parseInt(r.getAttribute('data-score')); 
+    });
+
+    // 2. TSK-11 움직임 공포 점수 (1~4점 환산 채점)
+    let tskTotal = 0;
+    document.querySelectorAll('input[name^="tsk_"]:checked').forEach(r => { 
+        tskTotal += (parseInt(r.getAttribute('data-score')) + 1); 
+    });
+
+    // 3. PCS 통증 파국화 점수 (0~4점 채점)
+    let pcsTotal = 0;
+    document.querySelectorAll('input[name^="pcs_"]:checked').forEach(r => { 
+        pcsTotal += parseInt(r.getAttribute('data-score')); 
+    });
+
+    const jobElem = document.getElementById('pJob');
+    const jobVal = jobElem ? jobElem.value : '기타/일반';
+    const pNameVal = document.getElementById('pName').value;
+    const pAgeVal = document.getElementById('pAge').value;
 
     const payload = {
-        patientName: ptName,
-        patientPhone: ptPhone,
-        patientAddress: ptAddress, // 주소 데이터 포함
-        sessionNum: currentSessionNum,
-        region: region,
+        savedAt: new Date().toLocaleString('ko-KR'),
+        patientName: `${pNameVal} (${pAgeVal}세)`,
+        patientPhone: document.getElementById('pPhone').value,
+        patientAddress: document.getElementById('pAddress').value,
+        sessionNum: "사전문진",
+        region: document.getElementById('areaSelect').value,
         bodyScore: bodyScore,
-        tskScore: tsk,
-        pcsScore: pcs,
-        rawSOAPAssessment: rawAssessment,
-        clientReportText: clientReportText,
-        savedAt: new Date().toLocaleString()
+        tskScore: tskTotal,
+        pcsScore: pcsTotal,
+        rawSOAPAssessment: `[사전문진 종합 데이터 수신]\n- 성별: ${document.getElementById('pGender').value}\n- 직업: ${jobVal}\n- 선택부위: ${document.getElementById('areaSelect').value}\n- 척도총점: ${bodyScore}점 | TSK: ${tskTotal}점 | PCS: ${pcsTotal}점`,
+        clientReportText: "회원 사전문진 제출 완료"
     };
 
     try {
-        await MockDatabaseService.saveToDatabase(payload);
-        renderSessionBadges();
-        updateCharts();
-        MockKakaoService.sendKakaoReport(ptPhone, clientReportText);
+        await fetch(scriptURL, { 
+            method: 'POST', 
+            mode: 'no-cors', 
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload) 
+        });
 
-        alert(`✅ [처리가 완료되었습니다]\n\n- ${currentSessionNum}회차 SOAP 데이터 구글시트 자동 기록 완료\n- 회원 전송용 카카오톡 연동 완료`);
+        // 폼 영역 숨김 처리 및 완료 카드 표시
+        document.getElementById('form-wrapper').style.display = 'none';
+        document.getElementById('success-card').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    } catch (error) {
-        alert("⚠️ 데이터 처리 중 오류가 발생했습니다: " + error.message);
+    } catch (err) {
+        alert("전송 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+        btn.disabled = false;
+        btn.innerText = "문진 작성 완료 및 전송하기 🚀";
     }
-}
+});
 
-document.addEventListener('DOMContentLoaded', () => { 
-    loadUrlParams(); 
-    resetAndRun(); 
-    initTrackingModule();
+document.addEventListener('DOMContentLoaded', () => {
+    loadPsychQuestions();
+    loadMentalQuestions();
+    initAddressSearch();
 });
 </script>
-
 </body>
 </html>
