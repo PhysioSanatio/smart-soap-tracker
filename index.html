@@ -182,7 +182,6 @@
             margin-bottom: 15px;
         }
 
-        /* 🟢 원클릭 올인원 메인 버튼 스타일 */
         .btn-one-click-save {
             width: 100%;
             padding: 16px;
@@ -328,7 +327,7 @@
         <div class="card">
             <h2>1. Subjective (기본정보 & OLD CHARTS)</h2>
             <div id="prom-info" class="prom-summary">
-                🔄 사전 문진 데이터를 불러오는 중입니다...
+                🔄 사전 문진 수신 대기 중입니다...
             </div>
 
             <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 8px; margin-bottom: 8px;">
@@ -518,10 +517,12 @@
 <script>
 let currentAreaName = "NDI";
 
+// 사전문진 URL 파라미터 자동 로드 및 바인딩
 function loadUrlParams() {
     const urlParams = new URLSearchParams(window.location.search);
     const pName = urlParams.get('pName');
     const pAge = urlParams.get('pAge');
+    const pPhone = urlParams.get('pPhone');
     const pJob = urlParams.get('pJob');
     const area = urlParams.get('area');
     const bodyScore = urlParams.get('bodyScore');
@@ -532,6 +533,7 @@ function loadUrlParams() {
         let nameText = decodeURIComponent(pName);
         if(pAge) nameText += ` (${pAge}세)`;
         document.getElementById('pt-name').value = nameText;
+        if(pPhone) document.getElementById('pt-phone').value = pPhone;
         if(pJob) document.getElementById('pt-job').value = decodeURIComponent(pJob);
         if(bodyScore) document.getElementById('pt-body-score').value = bodyScore;
         if(tsk) document.getElementById('pt-tsk').value = tsk;
@@ -542,7 +544,7 @@ function loadUrlParams() {
         if (areaMap[area]) document.getElementById('pt-region').value = areaMap[area];
 
         document.getElementById('prom-info').innerHTML = 
-            `📥 <b>${nameText}</b> [직업: <b>${pJob || '미지정'}</b>] 사전 문진 수신 완료! ` +
+            `📥 <b>${nameText}</b> [연락처: <b>${pPhone || '-'}</b> | 직업: <b>${decodeURIComponent(pJob) || '미지정'}</b>] 사전 문진 수신 완료! ` +
             `[ 척도: <b>${area}</b> (${bodyScore}점) | TSK: <b>${tsk}점</b> | PCS: <b>${pcs}점</b> ]`;
     }
 }
