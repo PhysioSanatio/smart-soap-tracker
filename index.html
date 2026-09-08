@@ -559,12 +559,12 @@
 </div>
 
 <script>
-const googleScriptApiUrl = 'https://script.google.com/macros/s/AKfycbzBJSdZstvTh3Pjb7QLSnD8Dv4z5hNSvyGiIp4P7dBS8OSj-VscCroWMRcwSnJw5AvT/exec';
+// 🎯 최신 구글 앱 스크립트 전용 URL 적용
+const googleScriptApiUrl = 'https://script.google.com/macros/s/AKfycbz_9QemQcaVen22z4zAqWlOh7Fkx14T2JSE_86KvKzCD4RAQ5lc-U6muYdGzHU_cqyd/exec';
 let currentAreaName = "NDI";
 
 // 🔑 [CORS 보안 해제] JSONP 콜백 방식을 이용한 구글 데이터 수신 전역 콜백
 window.handleGooglePromData = function(data) {
-    // 임시 태그 제거
     const oldScript = document.getElementById('jsonp-google-script');
     if (oldScript) oldScript.remove();
 
@@ -615,16 +615,13 @@ function searchGoogleProm(isLatest = false) {
     const infoDiv = document.getElementById('prom-info');
     infoDiv.innerHTML = `⏳ <b>구글 시트에서 환자 [${keyword || '최신 제출건'}] 정보를 연동하는 중입니다...</b>`;
 
-    // 이전 주입된 스크립트 삭제
     const oldScript = document.getElementById('jsonp-google-script');
     if (oldScript) oldScript.remove();
 
-    // 동적 JSONP 스크립트 주입 (CORS 블로킹 우회)
     const script = document.createElement('script');
     script.id = 'jsonp-google-script';
     let requestUrl = googleScriptApiUrl + (isLatest ? '?action=getLatest' : `?query=${encodeURIComponent(keyword)}`);
     
-    // 콜백 함수 지정
     requestUrl += (requestUrl.indexOf('?') >= 0 ? '&' : '?') + 'callback=handleGooglePromData';
     
     script.src = requestUrl;
