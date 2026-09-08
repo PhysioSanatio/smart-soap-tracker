@@ -109,20 +109,32 @@
             line-height: 1.4;
         }
 
-        .btn-fetch-google {
-            width: 100%;
-            padding: 10px;
+        .search-box-group {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        .search-box-group input {
+            flex: 1;
+            padding: 8px 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.82rem;
+            background: white;
+        }
+        .btn-search-google {
+            padding: 8px 14px;
             background: var(--primary);
             color: white;
             border: none;
             border-radius: 6px;
             font-weight: bold;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             cursor: pointer;
-            margin-top: 8px;
             transition: all 0.2s ease;
+            white-space: nowrap;
         }
-        .btn-fetch-google:hover { background: var(--primary-dark); }
+        .btn-search-google:hover { background: var(--primary-dark); }
 
         .oldcharts-grid {
             display: grid;
@@ -359,8 +371,12 @@
         <div class="card">
             <h2>1. Subjective (기본정보 & OLD CHARTS)</h2>
             <div id="prom-info" class="prom-summary">
-                <div>🔄 사전 문진 데이터를 실시간 수신 대기 중입니다...</div>
-                <button class="btn-fetch-google" onclick="fetchLatestGoogleProm()">📥 [구글 스프레드시트] 최신 사전 문진 데이터 불러오기</button>
+                <div style="font-weight:bold; color:var(--primary-dark);">📋 구글 스프레드시트 환자 사전 문진 검색</div>
+                <div class="search-box-group">
+                    <input type="text" id="search-keyword" placeholder="환자 이름 또는 연락처 뒤4자리 (예: 최수연 / 5678)" onkeyup="if(event.keyCode===13) searchGoogleProm()">
+                    <button class="btn-search-google" onclick="searchGoogleProm()">🔍 조회</button>
+                    <button class="btn-search-google" style="background:var(--primary-dark);" onclick="searchGoogleProm(true)">📥 최신건</button>
+                </div>
             </div>
 
             <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 8px; margin-bottom: 8px;">
@@ -543,44 +559,93 @@
 </div>
 
 <script>
-// 🎯 원장님의 구글 앱 스크립트 전용 URL 적용 완료!
 const googleScriptApiUrl = 'https://script.google.com/macros/s/AKfycbzBJSdZstvTh3Pjb7QLSnD8Dv4z5hNSvyGiIp4P7dBS8OSj-VscCroWMRcwSnJw5AvT/exec';
 let currentAreaName = "NDI";
 
-// 🔄 구글 스프레드시트 최신 사전 문진 데이터 끌어오기 함수
-async function fetchLatestGoogleProm() {
+// 🔑 [CORS 보안 해제] JSONP 콜백 방식을 이용한 구글 데이터 수신 전역 콜백
+window.handleGooglePromData = function(data) {
+    // 임시 태그 제거
+    const oldScript = document.getElementById('jsonp-google-script');
+    if (oldScript) oldScript.remove();
+
     const infoDiv = document.getElementById('prom-info');
-    infoDiv.innerHTML = `⏳ <b>구글 스프레드시트에서 최신 사전 문진 데이터를 수신하는 중입니다...</b>`;
-    
-    try {
-        const response = await fetch(googleScriptApiUrl + '?action=getLatest');
-        const data = await response.json();
+    const keywordInput = document.getElementById('search-keyword');
+    const keyword = keywordInput ? keywordInput.value.trim() : '';
+
+    if (data && data.name) {
+        let nameText = `${data.name} (${data.age || '35'}세)`;
+        document.getElementById('pt-name').value = nameText;
+        document.getElementById('pt-phone').value = data.phone || '';
+        if(data.job) document.getElementById('pt-job').value = data.job;
+        if(data.bodyScore) document.getElementById('pt-body-score').value = data.bodyScore;
+        if(data.tsk) document.getElementById('pt-tsk').value = data.tsk;
+        if(data.pcs) document.getElementById('pt-pcs').value = data.pcs;
+
+        currentAreaName = data.area || 'NDI';
+        const areaMap = { 'NDI': 'cervical', 'SPADI': 'cervical', 'ODI': 'lumbar', 'HOOS': 'psoas', 'KOOS': 'knee', 'FAAM': 'ankle', 'PRTEE': 'elbow' };
+        if (areaMap[currentAreaName]) document.getElementById('pt-region').value = areaMap[currentAreaName];
+
+        infoDiv.innerHTML = `
+            <div style="font-weight:bold; color:var(--success); margin-bottom:4px;">✅ [조회 성공] ${nameText} 님의 사전 문진 데이터 반영 완료</div>
+            <div class="search-box-group">
+                <input type="text" id="search-keyword" value="${keyword}" placeholder="환자 이름 또는 연락처 (예: 최수연 / 5678)" onkeyup="if(event.keyCode===13) searchGoogleProm()">
+                <button class="btn-search-google" onclick="searchGoogleProm()">🔍 재조회</button>
+                <button class="btn-search-google" style="background:var(--primary-dark);" onclick="searchGoogleProm(true)">📥 최신건</button>
+            </div>
+        `;
         
-        if (data && data.name) {
-            let nameText = `${data.name} (${data.age || '35'}세)`;
-            document.getElementById('pt-name').value = nameText;
-            document.getElementById('pt-phone').value = data.phone || '';
-            if(data.job) document.getElementById('pt-job').value = data.job;
-            if(data.bodyScore) document.getElementById('pt-body-score').value = data.bodyScore;
-            if(data.tsk) document.getElementById('pt-tsk').value = data.tsk;
-            if(data.pcs) document.getElementById('pt-pcs').value = data.pcs;
-
-            currentAreaName = data.area || 'NDI';
-            const areaMap = { 'NDI': 'cervical', 'SPADI': 'cervical', 'ODI': 'lumbar', 'HOOS': 'psoas', 'KOOS': 'knee', 'FAAM': 'ankle', 'PRTEE': 'elbow' };
-            if (areaMap[currentAreaName]) document.getElementById('pt-region').value = areaMap[currentAreaName];
-
-            infoDiv.innerHTML = 
-                `✅ <b>[구글 시트 연동 성공]</b> 수신 대상: <b>${nameText}</b> [직업: <b>${data.job || '미지정'}</b>] <br>` +
-                `[ 척도: <b>${currentAreaName}</b> (${data.bodyScore}점) | TSK: <b>${data.tsk}점</b> | PCS: <b>${data.pcs}점</b> ]` +
-                `<button class="btn-fetch-google" onclick="fetchLatestGoogleProm()">🔄 다시 불러오기</button>`;
-            
-            resetAndRun();
-        } else {
-            infoDiv.innerHTML = `⚠️ 구글 시트에서 최신 데이터를 가져오지 못했습니다. URL 파라미터를 수신합니다. <button class="btn-fetch-google" onclick="fetchLatestGoogleProm()">🔄 다시 시도</button>`;
-        }
-    } catch (e) {
-        infoDiv.innerHTML = `📥 URL 파라미터 모드로 작동 중입니다. <button class="btn-fetch-google" onclick="fetchLatestGoogleProm()">🔄 구글 시트 다시 연결</button>`;
+        resetAndRun();
+    } else {
+        alert(`검색 조건[${keyword || '최신건'}]에 해당하는 환자 문진 내역이 없습니다.`);
+        renderSearchBoxUI(keyword, "일치하는 내역이 없습니다.");
     }
+};
+
+// 🔍 JSONP 방식으로 구글 시트에 환자 정보 우회 검색 요청
+function searchGoogleProm(isLatest = false) {
+    const keywordInput = document.getElementById('search-keyword');
+    const keyword = isLatest ? '' : (keywordInput ? keywordInput.value.trim() : '');
+    
+    if (!isLatest && !keyword) {
+        alert("조회할 환자 성함이나 연락처 뒤4자리를 입력해 주세요.");
+        if (keywordInput) keywordInput.focus();
+        return;
+    }
+
+    const infoDiv = document.getElementById('prom-info');
+    infoDiv.innerHTML = `⏳ <b>구글 시트에서 환자 [${keyword || '최신 제출건'}] 정보를 연동하는 중입니다...</b>`;
+
+    // 이전 주입된 스크립트 삭제
+    const oldScript = document.getElementById('jsonp-google-script');
+    if (oldScript) oldScript.remove();
+
+    // 동적 JSONP 스크립트 주입 (CORS 블로킹 우회)
+    const script = document.createElement('script');
+    script.id = 'jsonp-google-script';
+    let requestUrl = googleScriptApiUrl + (isLatest ? '?action=getLatest' : `?query=${encodeURIComponent(keyword)}`);
+    
+    // 콜백 함수 지정
+    requestUrl += (requestUrl.indexOf('?') >= 0 ? '&' : '?') + 'callback=handleGooglePromData';
+    
+    script.src = requestUrl;
+    script.onerror = function() {
+        alert("구글 서버 통신 중 오류가 발생했습니다.");
+        renderSearchBoxUI(keyword, "서버 연동 오류가 발생했습니다.");
+    };
+
+    document.body.appendChild(script);
+}
+
+function renderSearchBoxUI(keyword, msg) {
+    const infoDiv = document.getElementById('prom-info');
+    infoDiv.innerHTML = `
+        <div style="font-weight:bold; color:var(--danger); margin-bottom:4px;">⚠️ ${msg}</div>
+        <div class="search-box-group">
+            <input type="text" id="search-keyword" value="${keyword}" placeholder="환자 이름 또는 연락처 (예: 최수연 / 5678)" onkeyup="if(event.keyCode===13) searchGoogleProm()">
+            <button class="btn-search-google" onclick="searchGoogleProm()">🔍 조회</button>
+            <button class="btn-search-google" style="background:var(--primary-dark);" onclick="searchGoogleProm(true)">📥 최신건</button>
+        </div>
+    `;
 }
 
 function loadUrlParams() {
@@ -605,11 +670,6 @@ function loadUrlParams() {
         currentAreaName = area;
         const areaMap = { 'NDI': 'cervical', 'SPADI': 'cervical', 'ODI': 'lumbar', 'HOOS': 'psoas', 'KOOS': 'knee', 'FAAM': 'ankle', 'PRTEE': 'elbow' };
         if (areaMap[area]) document.getElementById('pt-region').value = areaMap[area];
-
-        document.getElementById('prom-info').innerHTML = 
-            `📥 <b>${nameText}</b> [직업: <b>${pJob || '미지정'}</b>] 사전 문진 수신 완료! ` +
-            `[ 척도: <b>${area}</b> (${bodyScore}점) | TSK: <b>${tsk}점</b> | PCS: <b>${pcs}점</b> ] ` +
-            `<button class="btn-fetch-google" onclick="fetchLatestGoogleProm()">🔄 구글 시트 최신 데이터 불러오기</button>`;
     }
 }
 
