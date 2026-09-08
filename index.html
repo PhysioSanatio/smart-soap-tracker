@@ -102,12 +102,28 @@
             background: var(--accent-light);
             border: 1.5px solid var(--accent);
             border-radius: 8px;
-            padding: 10px 14px;
+            padding: 12px 14px;
             font-size: 0.83rem;
             margin-bottom: 15px;
             color: var(--primary-dark);
             line-height: 1.4;
         }
+
+        /* 🔄 구글 시트 불러오기 전용 버튼 스타일 */
+        .btn-fetch-google {
+            width: 100%;
+            padding: 10px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: all 0.2s ease;
+        }
+        .btn-fetch-google:hover { background: var(--primary-dark); }
 
         .oldcharts-grid {
             display: grid;
@@ -195,7 +211,6 @@
             margin-bottom: 15px;
         }
 
-        /* 🟢 원클릭 올인원 메인 버튼 스타일 (바이오스피어 랩 전용 골드 샌드) */
         .btn-one-click-save {
             width: 100%;
             padding: 16px;
@@ -345,7 +360,8 @@
         <div class="card">
             <h2>1. Subjective (기본정보 & OLD CHARTS)</h2>
             <div id="prom-info" class="prom-summary">
-                🔄 사전 문진 데이터를 불러오는 중입니다...
+                <div>🔄 사전 문진 데이터를 실시간 수신 대기 중입니다...</div>
+                <button class="btn-fetch-google" onclick="fetchLatestGoogleProm()">📥 [구글 스프레드시트] 최신 사전 문진 데이터 불러오기</button>
             </div>
 
             <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 8px; margin-bottom: 8px;">
@@ -523,7 +539,6 @@
                     세션 데이터를 기록하시거나 수치를 조정하시면 회원 전송용 순화 문구가 생성됩니다.
                 </div>
 
-                <!-- 🟢 단 하나의 메인 버튼으로 모든 프로세스 완결 -->
                 <button class="btn-one-click-save" onclick="handleOneClickConfirm()">
                     💾 [데이터 확정] 노션/구글시트 DB 저장 & 카카오톡 자동 전송 🚀
                 </button>
@@ -533,7 +548,44 @@
 </div>
 
 <script>
+const googleScriptApiUrl = 'https://script.google.com/macros/s/AKfycbxWQO-hVT-Nbf-xywFMx_Okv64T51zsITFILqwHuu4yWKyik30youiIs8MZaCyRewV2/exec';
 let currentAreaName = "NDI";
+
+// 🔄 구글 스프레드시트 최신 사전 문진 데이터 끌어오기 함수 (완벽 복원)
+async function fetchLatestGoogleProm() {
+    const infoDiv = document.getElementById('prom-info');
+    infoDiv.innerHTML = `⏳ <b>구글 스프레드시트에서 최신 사전 문진 데이터를 수신하는 중입니다...</b>`;
+    
+    try {
+        const response = await fetch(googleScriptApiUrl + '?action=getLatest');
+        const data = await response.json();
+        
+        if (data && data.name) {
+            let nameText = `${data.name} (${data.age || '35'}세)`;
+            document.getElementById('pt-name').value = nameText;
+            document.getElementById('pt-phone').value = data.phone || '';
+            if(data.job) document.getElementById('pt-job').value = data.job;
+            if(data.bodyScore) document.getElementById('pt-body-score').value = data.bodyScore;
+            if(data.tsk) document.getElementById('pt-tsk').value = data.tsk;
+            if(data.pcs) document.getElementById('pt-pcs').value = data.pcs;
+
+            currentAreaName = data.area || 'NDI';
+            const areaMap = { 'NDI': 'cervical', 'SPADI': 'cervical', 'ODI': 'lumbar', 'HOOS': 'psoas', 'KOOS': 'knee', 'FAAM': 'ankle', 'PRTEE': 'elbow' };
+            if (areaMap[currentAreaName]) document.getElementById('pt-region').value = areaMap[currentAreaName];
+
+            infoDiv.innerHTML = 
+                `✅ <b>[구글 시트 연동 성공]</b> 수신 대상: <b>${nameText}</b> [직업: <b>${data.job || '미지정'}</b>] <br>` +
+                `[ 척도: <b>${currentAreaName}</b> (${data.bodyScore}점) | TSK: <b>${data.tsk}점</b> | PCS: <b>${data.pcs}점</b> ]` +
+                `<button class="btn-fetch-google" onclick="fetchLatestGoogleProm()">🔄 다시 불러오기</button>`;
+            
+            resetAndRun();
+        } else {
+            infoDiv.innerHTML = `⚠️ 구글 시트에서 최신 데이터를 가져오지 못했습니다. URL 파라미터를 수신합니다. <button class="btn-fetch-google" onclick="fetchLatestGoogleProm()">🔄 다시 시도</button>`;
+        }
+    } catch (e) {
+        infoDiv.innerHTML = `📥 URL 파라미터 모드로 작동 중입니다. <button class="btn-fetch-google" onclick="fetchLatestGoogleProm()">🔄 구글 시트 다시 연결</button>`;
+    }
+}
 
 function loadUrlParams() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -560,7 +612,8 @@ function loadUrlParams() {
 
         document.getElementById('prom-info').innerHTML = 
             `📥 <b>${nameText}</b> [직업: <b>${pJob || '미지정'}</b>] 사전 문진 수신 완료! ` +
-            `[ 척도: <b>${area}</b> (${bodyScore}점) | TSK: <b>${tsk}점</b> | PCS: <b>${pcs}점</b> ]`;
+            `[ 척도: <b>${area}</b> (${bodyScore}점) | TSK: <b>${tsk}점</b> | PCS: <b>${pcs}점</b> ] ` +
+            `<button class="btn-fetch-google" onclick="fetchLatestGoogleProm()">🔄 구글 시트 최신 데이터 불러오기</button>`;
     }
 }
 
@@ -863,7 +916,6 @@ function evaluateSOAP() {
     generateClientReport();
 }
 
-// ==================== [10회권 경과 추적 & 순화 리포트 로직] ====================
 let currentSessionNum = 1;
 let sessionHistory = JSON.parse(localStorage.getItem('pt_session_history')) || {};
 
@@ -988,8 +1040,6 @@ function generateClientReport() {
     previewElem.innerText = clientTxt;
 }
 
-// ==================== 🟢 DB 저장 & 카카오 자동 연동 모듈 ====================
-
 const MockDatabaseService = {
     async saveToDatabase(payload) {
         sessionHistory[payload.sessionNum] = payload;
@@ -1012,7 +1062,6 @@ const MockKakaoService = {
     }
 };
 
-// 🟢 [원클릭 메인 실행 함수]
 async function handleOneClickConfirm() {
     const ptName = document.getElementById('pt-name').value;
     const ptPhone = document.getElementById('pt-phone').value;
