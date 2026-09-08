@@ -366,6 +366,28 @@
         }
         .chart-label { font-size: 0.7rem; color: #64748b; margin-top: 4px; text-align: center; }
 
+        /* 🆕 탭 메뉴 스타일 추가 */
+        .report-tab-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .report-tab-btn {
+            padding: 8px 14px;
+            background: #e2e8f0;
+            border: none;
+            border-radius: 6px 6px 0 0;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #475569;
+            cursor: pointer;
+        }
+        .report-tab-btn.active {
+            background: #ffffff;
+            color: #2563eb;
+            border-top: 2px solid #2563eb;
+        }
+
         @media print {
             body { background: white; padding: 0; }
             .header p, .tracking-card, .patient-search-card { display: none; }
@@ -433,7 +455,6 @@
                 </select>
             </div>
 
-            <!-- 🎯 OLD CHARTS 영역 (Temporal Pattern 및 Severity 추가 반영) -->
             <div class="oldcharts-grid">
                 <div>
                     <label>Onset (발병 시점)</label>
@@ -474,7 +495,6 @@
                         <option value="있음 (다리 저림)">있음 (다리 저림)</option>
                     </select>
                 </div>
-                <!-- 🆕 추가 1: Temporal Pattern (시간적 패턴) -->
                 <div>
                     <label>Temporal Pattern (시간적 패턴)</label>
                     <select id="oc-temporal" onchange="evaluateSOAP()">
@@ -484,7 +504,6 @@
                         <option value="하루 종일 일정함">하루 종일 일정함</option>
                     </select>
                 </div>
-                <!-- 🆕 추가 2: Severity (통증 강도 / NRS) -->
                 <div>
                     <label>Severity (통증 강도 / NRS)</label>
                     <select id="oc-severity" onchange="evaluateSOAP()">
@@ -497,7 +516,6 @@
                 </div>
             </div>
 
-            <!-- 🎯 대경TENS 극성 기본값 설정: 제조사 표준 사양 [주황색(-), 흰색(+)] 적용 -->
             <div style="background: #f1f5f9; padding: 10px; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--border);">
                 <label style="font-size:0.75rem; font-weight:bold; color:var(--primary);">🔌 대경TENS 케이블 색상 극성 설정:</label>
                 <select id="cable-polarity" onchange="evaluateSOAP()" style="width:100%; padding:6px; margin-top:2px; border-radius:6px; font-size:0.78rem; font-weight:bold; color:#ea580c;">
@@ -591,14 +609,21 @@
                 </div>
             </div>
 
+            <!-- 🆕 회원용/전문가용 리포트 미리보기 탭 구성 -->
             <div style="background:#f0f9ff; padding:14px; border-radius:10px; border:1.5px solid #bae6fd;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                    <h3 style="margin:0; font-size:0.9rem; color:#0369a1;">📱 카카오톡 회원 맞춤 간이 리포트 미리보기</h3>
-                    <span style="font-size:0.75rem; color:#0284c7; font-weight:600;">※ 의학용어 순화 및 CPG 운동 영상 자동 연결</span>
+                <div class="report-tab-group">
+                    <button class="report-tab-btn active" id="tab-btn-client" onclick="switchReportTab('client')">📱 회원 전송용 순화 리포트</button>
+                    <button class="report-tab-btn" id="tab-btn-master" onclick="switchReportTab('master')">📋 전문가 보관용 SOAP 마스터 차트</button>
                 </div>
-                
-                <div id="client-report-preview" style="font-size:0.82rem; color:#334155; white-space:pre-wrap; background:white; padding:12px; border-radius:8px; border:1px solid #cbd5e1; max-height:160px; overflow-y:auto; line-height:1.5; margin-bottom:12px;">
+
+                <!-- 1. 회원용 카카오톡 전송 리포트 -->
+                <div id="client-report-preview" style="font-size:0.82rem; color:#334155; white-space:pre-wrap; background:white; padding:12px; border-radius:8px; border:1px solid #cbd5e1; max-height:180px; overflow-y:auto; line-height:1.5; margin-bottom:12px;">
                     세션 데이터를 기록하시거나 수치를 조정하시면 회원 전송용 순화 문구가 생성됩니다.
+                </div>
+
+                <!-- 2. 전문가 보관용 상세 SOAP 마스터 차트 (신규) -->
+                <div id="master-report-preview" style="display:none; font-size:0.82rem; color:#0f172a; white-space:pre-wrap; background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #94a3b8; max-height:180px; overflow-y:auto; line-height:1.5; margin-bottom:12px; font-family:monospace;">
+                    전문가 보관용 상세 레포트가 자동 생성되는 영역입니다.
                 </div>
 
                 <button class="btn-one-click-save" id="btn-save-main" onclick="handleOneClickConfirm()">
@@ -610,10 +635,8 @@
 </div>
 
 <script>
-// 🎯 지정해주신 구글 앱스 스크립트 웹 앱 URL 업데이트 완료
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzBJSdZstvTh3Pjb7QLSnD8Dv4z5hNSvyGiIp4P7dBS8OSj-VscCroWMRcwSnJw5AvT/exec";
 
-// 🎯 부위별 표준 기능 장애 진단 척도 명칭 맵
 const PROM_NAME_MAP = {
     cervical: "목 기능 장애 지수 (NDI)",
     spadi: "어깨 통증 및 장애 지수 (SPADI)",
@@ -624,7 +647,6 @@ const PROM_NAME_MAP = {
     ankle: "발목 기능 지수 (FAAM)"
 };
 
-// 🔍 구글 시트 사전 문진 데이터 조회 함수
 async function searchPatientFromSheet() {
     const queryInput = document.getElementById('sheetSearchQuery');
     const query = queryInput.value.trim();
@@ -731,7 +753,6 @@ function loadUrlParams() {
     }
 }
 
-// 🎯 7가지 신체부위 전체 4단계 정밀 감별 알고리즘 트리
 const algoTree = {
     cervical: [
         { id: "red_cervical", isRed: true, title: "🚨 [Red Flag] 뇌혈관 및 중추신경 신호", question: "어지럼증, 안구 떨림, 구토, 하지 마비가 있나요?", options: [{label: "네 (의학적 위험)", value: "RED"}, {label: "아니요 (안전)", value: "GREEN"}] },
@@ -822,6 +843,8 @@ function selectAnswer(stepId, value) { userAnswers[stepId] = value; renderAlgori
 
 function evaluateSOAP() {
     const name = document.getElementById('pt-name').value;
+    const phone = document.getElementById('pt-phone').value;
+    const address = document.getElementById('pt-address').value;
     const job = document.getElementById('pt-job').value;
     const regionSelect = document.getElementById('pt-region');
     const regionKey = regionSelect.value;
@@ -830,11 +853,15 @@ function evaluateSOAP() {
     const bodyScore = parseInt(document.getElementById('pt-body-score').value) || 0;
     const tsk = parseInt(document.getElementById('pt-tsk').value) || 0;
     const pcs = parseInt(document.getElementById('pt-pcs').value) || 0;
+
+    const ocOnset = document.getElementById('oc-onset').value;
+    const ocLoc = document.getElementById('oc-location').value;
+    const ocDuration = document.getElementById('oc-duration').value;
     const ocChar = document.getElementById('oc-character').value;
     const ocAgg = document.getElementById('oc-agg').value;
-    const ocLoc = document.getElementById('oc-location').value;
-    const ocTemporal = document.getElementById('oc-temporal').value; // 🆕 시간적 패턴
-    const ocSeverity = document.getElementById('oc-severity').value; // 🆕 통증 강도
+    const ocRad = document.getElementById('oc-radiation').value;
+    const ocTemporal = document.getElementById('oc-temporal').value;
+    const ocSeverity = document.getElementById('oc-severity').value;
     
     const redBanner = document.getElementById('red-flag-banner');
     const yellowBanner = document.getElementById('yellow-flag-banner');
@@ -1070,7 +1097,7 @@ function evaluateSOAP() {
                  + `<div class="track-header">Track 3. 환경 피드백 & 심리/Yellow Flag 중재 (Environment & Personal)</div>` + buildTable(track3);
 
     document.getElementById('out-fitt').innerHTML = fittHtml;
-    generateClientReport();
+    generateReports();
 }
 
 let currentSessionNum = 1;
@@ -1079,7 +1106,7 @@ let sessionHistory = JSON.parse(localStorage.getItem('pt_session_history')) || {
 function initTrackingModule() {
     renderSessionBadges();
     updateCharts();
-    generateClientReport();
+    generateReports();
 }
 
 function renderSessionBadges() {
@@ -1110,7 +1137,7 @@ function switchSession(num) {
         document.getElementById('pt-pcs').value = data.pcs;
         evaluateSOAP();
     }
-    generateClientReport();
+    generateReports();
 }
 
 function updateCharts() {
@@ -1146,17 +1173,62 @@ function updateCharts() {
     tskChart.innerHTML = tskHtml;
 }
 
-function generateClientReport() {
+// 🆕 리포트 미리보기 탭 전환 함수
+function switchReportTab(tabType) {
+    const clientBtn = document.getElementById('tab-btn-client');
+    const masterBtn = document.getElementById('tab-btn-master');
+    const clientBox = document.getElementById('client-report-preview');
+    const masterBox = document.getElementById('master-report-preview');
+
+    if (tabType === 'client') {
+        clientBtn.classList.add('active');
+        masterBtn.classList.remove('active');
+        clientBox.style.display = 'block';
+        masterBox.style.display = 'none';
+    } else {
+        masterBtn.classList.add('active');
+        clientBtn.classList.remove('active');
+        masterBox.style.display = 'block';
+        clientBox.style.display = 'none';
+    }
+}
+
+// 🎯 [개선] 전문가용 종합 마스터 차트 & 회원용 리포트 동시 생성 함수
+function generateReports() {
     const ptNameElem = document.getElementById('pt-name');
+    const ptPhoneElem = document.getElementById('pt-phone');
+    const ptAddressElem = document.getElementById('pt-address');
+    const ptJobElem = document.getElementById('pt-job');
     const outAssessmentElem = document.getElementById('out-assessment');
-    const previewElem = document.getElementById('client-report-preview');
+    const clientPreviewElem = document.getElementById('client-report-preview');
+    const masterPreviewElem = document.getElementById('master-report-preview');
     const regionSelect = document.getElementById('pt-region');
-    if(!ptNameElem || !outAssessmentElem || !previewElem || !regionSelect) return;
+    const cablePolarityElem = document.getElementById('cable-polarity');
+
+    if(!ptNameElem || !outAssessmentElem || !clientPreviewElem || !regionSelect) return;
 
     const ptName = ptNameElem.value;
+    const ptPhone = ptPhoneElem.value;
+    const ptAddress = ptAddressElem.value;
+    const ptJob = ptJobElem.value;
     const rawAssessment = outAssessmentElem.innerText;
     const regionKey = regionSelect.value;
-    
+    const regionText = regionSelect.options[regionSelect.selectedIndex].text;
+    const promFullName = PROM_NAME_MAP[regionKey] || "신체 기능 장애 지수";
+
+    const ocOnset = document.getElementById('oc-onset').value;
+    const ocLoc = document.getElementById('oc-location').value;
+    const ocDuration = document.getElementById('oc-duration').value;
+    const ocChar = document.getElementById('oc-character').value;
+    const ocAgg = document.getElementById('oc-agg').value;
+    const ocRad = document.getElementById('oc-radiation').value;
+    const ocTemporal = document.getElementById('oc-temporal').value;
+    const ocSeverity = document.getElementById('oc-severity').value;
+    const bodyScore = document.getElementById('pt-body-score').value;
+    const tsk = document.getElementById('pt-tsk').value;
+    const pcs = document.getElementById('pt-pcs').value;
+
+    // 1️⃣ [회원 전송용 순화 리포트]
     let clientTxt = `[${ptName} 님 맞춤 컨디셔닝 & 경과 리포트 - ${currentSessionNum}회차]\n\n`;
     clientTxt += `📌 오늘의 체형 & 컨디셔닝 관리 소견\n`;
     
@@ -1196,7 +1268,40 @@ function generateClientReport() {
         clientTxt += `아래 가이드에 맞춰 가벼운 스트레칭과 움직임을 병행해 주세요!\n`;
     }
 
-    previewElem.innerText = clientTxt;
+    clientPreviewElem.innerText = clientTxt;
+
+    // 2️⃣ [전문가 보관용 Clinical Master Chart]
+    let masterTxt = `═══════════════════════════════════════════════════\n`;
+    masterTxt += `📋 CLINICAL SOAP MASTER CHART (${currentSessionNum}회차)\n`;
+    masterTxt += `═══════════════════════════════════════════════════\n\n`;
+    masterTxt += `[1. Subjective - 인적사항 & OLD CHARTS]\n`;
+    masterTxt += `• 환자성명: ${ptName} | 연락처: ${ptPhone}\n`;
+    masterTxt += `• 주소: ${ptAddress || '미입력'} | 직업: ${ptJob}\n`;
+    masterTxt += `• 선택부위: ${regionText}\n`;
+    masterTxt += `• Onset: ${ocOnset} | Location: ${ocLoc}\n`;
+    masterTxt += `• Duration: ${ocDuration} | Character: ${ocChar}\n`;
+    masterTxt += `• Aggravating: ${ocAgg} | Radiation: ${ocRad}\n`;
+    masterTxt += `• Temporal Pattern: ${ocTemporal}\n`;
+    masterTxt += `• Severity: ${ocSeverity}\n`;
+    masterTxt += `• 객관적 척도: ${promFullName} ${bodyScore}점 | TSK-11: ${tsk}점 | PCS: ${pcs}점\n\n`;
+
+    masterTxt += `[2. Assessment - ICF 종합 평가]\n`;
+    masterTxt += `${rawAssessment}\n\n`;
+
+    masterTxt += `[3. Plan - 핸즈온 전류 프로토콜 & CPG 처방]\n`;
+    masterTxt += `• TENS 극성배선: ${cablePolarityElem.options[cablePolarityElem.selectedIndex].text}\n`;
+    
+    masterTxt += `• CPG 운동 처방 세부 목록:\n`;
+    if (exerciseRows.length > 0) {
+        exerciseRows.forEach(row => {
+            const cols = row.querySelectorAll('td');
+            if (cols.length >= 3) {
+                masterTxt += `   - ${cols[0].innerText.trim()} [${cols[1].innerText.trim()}] : ${cols[2].innerText.trim()}\n`;
+            }
+        });
+    }
+
+    masterPreviewElem.innerText = masterTxt;
 }
 
 const DatabaseService = {
@@ -1235,7 +1340,9 @@ async function handleOneClickConfirm() {
     const pcs = parseInt(document.getElementById('pt-pcs').value) || 0;
     const regionSelect = document.getElementById('pt-region');
     const regionText = regionSelect.options[regionSelect.selectedIndex].text;
-    const rawAssessment = document.getElementById('out-assessment').innerText;
+    
+    // 전문가용 마스터 차트와 회원용 리포트 획득
+    const masterReportText = document.getElementById('master-report-preview').innerText;
     const clientReportText = document.getElementById('client-report-preview').innerText;
 
     const payload = {
@@ -1248,7 +1355,7 @@ async function handleOneClickConfirm() {
         bodyScore: bodyScore,
         tskScore: tsk,
         pcsScore: pcs,
-        rawSOAPAssessment: rawAssessment,
+        rawSOAPAssessment: masterReportText, // 🎯 전문가용 마스터 레포트 전체가 구글 시트로 저장됩니다.
         clientReportText: clientReportText
     };
 
@@ -1261,7 +1368,7 @@ async function handleOneClickConfirm() {
         updateCharts();
         KakaoService.sendKakaoReport(ptPhone, clientReportText);
 
-        alert(`✅ [처리가 완료되었습니다]\n\n- ${currentSessionNum}회차 SOAP 데이터 구글 시트 신규 행 추가 완료\n- 클립보드 복사 및 카카오톡 연동 완료`);
+        alert(`✅ [처리가 완료되었습니다]\n\n- ${currentSessionNum}회차 전문가용 SOAP 마스터 차트 구글 시트 저장 완료\n- 카카오톡 전송용 문구 복사 및 공유 완료`);
 
     } catch (error) {
         console.error("저장 에러:", error);
