@@ -560,11 +560,11 @@
 
 <script>
 // 🎯 최신 구글 앱 스크립트 전용 URL 적용
-const googleScriptApiUrl = 'https://script.google.com/macros/s/AKfycbyihi0JI2p1RxbEhQIOIne2A0uDxCkNOhUIccXqbk3XO1MIOnEDlM5d6XvK5II_BW2X/exec';
+const googleScriptApiUrl = 'https://script.google.com/macros/s/AKfycbxpxWpXAAVEKWUuUmgMe05FW7xamQOVvWaPgSK_4i0Pzvo3fTJAjhNXlRsemNy29VJH/exec';
 let currentAreaName = "NDI";
 
-// 🔑 [CORS 보안 해제] JSONP 콜백 방식을 이용한 구글 데이터 수신 전역 콜백
-window.handleGooglePromData = function(data) {
+// 🔑 [JSONP 수신 전역 콜백] - 시트 데이터 필드와 100% 매핑
+window.handleGooglePromData = function(res) {
     const oldScript = document.getElementById('jsonp-google-script');
     if (oldScript) oldScript.remove();
 
@@ -572,21 +572,56 @@ window.handleGooglePromData = function(data) {
     const keywordInput = document.getElementById('search-keyword');
     const keyword = keywordInput ? keywordInput.value.trim() : '';
 
-    if (data && data.name) {
-        let nameText = `${data.name} (${data.age || '35'}세)`;
-        document.getElementById('pt-name').value = nameText;
-        document.getElementById('pt-phone').value = data.phone || '';
-        if(data.job) document.getElementById('pt-job').value = data.job;
-        if(data.bodyScore) document.getElementById('pt-body-score').value = data.bodyScore;
-        if(data.tsk) document.getElementById('pt-tsk').value = data.tsk;
-        if(data.pcs) document.getElementById('pt-pcs').value = data.pcs;
+    // 구글 스크립트의 다양한 응답 규격(배열/단일객체) 유연 대응
+    let item = null;
+    if (res && res.result === "success" && Array.isArray(res.data) && res.data.length > 0) {
+        if (keyword) {
+            // 키워드와 일치하는 가장 최근 항목 역순 검색
+            for (let i = res.data.length - 1; i >= 0; i--) {
+                const target = res.data[i];
+                const pName = String(target.patientName || target.name || '');
+                const pPhone = String(target.patientPhone || target.phone || '');
+                if (pName.includes(keyword) || pPhone.includes(keyword)) {
+                    item = target;
+                    break;
+                }
+            }
+        }
+        if (!item) item = res.data[res.data.length - 1]; // 없거나 최신건 요청 시 마지막 데이터
+    } else if (res && (res.patientName || res.name)) {
+        item = res;
+    }
 
-        currentAreaName = data.area || 'NDI';
-        const areaMap = { 'NDI': 'cervical', 'SPADI': 'cervical', 'ODI': 'lumbar', 'HOOS': 'psoas', 'KOOS': 'knee', 'FAAM': 'ankle', 'PRTEE': 'elbow' };
-        if (areaMap[currentAreaName]) document.getElementById('pt-region').value = areaMap[currentAreaName];
+    if (item && (item.patientName || item.name)) {
+        let fullName = item.patientName || item.name || '';
+        document.getElementById('pt-name').value = fullName;
+        document.getElementById('pt-phone').value = item.patientPhone || item.phone || '';
+
+        // 점수 항목 할당 (통합기록 시트 필드 및 기본 필드 상호 호환)
+        const bodyScoreVal = item.bodyScore !== undefined ? item.bodyScore : (item.bodyScore0 || 0);
+        const tskVal = item.tskScore !== undefined ? item.tskScore : (item.tsk || 0);
+        const pcsVal = item.pcsScore !== undefined ? item.pcsScore : (item.pcs || 0);
+
+        document.getElementById('pt-body-score').value = bodyScoreVal;
+        document.getElementById('pt-tsk').value = tskVal;
+        document.getElementById('pt-pcs').value = pcsVal;
+
+        currentAreaName = item.region || item.area || 'NDI';
+        const areaMap = { 
+            'NDI': 'cervical', 'cervical': 'cervical',
+            'SPADI': 'cervical', 
+            'ODI': 'lumbar', 'lumbar': 'lumbar',
+            'HOOS': 'psoas', 'psoas': 'psoas',
+            'KOOS': 'knee', 'knee': 'knee',
+            'FAAM': 'ankle', 'ankle': 'ankle',
+            'PRTEE': 'elbow', 'elbow': 'elbow'
+        };
+        if (areaMap[currentAreaName]) {
+            document.getElementById('pt-region').value = areaMap[currentAreaName];
+        }
 
         infoDiv.innerHTML = `
-            <div style="font-weight:bold; color:var(--success); margin-bottom:4px;">✅ [조회 성공] ${nameText} 님의 사전 문진 데이터 반영 완료</div>
+            <div style="font-weight:bold; color:var(--success); margin-bottom:4px;">✅ [조회 성공] ${fullName} 님의 사전 문진 데이터 반영 완료</div>
             <div class="search-box-group">
                 <input type="text" id="search-keyword" value="${keyword}" placeholder="환자 이름 또는 연락처 (예: 최수연 / 5678)" onkeyup="if(event.keyCode===13) searchGoogleProm()">
                 <button class="btn-search-google" onclick="searchGoogleProm()">🔍 재조회</button>
