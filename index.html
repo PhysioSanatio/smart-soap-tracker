@@ -109,7 +109,6 @@
             line-height: 1.4;
         }
 
-        /* 🔄 구글 시트 불러오기 전용 버튼 스타일 */
         .btn-fetch-google {
             width: 100%;
             padding: 10px;
@@ -498,7 +497,6 @@
     </div>
 </div>
 
-<!-- ==================== [통합] 10회권 경과 추적 & 원클릭 확정 전송 카드 ==================== -->
 <div class="layout" style="margin-top:0;">
     <div style="grid-column: 1 / -1;">
         <div class="tracking-card">
@@ -513,9 +511,7 @@
                 <div id="sess-progress-fill" class="progress-bar-fill" style="width: 10%;"></div>
             </div>
 
-            <div class="session-badge-group" id="session-badges">
-                <!-- 회차 버튼 자동 생성 -->
-            </div>
+            <div class="session-badge-group" id="session-badges"></div>
 
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; margin-bottom: 15px;">
                 <div>
@@ -528,7 +524,6 @@
                 </div>
             </div>
 
-            <!-- 카톡 미리보기 & 원클릭 확정 박스 -->
             <div style="background:var(--accent-light); padding:14px; border-radius:10px; border:1.5px solid var(--accent);">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                     <h3 style="margin:0; font-size:0.9rem; color:var(--primary-dark);">📱 카카오톡 회원 맞춤 간이 리포트 미리보기</h3>
@@ -548,10 +543,11 @@
 </div>
 
 <script>
-const googleScriptApiUrl = 'https://script.google.com/macros/s/AKfycbxWQO-hVT-Nbf-xywFMx_Okv64T51zsITFILqwHuu4yWKyik30youiIs8MZaCyRewV2/exec';
+// 🎯 원장님의 구글 앱 스크립트 전용 URL 적용 완료!
+const googleScriptApiUrl = 'https://script.google.com/macros/s/AKfycbzBJSdZstvTh3Pjb7QLSnD8Dv4z5hNSvyGiIp4P7dBS8OSj-VscCroWMRcwSnJw5AvT/exec';
 let currentAreaName = "NDI";
 
-// 🔄 구글 스프레드시트 최신 사전 문진 데이터 끌어오기 함수 (완벽 복원)
+// 🔄 구글 스프레드시트 최신 사전 문진 데이터 끌어오기 함수
 async function fetchLatestGoogleProm() {
     const infoDiv = document.getElementById('prom-info');
     infoDiv.innerHTML = `⏳ <b>구글 스프레드시트에서 최신 사전 문진 데이터를 수신하는 중입니다...</b>`;
