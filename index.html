@@ -528,6 +528,8 @@
 
 <div class="layout" style="margin-top:0;">
     <div style="grid-column: 1 / -1;">
+       <div class="layout" style="margin-top:0;">
+    <div style="grid-column: 1 / -1;">
         <div class="tracking-card">
             <h2 style="color:var(--primary); margin-bottom: 12px;">📈 10회권 경과 추적 (Outcome Tracking) & 원클릭 데이터 처리</h2>
             
@@ -542,14 +544,19 @@
 
             <div class="session-badge-group" id="session-badges"></div>
 
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; margin-bottom: 15px;">
+            <!-- 🎯 TSK와 PCS를 모두 비교할 수 있도록 3분할 그래프 레이아웃으로 확장 -->
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px; margin-bottom: 15px;">
                 <div>
-                    <span style="font-size:0.8rem; font-weight:bold; color:var(--primary-dark);">[신체 기능 불편도 점수 추이]</span>
+                    <span style="font-size:0.75rem; font-weight:bold; color:var(--primary-dark);">[신체 기능 불편도 추이]</span>
                     <div class="chart-container" id="score-chart"></div>
                 </div>
                 <div>
-                    <span style="font-size:0.8rem; font-weight:bold; color:var(--primary-dark);">[움직임 부담감(TSK) 추이]</span>
+                    <span style="font-size:0.75rem; font-weight:bold; color:var(--primary-dark);">[움직임 공포감(TSK) 추이]</span>
                     <div class="chart-container" id="tsk-chart"></div>
+                </div>
+                <div>
+                    <span style="font-size:0.75rem; font-weight:bold; color:var(--primary-dark);">[통증 파국화(PCS) 추이]</span>
+                    <div class="chart-container" id="pcs-chart"></div>
                 </div>
             </div>
 
@@ -572,6 +579,54 @@
 </div>
 
 <script>
+// (상단 기존 자바스크립트 로직 동일 유지)
+
+function updateCharts() {
+    const scoreChart = document.getElementById('score-chart');
+    const tskChart = document.getElementById('tsk-chart');
+    const pcsChart = document.getElementById('pcs-chart'); // 🎯 PCS 차트 연동 추가
+    if(!scoreChart || !tskChart || !pcsChart) return;
+    
+    let scoreHtml = '';
+    let tskHtml = '';
+    let pcsHtml = '';
+
+    for(let i = 1; i <= 10; i++) {
+        const data = sessionHistory[i];
+        const scoreVal = data ? data.bodyScore : 0;
+        const tskVal = data ? data.tsk : 0;
+        const pcsVal = data ? data.pcs : 0; // PCS 값 바인딩
+
+        const scoreHeight = Math.min(100, Math.max(10, (scoreVal / 60) * 100));
+        const tskHeight = Math.min(100, Math.max(10, (tskVal / 50) * 100));
+        const pcsHeight = Math.min(100, Math.max(10, (pcsVal / 52) * 100)); // PCS 만점 기준 비율
+
+        scoreHtml += `
+            <div class="chart-bar-group">
+                <div class="chart-bar" style="height:${data ? scoreHeight : 5}%; background:${data ? 'var(--primary)' : 'var(--border)'};"></div>
+                <div class="chart-label">${i}회<br>${data ? scoreVal + '점' : '-'}</div>
+            </div>`;
+
+        tskHtml += `
+            <div class="chart-bar-group">
+                <div class="chart-bar" style="height:${data ? tskHeight : 5}%; background:${data ? 'var(--therapy-purple)' : 'var(--border)'};"></div>
+                <div class="chart-label">${i}회<br>${data ? tskVal + '점' : '-'}</div>
+            </div>`;
+
+        pcsHtml += `
+            <div class="chart-bar-group">
+                <div class="chart-bar" style="height:${data ? pcsHeight : 5}%; background:${data ? 'var(--etherapy-blue)' : 'var(--border)'};"></div>
+                <div class="chart-label">${i}회<br>${data ? pcsVal + '점' : '-'}</div>
+            </div>`;
+    }
+
+    scoreChart.innerHTML = scoreHtml;
+    tskChart.innerHTML = tskHtml;
+    pcsChart.innerHTML = pcsHtml; // PCS 차트 주입
+}
+
+// (나머지 기존 함수들 유지)
+</script>
 const googleScriptApiUrl = 'https://script.google.com/macros/s/AKfycbxpxWpXAAVEKWUuUmgMe05FW7xamQOVvWaPgSK_4i0Pzvo3fTJAjhNXlRsemNy29VJH/exec';
 let currentAreaName = "NDI";
 
