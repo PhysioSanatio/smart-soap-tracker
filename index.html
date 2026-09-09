@@ -445,6 +445,20 @@
                         <option value="있음 (다리 저림)">있음 (다리 저림)</option>
                     </select>
                 </div>
+                <!-- 🎯 Temporal & Severity 추가 -->
+                <div>
+                    <label>Temporal (시간적 변화)</label>
+                    <select id="oc-temporal" onchange="evaluateSOAP()">
+                        <option value="아침에 악화" selected>아침에 악화 (강직/유착)</option>
+                        <option value="오후/저녁에 악화">오후/저녁에 악화 (피로/부하)</option>
+                        <option value="야간통 (자다 깸)">야간통 (자다 깸 / 염증)</option>
+                        <option value="일정함">일정함</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Severity (통증 강도 NRS 0~10)</label>
+                    <input type="number" id="oc-severity" min="0" max="10" value="5" oninput="evaluateSOAP()">
+                </div>
             </div>
 
             <div style="background: var(--accent-light); padding: 10px; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--border);">
@@ -559,7 +573,7 @@
 </div>
 
 <script>
-// 🎯 최신 구글 앱 스크립트 전용 URL 적용
+// 🎯 원장님이 사용하시던 원래 구글 앱 스크립트 전용 URL
 const googleScriptApiUrl = 'https://script.google.com/macros/s/AKfycbxpxWpXAAVEKWUuUmgMe05FW7xamQOVvWaPgSK_4i0Pzvo3fTJAjhNXlRsemNy29VJH/exec';
 let currentAreaName = "NDI";
 
@@ -788,6 +802,10 @@ function evaluateSOAP() {
     const ocChar = document.getElementById('oc-character').value;
     const ocAgg = document.getElementById('oc-agg').value;
     const ocLoc = document.getElementById('oc-location').value;
+
+    // 🎯 [Temporal, Severity 수집 추가]
+    const ocTemporal = document.getElementById('oc-temporal') ? document.getElementById('oc-temporal').value : '';
+    const ocSeverity = document.getElementById('oc-severity') ? document.getElementById('oc-severity').value : '';
     
     const redBanner = document.getElementById('red-flag-banner');
     const yellowBanner = document.getElementById('yellow-flag-banner');
@@ -943,9 +961,11 @@ function evaluateSOAP() {
         `;
     }
 
+    // 🎯 [평가 내역에 Temporal, Severity 추가]
     icfAssessment += `1. b (Body Functions) & s (Body Structures):\n`;
     icfAssessment += `   - 신체 구조/원인 조직: ${causeTissue}\n`;
-    icfAssessment += `   - 통증 양상: ${ocChar} (주호소 부위: ${ocLoc})\n\n`;
+    icfAssessment += `   - 통증 양상: ${ocChar} (주호소 부위: ${ocLoc})\n`;
+    icfAssessment += `   - 통증 강도(NRS): ${ocSeverity} / 시간적 변화: ${ocTemporal}\n\n`;
 
     icfAssessment += `2. d (Activities & Participation):\n`;
     icfAssessment += `   - 기능 장애 척도: ${currentAreaName} ${bodyScore}점\n`;
