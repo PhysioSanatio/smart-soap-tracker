@@ -202,7 +202,7 @@
             overflow-y: auto;
         }
 
-        /* 4번, 5번 카드 테두리를 일반 카드와 동일하게 통일 */
+        /* 4번, 5번 카드 테두리도 일반 카드와 동일하게 통일 */
         .therapy-box {
             background: var(--accent-light);
             border: 1px solid var(--border);
@@ -489,7 +489,7 @@
         </div>
 
         <div class="card">
-            <h2>2. 대화형 정밀 감별 문진 알고리즘</h2>
+            <h2>2. 대화형 DPT 정밀 감별 문진 알고리즘</h2>
             <div id="algorithm-container"></div>
         </div>
     </div>
@@ -523,7 +523,7 @@
     </div>
 </div>
 
-<!-- 📈 하단 경과 추적 섹션 (3분할 그래프 컬러 통일 완료) -->
+<!-- 📈 하단 경과 추적 섹션 -->
 <div class="layout" style="margin-top:0;">
     <div style="grid-column: 1 / -1;">
         <div class="tracking-card">
@@ -540,7 +540,7 @@
 
             <div class="session-badge-group" id="session-badges"></div>
 
-            <!-- 🎯 신체 기능 불편도, TSK, PCS 3분할 그래프 레이아웃 (모두 브랜드 톤 반영) -->
+            <!-- 🎯 3분할 그래프 레이아웃 (브랜드 컬러 일체화) -->
             <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px; margin-bottom: 15px;">
                 <div>
                     <span style="font-size:0.75rem; font-weight:bold; color:var(--primary-dark);">[신체 기능 불편도 추이]</span>
@@ -715,39 +715,67 @@ function loadUrlParams() {
     }
 }
 
+/* 🩺 DPT(미국 물리치료 박사) 관점의 8단계 초정밀 감별 트리 (모든 부위 완비) */
 const algoTree = {
     cervical: [
-        { id: "red_cervical", isRed: true, title: "🚨 [Red Flag] 뇌혈관 및 중추신경 신호", question: "어지럼증, 안구 떨림, 구토, 하지 마비가 있나요?", options: [{label: "네 (의학적 위험)", value: "RED"}, {label: "아니요 (안전)", value: "GREEN"}] },
-        { id: "cv_disc", isRed: false, title: "[1단계] 경추 디스크 / 신경근병증 감별", question: "목을 뒤로 젖히고 누를 때(Spurling test) 팔이나 손가락으로 찌릿한 전기가 통하나요?", options: [{label: "네 (경추 디스크/신경 포착)", value: "DISC"}, {label: "아니요", value: "NO"}] },
-        { id: "cv_facet", isRed: false, title: "[2단계] 경추 후관절 증후군 감별", question: "목을 뒤로 젖히며 옆으로 회전할 때 뒷목 관절 깊은 곳이 뻐근하게 아픈가요?", options: [{label: "네 (후관절낭 문제)", value: "FACET"}, {label: "아니요", value: "NO"}] },
-        { id: "cv_tos", isRed: false, title: "[3단계] 견갑거근 / 흉출구 포착 감별", question: "고개를 숙이거나 팔을 들어올릴 때 견갑골 상각 및 쇄골 부위가 집히듯 아픈가요?", options: [{label: "네 (견갑거근/흉출구 포착)", value: "TOS"}, {label: "아니요", value: "NO"}] }
+        { id: "red_cervical", isRed: true, title: "🚨 [DPT Screen] 중추신경계(UMN) 및 척수병증 신호", question: "보행 장애, 손의 서툰 운동성(Clumsiness), 바빈스키 반사 양성 등 상위운동신경원 징후가 있나요?", options: [{label: "네 (응급 회송)", value: "RED"}, {label: "아니요 (안전)", value: "GREEN"}] },
+        { id: "cv_cpr", isRed: false, title: "[Wainner CPRs] 경추 신경근병증 복합 감별", question: "목을 측면으로 90도 이상 돌리지 못하며, 견인 시 통증이 감소하고 Spurling/ULTT 검사 중 3가지 이상 양성인가요?", options: [{label: "네 (경추 신경근병증)", value: "DISC_RADICULOPATHY"}, {label: "아니요", value: "NO"}] },
+        { id: "cv_facet", isRed: false, title: "[Mechanical] 후관절 폐쇄(Closing) 제한 패턴", question: "목을 통증측으로 신전 및 회전할 때 관절 깊은 곳에서 국소 찝힘과 잠김이 발생하나요?", options: [{label: "네 (후관절 증후군)", value: "FACET"}, {label: "아니요", value: "NO"}] },
+        { id: "cv_directional", isRed: false, title: "[Directional Pref] 경추 리트랙션 중심화 반응", question: "턱을 당기는 경추 후인(Retraction) 동작 반복 시 저림이 목 쪽으로 중심화(Centralization)되나요?", options: [{label: "네 (가역적 디스크성)", value: "DIR_PREF_YES"}, {label: "아니요", value: "NO"}] },
+        { id: "cv_tos", isRed: false, title: "[Vascular/Neural] 흉출구 포착 (TOS)", question: "팔을 머리 위로 올리고 3분간 유지할 때(Roos Test) 팔의 저림, 창백함, 무력감이 재현되나요?", options: [{label: "네 (TOS 압박)", value: "TOS"}, {label: "아니요", value: "NO"}] },
+        { id: "cv_levator", isRed: false, title: "[Myofascial] 견갑거근 및 상부승모근 유착", question: "견갑골 상각(Superior Angle) 부위에 국소 압통이 있으며 반대측 측굴 시 심한 연관통이 발생하나요?", options: [{label: "네 (근막유발점)", value: "LEVATOR"}, {label: "아니요", value: "NO"}] },
+        { id: "cv_scapular", isRed: false, title: "[Kinetic Chain] 견갑골 하강 및 전인 불균형", question: "정적 자세에서 상부 승모근이 과도하게 긴장하고 견갑골이 하방 회전되어 있나요?", options: [{label: "네 (견갑상완 리듬 파괴)", value: "SCAP_DYSFUNCTION"}, {label: "아니요", value: "NO"}] },
+        { id: "cv_c0c2", isRed: false, title: "[Cervicogenic] 상부 경추성 두통 (C0-C2)", question: "후두골 하연을 압박했을 때 안구 뒤쪽이나 측두부로 통증이 방사되나요?", options: [{label: "네 (경추원인성 두통)", value: "HEADACHE_C0C2"}, {label: "아니요", value: "NO"}] }
     ],
     lumbar: [
-        { id: "red_lumbar", isRed: true, title: "🚨 [Red Flag] 응급 마미증후군 및 척추 위험", question: "소변/대변 조절 불가, 회음부 마목, 발목 마비가 있나요?", options: [{label: "네 (의학적 위험)", value: "RED"}, {label: "아니요 (안전)", value: "GREEN"}] },
-        { id: "lm_disc", isRed: false, title: "[1단계] 요추 디스크 / 신경근 압박 감별", question: "허리를 숙이거나 기침할 때 다리 쪽으로 찌릿한 방사통이 내려오나요?", options: [{label: "네 (요추 디스크/신경근)", value: "DISC"}, {label: "아니요", value: "NO"}] },
-        { id: "lm_stenosis", isRed: false, title: "[2단계] 척추관 협착증 감별", question: "10분 이상 걸으면 다리가 터질 듯 저려서 허리를 숙이고 쉬었다 가야 하나요?", options: [{label: "네 (척추관 협착증)", value: "STENOSIS"}, {label: "아니요", value: "NO"}] },
-        { id: "lm_ql", isRed: false, title: "[3단계] 요방경근 / 천장관절 유착 감별", question: "몸통을 옆으로 숙이거나 골반을 누를 때 허리 깊은 곳이나 엉치 관절이 아픈가요?", options: [{label: "네 (요방경근/천장관절)", value: "QL_SIJ"}, {label: "아니요", value: "NO"}] }
+        { id: "red_lumbar", isRed: true, title: "🚨 [DPT Screen] 마미증후군 및 악성 종양 신호", question: "배뇨 장애, 안장형 마목(Saddle anesthesia), 체중 감소 및 야간통이 동반되나요?", options: [{label: "네 (응급 정밀 검사)", value: "RED"}, {label: "아니요", value: "GREEN"}] },
+        { id: "lm_centralization", isRed: false, title: "[McKenzie Method] 허리 중심화/말초화 반응", question: "반복적인 허리 젖힘 또는 숙임 시 방사통이 발가락 쪽으로 내려가나요(말초화), 아니면 중심부로 올라오나요(중심화)?", options: [{label: "중심화 현상 발생 (디스크 가역성)", value: "CENTRALIZATION"}, {label: "말초화 또는 변화 없음", value: "NO_CENTRALIZATION"}] },
+        { id: "lm_stenosis_cpr", isRed: false, title: "[Cook CPRs] 척추관 협착증 진단 규칙", question: "50세 이상, 걷거나 서있을 때 악화되며 숙이거나 자전거 탈 때 완화되는가?", options: [{label: "네 (신경인성 간헐적 파행)", value: "STENOSIS_CPR"}, {label: "아니요", value: "NO"}] },
+        { id: "lm_sij_cluster", isRed: false, title: "[Laslett's Cluster] 천장관절(SIJ) 복합 증후군", question: "Distraction, Compression, Thigh Thrust 등 유발 검사 중 2가지 이상에서 통증이 재현되나요?", options: [{label: "네 (천장관절 기능장애)", value: "SIJ_DYSFUNCTION"}, {label: "아니요", value: "NO"}] },
+        { id: "lm_instability", isRed: false, title: "[Clinical Instability] 요추 불안정성 감별", question: "엎드린 상태에서 다리 들 때 복부를 긴장시키면 통증이 사라지나요(Prone Instability)?", options: [{label: "네 (운동조절 장애/불안정성)", value: "INSTABILITY"}, {label: "아니요", value: "NO"}] },
+        { id: "lm_piriformis", isRed: false, title: "[Neurodynamic] 좌골신경 포착 (이상근 검사)", question: "고관절 굴곡-내전-내회전 시(FAIR Test) 엉덩이 깊은 곳에서 방사통이 유발되나요?", options: [{label: "네 (이상근 신증후군)", value: "PIRIFORMIS"}, {label: "아니요", value: "NO"}] },
+        { id: "lm_ql", isRed: false, title: "[Myofascial] 요방경근(QL) 트리거포인트", question: "골반을 옆으로 밀거나 누울 때 요추 측면 깊은 곳에서 늑골 하연으로 쑤시는 통증이 있나요?", options: [{label: "네 (요방경근 과긴장)", value: "QL_TRIGGER"}, {label: "아니요", value: "NO"}] },
+        { id: "lm_hip_spine", isRed: false, title: "[Screening] 고관절-요추 복합 증후군 (Hip-Spine)", question: "고관절의 내회전 가동범위가 현저히 제한되어 요추로 부하가 전가되나요?", options: [{label: "네 (고관절 가동성 제한 연동)", value: "HIP_SPINE_SYNTHESIS"}, {label: "아니요", value: "NO"}] }
     ],
     elbow: [
-        { id: "red_elbow", isRed: true, title: "🚨 [Red Flag] 관절 변형 및 급성 인대 손상", question: "팔꿈치 관절의 변형이나 급성 기계적 걸림 현상이 있나요?", options: [{label: "네 (의학적 위험)", value: "RED"}, {label: "아니요 (안전)", value: "GREEN"}] },
-        { id: "eb_tennis", isRed: false, title: "[1단계] 외측상과염 (테니스 엘보) 감별", question: "손목을 뒤로 젖히거나 물건을 들어올릴 때 팔꿈치 바깥쪽이 아픈가요?", options: [{label: "네 (외측상과염)", value: "TENNIS"}, {label: "아니요", value: "NO"}] },
-        { id: "eb_golf", isRed: false, title: "[2단계] 내측상과염 (골프 엘보) 감별", question: "손목을 안으로 굽히거나 손가락을 꽉 쥘 때 팔꿈치 안쪽이 아픈가요?", options: [{label: "네 (내측상과염)", value: "GOLF"}, {label: "아니요", value: "NO"}] },
-        { id: "eb_tunnel", isRed: false, title: "[3단계] 주관절 터널 (척골신경 포착) 감별", question: "팔꿈치를 오랫동안 구부리고 있으면 약지나 새끼손가락이 저린가요?", options: [{label: "네 (척골신경 포착)", value: "CUBITAL"}, {label: "아니요", value: "NO"}] }
+        { id: "red_elbow", isRed: true, title: "🚨 [DPT Screen] 급성 골절 및 관절 파열 신호", question: "팔꿈치 관절의 변형, 극심한 혈종, 능동적 굴신 운동이 전면 불가능한가요?", options: [{label: "네 (의학적 위험 회송)", value: "RED"}, {label: "아니요", value: "GREEN"}] },
+        { id: "eb_tennis", isRed: false, title: "[Clinical Test] 외측상과염 (Cozen/Mills 유발)", question: "주먹을 쥐고 손목을 위로 젖힐 때(저항성 신전) 또는 신근군을 신전시킬 때 외측상과에 통증이 유발되나요?", options: [{label: "네 (외측상과 건병증)", value: "TENNIS"}, {label: "아니요", value: "NO"}] },
+        { id: "eb_golf", isRed: false, title: "[Clinical Test] 내측상과염 (Golf Elbow)", question: "손목을 안으로 굽히거나 저항을 주며 쥘 때 내측상과 부착부에서 찌릿한 통증이 발생하나요?", options: [{label: "네 (내측상과 건병증)", value: "GOLF"}, {label: "아니요", value: "NO"}] },
+        { id: "eb_cubital", isRed: false, title: "[Neurodynamic] 주관절 터널증후군 (척골신경)", question: "팔꿈치를 완전히 구운 상태를 1분간 유지(Flexion Test)할 때 약지 및 새끼손가락에 저림이 생기나요?", options: [{label: "네 (척골신경 압박 포착)", value: "CUBITAL"}, {label: "아니요", value: "NO"}] },
+        { id: "eb_radial", isRed: false, title: "[Compression] 회외근 아케이드 / 요골신경 포착", question: "팔꿈치 외측 아래 전완부 깊은 곳을 누를 때 압통이 있고 저항성 회외 시 통증이 심해지나요?", options: [{label: "네 (후골간신경 포착)", value: "RADIAL"}, {label: "아니요", value: "NO"}] },
+        { id: "eb_eccentric", isRed: false, title: "[Mechanical] 전완 굴신근 원심성 부하 저항력", question: "손목을 천천히 내릴 때(원심성 수축) 통증과 함께 제어력이 급격히 떨어지는가?", options: [{label: "네 (건 조직의 용량 저하)", value: "ECCENTRIC_DEFICIT"}, {label: "아니요", value: "NO"}] },
+        { id: "eb_biceps_distal", isRed: false, title: "[Tendon] 원위 이두근 건 (Distal Biceps) 부하", question: "팔꿈치를 90도 구운 상태에서 손바닥을 위로 뒤집을 때(Supination) 팔꿈치 앞쪽 오목한 곳에 통증이 있나요?", options: [{label: "네 (원위 이두건 건병증)", value: "DISTAL_BICEPS"}, {label: "아니요", value: "NO"}] },
+        { id: "eb_kinetic", isRed: false, title: "[Kinetic Chain] 견관절-수근관 연동 역학", question: "어깨 외회전 가동성 저하나 수근관(손목터널) 긴장이 팔꿈치 부하를 가중시키고 있나요?", options: [{label: "네 (상지 키네틱체인 불균형)", value: "KINETIC_ELBOW"}, {label: "아니요", value: "NO"}] }
     ],
     psoas: [
-        { id: "red_psoas", isRed: true, title: "🚨 [Red Flag] 고관절 무혈성 괴사 및 척추 탈출", question: "고관절 체중 지지 시 극심한 통증이나 하지 마비감이 있나요?", options: [{label: "네 (의학적 위험)", value: "RED"}, {label: "아니요 (안전)", value: "GREEN"}] },
-        { id: "ps_psoas", isRed: false, title: "[1단계] 장요근 단축 & 서혜부 찝힘 감별", question: "다리를 뒤로 펴거나(신전) 앉았다 일어날 때 서혜부 앞쪽이 찝히듯 아픈가요?", options: [{label: "네 (장요근 단축/포착)", value: "PSOAS"}, {label: "아니요", value: "NO"}] },
-        { id: "ps_adductor", isRed: false, title: "[2단계] 내전근 건염 / 스포츠 허니아 감별", question: "다리를 안으로 모으거나 서혜부 삼각 라인을 누를 때 통증이 있나요?", options: [{label: "네 (내전근 긴장)", value: "ADDUCTOR"}, {label: "아니요", value: "NO"}] }
+        { id: "red_psoas", isRed: true, title: "🚨 [DPT Screen] 고관절 골절 및 화농성 관절염", question: "체중 지지가 아예 불가능하거나 고관절 수동 회전 시 극심한 스파즘과 열감이 동반되나요?", options: [{label: "네 (응급 회송)", value: "RED"}, {label: "아니요", value: "GREEN"}] },
+        { id: "ps_impingement", isRed: false, title: "[FADIR/FABER] 고관절 충증후군 (FAIS) 감별", question: "고관절을 깊게 구부리고 안으로 돌릴 때(FADIR) 서혜부 깊은 곳에서 찝히는 통증(Clicking)이 있나요?", options: [{label: "네 (대퇴골구조 이상/충돌)", value: "FAI_IMPINGEMENT"}, {label: "아니요", value: "NO"}] },
+        { id: "ps_adductor", isRed: false, title: "[Squeeze Test] 내전근 건염 및 스포츠 허니아", question: "누워서 무릎 사이에 볼을 끼우고 강하게 조일 때(Squeeze Test) 치골 결합부 주변 사타구니가 아픈가요?", options: [{label: "네 (내전근/치골부하)", value: "ADDUCTOR_HERNIA"}, {label: "아니요", value: "NO"}] },
+        { id: "ps_trochanteric", isRed: false, title: "[Greater Trochanter] 고관절 통증 증후군 (GTPS)", question: "대전자 부위를 직접 누를 때 아프고, 누워서 반대편으로 돌아누울 때 골반 바깥쪽이 쑤시는가?", options: [{label: "네 (점액낭염/중둔근건염)", value: "GTPS"}, {label: "아니요", value: "NO"}] },
+        { id: "ps_piriformis", isRed: false, title: "[Neurodynamic] 이상근 및 고관절 외회전근 과긴장", question: "고관절 굴곡 90도 상태에서 안으로 내회전할 때 엉덩이 심부 골반링에 통증이 방사되는가?", options: [{label: "네 (외회전근 신장 포착)", value: "PIRIFORMIS_HIP"}, {label: "아니요", value: "NO"}] },
+        { id: "ps_labrum", isRed: false, title: "[Labral Tear] 관절순 파열 특이도 검사", question: "고관절을 회전시키며 펴거나 구부릴 때 관절 내부에서 모래 갈리는 소리나 걸림이 있는가?", options: [{label: "네 (관절순 손상 의심)", value: "LABRUM_TEAR"}, {label: "아니요", value: "NO"}] },
+        { id: "ps_rectus", isRed: false, title: "[Rectus Femoris] 대퇴직근 기시부 과부하", question: "AIIS(전하장골극) 부위를 누를 때 압통이 있고 무릎을 구부린 채 다리를 뒤로 뺄 때 앞쪽이 당기는가?", options: [{label: "네 (대퇴직근 기시부 과부하)", value: "RECTUS_ORIGIN"}, {label: "아니요", value: "NO"}] },
+        { id: "ps_pelvic_torsion", isRed: false, title: "[Pelvic Torsion] 골반 회전 변위 및 요천추 연동", question: "양쪽 골반의 전후방 회전 비대칭으로 인해 보행 시 한쪽 고관절에 과도한 스트레스가 걸리는가?", options: [{label: "네 (골반 회전 변위)", value: "PELVIC_TORSION"}, {label: "아니요", value: "NO"}] }
     ],
     knee: [
-        { id: "red_knee", isRed: true, title: "🚨 [Red Flag] 감염 및 급성 인대 파열", question: "무릎 관절의 심한 열감, 부종, 체중 지지 불가 상태인가요?", options: [{label: "네 (의학적 위험)", value: "RED"}, {label: "아니요 (안전)", value: "GREEN"}] },
-        { id: "kn_pfps", isRed: false, title: "[1단계] 슬개대퇴통증증후군 (PFPS) 감별", question: "계단을 오르내리거나 오래 앉아있을 때 슬개골 전면부가 뻐근하게 아픈가요?", options: [{label: "네 (슬개대퇴 연골부하)", value: "PFPS"}, {label: "아니요", value: "NO"}] },
-        { id: "kn_meniscus", isRed: false, title: "[2단계] 반월상 연골판 / 측부인대 감별", question: "무릎을 비틀거나 구부릴 때 관절 안쪽에 걸리는 느낌(Clicking)이 있나요?", options: [{label: "네 (연골판/측부인대)", value: "MENISCUS"}, {label: "아니요", value: "NO"}] }
+        { id: "red_knee", isRed: true, title: "🚨 [DPT Screen] 급성 구조적 파열 및 감염 신호", question: "관절 내 대량 혈종(Hemarthrosis), 극심한 열감, 무릎 잠김으로 펴지지가 않는 상태인가요?", options: [{label: "네 (정형외과 응급 회송)", value: "RED"}, {label: "아니요", value: "GREEN"}] },
+        { id: "kn_pfps", isRed: false, title: "[Clinical Rule] 슬개대퇴통증증후군 (PFPS)", question: "계단 내려가기, 오래 앉아있기(Movie Sign), 스쿼트 시 슬개골 주변 또는 심부에서 둔한 통증이 있는가?", options: [{label: "네 (슬개골 궤적 이상)", value: "PFPS"}, {label: "아니요", value: "NO"}] },
+        { id: "kn_meniscus", isRed: false, title: "[McMurray/Thessaly] 반월상 연골판 손상 클러스터", question: "체중을 싣고 무릎을 회전할 때(Thessaly Test) 관절 간극(Joint line)에서 통증과 걸림이 발생하는가?", options: [{label: "네 (연골판 파열 의심)", value: "MENISCUS_TEAR"}, {label: "아니요", value: "NO"}] },
+        { id: "kn_ligament", isRed: false, title: "[Stress Test] 측부인대 (MCL/LCL) 불안정성", question: "무릎을 살짝 구운 상태에서 안쪽이나 바깥쪽으로 측면 스트레스를 줄 때 관절이 벌어지며 아픈가?", options: [{label: "네 (측부인대 손상/이완)", value: "COLLATERAL_LIG"}, {label: "아니요", value: "NO"}] },
+        { id: "kn_cruciate", isRed: false, title: "[Lachman/Pivot] 십자인대 (ACL/PCL) 불안정성", question: "정강이뼈가 앞으로나 뒤로 훌렁 밀려나가는 느낌(Drawer/Lachman 양성)이 있는가?", options: [{label: "네 (십자인대 불안정)", value: "CRUCIATE_LIG"}, {label: "아니요", value: "NO"}] },
+        { id: "kn_tendon", isRed: false, title: "[Tendinopathy] 슬개건염 / 대퇴사두건염", question: "점프나 스쿼트 직후 슬개골 하단(또는 상단) 인대 부착부를 누를 때 국소적인 날카로운 통증이 있는가?", options: [{label: "네 (신전건 건병증)", value: "PAT_TENDON"}, {label: "아니요", value: "NO"}] },
+        { id: "kn_itb", isRed: false, title: "[Noble Test] 장경인대 마찰증후군", question: "무릎을 30도 정도 구부린 상태에서 대퇴 외측 상과 부위를 누를 때 극심한 통증이 재현되는가?", options: [{label: "네 (장경인대 마찰)", value: "ITB_SYNDROME"}, {label: "아니요", value: "NO"}] },
+        { id: "kn_pes", isRed: false, title: "[Pes Anserinus] 거위발 건염 및 내측 슬관절염", question: "정강이 안쪽 상단(거위발 부착부)에 압통이 있고, 무릎을 펼 때 안쪽이 팽팽하게 당기는가?", options: [{label: "네 (거위발 건/점액낭)", value: "PES_ANSERINUS"}, {label: "아니요", value: "NO"}] }
     ],
     ankle: [
-        { id: "red_ankle", isRed: true, title: "🚨 [Red Flag] 골절(Ottawa Ankle Rule)", question: "복사뼈 부위 압통이 심하고 4걸음 이상 체중 지지가 불가능한가요?", options: [{label: "네 (골절 의심)", value: "RED"}, {label: "아니요 (안전)", value: "GREEN"}] },
-        { id: "ak_sprain", isRed: false, title: "[1단계] 전거비인대 (ATFL) 손상 감별", question: "발목이 안으로 꺾이면서 외측 복사뼈 앞쪽을 누를 때 아픈가요?", options: [{label: "네 (외측 인대 유착)", value: "ATFL"}, {label: "아니요", value: "NO"}] },
-        { id: "ak_fascia", isRed: false, title: "[2단계] 족저근막염 / 타살터널 감별", question: "아침에 첫 발을 디딜 때 뒤꿈치나 발바닥 안쪽으로 찌릿한 통증이 오나요?", options: [{label: "네 (족저근막/족부신경)", value: "PLANTAR"}, {label: "아니요", value: "NO"}] }
+        { id: "red_ankle", isRed: true, title: "🚨 [Ottawa Rule] 발목 골절 응급 스크리닝", question: "외측/내측 복사뼈 후단 6cm 이내 압통이 있거나, 4걸음 이상 체중 지지가 절대 불가능한가?", options: [{label: "네 (X-ray 촬영 필요/응급)", value: "RED"}, {label: "아니요", value: "GREEN"}] },
+        { id: "ak_atfl", isRed: false, title: "[Ligament Stress] 전거비인대 (ATFL) 만성 불안정", question: "발목이 안으로 꺾이는 염좌 병력이 반복되며, 전방 전위 검사(Anterior Drawer) 시 유격이 큰가?", options: [{label: "네 (외측 인대 이완/유착)", value: "ATFL_INSTABILITY"}, {label: "아니요", value: "NO"}] },
+        { id: "ak_fascia", isRed: false, title: "[Windlass Test] 족저근막염 및 타살터널", question: "발가락을 발등 쪽으로 젖힐 때(Windlass) 발바닥 근막과 뒤꿈치 내측에 찌릿한 통증이 오는가?", options: [{label: "네 (족저근막 건병증)", value: "PLANTAR_FASCIA"}, {label: "아니요", value: "NO"}] },
+        { id: "ak_achilles", isRed: false, title: "[Thompson Test] 아킬레스건염 및 건병증", question: "발뒤꿈치 아킬레스건 중부나 부착부에 아침 첫 발 시 뻣뻣함과 비후(두꺼워짐)가 있는가?", options: [{label: "네 (아킬레스 건병증)", value: "ACHILLES_TENDINOPATHY"}, {label: "아니요", value: "NO"}] },
+        { id: "ak_tibial_post", isRed: false, title: "[Single Heel Rise] 후경골근 건기능 부전 (평발화)", question: "까치발을 한 발로 설 때 발목 안쪽이 무너지고 뒤꿈치가 바깥쪽으로 틀어지는가(Too many toes)?", options: [{label: "네 (후경골근 부전)", value: "TIBIALIS_POST_DYS"}, {label: "아니요", value: "NO"}] },
+        { id: "ak_peroneal", isRed: false, title: "[Peroneal Tendon] 비골근 건염 및 아탈구", question: "외측 복사뼈 뒤쪽 고랑 부위를 따라 통증이 있고, 발목을 바깥쪽으로 돌릴 때 저항 통증이 있는가?", options: [{label: "네 (비골근 건 부하)", value: "PERONEAL_TENDON"}, {label: "아니요", value: "NO"}] },
+        { id: "ak_deltoid", isRed: false, title: "[Deltoid Ligament] 내측 삼각인대 손상 감별", question: "발목을 바깥쪽으로 꺾였을 때(외반 스트레스) 내측 복사뼈 아래 삼각인대 부위에 통증이 있는가?", options: [{label: "네 (내측 인대 손상)", value: "DELTOID_LIG"}, {label: "아니요", value: "NO"}] },
+        { id: "ak_intrinsic", isRed: false, title: "[Intrinsic Foot] 족부 내재근 및 아치 붕괴", question: "발바닥 소근육들이 약화되어 발가락 굽힘 시 쥐가 나거나 발가락이 갈퀴발처럼 굳는가?", options: [{label: "네 (발바닥 내재근 약화)", value: "INTRINSIC_FOOT_WEAK"}, {label: "아니요", value: "NO"}] }
     ]
 };
 
@@ -831,7 +859,7 @@ function evaluateSOAP() {
     let icfAssessment = `[ICF 체계 기반 Assessment & 임상 소견]\n\n`;
 
     if (region === 'ankle') {
-        causeTissue = "전경골근, 비골근, 내/외측 복사뼈 인대 유착 및 경골 신경 분지 포착";
+        causeTissue = "전거비인대, 아킬레스건, 족저근막 및 경골신경 분지 포착";
         document.getElementById('therapy-header-title').innerText = "4. 발목 정밀 6단계 대경TENS 수기-전류 프로토콜";
         
         stepsHtml = `
@@ -851,7 +879,7 @@ function evaluateSOAP() {
             <div style="font-size:0.78rem;">• <b>임상 목표:</b> 족저근막 및 내/외측 복사뼈 심부 심줄 순환 증진</div>
         `;
     } else if (region === 'knee') {
-        causeTissue = "대퇴사두근(내/외측광근), 슬개건, 내측 측부인대(MCL) 및 내측 햄스트링 유착";
+        causeTissue = "대퇴사두근(내/외측광근), 슬개건, 반월상 연골판 및 측부인대 유착";
         document.getElementById('therapy-header-title').innerText = "4. 무릎 정밀 8단계 대경TENS 수기-전류 프로토콜";
 
         stepsHtml = `
@@ -1076,7 +1104,6 @@ function updateCharts() {
         const tskHeight = Math.min(100, Math.max(10, (tskVal / 50) * 100));
         const pcsHeight = Math.min(100, Math.max(10, (pcsVal / 52) * 100));
 
-        // 🎯 3개 차트 모두 샌드 브라운 계열(--primary 또는 약간의 톤 변화)로 통일감 부여
         scoreHtml += `
             <div class="chart-bar-group">
                 <div class="chart-bar" style="height:${data ? scoreHeight : 5}%; background:${data ? 'var(--primary)' : 'var(--border)'};"></div>
