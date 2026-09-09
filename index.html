@@ -395,7 +395,7 @@
                 </select>
             </div>
 
-            <!-- 📌 완벽 복원된 OLDCHARTS 그리드 -->
+            <!-- OLDCHARTS 그리드 -->
             <div class="oldcharts-grid">
                 <div>
                     <label>Onset (발병 시점)</label>
@@ -494,7 +494,7 @@
             <div id="out-assessment" class="out-box">분석 결과가 출력됩니다.</div>
         </div>
 
-        <!-- 📌 대경TENS 프로토콜 완벽 복원 -->
+        <!-- 4. 대경TENS 수기-전류 프로토콜 -->
         <div class="card">
             <h2 id="therapy-header-title" style="color: var(--primary);">4. 선택 부위 정밀 수기-전류 핸즈온 프로토콜</h2>
             <div id="out-therapy" class="therapy-box" style="max-height: 280px; overflow-y: auto;">
@@ -509,7 +509,7 @@
             </div>
         </div>
 
-        <!-- 📌 CPG 운동 처방 및 유튜브 영상 링크 복원 -->
+        <!-- 6. CPG 운동 처방 및 유튜브 링크 -->
         <div class="card">
             <h2>6. CPG 검증 가이드라인 운동 처방 & 고유 영상</h2>
             <div id="out-fitt">
@@ -519,7 +519,7 @@
     </div>
 </div>
 
-<!-- 📈 하단 경과 추적 섹션 -->
+<!-- 하단 경과 추적 섹션 -->
 <div class="layout" style="margin-top:0;">
     <div style="grid-column: 1 / -1;">
         <div class="tracking-card">
@@ -708,7 +708,7 @@ function loadUrlParams() {
     }
 }
 
-/* 🩺 DPT 관점의 8단계 초정밀 감별 트리 (부위별 8단계 완비) */
+/* DPT 관점의 8단계 정밀 감별 트리 */
 const algoTree = {
     cervical: [
         { id: "red_cervical", isRed: true, title: "🚨 [DPT Screen 1/8] 중추신경계(UMN) 및 척수병증 신호", question: "보행 장애, 손의 서툰 운동성, 바빈스키 반사 양성 등 상위운동신경원 징후가 있나요?", options: [{label: "네 (응급 회송)", value: "RED"}, {label: "아니요 (안전)", value: "GREEN"}] },
@@ -822,7 +822,6 @@ function evaluatePlatform() {
     const tsk = parseInt(document.getElementById('pt-tsk').value) || 0;
     const pcs = parseInt(document.getElementById('pt-pcs').value) || 0;
     
-    // OLDCHARTS 변수 수집 복원
     const ocOnset = document.getElementById('oc-onset').value;
     const ocLocation = document.getElementById('oc-location').value;
     const ocDuration = document.getElementById('oc-duration').value;
@@ -854,113 +853,133 @@ function evaluatePlatform() {
     let negName = (cablePolarity === "NORMAL") ? "흰색(-)" : "주황색(-)";
     let posName = (cablePolarity === "NORMAL") ? "주황색(+)" : "흰색(+)";
 
-    let structureHypothesis = "";
+    let causeTissue = "";
     let stepsHtml = "";
     let etherapyHtml = "";
 
-    let positiveFindings = [];
-    Object.keys(userAnswers).forEach(key => {
-        const val = userAnswers[key];
-        if (val && val !== 'NO' && val !== 'GREEN' && val !== 'RED') {
-            positiveFindings.push(val);
-        }
-    });
-
-    // 📌 부위별 대경TENS 수기-전류 프로토콜 완벽 복원
+    // 선생님이 제공해주신 원본 프로토콜 코드를 완벽하게 이식
     if (region === 'ankle') {
-        structureHypothesis = "Possible contributor: 전거비인대, 아킬레스건, 족저근막 부하 (Confidence: Moderate)";
-        document.getElementById('therapy-header-title').innerText = "4. 발목 정밀 6단계 대경TENS 수기-전류 프로토콜";
+        causeTissue = "전거비인대, 아킬레스건, 족저근막 부하 및 발목 복사뼈 주변 유착";
+        document.getElementById('therapy-header-title').innerText = "4. 발목 정밀 수기-전류 핸즈온 프로토콜";
+
         stepsHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:var(--primary); margin-bottom:8px;">⚡ [발목 정밀 수기-전류 매핑] <span class="tag-warn">(⚠️ 필수: 쥐 나는 느낌 피드백 모니터링)</span></div>
-            <div class="step-card"><div class="step-title">1단계: 전경골근 & 발가락 신전 유도</div><div>• Dorsiflexion 선 가운데 <span class="tag-pos">${posName}</span> | 전경골근 <span class="tag-neg">${negName}</span></div></div>
-            <div class="step-card"><div class="step-title">2단계: 외측 복사뼈 & 갈퀴발(Claw Toe) 유도</div><div>• 외측복사뼈 1마디 위 <span class="tag-pos">${posName}</span> | 2마디 위 <span class="tag-neg">${negName}</span></div></div>
-            <div class="step-card"><div class="step-title">3단계: Proximal 비골근-전경골근 미세 각도 조절</div><div>• Proximal 사이 <span class="tag-neg">${negName}</span> | Distal 사이 <span class="tag-pos">${posName}</span></div></div>
-            <div class="step-card"><div class="step-title">4단계: 외측 복사뼈 발등 전류 통전</div><div>• 외측복사뼈 아래 <span class="tag-pos">${posName}</span> | 위 <span class="tag-neg">${negName}</span></div></div>
-            <div class="step-card"><div class="step-title">5단계: 내측 복사뼈 & 발가락 굴곡 유도</div><div>• 내측복사뼈 위 <span class="tag-pos">${posName}</span> | 2마디 위 <span class="tag-neg">${negName}</span></div></div>
-            <div class="step-card"><div class="step-title">6단계: 내측 복사뼈 발바닥 전류 통전</div><div>• 내측복사뼈 아래 <span class="tag-pos">${posName}</span> | 위 <span class="tag-neg">${negName}</span></div></div>
+            <div style="font-size:0.8rem; font-weight:bold; color:#6d28d9; margin-bottom:8px;">⚡ [발목 정밀 수기-전류 매핑] <span class="tag-warn">(⚠️ 필수: 쥐 나는 느낌 피드백 모니터링)</span></div>
+            <div class="step-card"><div class="step-title">1단계: 전경골근 & 발가락 신전 유도</div><div>• Dorsiflexion 선 가운데 <span class="tag-pos">${posName}</span> | 전경골근 <span class="tag-neg">${negName}</span> | 발가락 Extension 인상</div></div>
+            <div class="step-card"><div class="step-title">2단계: 외측 복사뼈 & 갈퀴발(Claw Toe) 유도</div><div>• 외측복사뼈 1마디 위 <span class="tag-pos">${posName}</span> | 2마디 위 <span class="tag-neg">${negName}</span> | 갈퀴발 수축 유도</div></div>
+            <div class="step-card"><div class="step-title">3단계: Proximal 비골근-전경골근 미세 각도 조절</div><div>• Proximal 사이 <span class="tag-neg">${negName}</span> | Distal 사이 <span class="tag-pos">${posName}</span> | Inversion/Eversion 중간각 조절</div></div>
+            <div class="step-card"><div class="step-title">4단계: 외측 복사뼈 발등 전류 통전</div><div>• 외측복사뼈 아래 <span class="tag-pos">${posName}</span> | 위 <span class="tag-neg">${negName}</span> | 발등 전류 확인</div></div>
+            <div class="step-card"><div class="step-title">5단계: 내측 복사뼈 & 발가락 굴곡 유도</div><div>• 내측복사뼈 위 <span class="tag-pos">${posName}</span> | 2마디 위 <span class="tag-neg">${negName}</span> | 발가락 굴곡 확인</div></div>
+            <div class="step-card"><div class="step-title">6단계: 내측 복사뼈 발바닥 전류 통전</div><div>• 내측복사뼈 아래 <span class="tag-pos">${posName}</span> | 위 <span class="tag-neg">${negName}</span> | 발바닥 전류 확인</div></div>
         `;
+
         etherapyHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:var(--primary);">🌊 [E-Therapy 족부/발목 고주파 세팅]</div>
+            <div style="font-size:0.8rem; font-weight:bold; color:#0284c7;">🌊 [E-Therapy 족부/발목 고주파 세팅]</div>
             <div style="font-size:0.78rem; margin-top:4px;">• <b>적용 파형:</b> 엑셀 인버전 이완 파형 (Deep Tissues Frequency)</div>
             <div style="font-size:0.78rem;">• <b>통전 시간/매질:</b> 15분 / 고주파 전도성 크림 도포</div>
             <div style="font-size:0.78rem;">• <b>임상 목표:</b> 족저근막 및 내/외측 복사뼈 심부 심줄 순환 증진</div>
         `;
     } else if (region === 'knee') {
-        structureHypothesis = "Possible contributor: 대퇴사두근건, 슬개골 궤적, 반월상 연골판 부하 (Confidence: Moderate)";
+        causeTissue = "대퇴사두근(내/외측광근), 슬개건, 내측 측부인대(MCL) 및 내측 햄스트링 유착";
         document.getElementById('therapy-header-title').innerText = "4. 무릎 정밀 8단계 대경TENS 수기-전류 프로토콜";
+
         stepsHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:var(--primary); margin-bottom:8px;">⚡ [무릎 정밀 수기-전류 매핑]</div>
+            <div style="font-size:0.8rem; font-weight:bold; color:#6d28d9; margin-bottom:8px;">⚡ [무릎 정밀 수기-전류 매핑]</div>
             <div class="step-card"><div class="step-title">1단계: 내/외측광근 근수축 유도</div><div>• 내측광근-Patella 사이 <span class="tag-neg">${negName}</span> | 외측광근-Patella 사이 <span class="tag-pos">${posName}</span></div></div>
-            <div class="step-card"><div class="step-title">2단계: Patella 정가운데 양옆 압박감 유도</div><div>• Patella 내측 <span class="tag-neg">${negName}</span> | 외측 <span class="tag-pos">${posName}</span></div></div>
+            <div class="step-card"><div class="step-title">2단계: Patella 정가운데 양옆 압박감 유도</div><div>• Patella 내측 <span class="tag-neg">${negName}</span> | 외측 <span class="tag-pos">${posName}</span> | (무릎 누르는 압력 피드백)</div></div>
             <div class="step-card"><div class="step-title">3단계: Patellar Tendon 양옆 자극</div><div>• Patellar tendon 내측 <span class="tag-neg">${negName}</span> | 외측 <span class="tag-pos">${posName}</span></div></div>
             <div class="step-card"><div class="step-title">4~6단계: 1~3단계 극성 반전 교차 실시</div><div>• <span class="tag-mod">극성 교차:</span> 내측에 <span class="tag-pos">${posName}</span> | 외측에 <span class="tag-neg">${negName}</span> 교차 적용</div></div>
             <div class="step-card"><div class="step-title">7단계: 내측 측부인대(MCL) & 거위발 건 부착부</div><div>• 내측 측부인대 <span class="tag-pos">${posName}</span> | 내측광근/Sartorius 사이 <span class="tag-neg">${negName}</span></div></div>
             <div class="step-card"><div class="step-title">8단계: 내측 햄스트링 & 하지 전파 감각</div><div>• 무릎 아래 내측 햄스트링 <span class="tag-pos">${posName}</span> | 내측 측부인대 <span class="tag-neg">${negName}</span></div></div>
         `;
+
         etherapyHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:var(--primary);">🌊 [E-Therapy 무릎 관절낭 고주파 세팅]</div>
+            <div style="font-size:0.8rem; font-weight:bold; color:#0284c7;">🌊 [E-Therapy 무릎 관절낭 고주파 세팅]</div>
             <div style="font-size:0.78rem; margin-top:4px;">• <b>적용 파형:</b> 관절 심부 순환 엑셀 파형 (Joint Capsule Wave)</div>
-            <div style="font-size:0.78rem;">• <b>통전 시간/매질:</b> 12분 / 무릎 관절 전면부 전도매질 도포</div>
+            <div style="font-size:0.78rem;">• <b>통전 시간/매질:</b> 12분 / 무릎 관절 전면부 전도매질 수분포 도포</div>
             <div style="font-size:0.78rem;">• <b>임상 목표:</b> 슬개골 트랙킹 부종 완화 및 관절액 삼투 이완</div>
         `;
     } else if (region === 'elbow') {
-        structureHypothesis = "Possible contributor: 외/내측상과 건 부착부, 수근굴신근 용량 저하 (Confidence: High)";
+        causeTissue = "외측상과, 삼두/이두근, Distal Radioulnar/Radius/Ulna 및 수근부 굴근 유착";
         document.getElementById('therapy-header-title').innerText = "4. 팔꿈치 정밀 8단계 대경TENS 수기-전류 프로토콜";
+
         stepsHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:var(--primary); margin-bottom:8px;">⚡ [팔꿈치 정밀 수기-전류 매핑] <span class="tag-warn">(👋 과수축 시 시술자 눌러주기 보조)</span></div>
-            <div class="step-card"><div class="step-title">1단계: Deltoid tuberosity 45도 내측 & 손목 Extension 탐색</div><div>• Proximal <span class="tag-neg">${negName}</span> | Distal <span class="tag-pos">${posName}</span></div></div>
-            <div class="step-card"><div class="step-title">2단계: 삼두/이두 통전 & 수기 완화</div><div>• 삼두 <span class="tag-neg">${negName}</span> | 이두 <span class="tag-pos">${posName}</span></div></div>
-            <div class="step-card"><div class="step-title">3단계: 삼두-외측상과 자극</div><div>• 삼두 <span class="tag-neg">${negName}</span> | 외측상과 <span class="tag-pos">${posName}</span></div></div>
-            <div class="step-card"><div class="step-title">4~5단계: 외측상과 상/하 자극 및 Extensor 이완</div><div>• 외측상과 위 <span class="tag-neg">${negName}</span> | 아래 <span class="tag-pos">${posName}</span></div></div>
-            <div class="step-card"><div class="step-title">6~8단계: Distal Radius/Ulna 및 수근부 굴곡 유도</div><div>• 수근부 <span class="tag-pos">${posName}</span> | 2마디 위 <span class="tag-neg">${negName}</span></div></div>
+            <div style="font-size:0.8rem; font-weight:bold; color:#6d28d9; margin-bottom:8px;">⚡ [팔꿈치 정밀 수기-전류 매핑] <span class="tag-warn">(👋 과수축 시 시술자 눌러주기 보조)</span></div>
+            <div class="step-card"><div class="step-title">1단계: Deltoid tuberosity 45도 내측 & 손목 Extension 탐색</div><div>• Proximal <span class="tag-neg">${negName}</span> | Distal <span class="tag-pos">${posName}</span> | Extension 탐색</div></div>
+            <div class="step-card"><div class="step-title">2단계: 삼두/이두 통전 & 수기 완화</div><div>• 삼두 <span class="tag-neg">${negName}</span> | 이두 <span class="tag-pos">${posName}</span> | 손목 과꺾임 시 시술자 아래로 눌러 완화</div></div>
+            <div class="step-card"><div class="step-title">3단계: 삼두-외측상과 자극</div><div>• 삼두 <span class="tag-neg">${negName}</span> | 외측상과 <span class="tag-pos">${posName}</span> | 누름 보조 후 유지</div></div>
+            <div class="step-card"><div class="step-title">4단계: 외측상과 상/하 자극</div><div>• 외측상과 위 <span class="tag-neg">${negName}</span> | 외측상과 아래 <span class="tag-pos">${posName}</span></div></div>
+            <div class="step-card"><div class="step-title">5단계: 외측상과-Extensor 이완 (저강도)</div><div>• 외측상과 <span class="tag-neg">${negName}</span> | Extensor 부위 <span class="tag-pos">${posName}</span> | <span class="tag-ma">저강도 유지</span></div></div>
+            <div class="step-card"><div class="step-title">6단계: Distal Radius 측면 자극</div><div>• Distal Radioulnar Joint <span class="tag-pos">${posName}</span> | Distal Radius 측면 <span class="tag-neg">${negName}</span></div></div>
+            <div class="step-card"><div class="step-title">7단계: Distal Ulna 측면 자극</div><div>• Distal Radioulnar Joint <span class="tag-pos">${posName}</span> | Distal Ulna 측면 <span class="tag-neg">${negName}</span></div></div>
+            <div class="step-card"><div class="step-title">8단계: 손바닥 수근부 & 손가락/손목 굴곡 유도</div><div>• 수근부 <span class="tag-pos">${posName}</span> | 2마디 위 <span class="tag-neg">${negName}</span> | (과수축 시 누름 보조)</div></div>
         `;
+
         etherapyHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:var(--primary);">🌊 [E-Therapy 상과염 파형 세팅]</div>
+            <div style="font-size:0.8rem; font-weight:bold; color:#0284c7;">🌊 [E-Therapy 상과염(Epicondylitis) 파형 세팅]</div>
             <div style="font-size:0.78rem; margin-top:4px;">• <b>적용 파형:</b> 건 부착부 이완 고주파 파형 (Tendon Repair Wave)</div>
-            <div style="font-size:0.78rem;">• <b>통전 시간/매질:</b> 10분 / 외/내측 상과 고주파 크림 도포</div>
+            <div style="font-size:0.78rem;">• <b>통전 시간/매질:</b> 10분 / 외측/내측 상과 고주파 크림 얇게 도포</div>
             <div style="font-size:0.78rem;">• <b>임상 목표:</b> 건 부착부 세포 재생 유도 및 과수축 포착 해소</div>
         `;
     } else if (region === 'psoas') {
-        structureHypothesis = "Possible contributor: 장요근, 대퇴직근 기시부, 고관절 굴곡근 밸런스 (Confidence: Moderate)";
-        document.getElementById('therapy-header-title').innerText = "4. 장요근/고관절 정밀 4단계 수기-전류 프로토콜";
+        causeTissue = "장요근, 대퇴직근 기시부, 서혜부 삼각, 대전차 중둔근 및 외측 햄스트링 유착";
+        document.getElementById('therapy-header-title').innerText = "4. 장요근/내전근 정밀 4단계 수기-전류 프로토콜";
+
         stepsHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:var(--primary); margin-bottom:8px;">⚡ [장요근 & 내전근 정밀 수기-전류 매핑]</div>
-            <div class="step-card"><div class="step-title">1단계: ASIS 내측 집게 압박 & 무릎 폄 유도</div><div>• ASIS 내측 <span class="tag-neg">${negName}</span> | 중둔근 <span class="tag-pos">${posName}</span></div></div>
-            <div class="step-card"><div class="step-title">2단계: 4자 자세 & 반대다리 고경 수동 저항</div><div>• L4~S1 <span class="tag-pos">${posName}</span> | 서혜부 삼각 <span class="tag-neg">${negName}</span></div></div>
-            <div class="step-card"><div class="step-title">3~4단계: 대퇴직근 기시부 및 외측 햄스트링 연동</div><div>• 대퇴직근 기시부 <span class="tag-neg">${negName}</span> | 앞허벅지 중간 <span class="tag-pos">${posName}</span></div></div>
+            <div style="font-size:0.8rem; font-weight:bold; color:#6d28d9; margin-bottom:8px;">⚡ [장요근 & 내전근 정밀 수기-전류 매핑]</div>
+            <div class="step-card"><div class="step-title">1단계: ASIS 내측 집게 압박 & 무릎 폄 유도</div><div>• ASIS 내측 <span class="tag-neg">${negName}</span> | 중둔근 <span class="tag-pos">${posName}</span> | 무릎 펴질 때까지 유지</div></div>
+            <div class="step-card"><div class="step-title">2단계: 4자 자세(Figure-4) & 반대다리 고경 수동 저항</div><div>• L4~S1 <span class="tag-pos">${posName}</span> | 서혜부 삼각 <span class="tag-neg">${negName}</span> | <b>"반대 다리로 베개 강하게 누르도록"</b> 지시</div></div>
+            <div class="step-card"><div class="step-title">3단계: 대퇴직근 기시부-허벅지 중간</div><div>• 대퇴직근 기시부 <span class="tag-neg">${negName}</span> | 앞허벅지 중간 <span class="tag-pos">${posName}</span></div></div>
+            <div class="step-card"><div class="step-title">4단계: 외측 햄스트링-비골두 반응</div><div>• 외측 햄스트링 <span class="tag-neg">${negName}</span> | 비골 머리부위 <span class="tag-pos">${posName}</span></div></div>
         `;
+
         etherapyHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:var(--primary);">🌊 [E-Therapy 심부 고관절/장요근 파형 세팅]</div>
+            <div style="font-size:0.8rem; font-weight:bold; color:#0284c7;">🌊 [E-Therapy 심부 고관절/장요근 파형 세팅]</div>
             <div style="font-size:0.78rem; margin-top:4px;">• <b>적용 파형:</b> 심부 장요근 이완 고주파 (Deep Psoas Frequency)</div>
             <div style="font-size:0.78rem;">• <b>통전 시간/매질:</b> 15분 / 복부 하단 서혜부 매질 도포</div>
             <div style="font-size:0.78rem;">• <b>임상 목표:</b> 고관절 굴근 신경근 자율신경 이완</div>
         `;
     } else if (region === 'lumbar') {
-        structureHypothesis = "Possible contributor: 흉요근막, 요방경근, 다열근 및 요추 분절 부하 (Confidence: High)";
-        document.getElementById('therapy-header-title').innerText = "4. 요추 정밀 9단계 대경TENS 수기-전류 프로토콜";
+        causeTissue = "요추 신경근, 요방경근, 천장관절 유착 및 좌골신경 포착";
+        document.getElementById('therapy-header-title').innerText = "4. 요추 정밀 10단계 대경TENS 수기-전류 프로토콜";
+
         stepsHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:var(--primary); margin-bottom:8px;">⚡ [60Hz 요추 정밀 9단계 수기-전류 매핑]</div>
-            <div class="step-card"><div class="step-title">1~4단계: 상/하부 요추 분절 및 복횡근 연동</div><div>• L1~L5 <span class="tag-neg">${negName}</span> | 장골능 <span class="tag-pos">${posName}</span> | <span class="tag-ma">3 mA</span></div></div>
-            <div class="step-card"><div class="step-title">5~6단계: 요천추 이행부 & 천골 연관 영역</div><div>• 좌측 <span class="tag-neg">${negName}</span> | 우측 <span class="tag-pos">${posName}</span> | <span class="tag-ma">2 ➔ 5 mA</span></div></div>
-            <div class="step-card"><div class="step-title">7~9단계: 중둔근 및 이상근/좌골신경 순/역방향 자극</div><div>• PSIS 영역 <span class="tag-neg">${negName}</span> | 좌골신경 출구 <span class="tag-pos">${posName}</span></div></div>
+            <div style="font-size:0.8rem; font-weight:bold; color:#6d28d9; margin-bottom:8px;">⚡ [60Hz 요추 정밀 10단계 수기-전류 매핑]</div>
+            <div class="step-card"><div class="step-title">1단계: 상부 요추 분절 (L1~L3) 자극</div><div>• L1 근처 <span class="tag-neg">${negName}</span> | L3 방향 <span class="tag-pos">${posName}</span> | <span class="tag-ma">3 mA</span></div></div>
+            <div class="step-card"><div class="step-title">2단계: 하부 요추 분절 (L2~L5) 자극</div><div>• L2 근처 <span class="tag-neg">${negName}</span> | L5 방향 <span class="tag-pos">${posName}</span> | <span class="tag-ma">3 mA</span></div></div>
+            <div class="step-card"><div class="step-title">3단계: 복횡근·복사근 연동 (두부 방향 압박)</div><div>• PSIS 근처 <span class="tag-neg">${negName}</span> | 장골능 <span class="tag-pos">${posName}</span> | <span class="tag-ma">3 mA</span> (두부 방향)</div></div>
+            <div class="step-card"><div class="step-title">4단계: 복횡근·복사근 연동 (족부 방향 압박)</div><div>• PSIS 근처 <span class="tag-neg">${negName}</span> | 장골능 <span class="tag-pos">${posName}</span> | <span class="tag-ma">3 mA</span> (족부 방향)</div></div>
+            <div class="step-card"><div class="step-title">5단계: 요천추 이행부 (L5-PSIS 나란히)</div><div>• 좌측 <span class="tag-neg">${negName}</span> | 우측 <span class="tag-pos">${posName}</span> | <span class="tag-ma">2 ➔ 5 mA Titration</span></div></div>
+            <div class="step-card"><div class="step-title">6단계: 천골 연관 영역 (PSIS ~ Sacral Apex)</div><div>• PSIS 근처 <span class="tag-neg">${negName}</span> | 천골 끝(Apex) <span class="tag-pos">${posName}</span> | <span class="tag-ma">2 ➔ 5 mA</span></div></div>
+            <div class="step-card"><div class="step-title">7단계: 중둔근 & 대전자 연결부</div><div>• 대전자~ASIS 사이 <span class="tag-neg">${negName}</span> | PSIS 옆 중둔근 <span class="tag-pos">${posName}</span> | <span class="tag-ma">3 mA~</span></div></div>
+            <div class="step-card"><div class="step-title">8단계: 이상근 & 좌골신경 순방향 자극</div><div>• PSIS 영역 <span class="tag-neg">${negName}</span> | 좌골신경 출구 <span class="tag-pos">${posName}</span></div></div>
+            <div class="step-card"><div class="step-title">9단계: 이상근 & 좌골신경 역방향 (운동 반응)</div><div>• PSIS <span class="tag-pos">${posName}</span> | 좌골신경 출구 <span class="tag-neg">${negName}</span> | (<b>발바닥 굽힘 반응</b> 유도)</div></div>
         `;
+
         etherapyHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:var(--primary);">🌊 [E-Therapy 요부 심부 고주파 세팅]</div>
+            <div style="font-size:0.8rem; font-weight:bold; color:#0284c7;">🌊 [E-Therapy 요부 심부 고주파 세팅]</div>
             <div style="font-size:0.78rem; margin-top:4px;">• <b>적용 파형:</b> 흉요근막 심부 진동 엑셀 파형 (Lumbar Core Wave)</div>
             <div style="font-size:0.78rem;">• <b>통전 시간/매질:</b> 15분 / 요방경근 영역 고주파 전도크림</div>
             <div style="font-size:0.78rem;">• <b>임상 목표:</b> 요추 심부 다열근 및 요방경근 유착 세포 이완</div>
         `;
     } else {
-        structureHypothesis = "Possible contributor: 후두하근, C3-C5 신경근, 견갑거근 및 상부승모근 (Confidence: High)";
-        document.getElementById('therapy-header-title').innerText = "4. 목/어깨 정밀 8단계 대경TENS 수기-전류 프로토콜";
+        causeTissue = "후두하근, 두경부 측두근막, C3-C5 신경근, 견갑거근 및 견갑골 수축/하강 유착";
+        document.getElementById('therapy-header-title').innerText = "4. 목/어깨 정밀 10단계 대경TENS 수기-전류 프로토콜";
+
         stepsHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:var(--primary); margin-bottom:8px;">⚡ [경추 & 어깨 정밀 8단계 수기-전류 매핑]</div>
-            <div class="step-card"><div class="step-title">1~3단계: 후두하근 및 측두부 30Hz 펄스 타격</div><div>• 후두하근 <span class="tag-neg">${negName}</span> | 하부 경추 <span class="tag-pos">${posName}</span> | <span class="tag-ma">최대 2 mA</span></div></div>
-            <div class="step-card"><div class="step-title">4~6단계: C3-C5 축 및 견갑거근 영역 자극</div><div>• C3~C5 <span class="tag-neg">${negName}</span> | C7~T3 <span class="tag-pos">${posName}</span> | <span class="tag-ma">2 mA</span></div></div>
-            <div class="step-card"><div class="step-title">7~8단계: 견갑골 후전 및 하강 유导</div><div>• Scapula Border <span class="tag-neg">${negName}</span> | T5~T8 <span class="tag-pos">${posName}</span></div></div>
+            <div style="font-size:0.8rem; font-weight:bold; color:#6d28d9; margin-bottom:8px;">⚡ [경추 & 어깨 정밀 10단계 수기-전류 매핑]</div>
+            <div class="step-card"><div class="step-title">1단계: 두통 & 후두하근 영역 이완</div><div>• 후두하근 <span class="tag-neg">${negName}</span> | 하부 경추 <span class="tag-pos">${posName}</span> | <span class="tag-ma">최대 2 mA</span> (정수리 감각 유도)</div></div>
+            <div class="step-card"><div class="step-title">2단계: 측두부/두부 감각 & 30Hz 펄스 타격 (좌)</div><div>• Styloid-Splenius <span class="tag-neg">${negName}</span> | 하부 경추 <span class="tag-pos">${posName}</span> | <span class="tag-mod">30Hz(4초) ↔ 60Hz 변조</span> (입안 쇠맛 감각)</div></div>
+            <div class="step-card"><div class="step-title">3단계: 측두부/두부 감각 & 30Hz 펄스 타격 (우)</div><div>• 우측 영역 동일 교차 적용</div></div>
+            <div class="step-card"><div class="step-title">4단계: 중부-하부 경추 축 (C3~C5 ➔ C7~T3)</div><div>• C3~C5 <span class="tag-neg">${negName}</span> | C7~T3 <span class="tag-pos">${posName}</span> | <span class="tag-ma">2 mA</span></div></div>
+            <div class="step-card"><div class="step-title">5단계: 견갑거근 국소 유착 해소</div><div>• Superior Angle~C7 견갑거근 <span class="tag-neg">${negName}</span> | T5~T8 <span class="tag-pos">${posName}</span> | <span class="tag-ma">2 mA</span></div></div>
+            <div class="step-card"><div class="step-title">6단계: 견관절 & 상부 승모근 영역</div><div>• Acromion 승모근 <span class="tag-neg">${negName}</span> | C7~T3 <span class="tag-pos">${posName}</span> | <span class="tag-ma">2 mA</span></div></div>
+            <div class="step-card"><div class="step-title">7단계: 견갑골 후전 (Scapular Retraction) 유도</div><div>• Scapula Medial Border <span class="tag-neg">${negName}</span> | T5~T8 <span class="tag-pos">${posName}</span> | Retraction 수축 유도</div></div>
+            <div class="step-card"><div class="step-title">8단계: 견갑골 하강 (Scapular Depression) 유도</div><div>• Scapula Inferior Angle <span class="tag-neg">${negName}</span> | T5~T8 <span class="tag-pos">${posName}</span> | Depression 수축 유도</div></div>
+            <div class="step-card"><div class="step-title">9~10단계: 우측 견갑골 & 승모근 대칭 적용</div><div>• 4~8단계 우측 대칭 완료</div></div>
         `;
+
         etherapyHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:var(--primary);">🌊 [E-Therapy 경추/견갑 고주파 세팅]</div>
+            <div style="font-size:0.8rem; font-weight:bold; color:#0284c7;">🌊 [E-Therapy 두경부/견갑 고주파 세팅]</div>
             <div style="font-size:0.78rem; margin-top:4px;">• <b>적용 파형:</b> C3-C5 신경근 및 두경부 고주파 이완 파형</div>
             <div style="font-size:0.78rem;">• <b>통전 시간/매질:</b> 12분 / 후두하근 및 승모근 고주파 전도크림</div>
             <div style="font-size:0.78rem;">• <b>임상 목표:</b> 긴장성 두통 완화 및 견갑골 주변근 순환 촉진</div>
@@ -980,7 +999,7 @@ function evaluatePlatform() {
 
     profileText += `3. ICF Domain Summary\n`;
     profileText += `   - [b] Body Function: ${ocChar} 통증 양상 (${ocTemporal}), 신경근/근막 과긴장성 반응\n`;
-    profileText += `   - [s] Structure Hypothesis: ${structureHypothesis}\n`;
+    profileText += `   - [s] Structure Hypothesis: Possible contributor: ${causeTissue} (Confidence: High)\n`;
     profileText += `   - [d] Activity: ${currentAreaName} 관련 과제 수행력 저하\n`;
     profileText += `   - [d] Participation: 직업 환경(${job}) 및 일상 역할 수행 제한\n`;
     profileText += `   - [e] Environmental Context:\n`;
@@ -1005,7 +1024,7 @@ function evaluatePlatform() {
     document.getElementById('out-therapy').innerHTML = stepsHtml;
     document.getElementById('out-etherapy').innerHTML = etherapyHtml;
 
-    // 📌 3) CPG 검증 운동 처방 및 유튜브 영상 링크 복원
+    // CPG 검증 운동 처방 및 유튜브 링크 라이브러리
     let track1 = [], track2 = [], track3 = [];
     if (region === 'ankle') {
         track1.push({ name: "발목 배굴(Dorsiflexion) & 비골근 등척성 강화", fitt: "주 5회 / RPE 3-4", target: "발목 관절 가동성 및 안정성 회복", yt: "https://www.youtube.com/watch?v=fdWEqXk6iDE" });
