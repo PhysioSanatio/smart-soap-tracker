@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BIOSPHERE LAB - 1:1 프라이빗 맞춤 BPS 사전 문진</title>
+    <title>REVOREM - 1:1 프라이빗 맞춤 BPS 사전 문진</title>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <style>
         :root {
             --bg-main: #FAFAFA;
             --card-bg: #FFFFFF;
-            --primary: #8C7A6B;           /* Sand Brown */
+            --primary: #8C7A6B;            /* Sand Brown */
             --primary-dark: #52463C;
-            --primary-light: #F7F4EE;     /* Soft Ivory / Beige */
-            --accent: #CDB78E;            /* Champagne Gold */
+            --primary-light: #F7F4EE;      /* Soft Ivory / Beige */
+            --accent: #CDB78E;             /* Champagne Gold */
             --rose-point: #A89684;
             --text-main: #222222;
             --text-sub: #666666;
@@ -42,7 +42,7 @@
         }
         
         .header { text-align: center; margin-bottom: 32px; border-bottom: 2px solid var(--accent); padding-bottom: 24px; }
-        .header-logo { font-size: 20px; font-weight: 800; letter-spacing: 4px; color: var(--primary); margin-bottom: 4px; }
+        .header-logo { font-size: 22px; font-weight: 800; letter-spacing: 4px; color: var(--primary); margin-bottom: 4px; font-family: 'Cinzel', serif; }
         .header-badge { display: inline-block; background: var(--primary-light); color: var(--primary-dark); font-size: 12px; font-weight: 700; padding: 5px 14px; border-radius: 20px; margin-bottom: 12px; border: 1px solid var(--border-light); }
         .header h1 { font-size: 22px; font-weight: 800; color: var(--text-main); margin: 0 0 8px 0; letter-spacing: -0.5px; }
         .header p { font-size: 13.5px; color: var(--text-sub); margin: 0; }
@@ -126,18 +126,42 @@
         }
         .submit-btn:active { transform: scale(0.99); }
         .submit-btn:disabled { background: #d3d3d3; box-shadow: none; }
+
+        /* 제출 완료 후 안내 화면 스타일 */
+        .success-screen {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .success-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+        .success-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary-dark);
+            margin-bottom: 12px;
+        }
+        .success-desc {
+            font-size: 15px;
+            color: var(--text-sub);
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="header">
-        <div class="header-logo">BIOSPHERE LAB</div>
+        <div class="header-logo">REVOREM</div>
         <span class="header-badge">🌿 100% Private BPS Precision Care</span>
         <h1>1:1 맞춤 바디 밸런싱 사전 문진</h1>
         <p>고급 세션 진행을 위한 전문 자가 컨디션 진단표입니다.</p>
     </div>
 
+    <!-- 설문지 폼 영역 -->
     <form id="wellnessForm">
         <div class="sec-title">👤 기본 인적 사항</div>
         <div class="input-grid">
@@ -198,6 +222,20 @@
 
         <button type="submit" id="submitBtn" class="submit-btn">문진 작성 완료 및 전송하기</button>
     </form>
+
+    <!-- 제출 완료 후 고객에게 보여지는 안내 화면 (차팅페이지로 안 넘어가고 여기서 차단됨) -->
+    <div id="successScreen" class="success-screen">
+        <div class="success-icon">✨</div>
+        <div class="success-title">사전 문진 제출이 완료되었습니다</div>
+        <div class="success-desc">
+            <span id="userNameDisplay" style="font-weight: 700; color: var(--primary-dark);"></span>님의 소중한 컨디션 데이터가<br>
+            <strong>REVOREM</strong> 정밀 분석 시스템에 안전하게 접수되었습니다.<br><br>
+            편안한 마음으로 샵을 방문해 주시면,<br>체계적인 1:1 맞춤 세션으로 뵙겠습니다.
+        </div>
+        <div style="font-size: 13px; color: var(--text-sub); background: var(--primary-light); padding: 12px; border-radius: 8px;">
+            본 창을 닫으셔도 안전하게 저장됩니다. 감사합니다.
+        </div>
+    </div>
 </div>
 
 <script>
@@ -499,8 +537,6 @@ document.getElementById('wellnessForm').addEventListener('submit', function(e) {
     const rawAddress = document.getElementById('pAddress').value;
     const rawArea = document.getElementById('areaSelect').value;
 
-    // 🎯 [구글 스크립트 시트 매핑 보완]
-    // 구글 스크립트 백엔드와 사전 문진 전송 필드를 100% 상호 호환되도록 수록
     const payload = {
         patientName: rawName ? `${rawName} (${rawAge}세)` : rawName,
         name: rawName,
@@ -525,24 +561,17 @@ document.getElementById('wellnessForm').addEventListener('submit', function(e) {
         at: new Date().toLocaleString('ko-KR')
     };
 
+    // 구글 시트로 데이터 전송 (no-cors 방식)
     fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) })
     .then(() => {
-        alert(`[문진 제출 완료]\n\n${rawName}님, 사전 문진이 완료되었습니다.\n현장 차팅 시스템으로 이동합니다.`);
-        
-        const targetSoapUrl = "index.html"; 
-        
-        const queryParams = `?pName=${encodeURIComponent(rawName)}`
-                          + `&pAge=${rawAge}`
-                          + `&pJob=${encodeURIComponent(jobVal)}`
-                          + `&area=${encodeURIComponent(rawArea)}`
-                          + `&bodyScore=${bodyScore}`
-                          + `&tsk=${tskTotal}`
-                          + `&pcs=${pcsTotal}`;
-
-        window.location.href = targetSoapUrl + queryParams;
+        // index.html로 안 넘어가고 설문 폼을 숨긴 뒤 완료 안내 화면(successScreen)을 띄움
+        document.getElementById('wellnessForm').style.display = 'none';
+        document.getElementById('userNameDisplay').innerText = rawName;
+        document.getElementById('successScreen').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     })
     .catch(err => {
-        alert("전송 중 오류가 발생했습니다.");
+        alert("전송 중 오류가 발생했습니다. 다시 시도해 주세요.");
         btn.disabled = false;
         btn.innerText = "문진 작성 완료 및 전송하기";
     });
