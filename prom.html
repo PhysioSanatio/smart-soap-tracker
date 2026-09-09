@@ -155,14 +155,17 @@
                 </select>
             </div>
             <div>
+                <!-- 🎯 index.html과 100% 일치하도록 수정된 직업 분류 -->
                 <select id="pJob" required>
                     <option value="">직업 / 주요 작업 형태</option>
-                    <option value="사무직/컴퓨터사용">사무직 (장시간 컴퓨터 작업)</option>
-                    <option value="육아/가사노동">육아 / 가사 노동 (반복 굴곡)</option>
-                    <option value="현장/육체노동">현장 / 육체 노동 (중량물 취급)</option>
-                    <option value="서비스/오래서있음">서비스직 (장시간 서 있기)</option>
-                    <option value="학생/운전기사">운전 / 고정 자세 유지</option>
-                    <option value="기타/일반">기타 / 일반</option>
+                    <option value="사무직/컴퓨터사용">사무직</option>
+                    <option value="육아/가사노동">육아/가사</option>
+                    <option value="현장/육체노동">육체노동</option>
+                    <option value="서비스/오래서있음">서비스직</option>
+                    <option value="전문운전/고정자세">전문운전</option>
+                    <option value="헤어/미용/디자이너">미용/디자이너</option>
+                    <option value="치과의사/의료보조">치과/의료계</option>
+                    <option value="스포츠/운동선수">운동선수/트레이너</option>
                 </select>
             </div>
             <div class="full-width">
@@ -199,7 +202,8 @@
 </div>
 
 <script>
-const scriptURL = 'https://script.google.com/macros/s/AKfycbxWQO-hVT-Nbf-xywFMx_Okv64T51zsITFILqwHuu4yWKyik30youiIs8MZaCyRewV2/exec'; 
+// 🎯 index.html에서 사용하는 동일한 구글 앱스 스크립트 URL 연결
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxpxWpXAAVEKWUuUmgMe05FW7xamQOVvWaPgSK_4i0Pzvo3fTJAjhNXlRsemNy29VJH/exec'; 
 
 const DATA_SURVEY = {
     NDI: {
@@ -488,7 +492,7 @@ document.getElementById('wellnessForm').addEventListener('submit', function(e) {
     document.querySelectorAll('input[name^="pcs_"]:checked').forEach(r => { pcsTotal += parseInt(r.value); });
 
     const jobElem = document.getElementById('pJob');
-    const jobVal = jobElem ? jobElem.value : '기타/일반';
+    const jobVal = jobElem ? jobElem.value : '사무직/컴퓨터사용';
 
     const payload = {
         name: document.getElementById('pName').value,
