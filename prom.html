@@ -70,7 +70,7 @@
         
         .full-width { grid-column: 1 / -1; }
 
-        input[type="text"], input[type="tel"], input[type="number"], select {
+        input[type="text"], input[type="tel"], input[type="number"], select, textarea {
             width: 100%; 
             padding: 15px 16px; 
             border-radius: 8px; 
@@ -81,7 +81,20 @@
             appearance: none;
             transition: all 0.2s ease;
         }
-        input:focus, select:focus { outline: none; border-color: var(--accent); background: #fff; box-shadow: 0 0 0 3px rgba(205, 183, 142, 0.2); }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); background: #fff; box-shadow: 0 0 0 3px rgba(205, 183, 142, 0.2); }
+        textarea { width:100%; min-height:92px; resize:vertical; padding:15px 16px; border-radius:8px; border:1.5px solid var(--border-light); font-size:14.5px; font-family:inherit; line-height:1.5; }
+        .range-wrap { background:var(--primary-light); border:1px solid var(--border-light); border-radius:10px; padding:16px; margin-top:10px; }
+        .range-row { display:flex; align-items:center; gap:14px; }
+        .range-row input[type="range"] { flex:1; accent-color:var(--primary); }
+        .range-value { min-width:48px; text-align:center; font-weight:800; color:var(--primary-dark); font-size:18px; }
+        .check-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+        @media(max-width:500px){.check-grid{grid-template-columns:1fr}}
+        .check-label { display:flex; gap:9px; align-items:flex-start; padding:12px; border:1.5px solid var(--border-light); border-radius:8px; background:var(--primary-light); font-size:13.5px; font-weight:600; cursor:pointer; }
+        .check-label input { margin-top:3px; accent-color:var(--primary); }
+        .safety-box { border:1.5px solid #E8C7C7; background:#FFF8F8; border-radius:10px; padding:16px; margin-bottom:12px; }
+        .safety-box .q-text { margin-bottom:10px; }
+        .safety-note { font-size:12.5px; color:#7A4A4A; line-height:1.55; margin-bottom:14px; }
+        .optional-note { font-size:12px; color:var(--text-sub); margin-top:6px; }
 
         .q-card { background: #fff; border: 1.5px solid var(--border-light); border-radius: 10px; padding: 18px; margin-bottom: 14px; transition: 0.2s; }
         .q-num { font-size: 12.5px; font-weight: 800; color: var(--primary); display: block; margin-bottom: 6px; }
@@ -199,6 +212,56 @@
             </div>
         </div>
 
+        <div class="sec-title">🎯 회복 목표 & 현재 기능</div>
+        <div class="guide-box">통증의 크기뿐 아니라, 다시 하고 싶은 활동과 현재 수행 수준을 함께 확인합니다.</div>
+        <div class="full-width">
+            <input type="text" id="primaryGoal" placeholder="회복 후 가장 먼저 하고 싶은 활동 (예: 아이를 안고 30분 걷기)" required>
+        </div>
+        <div class="range-wrap">
+            <div style="font-weight:700; margin-bottom:8px;">현재 그 활동을 어느 정도 할 수 있나요?</div>
+            <div class="range-row">
+                <span style="font-size:12px;">0 전혀 못함</span>
+                <input type="range" id="goalScore" min="0" max="10" value="5" oninput="document.getElementById('goalScoreView').textContent=this.value+'/10'">
+                <span class="range-value" id="goalScoreView">5/10</span>
+            </div>
+        </div>
+        <div style="margin-top:12px">
+            <textarea id="activityLimit" placeholder="현재 증상 때문에 가장 어려워진 일상생활·업무·육아·운동·취미가 있다면 적어주세요."></textarea>
+        </div>
+
+        <div class="sec-title">📝 증상 정보 (OLDCHARTS)</div>
+        <div class="guide-box">방문 전 알고 있는 범위에서 작성해 주세요. 정확하지 않은 항목은 가장 가까운 답을 선택하면 됩니다.</div>
+        <div class="input-grid">
+            <div><select id="ocOnset" required><option value="">언제부터 시작됐나요?</option><option>1주 이내</option><option>1주~1개월</option><option>1~3개월</option><option>3개월 이상</option><option>반복적으로 재발</option></select></div>
+            <div><input type="text" id="ocLocation" placeholder="가장 불편한 위치" required></div>
+            <div><select id="ocDuration" required><option value="">한번 나타나면 얼마나 지속되나요?</option><option>간헐적 / 짧게</option><option>수분~수십분</option><option>수시간</option><option>거의 지속적</option><option>활동에 따라 변함</option></select></div>
+            <div><select id="ocCharacter" required><option value="">주된 느낌</option><option>뻐근함/당김</option><option>찌름/날카로움</option><option>쑤심/욱신거림</option><option>화끈거림</option><option>저림/감각이상</option><option>힘 빠짐/불안정</option><option>뻣뻣함</option><option>기타</option></select></div>
+            <div class="full-width"><input type="text" id="ocAggravating" placeholder="심해지는 동작·자세·상황"></div>
+            <div class="full-width"><input type="text" id="ocRelieving" placeholder="편해지는 동작·자세·상황"></div>
+            <div><select id="ocRadiation"><option value="없음">다른 곳으로 퍼짐: 없음</option><option value="있음">다른 곳으로 퍼짐: 있음</option><option value="잘 모르겠음">잘 모르겠음</option></select></div>
+            <div><select id="ocTemporal"><option value="">심한 시간대/양상</option><option>아침</option><option>낮/활동 중</option><option>저녁</option><option>밤/수면 중</option><option>일정하지 않음</option></select></div>
+            <div><input type="number" id="nrsCurrent" min="0" max="10" placeholder="현재 통증 0~10" required></div>
+            <div><input type="number" id="nrsWorst" min="0" max="10" placeholder="최근 최고 통증 0~10" required></div>
+        </div>
+
+        <div class="sec-title">🛡️ 방문 전 안전 확인</div>
+        <div class="safety-note">아래 항목은 질환을 진단하기 위한 문항이 아니라, 방문 시 치료사가 먼저 확인해야 할 사항을 놓치지 않기 위한 사전 확인입니다. 해당되는 항목이 있어도 자동으로 특정 질환을 의미하지 않습니다.</div>
+        <div id="safety-survey-area"></div>
+
+        <div class="sec-title">🌍 생활·환경 요인</div>
+        <div class="guide-box">회복에 영향을 줄 수 있는 생활환경을 선택해 주세요. 여러 개 선택할 수 있습니다.</div>
+        <div class="check-grid" id="barrierGroup">
+            <label class="check-label"><input type="checkbox" value="장시간 앉아서 근무">장시간 앉아서 근무</label>
+            <label class="check-label"><input type="checkbox" value="반복적 육체노동">반복적인 육체노동</label>
+            <label class="check-label"><input type="checkbox" value="육아/가사 부담">육아·가사 부담</label>
+            <label class="check-label"><input type="checkbox" value="운동시간 부족">운동할 시간 부족</label>
+            <label class="check-label"><input type="checkbox" value="수면 부족">수면 부족</label>
+            <label class="check-label"><input type="checkbox" value="업무조절 어려움">업무 조절 어려움</label>
+            <label class="check-label"><input type="checkbox" value="특별히 없음">특별히 없음</label>
+            <label class="check-label"><input type="checkbox" value="기타">기타</label>
+        </div>
+        <div style="margin-top:12px"><textarea id="environmentNote" placeholder="그 밖에 회복에 방해되거나 도움이 될 만한 환경·상황이 있다면 적어주세요. (선택)"></textarea></div>
+
         <div class="sec-title">🎯 가장 불편한 신체 부위 정밀 진단</div>
         <div class="guide-box">현재 가장 통증이나 움직임 제한이 심한 부위 1곳을 선택해 주세요.</div>
         <select id="areaSelect" onchange="loadAreaQuestions()" required style="font-weight: 700; border-color: var(--accent);">
@@ -217,7 +280,8 @@
         <div class="sec-title psych">🧠 움직임 공포 & 통증 반응 (TSK-11 / PCS)</div>
         <div id="psych-survey-area"></div>
 
-        <div class="sec-title mental">🌿 마음 컨디션 (스트레스 · 불안 · 우울)</div>
+        <div class="sec-title mental">🌿 회복 관련 심리 컨디션</div>
+        <div class="guide-box">아래 항목은 회복 과정에 영향을 줄 수 있는 심리적 부담을 파악하기 위한 선별 정보입니다. 결과만으로 진단하지 않으며, 필요 시 적절한 전문 평가를 안내할 수 있습니다.</div>
         <div id="mental-survey-area"></div>
 
         <button type="submit" id="submitBtn" class="submit-btn">문진 작성 완료 및 전송하기</button>
@@ -431,6 +495,31 @@ const DATA_SURVEY = {
     ]
 };
 
+const SAFETY_PRE = [
+    {id:"majorTrauma", q:"최근 큰 사고·낙상·충돌 이후 현재 증상이 시작되었나요?"},
+    {id:"systemic", q:"최근 원인을 설명하기 어려운 발열·오한·심한 몸살과 함께 통증이 있나요?"},
+    {id:"weightLoss", q:"최근 특별한 이유 없이 체중이 눈에 띄게 감소했나요?"},
+    {id:"progressiveNeuro", q:"최근 팔이나 다리의 힘이 새로 떨어지거나 점점 약해지고, 감각저하가 넓어지고 있나요?"},
+    {id:"gaitBalance", q:"최근 걷기나 균형이 이전과 다르게 갑자기 또는 점점 나빠지고 있나요?"},
+    {id:"bowelBladder", q:"최근 대소변을 조절하는 기능에 갑작스러운 변화가 생겼나요?"},
+    {id:"saddle", q:"최근 회음부·엉덩이 안쪽 주변의 감각이 둔하거나 이상하게 느껴지나요?"}
+];
+
+function loadSafetyQuestions(){
+    const c=document.getElementById('safety-survey-area');
+    c.innerHTML=SAFETY_PRE.map((x,i)=>`
+      <div class="safety-box">
+        <div class="q-text">Q${i+1}. ${x.q}</div>
+        <div class="opt-group">
+          <label class="opt-label"><input type="radio" name="safe_${x.id}" value="아니오" required><span>아니오</span></label>
+          <label class="opt-label"><input type="radio" name="safe_${x.id}" value="예" required><span>예</span></label>
+          <label class="opt-label"><input type="radio" name="safe_${x.id}" value="잘 모르겠음" required><span>잘 모르겠음</span></label>
+        </div>
+      </div>`).join('');
+}
+function checkedValues(selector){return [...document.querySelectorAll(selector+ ' input[type="checkbox"]:checked')].map(x=>x.value);}
+function radioValue(name){const x=document.querySelector(`input[name="${name}"]:checked`);return x?x.value:"";}
+
 function loadAreaQuestions() {
     const area = document.getElementById('areaSelect').value;
     const container = document.getElementById('body-survey-area');
@@ -536,6 +625,20 @@ document.getElementById('wellnessForm').addEventListener('submit', function(e) {
     const rawGender = document.getElementById('pGender').value;
     const rawAddress = document.getElementById('pAddress').value;
     const rawArea = document.getElementById('areaSelect').value;
+    const goal = document.getElementById('primaryGoal').value.trim();
+    const goalScore = Number(document.getElementById('goalScore').value);
+    const activityLimit = document.getElementById('activityLimit').value.trim();
+    const safetyResponses = {};
+    SAFETY_PRE.forEach(x => safetyResponses[x.id] = radioValue(`safe_${x.id}`));
+    const safetyAttention = Object.entries(safetyResponses).filter(([k,v]) => v === '예' || v === '잘 모르겠음').map(([k]) => k);
+    const barriers = checkedValues('#barrierGroup');
+    const environmentNote = document.getElementById('environmentNote').value.trim();
+
+    // 문항별 PROM/심리 응답도 보존하여 REVOREM에서 총점뿐 아니라 패턴을 재구성할 수 있게 함
+    const bodyResponses = [...document.querySelectorAll('#body-survey-area input[type="radio"]:checked')].map(r => ({name:r.name, value:Number(r.value)}));
+    const tskResponses = [...document.querySelectorAll('input[name^="tsk_"]:checked')].map(r => ({name:r.name, value:Number(r.value)+1}));
+    const pcsResponses = [...document.querySelectorAll('input[name^="pcs_"]:checked')].map(r => ({name:r.name, value:Number(r.value)}));
+    const mentalResponses = [...document.querySelectorAll('input[name^="mental_"]:checked')].map(r => ({name:r.name, value:Number(r.value)}));
 
     const payload = {
         patientName: rawName ? `${rawName} (${rawAge}세)` : rawName,
@@ -549,6 +652,40 @@ document.getElementById('wellnessForm').addEventListener('submit', function(e) {
         address: rawAddress,
         region: rawArea,
         area: rawArea,
+        goal: goal,
+        primaryGoal: goal,
+        goalScore: goalScore,
+        activityLimit: activityLimit,
+        oldcharts: {
+            onset: document.getElementById('ocOnset').value,
+            location: document.getElementById('ocLocation').value.trim(),
+            duration: document.getElementById('ocDuration').value,
+            character: document.getElementById('ocCharacter').value,
+            aggravating: document.getElementById('ocAggravating').value.trim(),
+            relieving: document.getElementById('ocRelieving').value.trim(),
+            radiation: document.getElementById('ocRadiation').value,
+            temporal: document.getElementById('ocTemporal').value,
+            severity: Number(document.getElementById('nrsCurrent').value),
+            worstSeverity: Number(document.getElementById('nrsWorst').value)
+        },
+        ocOnset: document.getElementById('ocOnset').value,
+        ocLocation: document.getElementById('ocLocation').value.trim(),
+        ocDuration: document.getElementById('ocDuration').value,
+        ocCharacter: document.getElementById('ocCharacter').value,
+        ocAggravating: document.getElementById('ocAggravating').value.trim(),
+        ocRelieving: document.getElementById('ocRelieving').value.trim(),
+        ocRadiation: document.getElementById('ocRadiation').value,
+        ocTemporal: document.getElementById('ocTemporal').value,
+        nrsCurrent: Number(document.getElementById('nrsCurrent').value),
+        nrsWorst: Number(document.getElementById('nrsWorst').value),
+        safetyResponses: safetyResponses,
+        safetyAttention: safetyAttention,
+        environmentBarriers: barriers,
+        environmentNote: environmentNote,
+        bodyResponses: bodyResponses,
+        tskResponses: tskResponses,
+        pcsResponses: pcsResponses,
+        mentalResponses: mentalResponses,
         sessionNum: "사전문진",
         bodyScore: bodyScore,
         bodyScore0: bodyScore,
@@ -556,7 +693,7 @@ document.getElementById('wellnessForm').addEventListener('submit', function(e) {
         tsk: tskTotal,
         pcsScore: pcsTotal,
         pcs: pcsTotal,
-        clientReportText: `[사전문진 종합 데이터]\n- 성별: ${rawGender}\n- 직업: ${jobVal}\n- 선택부위: ${rawArea}\n- 척도총점: ${bodyScore}점 | TSK: ${tskTotal}점 | PCS: ${pcsTotal}점`,
+        clientReportText: `[REVOREM 사전문진]\n- 성별: ${rawGender} | 직업: ${jobVal}\n- Primary Goal: ${goal} (${goalScore}/10)\n- Activity limitation: ${activityLimit || '-'}\n- C.C.: ${document.getElementById('ocLocation').value} | NRS ${document.getElementById('nrsCurrent').value}/10 (최근 최고 ${document.getElementById('nrsWorst').value}/10)\n- 선택부위: ${rawArea} | PROM raw: ${bodyScore}\n- TSK-11: ${tskTotal} | PCS: ${pcsTotal}\n- Safety pre-screen attention: ${safetyAttention.length ? safetyAttention.join(', ') : 'none reported'}\n- Environment: ${barriers.join(', ') || '-'} ${environmentNote ? '/ '+environmentNote : ''}`,
         savedAt: new Date().toLocaleString('ko-KR'),
         at: new Date().toLocaleString('ko-KR')
     };
@@ -578,6 +715,7 @@ document.getElementById('wellnessForm').addEventListener('submit', function(e) {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+    loadSafetyQuestions();
     loadPsychQuestions();
     loadMentalQuestions();
     initAddressSearch();
