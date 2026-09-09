@@ -155,7 +155,6 @@
                 </select>
             </div>
             <div>
-                <!-- 🎯 index.html과 100% 일치하도록 수정된 직업 분류 -->
                 <select id="pJob" required>
                     <option value="">직업 / 주요 작업 형태</option>
                     <option value="사무직/컴퓨터사용">사무직</option>
@@ -202,7 +201,6 @@
 </div>
 
 <script>
-// 🎯 index.html에서 사용하는 동일한 구글 앱스 스크립트 URL 연결
 const scriptURL = 'https://script.google.com/macros/s/AKfycbxpxWpXAAVEKWUuUmgMe05FW7xamQOVvWaPgSK_4i0Pzvo3fTJAjhNXlRsemNy29VJH/exec'; 
 
 const DATA_SURVEY = {
@@ -494,33 +492,52 @@ document.getElementById('wellnessForm').addEventListener('submit', function(e) {
     const jobElem = document.getElementById('pJob');
     const jobVal = jobElem ? jobElem.value : '사무직/컴퓨터사용';
 
+    const rawName = document.getElementById('pName').value;
+    const rawAge = document.getElementById('pAge').value;
+    const rawPhone = document.getElementById('pPhone').value;
+    const rawGender = document.getElementById('pGender').value;
+    const rawAddress = document.getElementById('pAddress').value;
+    const rawArea = document.getElementById('areaSelect').value;
+
+    // 🎯 [구글 스크립트 시트 매핑 보완]
+    // 구글 스크립트 백엔드와 사전 문진 전송 필드를 100% 상호 호환되도록 수록
     const payload = {
-        name: document.getElementById('pName').value,
-        age: document.getElementById('pAge').value,
+        patientName: rawName ? `${rawName} (${rawAge}세)` : rawName,
+        name: rawName,
+        age: rawAge,
+        patientPhone: rawPhone,
+        phone: rawPhone,
+        gender: rawGender,
         job: jobVal,
-        phone: document.getElementById('pPhone').value,
-        gender: document.getElementById('pGender').value,
-        address: document.getElementById('pAddress').value,
-        area: document.getElementById('areaSelect').value,
+        patientAddress: rawAddress,
+        address: rawAddress,
+        region: rawArea,
+        area: rawArea,
+        sessionNum: "사전문진",
         bodyScore: bodyScore,
+        bodyScore0: bodyScore,
+        tskScore: tskTotal,
         tsk: tskTotal,
+        pcsScore: pcsTotal,
         pcs: pcsTotal,
+        clientReportText: `[사전문진 종합 데이터]\n- 성별: ${rawGender}\n- 직업: ${jobVal}\n- 선택부위: ${rawArea}\n- 척도총점: ${bodyScore}점 | TSK: ${tskTotal}점 | PCS: ${pcsTotal}점`,
+        savedAt: new Date().toLocaleString('ko-KR'),
         at: new Date().toLocaleString('ko-KR')
     };
 
     fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) })
     .then(() => {
-        alert(`[문진 제출 완료]\n\n${payload.name}님, 사전 문진이 완료되었습니다.\n현장 차팅 시스템으로 이동합니다.`);
+        alert(`[문진 제출 완료]\n\n${rawName}님, 사전 문진이 완료되었습니다.\n현장 차팅 시스템으로 이동합니다.`);
         
         const targetSoapUrl = "index.html"; 
         
-        const queryParams = `?pName=${encodeURIComponent(payload.name)}`
-                          + `&pAge=${payload.age}`
-                          + `&pJob=${encodeURIComponent(payload.job)}`
-                          + `&area=${encodeURIComponent(payload.area)}`
-                          + `&bodyScore=${payload.bodyScore}`
-                          + `&tsk=${payload.tsk}`
-                          + `&pcs=${payload.pcs}`;
+        const queryParams = `?pName=${encodeURIComponent(rawName)}`
+                          + `&pAge=${rawAge}`
+                          + `&pJob=${encodeURIComponent(jobVal)}`
+                          + `&area=${encodeURIComponent(rawArea)}`
+                          + `&bodyScore=${bodyScore}`
+                          + `&tsk=${tskTotal}`
+                          + `&pcs=${pcsTotal}`;
 
         window.location.href = targetSoapUrl + queryParams;
     })
