@@ -15,10 +15,6 @@
             --warning-yellow: #D97706;
             --warning-bg: #FFFBEB;
             --success: #15803D;
-            --therapy-purple: #6D28D9;
-            --therapy-bg: #F5F3FF;
-            --etherapy-blue: #0284C7;
-            --etherapy-bg: #F0F9FF;
             --bg: #FAFAFA;
             --card-bg: #FFFFFF;
             --border: #E5E0D8;
@@ -206,17 +202,18 @@
             overflow-y: auto;
         }
 
+        /* 4번, 5번 카드 테두리를 일반 카드와 동일하게 통일 */
         .therapy-box {
-            background: var(--therapy-bg);
-            border: 1.5px solid #DDD6FE;
+            background: var(--accent-light);
+            border: 1px solid var(--border);
             border-radius: 8px;
             padding: 12px;
             margin-bottom: 15px;
         }
 
         .etherapy-box {
-            background: var(--etherapy-bg);
-            border: 1.5px solid #7DD3FC;
+            background: var(--accent-light);
+            border: 1px solid var(--border);
             border-radius: 8px;
             padding: 12px;
             margin-bottom: 15px;
@@ -265,7 +262,7 @@
         .tag-neg { color: #0284C7; font-weight: bold; }
         .tag-pos { color: #EA580C; font-weight: bold; }
         .tag-ma { color: var(--success); font-weight: bold; }
-        .tag-mod { color: var(--therapy-purple); font-weight: bold; }
+        .tag-mod { color: var(--primary-dark); font-weight: bold; }
         .tag-warn { color: var(--warning-yellow); font-weight: bold; }
 
         .yt-link {
@@ -385,7 +382,7 @@
             </div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
-                <select id="pt-job" onchange="evaluateSOAP()" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; font-weight:bold; color:var(--etherapy-blue);">
+                <select id="pt-job" onchange="evaluateSOAP()" style="padding: 8px; border: 1px solid var(--border); border-radius: 6px; font-weight:bold; color:var(--primary-dark);">
                     <option value="사무직/컴퓨터사용">직업: 사무직 (장시간 좌식/거북목)</option>
                     <option value="육아/가사노동">직업: 육아/가사 (반복 굴곡/손목부하)</option>
                     <option value="현장/육체노동">직업: 육체노동 (중량물 취급/요추부하)</option>
@@ -503,22 +500,22 @@
             <div id="out-assessment" class="out-box">분석 결과가 출력됩니다.</div>
         </div>
 
-        <div class="card" style="border-color: #DDD6FE;">
-            <h2 id="therapy-header-title" style="color: var(--therapy-purple);">4. 선택 부위 정밀 수기-전류 핸즈온 프로토콜</h2>
+        <div class="card">
+            <h2 id="therapy-header-title" style="color: var(--primary);">4. 선택 부위 정밀 수기-전류 핸즈온 프로토콜</h2>
             <div id="out-therapy" class="therapy-box" style="max-height: 280px; overflow-y: auto;">
                 <p style="color: var(--text-sub); font-size: 0.85rem; text-align: center; margin:0;">감별 완료 시 핸즈온 가이드가 도출됩니다.</p>
             </div>
         </div>
 
-        <div class="card" style="border-color: #7DD3FC;">
-            <h2 style="color: var(--etherapy-blue);">⚡ E-Therapy (고주파/엑셀 파형) 처방 세팅</h2>
+        <div class="card">
+            <h2 style="color: var(--primary);">5. E-Therapy (고주파/엑셀 파형) 처방 세팅</h2>
             <div id="out-etherapy" class="etherapy-box">
                 <p style="color: var(--text-sub); font-size: 0.85rem; text-align: center; margin:0;">증상별 E-Therapy 설정값이 도출됩니다.</p>
             </div>
         </div>
 
         <div class="card">
-            <h2>5. CPG 검증 가이드라인 운동 처방 & 고유 영상</h2>
+            <h2>6. CPG 검증 가이드라인 운동 처방 & 고유 영상</h2>
             <div id="out-fitt">
                 <p style="color: var(--text-sub); font-size: 0.85rem; text-align: center;">운동 처방전이 생성됩니다.</p>
             </div>
@@ -526,6 +523,7 @@
     </div>
 </div>
 
+<!-- 📈 하단 경과 추적 섹션 (3분할 그래프 컬러 통일 완료) -->
 <div class="layout" style="margin-top:0;">
     <div style="grid-column: 1 / -1;">
         <div class="tracking-card">
@@ -542,14 +540,19 @@
 
             <div class="session-badge-group" id="session-badges"></div>
 
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; margin-bottom: 15px;">
+            <!-- 🎯 신체 기능 불편도, TSK, PCS 3분할 그래프 레이아웃 (모두 브랜드 톤 반영) -->
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px; margin-bottom: 15px;">
                 <div>
-                    <span style="font-size:0.8rem; font-weight:bold; color:var(--primary-dark);">[신체 기능 불편도 점수 추이]</span>
+                    <span style="font-size:0.75rem; font-weight:bold; color:var(--primary-dark);">[신체 기능 불편도 추이]</span>
                     <div class="chart-container" id="score-chart"></div>
                 </div>
                 <div>
-                    <span style="font-size:0.8rem; font-weight:bold; color:var(--primary-dark);">[움직임 부담감(TSK) 추이]</span>
+                    <span style="font-size:0.75rem; font-weight:bold; color:var(--primary-dark);">[움직임 공포감(TSK) 추이]</span>
                     <div class="chart-container" id="tsk-chart"></div>
+                </div>
+                <div>
+                    <span style="font-size:0.75rem; font-weight:bold; color:var(--primary-dark);">[통증 파국화(PCS) 추이]</span>
+                    <div class="chart-container" id="pcs-chart"></div>
                 </div>
             </div>
 
@@ -832,7 +835,7 @@ function evaluateSOAP() {
         document.getElementById('therapy-header-title').innerText = "4. 발목 정밀 6단계 대경TENS 수기-전류 프로토콜";
         
         stepsHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:var(--therapy-purple); margin-bottom:8px;">⚡ [발목 정밀 수기-전류 매핑] <span class="tag-warn">(⚠️ 필수: 쥐 나는 느낌 피드백 모니터링)</span></div>
+            <div style="font-size:0.8rem; font-weight:bold; color:var(--primary); margin-bottom:8px;">⚡ [발목 정밀 수기-전류 매핑] <span class="tag-warn">(⚠️ 필수: 쥐 나는 느낌 피드백 모니터링)</span></div>
             <div class="step-card"><div class="step-title">1단계: 전경골근 & 발가락 신전 유도</div><div>• Dorsiflexion 선 가운데 <span class="tag-pos">${posName}</span> | 전경골근 <span class="tag-neg">${negName}</span> | 발가락 Extension 인상</div></div>
             <div class="step-card"><div class="step-title">2단계: 외측 복사뼈 & 갈퀴발(Claw Toe) 유도</div><div>• 외측복사뼈 1마디 위 <span class="tag-pos">${posName}</span> | 2마디 위 <span class="tag-neg">${negName}</span> | 갈퀴발 수축 유도</div></div>
             <div class="step-card"><div class="step-title">3단계: Proximal 비골근-전경골근 미세 각도 조절</div><div>• Proximal 사이 <span class="tag-neg">${negName}</span> | Distal 사이 <span class="tag-pos">${posName}</span> | Inversion/Eversion 중간각 조절</div></div>
@@ -842,7 +845,7 @@ function evaluateSOAP() {
         `;
 
         etherapyHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:var(--etherapy-blue);">🌊 [E-Therapy 족부/발목 고주파 세팅]</div>
+            <div style="font-size:0.8rem; font-weight:bold; color:var(--primary);">🌊 [E-Therapy 족부/발목 고주파 세팅]</div>
             <div style="font-size:0.78rem; margin-top:4px;">• <b>적용 파형:</b> 엑셀 인버전 이완 파형 (Deep Tissues Frequency)</div>
             <div style="font-size:0.78rem;">• <b>통전 시간/매질:</b> 15분 / 고주파 전도성 크림 도포</div>
             <div style="font-size:0.78rem;">• <b>임상 목표:</b> 족저근막 및 내/외측 복사뼈 심부 심줄 순환 증진</div>
@@ -852,7 +855,7 @@ function evaluateSOAP() {
         document.getElementById('therapy-header-title').innerText = "4. 무릎 정밀 8단계 대경TENS 수기-전류 프로토콜";
 
         stepsHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:var(--therapy-purple); margin-bottom:8px;">⚡ [무릎 정밀 수기-전류 매핑]</div>
+            <div style="font-size:0.8rem; font-weight:bold; color:var(--primary); margin-bottom:8px;">⚡ [무릎 정밀 수기-전류 매핑]</div>
             <div class="step-card"><div class="step-title">1단계: 내/외측광근 근수축 유도</div><div>• 내측광근-Patella 사이 <span class="tag-neg">${negName}</span> | 외측광근-Patella 사이 <span class="tag-pos">${posName}</span></div></div>
             <div class="step-card"><div class="step-title">2단계: Patella 정가운데 양옆 압박감 유도</div><div>• Patella 내측 <span class="tag-neg">${negName}</span> | 외측 <span class="tag-pos">${posName}</span> | (무릎 누르는 압력 피드백)</div></div>
             <div class="step-card"><div class="step-title">3단계: Patellar Tendon 양옆 자극</div><div>• Patellar tendon 내측 <span class="tag-neg">${negName}</span> | 외측 <span class="tag-pos">${posName}</span></div></div>
@@ -862,7 +865,7 @@ function evaluateSOAP() {
         `;
 
         etherapyHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:var(--etherapy-blue);">🌊 [E-Therapy 무릎 관절낭 고주파 세팅]</div>
+            <div style="font-size:0.8rem; font-weight:bold; color:var(--primary);">🌊 [E-Therapy 무릎 관절낭 고주파 세팅]</div>
             <div style="font-size:0.78rem; margin-top:4px;">• <b>적용 파형:</b> 관절 심부 순환 엑셀 파형 (Joint Capsule Wave)</div>
             <div style="font-size:0.78rem;">• <b>통전 시간/매질:</b> 12분 / 무릎 관절 전면부 전도매질 수분포 도포</div>
             <div style="font-size:0.78rem;">• <b>임상 목표:</b> 슬개골 트랙킹 부종 완화 및 관절액 삼투 이완</div>
@@ -872,7 +875,7 @@ function evaluateSOAP() {
         document.getElementById('therapy-header-title').innerText = "4. 팔꿈치 정밀 8단계 대경TENS 수기-전류 프로토콜";
 
         stepsHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:var(--therapy-purple); margin-bottom:8px;">⚡ [팔꿈치 정밀 수기-전류 매핑] <span class="tag-warn">(👋 과수축 시 시술자 눌러주기 보조)</span></div>
+            <div style="font-size:0.8rem; font-weight:bold; color:var(--primary); margin-bottom:8px;">⚡ [팔꿈치 정밀 수기-전류 매핑] <span class="tag-warn">(👋 과수축 시 시술자 눌러주기 보조)</span></div>
             <div class="step-card"><div class="step-title">1단계: Deltoid tuberosity 45도 내측 & 손목 Extension 탐색</div><div>• Proximal <span class="tag-neg">${negName}</span> | Distal <span class="tag-pos">${posName}</span> | Extension 탐색</div></div>
             <div class="step-card"><div class="step-title">2단계: 삼두/이두 통전 & 수기 완화</div><div>• 삼두 <span class="tag-neg">${negName}</span> | 이두 <span class="tag-pos">${posName}</span> | 손목 과꺾임 시 시술자 아래로 눌러 완화</div></div>
             <div class="step-card"><div class="step-title">3단계: 삼두-외측상과 자극</div><div>• 삼두 <span class="tag-neg">${negName}</span> | 외측상과 <span class="tag-pos">${posName}</span> | 누름 보조 후 유지</div></div>
@@ -884,7 +887,7 @@ function evaluateSOAP() {
         `;
 
         etherapyHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:var(--etherapy-blue);">🌊 [E-Therapy 상과염(Epicondylitis) 파형 세팅]</div>
+            <div style="font-size:0.8rem; font-weight:bold; color:var(--primary);">🌊 [E-Therapy 상과염(Epicondylitis) 파형 세팅]</div>
             <div style="font-size:0.78rem; margin-top:4px;">• <b>적용 파형:</b> 건 부착부 이완 고주파 파형 (Tendon Repair Wave)</div>
             <div style="font-size:0.78rem;">• <b>통전 시간/매질:</b> 10분 / 외측/내측 상과 고주파 크림 얇게 도포</div>
             <div style="font-size:0.78rem;">• <b>임상 목표:</b> 건 부착부 세포 재생 유도 및 과수축 포착 해소</div>
@@ -894,7 +897,7 @@ function evaluateSOAP() {
         document.getElementById('therapy-header-title').innerText = "4. 장요근/내전근 정밀 4단계 수기-전류 프로토콜";
 
         stepsHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:var(--therapy-purple); margin-bottom:8px;">⚡ [장요근 & 내전근 정밀 수기-전류 매핑]</div>
+            <div style="font-size:0.8rem; font-weight:bold; color:var(--primary); margin-bottom:8px;">⚡ [장요근 & 내전근 정밀 수기-전류 매핑]</div>
             <div class="step-card"><div class="step-title">1단계: ASIS 내측 집게 압박 & 무릎 폄 유도</div><div>• ASIS 내측 <span class="tag-neg">${negName}</span> | 중둔근 <span class="tag-pos">${posName}</span> | 무릎 펴질 때까지 유지</div></div>
             <div class="step-card"><div class="step-title">2단계: 4자 자세(Figure-4) & 반대다리 고경 수동 저항</div><div>• L4~S1 <span class="tag-pos">${posName}</span> | 서혜부 삼각 <span class="tag-neg">${negName}</span> | <b>"반대 다리로 베개 강하게 누르도록"</b> 지시</div></div>
             <div class="step-card"><div class="step-title">3단계: 대퇴직근 기시부-허벅지 중간</div><div>• 대퇴직근 기시부 <span class="tag-neg">${negName}</span> | 앞허벅지 중간 <span class="tag-pos">${posName}</span></div></div>
@@ -902,7 +905,7 @@ function evaluateSOAP() {
         `;
 
         etherapyHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:var(--etherapy-blue);">🌊 [E-Therapy 심부 고관절/장요근 파형 세팅]</div>
+            <div style="font-size:0.8rem; font-weight:bold; color:var(--primary);">🌊 [E-Therapy 심부 고관절/장요근 파형 세팅]</div>
             <div style="font-size:0.78rem; margin-top:4px;">• <b>적용 파형:</b> 심부 장요근 이완 고주파 (Deep Psoas Frequency)</div>
             <div style="font-size:0.78rem;">• <b>통전 시간/매질:</b> 15분 / 복부 하단 서혜부 매질 도포</div>
             <div style="font-size:0.78rem;">• <b>임상 목표:</b> 고관절 굴근 신경근 자율신경 이완</div>
@@ -911,7 +914,7 @@ function evaluateSOAP() {
         causeTissue = "요추 신경근, 요방경근, 천장관절 유착 및 좌골신경 포착";
         document.getElementById('therapy-header-title').innerText = "4. 요추 정밀 10단계 대경TENS 수기-전류 프로토콜";
         stepsHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:var(--therapy-purple); margin-bottom:8px;">⚡ [60Hz 요추 정밀 10단계 수기-전류 매핑]</div>
+            <div style="font-size:0.8rem; font-weight:bold; color:var(--primary); margin-bottom:8px;">⚡ [60Hz 요추 정밀 10단계 수기-전류 매핑]</div>
             <div class="step-card"><div class="step-title">1단계: 상부 요추 분절 (L1~L3) 자극</div><div>• L1 근처 <span class="tag-neg">${negName}</span> | L3 방향 <span class="tag-pos">${posName}</span> | <span class="tag-ma">3 mA</span></div></div>
             <div class="step-card"><div class="step-title">2단계: 하부 요추 분절 (L2~L5) 자극</div><div>• L2 근처 <span class="tag-neg">${negName}</span> | L5 방향 <span class="tag-pos">${posName}</span> | <span class="tag-ma">3 mA</span></div></div>
             <div class="step-card"><div class="step-title">3단계: 복횡근·복사근 연동 (두부 방향 압박)</div><div>• PSIS 근처 <span class="tag-neg">${negName}</span> | 장골능 <span class="tag-pos">${posName}</span> | <span class="tag-ma">3 mA</span> (두부 방향)</div></div>
@@ -924,7 +927,7 @@ function evaluateSOAP() {
         `;
 
         etherapyHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:var(--etherapy-blue);">🌊 [E-Therapy 요부 심부 고주파 세팅]</div>
+            <div style="font-size:0.8rem; font-weight:bold; color:var(--primary);">🌊 [E-Therapy 요부 심부 고주파 세팅]</div>
             <div style="font-size:0.78rem; margin-top:4px;">• <b>적용 파형:</b> 흉요근막 심부 진동 엑셀 파형 (Lumbar Core Wave)</div>
             <div style="font-size:0.78rem;">• <b>통전 시간/매질:</b> 15분 / 요방경근 영역 고주파 전도크림</div>
             <div style="font-size:0.78rem;">• <b>임상 목표:</b> 요추 심부 다열근 및 요방경근 유착 세포 이완</div>
@@ -933,7 +936,7 @@ function evaluateSOAP() {
         causeTissue = "후두하근, 두경부 측두근막, C3-C5 신경근, 견갑거근 및 견갑골 수축/하강 유착";
         document.getElementById('therapy-header-title').innerText = "4. 목/어깨 정밀 10단계 대경TENS 수기-전류 프로토콜";
         stepsHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:var(--therapy-purple); margin-bottom:8px;">⚡ [경추 & 어깨 정밀 10단계 수기-전류 매핑]</div>
+            <div style="font-size:0.8rem; font-weight:bold; color:var(--primary); margin-bottom:8px;">⚡ [경추 & 어깨 정밀 10단계 수기-전류 매핑]</div>
             <div class="step-card"><div class="step-title">1단계: 두통 & 후두하근 영역 이완</div><div>• 후두하근 <span class="tag-neg">${negName}</span> | 하부 경추 <span class="tag-pos">${posName}</span> | <span class="tag-ma">최대 2 mA</span> (정수리 감각 유도)</div></div>
             <div class="step-card"><div class="step-title">2단계: 측두부/두부 감각 & 30Hz 펄스 타격 (좌)</div><div>• Styloid-Splenius <span class="tag-neg">${negName}</span> | 하부 경추 <span class="tag-pos">${posName}</span> | <span class="tag-mod">30Hz(4초) ↔ 60Hz 변조</span> (입안 쇠맛 감각)</div></div>
             <div class="step-card"><div class="step-title">3단계: 측두부/두부 감각 & 30Hz 펄스 타격 (우)</div><div>• 우측 영역 동일 교차 적용</div></div>
@@ -946,7 +949,7 @@ function evaluateSOAP() {
         `;
 
         etherapyHtml = `
-            <div style="font-size:0.8rem; font-weight:bold; color:var(--etherapy-blue);">🌊 [E-Therapy 두경부/견갑 고주파 세팅]</div>
+            <div style="font-size:0.8rem; font-weight:bold; color:var(--primary);">🌊 [E-Therapy 두경부/견갑 고주파 세팅]</div>
             <div style="font-size:0.78rem; margin-top:4px;">• <b>적용 파형:</b> C3-C5 신경근 및 두경부 고주파 이완 파형</div>
             <div style="font-size:0.78rem;">• <b>통전 시간/매질:</b> 12분 / 후두하근 및 승모근 고주파 전도크림</div>
             <div style="font-size:0.78rem;">• <b>임상 목표:</b> 긴장성 두통 완화 및 견갑골 주변근 순환 촉진</div>
@@ -1056,19 +1059,24 @@ function switchSession(num) {
 function updateCharts() {
     const scoreChart = document.getElementById('score-chart');
     const tskChart = document.getElementById('tsk-chart');
-    if(!scoreChart || !tskChart) return;
+    const pcsChart = document.getElementById('pcs-chart');
+    if(!scoreChart || !tskChart || !pcsChart) return;
     
     let scoreHtml = '';
     let tskHtml = '';
+    let pcsHtml = '';
 
     for(let i = 1; i <= 10; i++) {
         const data = sessionHistory[i];
         const scoreVal = data ? data.bodyScore : 0;
         const tskVal = data ? data.tsk : 0;
+        const pcsVal = data ? data.pcs : 0;
 
         const scoreHeight = Math.min(100, Math.max(10, (scoreVal / 60) * 100));
         const tskHeight = Math.min(100, Math.max(10, (tskVal / 50) * 100));
+        const pcsHeight = Math.min(100, Math.max(10, (pcsVal / 52) * 100));
 
+        // 🎯 3개 차트 모두 샌드 브라운 계열(--primary 또는 약간의 톤 변화)로 통일감 부여
         scoreHtml += `
             <div class="chart-bar-group">
                 <div class="chart-bar" style="height:${data ? scoreHeight : 5}%; background:${data ? 'var(--primary)' : 'var(--border)'};"></div>
@@ -1077,13 +1085,20 @@ function updateCharts() {
 
         tskHtml += `
             <div class="chart-bar-group">
-                <div class="chart-bar" style="height:${data ? tskHeight : 5}%; background:${data ? 'var(--therapy-purple)' : 'var(--border)'};"></div>
+                <div class="chart-bar" style="height:${data ? tskHeight : 5}%; background:${data ? '#7A6A5C' : 'var(--border)'};"></div>
                 <div class="chart-label">${i}회<br>${data ? tskVal + '점' : '-'}</div>
+            </div>`;
+
+        pcsHtml += `
+            <div class="chart-bar-group">
+                <div class="chart-bar" style="height:${data ? pcsHeight : 5}%; background:${data ? '#68594C' : 'var(--border)'};"></div>
+                <div class="chart-label">${i}회<br>${data ? pcsVal + '점' : '-'}</div>
             </div>`;
     }
 
     scoreChart.innerHTML = scoreHtml;
     tskChart.innerHTML = tskHtml;
+    pcsChart.innerHTML = pcsHtml;
 }
 
 function generateClientReport() {
