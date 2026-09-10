@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>REVOREM Clinical · Admin Login</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#f7f3ec;
+      --panel:rgba(255,253,249,.88);
+      --ink:#27231f;
+      --muted:#776e65;
+      --gold:#9b7d5d;
+      --line:rgba(155,125,93,.22);
+      --shadow:0 24px 70px rgba(67,54,42,.08);
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:28px;
+      background:
+        radial-gradient(circle at 50% 18%, rgba(155,125,93,.10), transparent 32%),
+        var(--bg);
+      color:var(--ink);
+      font-family:"Montserrat","Pretendard","Noto Sans KR",sans-serif;
+    }
+
+    .login-shell{
+      width:min(440px,100%);
+      text-align:center;
+    }
+
+    .brand{
+      margin-bottom:26px;
+    }
+
+    .brand-mark{
+      width:58px;
+      height:58px;
+      margin:0 auto 14px;
+      border:1px solid var(--line);
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      color:var(--gold);
+      font-weight:700;
+      font-size:1.2rem;
+      letter-spacing:-.06em;
+      background:rgba(255,255,255,.38);
+    }
+
+    .brand-name{
+      font-size:.83rem;
+      font-weight:700;
+      letter-spacing:.20em;
+    }
+
+    .brand-sub{
+      margin-top:6px;
+      color:var(--muted);
+      font-size:.62rem;
+      letter-spacing:.14em;
+    }
+
+    .panel{
+      padding:42px 34px 34px;
+      border:1px solid var(--line);
+      border-radius:26px;
+      background:var(--panel);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(12px);
+    }
+
+    .eyebrow{
+      margin-bottom:10px;
+      color:var(--gold);
+      font-size:.65rem;
+      font-weight:700;
+      letter-spacing:.16em;
+    }
+
+    h1{
+      margin:0;
+      font-size:1.55rem;
+      line-height:1.35;
+      font-weight:600;
+      letter-spacing:-.03em;
+    }
+
+    .desc{
+      margin:13px auto 28px;
+      color:var(--muted);
+      font-family:"Pretendard","Noto Sans KR",sans-serif;
+      font-size:.9rem;
+      line-height:1.7;
+    }
+
+    .google-btn{
+      width:100%;
+      min-height:52px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:#fff;
+      color:var(--ink);
+      cursor:pointer;
+      font-family:inherit;
+      font-size:.87rem;
+      font-weight:600;
+      transition:.18s ease;
+    }
+
+    .google-btn:hover{
+      transform:translateY(-1px);
+      box-shadow:0 9px 22px rgba(67,54,42,.07);
+    }
+
+    .google-btn:disabled{
+      opacity:.55;
+      cursor:not-allowed;
+      transform:none;
+      box-shadow:none;
+    }
+
+    .status{
+      min-height:24px;
+      margin-top:17px;
+      color:var(--muted);
+      font-family:"Pretendard","Noto Sans KR",sans-serif;
+      font-size:.78rem;
+      line-height:1.55;
+    }
+
+    .status.error{color:#9a514d}
+
+    .security-note{
+      margin-top:24px;
+      padding-top:20px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-size:.64rem;
+      line-height:1.7;
+      letter-spacing:.03em;
+    }
+
+    .back{
+      display:inline-block;
+      margin-top:22px;
+      color:var(--muted);
+      text-decoration:none;
+      font-size:.7rem;
+      letter-spacing:.08em;
+    }
+
+    .back:hover{color:var(--ink)}
+  </style>
+</head>
+
+<body>
+  <main class="login-shell">
+    <div class="brand">
+      <div class="brand-mark">R</div>
+      <div class="brand-name">REVOREM</div>
+      <div class="brand-sub">BPS PRECISION LAB</div>
+    </div>
+
+    <section class="panel">
+      <div class="eyebrow">ADMINISTRATOR ACCESS</div>
+      <h1>REVOREM Clinical</h1>
+      <p class="desc">
+        관리자 전용 임상 시스템입니다.<br>
+        승인된 Google 계정으로 로그인해 주세요.
+      </p>
+
+      <button id="googleLoginBtn" class="google-btn" type="button">
+        Continue with Google
+      </button>
+
+      <div id="status" class="status"></div>
+
+      <div class="security-note">
+        Authorized personnel only.<br>
+        인증되지 않은 계정은 Clinical 페이지에 접근할 수 없습니다.
+      </div>
+    </section>
+
+    <a class="back" href="index.html">← BACK TO REVOREM</a>
+  </main>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+    import {
+      getAuth,
+      GoogleAuthProvider,
+      signInWithPopup,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+    const firebaseConfig = {
+  apiKey: "AIzaSyBrJZNDB2FYu1uO9fPLWQw1qsLVwuAABoY",
+  authDomain: "revorem-2d0f4.firebaseapp.com",
+  projectId: "revorem-2d0f4",
+  storageBucket: "revorem-2d0f4.firebasestorage.app",
+  messagingSenderId: "556322485533",
+  appId: "1:556322485533:web:11a1368658b648bf5e9df4",
+  measurementId: "G-45HKDJ3JTV"
+};
+
+    // 아래 이메일만 실제 관리자 Google 계정으로 교체하세요.
+    const ALLOWED_ADMINS = [
+      "YOUR_ADMIN_EMAIL@gmail.com"
+    ].map(email => email.toLowerCase());
+
+    const CLINICAL_PAGE = "charting.html";
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    provider.setCustomParameters({
+      prompt: "select_account"
+    });
+
+    const btn = document.getElementById("googleLoginBtn");
+    const statusEl = document.getElementById("status");
+
+    function setStatus(message, isError = false){
+      statusEl.textContent = message;
+      statusEl.classList.toggle("error", isError);
+    }
+
+    function isAllowed(user){
+      const email = (user?.email || "").toLowerCase();
+      return ALLOWED_ADMINS.includes(email);
+    }
+
+    async function authorizeAndEnter(user){
+      if (!user) return;
+
+      if (!isAllowed(user)){
+        await signOut(auth);
+        setStatus("승인되지 않은 계정입니다.", true);
+        btn.disabled = false;
+        return;
+      }
+
+      setStatus("인증되었습니다. Clinical 시스템으로 이동합니다.");
+      window.location.replace(CLINICAL_PAGE);
+    }
+
+    btn.addEventListener("click", async () => {
+      btn.disabled = true;
+      setStatus("Google 계정 인증 중...");
+
+      try{
+        const result = await signInWithPopup(auth, provider);
+        await authorizeAndEnter(result.user);
+      }catch(error){
+        console.error(error);
+
+        if (error.code === "auth/popup-closed-by-user"){
+          setStatus("로그인이 취소되었습니다.", true);
+        }else{
+          setStatus("로그인 중 오류가 발생했습니다. Firebase 설정을 확인해 주세요.", true);
+        }
+
+        btn.disabled = false;
+      }
+    });
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user && isAllowed(user)){
+        window.location.replace(CLINICAL_PAGE);
+      }
+    });
+  </script>
+</body>
+</html>
