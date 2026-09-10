@@ -55,15 +55,21 @@ async function verifyRevoremAdmin(req) {
   const emails = allowedAdminEmails();
   const uids = allowedAdminUids();
 
-  // UID가 설정되어 있으면 UID를 최우선 권한 기준으로 사용.
-  // 초기 구축 시 UID가 아직 없다면 verified Google email allowlist를 사용.
-  const uidAllowed = uids.length > 0 && uids.includes(uid);
-  const emailAllowed =
-    emails.length > 0 &&
-    decoded.email_verified === true &&
-    emails.includes(email);
+  // REVOREM Security v1.1 — UID-FIRST
+  // UID allowlist가 설정되어 있으면 UID 일치를 필수로 요구한다.
+  // UID allowlist가 비어 있을 때만 verified email allowlist를 fallback으로 사용한다.
+  let isAllowed = false;
 
-  if (!uidAllowed && !emailAllowed) {
+  if (uids.length > 0) {
+    isAllowed = uids.includes(uid);
+  } else {
+    isAllowed =
+      emails.length > 0 &&
+      decoded.email_verified === true &&
+      emails.includes(email);
+  }
+
+  if (!isAllowed) {
     const err = new Error("REVOREM 관리자 권한이 없습니다.");
     err.statusCode = 403;
     throw err;
@@ -163,3 +169,4 @@ export default async function handler(req, res) {
     });
   }
 }
+
