@@ -2046,48 +2046,64 @@ document.addEventListener('DOMContentLoaded',()=>{
  renderPersonalFactors();updateMemberStatusUI();refreshCrmAnalytics();
 });
 </script>
-  <!--
-REVOREM Clinical 인증 가드
-기존 charting.html의 </body> 바로 위에 넣을 코드입니다.
-
-중요:
-1) 아래 Firebase config는 login.html과 동일하게 입력
-2) 관리자 이메일도 login.html과 동일하게 입력
-3) 이것은 "페이지 접근 가드" 단계입니다.
-4) 환자 데이터 API 자체의 인증은 다음 단계에서 별도로 보강해야 합니다.
--->
-
+  <!-- REVOREM Clinical 인증 가드 v3 -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
   import {
     getAuth,
     onAuthStateChanged,
-    signOut
+    signOut,
+    setPersistence,
+    browserLocalPersistence
   } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
   const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.firebasestorage.app",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyBrJZNDB2FYu1uO9fPLWQw1qsLVwuAABoY",
+    authDomain: "revorem-2d0f4.firebaseapp.com",
+    projectId: "revorem-2d0f4",
+    storageBucket: "revorem-2d0f4.firebasestorage.app",
+    messagingSenderId: "556322485533",
+    appId: "1:556322485533:web:11a1368658b648bf5e9df4",
+    measurementId: "G-45HKDJ3JTV"
   };
 
   const ALLOWED_ADMINS = [
     "liger1123@gmail.com"
-  ].map(email => email.toLowerCase());
+  ].map(email => email.trim().toLowerCase());
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
   document.documentElement.style.visibility = "hidden";
 
-  onAuthStateChanged(auth, async (user) => {
-    const email = (user?.email || "").toLowerCase();
+  try {
+    await setPersistence(auth, browserLocalPersistence);
+  } catch (error) {
+    console.error("REVOREM persistence error:", error);
+  }
 
-    if (!user || !ALLOWED_ADMINS.includes(email)){
-      if (user) await signOut(auth);
+  onAuthStateChanged(auth, async (user) => {
+    const email = (user?.email || "").trim().toLowerCase();
+
+    console.log("REVOREM charting auth state:", {
+      signedIn: !!user,
+      email
+    });
+
+    if (!user) {
+      window.location.replace("login.html");
+      return;
+    }
+
+    if (!ALLOWED_ADMINS.includes(email)) {
+      console.warn("REVOREM unauthorized charting access:", email);
+
+      try {
+        await signOut(auth);
+      } catch (error) {
+        console.error(error);
+      }
+
       window.location.replace("login.html");
       return;
     }
@@ -2095,7 +2111,7 @@ REVOREM Clinical 인증 가드
     document.documentElement.style.visibility = "visible";
   });
 
-  window.revoremLogout = async function(){
+  window.revoremLogout = async function () {
     await signOut(auth);
     window.location.replace("login.html");
   };
