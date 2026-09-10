@@ -97,7 +97,9 @@
       GoogleAuthProvider,
       signInWithPopup,
       onAuthStateChanged,
-      signOut
+      signOut,
+      setPersistence,
+      browserSessionPersistence
     } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
     const firebaseConfig = {
@@ -144,7 +146,6 @@
       const actualEmail = normalizedEmail(user);
 
       if (!isAllowed(user)){
-        // 디버깅을 위해 실제 Firebase가 인식한 이메일을 표시
         setStatus(
           `승인되지 않은 계정입니다. 현재 로그인 계정: ${actualEmail || "이메일 확인 불가"}`,
           true
@@ -155,7 +156,6 @@
           providerData: user.providerData
         });
 
-        // 메시지를 먼저 보여준 뒤 세션 종료
         setTimeout(async () => {
           try { await signOut(auth); } catch (e) { console.error(e); }
         }, 1500);
@@ -168,11 +168,27 @@
       window.location.replace(CLINICAL_PAGE);
     }
 
+    async function initializeSessionAuth(){
+      try{
+        await setPersistence(auth, browserSessionPersistence);
+      }catch(error){
+        console.error("Firebase session persistence error:", error);
+        setStatus("로그인 세션 초기화에 실패했습니다.", true);
+      }
+
+      onAuthStateChanged(auth, async (user) => {
+        if (user && isAllowed(user)){
+          window.location.replace(CLINICAL_PAGE);
+        }
+      });
+    }
+
     btn.addEventListener("click", async () => {
       btn.disabled = true;
       setStatus("Google 계정 인증 중...");
 
       try{
+        await setPersistence(auth, browserSessionPersistence);
         const result = await signInWithPopup(auth, provider);
         await authorizeAndEnter(result.user);
       }catch(error){
@@ -190,12 +206,7 @@
       }
     });
 
-    onAuthStateChanged(auth, async (user) => {
-      if (user && isAllowed(user)){
-        window.location.replace(CLINICAL_PAGE);
-      }
-    });
+    initializeSessionAuth();
   </script>
 </body>
 </html>
-
