@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>REVOREM v3.8 - CPG Decision Table & Adaptive Progression Engine</title>
+<title>REVOREM Clinical Engine 1.0 - Longitudinal Closed-Loop ICF Reasoning</title>
 <style>
 :root{--primary:#8C7A6B;--primary-dark:#52463C;--accent:#CDB78E;--accent-light:#F7F4EE;--danger:#B91C1C;--danger-bg:#FEF2F2;--orange:#C2410C;--orange-bg:#FFF7ED;--warning:#D97706;--warning-bg:#FFFBEB;--success:#15803D;--success-bg:#F0FDF4;--info:#0369A1;--info-bg:#F0F9FF;--bg:#FAFAFA;--card:#fff;--border:#E5E0D8;--text:#222;--sub:#666}
 *{box-sizing:border-box}body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--bg);color:var(--text);margin:0;padding:15px;line-height:1.45}.header{text-align:center;margin-bottom:15px;padding:16px;background:var(--card);border-radius:8px;border:1px solid var(--border);border-bottom:3px solid var(--accent)}.header h1{font-size:1.35rem;margin:0;color:var(--primary);letter-spacing:4px;font-weight:800}.header p{font-size:.82rem;margin:4px 0 0;color:var(--sub);letter-spacing:1.5px;font-weight:600}.layout{display:grid;grid-template-columns:1.08fr .92fr;gap:15px;max-width:1500px;margin:0 auto}@media(max-width:950px){.layout{grid-template-columns:1fr}}.card{background:var(--card);border-radius:8px;padding:16px;border:1px solid var(--border);box-shadow:0 2px 4px rgba(0,0,0,.02);margin-bottom:15px}h2{font-size:1.05rem;color:var(--primary);margin:0 0 12px;border-bottom:2px solid var(--accent-light);padding:0 0 6px 8px;border-left:3.5px solid var(--accent)}h3{font-size:.9rem;color:var(--primary-dark);margin:10px 0 7px}.small{font-size:.75rem;color:var(--sub)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}@media(max-width:650px){.grid2,.grid3{grid-template-columns:1fr}}label{font-size:.75rem;font-weight:700;color:var(--primary);display:block;margin-bottom:3px}input,select,textarea{width:100%;padding:8px 9px;border:1px solid var(--border);border-radius:6px;background:#fff;font:inherit;font-size:.82rem;color:var(--text)}textarea{min-height:58px;resize:vertical}.prom-summary,.soft-box{background:var(--accent-light);border:1px solid var(--accent);border-radius:8px;padding:11px 13px;font-size:.82rem;margin-bottom:10px}.search-box-group{display:flex;gap:6px;margin-top:7px}.search-box-group input{flex:1}.btn{border:0;border-radius:6px;padding:8px 12px;background:var(--primary);color:#fff;font-weight:700;cursor:pointer;font-size:.8rem}.btn:hover{background:var(--primary-dark)}.btn.secondary{background:var(--primary-dark)}.oldcharts-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:var(--accent-light);padding:12px;border-radius:8px;border:1px solid var(--border);margin:10px 0}.banner{border-radius:8px;padding:11px 12px;font-weight:700;margin-bottom:10px;display:none;font-size:.83rem}.banner.red{background:var(--danger-bg);border:2px solid var(--danger);color:var(--danger)}.banner.orange{background:var(--orange-bg);border:2px solid var(--orange);color:var(--orange)}.banner.yellow{background:var(--warning-bg);border:2px solid var(--warning);color:var(--warning)}.banner.green{background:var(--success-bg);border:1.5px solid var(--success);color:var(--success)}.section-label{font-size:.78rem;font-weight:800;color:var(--primary-dark);padding:6px 8px;background:var(--accent-light);border-radius:6px;margin:8px 0}.algo-step{background:#FAFAFA;border:1px solid var(--border);border-left:4px solid var(--accent);padding:11px;border-radius:6px;margin-bottom:9px}.algo-step.red-step{border-left-color:var(--danger);background:var(--danger-bg)}.algo-step.orange-step{border-left-color:var(--orange);background:var(--orange-bg)}.algo-title{font-weight:800;font-size:.86rem;color:var(--primary-dark);margin-bottom:4px}.algo-q{font-size:.83rem;margin-bottom:7px}.btn-group{display:flex;gap:6px;flex-wrap:wrap}.choice{flex:1;min-width:95px;padding:7px;border:1.5px solid var(--border);background:#fff;border-radius:6px;font-size:.78rem;font-weight:700;cursor:pointer}.choice.pos{background:var(--primary);color:#fff;border-color:var(--primary)}.choice.neg{background:var(--success);color:#fff;border-color:var(--success)}.choice.nt{background:#6B7280;color:#fff;border-color:#6B7280}.out-box{background:var(--accent-light);border:1px solid var(--border);padding:12px;border-radius:6px;font-size:.8rem;white-space:pre-wrap;max-height:420px;overflow:auto}.status-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}.pill{padding:4px 8px;border-radius:999px;font-size:.72rem;font-weight:800;border:1px solid var(--border);background:#fff}.pill.red{color:var(--danger);border-color:#FCA5A5}.pill.orange{color:var(--orange);border-color:#FDBA74}.pill.green{color:var(--success);border-color:#86EFAC}.pill.gray{color:#6B7280}.collapse{border:1px solid var(--border);border-radius:8px;margin-bottom:9px;overflow:hidden}.collapse summary{cursor:pointer;padding:10px 12px;background:var(--accent-light);font-weight:800;color:var(--primary-dark);font-size:.84rem;list-style:none}.collapse summary::-webkit-details-marker{display:none}.collapse summary:before{content:'▶';display:inline-block;margin-right:7px;font-size:.7rem;transition:.15s}.collapse[open] summary:before{transform:rotate(90deg)}.collapse-body{padding:10px 12px}.step-card{background:#fff;border:1px solid var(--border);border-radius:6px;padding:8px 10px;margin-bottom:6px;font-size:.77rem}.step-title{font-weight:800;color:var(--primary-dark);margin-bottom:3px}.tag-neg{color:#0284C7;font-weight:800}.tag-pos{color:#EA580C;font-weight:800}.tag-ma{color:var(--success);font-weight:800}.tag-mod{color:var(--primary-dark);font-weight:800}.tag-warn{color:var(--warning);font-weight:800}.therapy-lock{padding:12px;text-align:center;background:var(--danger-bg);color:var(--danger);border:1px dashed var(--danger);border-radius:6px;font-weight:800}.fitt-table{width:100%;border-collapse:collapse;font-size:.75rem;margin:6px 0 11px}.fitt-table th,.fitt-table td{border:1px solid var(--border);padding:6px 7px;text-align:left;vertical-align:top}.fitt-table th{background:var(--accent-light);color:var(--primary)}.track-header{font-weight:800;color:var(--primary);font-size:.82rem;margin-top:10px;border-left:3px solid var(--accent);padding-left:6px}.tracking-card{background:#fff;border:2px solid var(--accent);border-radius:12px;padding:18px;margin-top:10px}.session-badge-group{display:flex;gap:6px;flex-wrap:wrap;margin:9px 0}.session-badge{padding:6px 11px;background:var(--accent-light);border:1px solid var(--border);border-radius:20px;font-size:.77rem;font-weight:800;cursor:pointer;color:var(--primary)}.session-badge.active{background:var(--primary);color:#fff}.progress-bar-bg{width:100%;background:var(--accent-light);height:10px;border-radius:5px;overflow:hidden;margin:7px 0;border:1px solid var(--border)}.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--primary));width:0;transition:.3s}.charts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}@media(max-width:950px){.charts{grid-template-columns:1fr 1fr}}@media(max-width:600px){.charts{grid-template-columns:1fr}}.chart-container{display:flex;align-items:flex-end;height:105px;gap:5px;background:var(--accent-light);padding:8px;border-radius:8px;border:1px solid var(--border)}.chart-bar-group{flex:1;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end}.chart-bar{width:100%;max-width:18px;background:var(--primary);border-radius:3px 3px 0 0}.chart-label{font-size:.62rem;color:var(--sub);margin-top:3px;text-align:center}.btn-save{width:100%;padding:14px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;border:0;border-radius:8px;font-weight:800;font-size:.95rem;cursor:pointer}.wave-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}@media(max-width:700px){.wave-grid{grid-template-columns:1fr}}.wave-card{border:1px solid var(--border);border-radius:7px;padding:7px;background:#fff}.wave-card img{width:100%;height:auto;display:block;border-radius:4px}.source-note{font-size:.72rem;color:var(--sub);background:var(--info-bg);border-left:3px solid var(--info);padding:7px 8px;margin:7px 0}.danger-note{font-size:.72rem;color:var(--danger);background:var(--danger-bg);border-left:3px solid var(--danger);padding:7px 8px;margin:7px 0}.yt-link{display:inline-block;background:#7A6A5C;color:#fff;padding:3px 7px;border-radius:4px;font-weight:700;font-size:.68rem;text-decoration:none}@media print{body{background:#fff;padding:0}.tracking-card,.btn-save,.search-box-group{display:none}.layout{display:block}.card{box-shadow:none;page-break-inside:avoid}}
@@ -114,7 +114,35 @@
 </div>
 </div>
 
-<div class="layout" style="margin-top:0"><div style="grid-column:1/-1"><div class="tracking-card"><h2>📈 Episode of Care — 10회 패키지 진행 & Outcome Tracking</h2><div class="grid3"><div><label>Episode ID</label><input id="episode-id" value="Episode-1"></div><div><label>현재 회차</label><div style="padding:7px 0;font-weight:800"><span id="sess-count-txt">1</span> / 10</div></div><div><label>저장 전 확인</label><div id="completion-text" class="small">Safety screen을 완료하세요.</div></div></div><div class="progress-bar-bg"><div id="sess-progress-fill" class="progress-bar-fill"></div></div><div class="session-badge-group" id="session-badges"></div><div class="charts"><div><b class="small">Goal Performance</b><div class="chart-container" id="goal-chart"></div></div><div><b class="small" id="score-chart-label">기능/장애 점수</b><div class="chart-container" id="score-chart"></div></div><div><b class="small">TSK-11</b><div class="chart-container" id="tsk-chart"></div></div><div><b class="small">PCS</b><div class="chart-container" id="pcs-chart"></div></div></div><div class="soft-box" style="margin-top:12px">
+<div class="layout" style="margin-top:0"><div style="grid-column:1/-1"><div class="tracking-card"><h2>📈 Episode of Care — 10회 Outcome Tracking</h2><div class="grid3"><div><label>Episode ID</label><input id="episode-id" value="Episode-1"></div><div><label>현재 회차</label><div style="padding:7px 0;font-weight:800"><span id="sess-count-txt">1</span> / 10</div></div><div><label>저장 전 확인</label><div id="completion-text" class="small">Safety screen을 완료하세요.</div></div></div><div class="progress-bar-bg"><div id="sess-progress-fill" class="progress-bar-fill"></div></div><div class="session-badge-group" id="session-badges"></div>
+
+<div class="auto-panel" style="margin-top:14px">
+  <div class="auto-panel-head">
+    <div class="auto-panel-title">🔄 REVOREM Closed-Loop Clinical Review</div>
+    <button type="button" class="btn-auto" onclick="refreshClosedLoopReview()">이전 회차와 비교</button>
+  </div>
+  <div class="auto-panel-note">이전 회차의 Goal · 기능점수 · NRS · 세션반응과 현재 상태를 비교하여 Progress / Maintain / Modify / Reassess / Safety First 후보를 제안합니다. 최종 임상판단은 치료사가 확인합니다.</div>
+  <div id="closed-loop-summary" class="icf-preview">2회차부터 이전 저장 회차와 비교해 longitudinal recommendation이 표시됩니다.</div>
+  <div class="grid2" style="margin-top:10px">
+    <div>
+      <label>치료사 최종 판단</label>
+      <select id="loop-clinician-action" onchange="refreshClosedLoopReview()">
+        <option value="">알고리즘 제안 유지</option>
+        <option value="PROGRESS">Progress — 부하/난이도 진행</option>
+        <option value="MAINTAIN">Maintain — 현재 단계 유지</option>
+        <option value="MODIFY">Modify — 중재/용량 수정</option>
+        <option value="REASSESS">Reassess — 가설/검진 재평가</option>
+        <option value="SAFETY_FIRST">Safety First — 의학적 확인 우선</option>
+      </select>
+    </div>
+    <div>
+      <label>Override / 판단 근거</label>
+      <textarea id="loop-clinician-rationale" placeholder="예: Goal은 향상되었으나 overhead endurance가 아직 부족하여 같은 부하를 한 회차 유지" oninput="refreshClosedLoopReview()"></textarea>
+    </div>
+  </div>
+</div>
+
+<div class="charts"><div><b class="small">Goal Performance</b><div class="chart-container" id="goal-chart"></div></div><div><b class="small" id="score-chart-label">기능/장애 점수</b><div class="chart-container" id="score-chart"></div></div><div><b class="small">TSK-11</b><div class="chart-container" id="tsk-chart"></div></div><div><b class="small">PCS</b><div class="chart-container" id="pcs-chart"></div></div></div><div class="soft-box" style="margin-top:12px">
 <h3>💬 회원용 카카오톡 피드백</h3>
 <div class="member-report" id="client-report-preview"></div>
 <div class="report-actions">
@@ -280,12 +308,261 @@ if(region==='hip'){add('Hip strength + task-specific loading','주 2–4회 prog
 if(region==='elbow'){add('Graded wrist/forearm tendon loading','주 3–5회, 등척성→등장성/원심성 등 단계화','grip/load capacity');if(top.includes('nerve')||top.includes('Cervical'))add('Neurodynamic / proximal contributor management','symptom irritability 기준','neural tolerance');add('Work/grip load modification + return exposure','작업량/도구/그립 전략 조절','work participation')}
 if(yellow)add('Pain education + graded exposure','짧은 교육 후 회피활동을 단계적으로 재노출','recovery confidence / fear reduction');const goal=val('pt-goal');if(goal)add(`🎯 Goal task: ${goal}`,`현재 ${num('pt-goal-score')}/10 → 환자와 다음 목표 수준 합의`,'Goal performance');e.innerHTML=`<div class="track-header">Active intervention candidates — clinical pattern + ICF Goal 기반</div><table class="fitt-table"><thead><tr><th>중재</th><th>용량/진행</th><th>ICF 목표</th></tr></thead><tbody>${rows.map(r=>`<tr><td><b>${r.n}</b></td><td>${r.d}</td><td>${r.t}</td></tr>`).join('')}</tbody></table><div class="source-note">전기/수기 치료는 adjunct/reference로 분리하고, 장기 outcome은 Goal-linked active intervention과 self-management를 중심으로 추적하도록 설계했습니다.</div>`}
 function patientKey(){const raw=(val('pt-phone')||val('pt-name')||'anonymous').replace(/\s/g,'');return `revorem_v2_${raw}_${val('episode-id')||'Episode-1'}`}
+
+function historyEntries(){
+ const h=getHistory();
+ return Object.keys(h).map(Number).filter(n=>Number.isFinite(n)&&h[n]).sort((a,b)=>a-b).map(n=>({session:n,...h[n]}));
+}
+function previousSavedSession(session=currentSessionNum){
+ const h=getHistory();
+ for(let n=Number(session)-1;n>=1;n--)if(h[n])return {session:n,data:h[n]};
+ return null;
+}
+function scoreDirection(meta=instrumentMeta()){return meta.direction||'higher_worse'}
+function normalizedScoreImprovement(prev,current,max,direction='higher_worse'){
+ const p=Number(prev),c=Number(current),m=Number(max)||100;
+ if(!Number.isFinite(p)||!Number.isFinite(c))return null;
+ const raw=direction==='higher_better'?(c-p):(p-c);
+ return {raw,percentOfScale:Math.round(raw/m*1000)/10};
+}
+function currentLongitudinalSnapshot(){
+ const d=sessionInterventionData(),meta=instrumentMeta();
+ return {
+  session:currentSessionNum,
+  goalScore:num('pt-goal-score'),
+  bodyScore:num('pt-body-score'),
+  bodyScoreMax:meta.max,
+  bodyDirection:scoreDirection(meta),
+  nrs:num('oc-severity'),
+  postNrs:d.postNrs===''?null:Number(d.postNrs),
+  postGoalScore:d.postGoalScore===''?null:Number(d.postGoalScore),
+  response:d.response||'',
+  patternKeys:inferPatterns(val('pt-region')).map(x=>x.name),
+  safety:getSafety()
+ };
+}
+function storedSnapshot(d){
+ if(!d)return null;
+ return {
+  session:Number(d.sessionNum)||0,
+  goalScore:Number(d.goalScore),
+  bodyScore:Number(d.bodyScore),
+  bodyScoreMax:Number(d.bodyScoreMax)||100,
+  bodyDirection:CONFIG.instruments[d.prom]?.direction||'higher_worse',
+  nrs:Number(d.oldcharts?.severity),
+  postNrs:d.interventions?.postNrs===''||d.interventions?.postNrs==null?null:Number(d.interventions?.postNrs),
+  postGoalScore:d.interventions?.postGoalScore===''||d.interventions?.postGoalScore==null?null:Number(d.interventions?.postGoalScore),
+  response:d.interventions?.response||'',
+  patternKeys:(d.patterns||[]).map(x=>typeof x==='string'?x:x.name),
+  safety:d.safety||{red:[],orange:[]}
+ };
+}
+function sessionResponseSignals(curr){
+ const nrsPre=Number(curr.nrs),nrsPost=curr.postNrs,goalPre=Number(curr.goalScore),goalPost=curr.postGoalScore;
+ const nrsDelta=Number.isFinite(nrsPost)?Math.round((nrsPost-nrsPre)*10)/10:null;
+ const goalDelta=Number.isFinite(goalPost)?Math.round((goalPost-goalPre)*10)/10:null;
+ return {nrsDelta,goalDelta};
+}
+function consecutiveNoProgressCount(current){
+ const entries=historyEntries().filter(x=>x.session<currentSessionNum);
+ if(!entries.length)return 0;
+ let count=0;
+ for(let i=entries.length-1;i>=0;i--){
+   const d=entries[i].closedLoop;
+   if(!d)break;
+   if(['MAINTAIN','MODIFY','REASSESS'].includes(d.finalAction||d.recommendation))count++;
+   else break;
+ }
+ return count;
+}
+function closedLoopAnalysis(){
+ const curr=currentLongitudinalSnapshot(),prevWrap=previousSavedSession();
+ const safety=curr.safety||{red:[],orange:[]};
+ if(safety.red?.length){
+   return {available:true,recommendation:'SAFETY_FIRST',confidence:'high',reason:'현재 Safety Screen에서 RED 항목이 확인되어 progression보다 의학적 확인이 우선입니다.',metrics:{},flags:['RED safety'],prevSession:prevWrap?.session||null};
+ }
+ if(!prevWrap){
+   return {available:false,recommendation:'BASELINE',confidence:'baseline',reason:'비교 가능한 이전 저장 회차가 없어 이번 회차를 longitudinal baseline으로 사용합니다.',metrics:{},flags:[],prevSession:null};
+ }
+ const prev=storedSnapshot(prevWrap.data);
+ const goalDelta=Math.round((curr.goalScore-prev.goalScore)*10)/10;
+ const body=normalizedScoreImprovement(prev.bodyScore,curr.bodyScore,curr.bodyScoreMax,curr.bodyDirection);
+ const nrsDelta=Number.isFinite(prev.nrs)&&Number.isFinite(curr.nrs)?Math.round((curr.nrs-prev.nrs)*10)/10:null;
+ const acute=sessionResponseSignals(curr);
+ const flags=[];
+ if(safety.orange?.length)flags.push('ORANGE safety/context');
+ if(goalDelta<=-1)flags.push('Goal performance worsened');
+ if(body&&body.percentOfScale<=-5)flags.push('Function score worsened ≥5% of scale');
+ if(nrsDelta!==null&&nrsDelta>=2)flags.push('NRS worsened ≥2');
+ if(acute.nrsDelta!==null&&acute.nrsDelta>=2)flags.push('Same-session NRS flare');
+ if(acute.goalDelta!==null&&acute.goalDelta<=-1)flags.push('Same-session Goal worsened');
+
+ const meaningfulGoal=goalDelta>=1;
+ const meaningfulBody=body&&body.percentOfScale>=5;
+ const painImproved=nrsDelta!==null&&nrsDelta<=-2;
+ const majorWorse=goalDelta<=-1||(body&&body.percentOfScale<=-5)||(nrsDelta!==null&&nrsDelta>=2);
+ const sameSessionBad=(acute.nrsDelta!==null&&acute.nrsDelta>=2)||(acute.goalDelta!==null&&acute.goalDelta<=-1);
+ const sameSessionGood=(acute.nrsDelta!==null&&acute.nrsDelta<=-1)||(acute.goalDelta!==null&&acute.goalDelta>=1);
+ const stagnant=goalDelta===0 && (!body||Math.abs(body.percentOfScale)<3) && (nrsDelta===null||Math.abs(nrsDelta)<2);
+ const noProg=consecutiveNoProgressCount(currentSessionNum);
+
+ let recommendation='MAINTAIN',confidence='moderate',reason='';
+ if(safety.orange?.length && majorWorse){
+   recommendation='REASSESS';confidence='high';
+   reason='Safety/주의 맥락과 함께 기능 또는 증상의 악화가 보여 progression 전에 재평가가 필요합니다.';
+ }else if(majorWorse||sameSessionBad){
+   recommendation='REASSESS';confidence='high';
+   reason='지난 회차 대비 기능/증상 악화 또는 세션 내 부정적 반응이 있어 가설과 부하 수준을 다시 확인하는 편이 적절합니다.';
+ }else if((meaningfulGoal||meaningfulBody) && !sameSessionBad){
+   recommendation='PROGRESS';confidence=(meaningfulGoal&&meaningfulBody)?'high':'moderate';
+   reason='Goal 수행 또는 기능점수에서 긍정적인 변화가 확인되고 뚜렷한 악화 신호가 없어 한 요소씩 progression을 고려할 수 있습니다.';
+ }else if(painImproved && !meaningfulGoal && !meaningfulBody){
+   recommendation='MODIFY';confidence='moderate';
+   reason='통증은 감소했지만 Goal/기능 변화가 충분하지 않아 통증조절을 반복하기보다 기능적 중재와 목표 노출의 비중을 조정할 필요가 있습니다.';
+   flags.push('Pain improved, function unchanged');
+ }else if(stagnant && noProg>=1){
+   recommendation='MODIFY';confidence='moderate';
+   reason='두 회차 이상 의미 있는 기능 변화가 제한적이어서 동일 전략 반복보다 우선순위·용량·과제 선택의 수정이 필요합니다.';
+   flags.push('Repeated plateau');
+ }else if(stagnant){
+   recommendation='MAINTAIN';confidence='low-moderate';
+   reason='뚜렷한 악화는 없지만 아직 명확한 변화도 없어 현재 단계를 짧게 유지하며 반응을 한 회차 더 확인하는 것이 적절합니다.';
+ }else if(sameSessionGood){
+   recommendation='MAINTAIN';confidence='moderate';
+   reason='즉각 반응은 긍정적이지만 longitudinal 변화가 아직 충분하지 않아 현재 단계에서 재현성을 확인하는 편이 좋습니다.';
+ }else{
+   recommendation='MAINTAIN';confidence='low-moderate';
+   reason='현재 변화가 progression 또는 reassessment를 강하게 지지하지 않아 현 단계 유지 후 추가 추적이 적절합니다.';
+ }
+
+ return {
+  available:true,recommendation,confidence,reason,prevSession:prevWrap.session,
+  metrics:{
+   goalPrev:prev.goalScore,goalCurrent:curr.goalScore,goalDelta,
+   bodyPrev:prev.bodyScore,bodyCurrent:curr.bodyScore,bodyDelta:body?.raw??null,bodyScalePct:body?.percentOfScale??null,
+   nrsPrev:prev.nrs,nrsCurrent:curr.nrs,nrsDelta,
+   postNrs:curr.postNrs,postGoalScore:curr.postGoalScore,
+   sameSessionNrsDelta:acute.nrsDelta,sameSessionGoalDelta:acute.goalDelta
+  },
+  flags
+ };
+}
+function actionLabel(a){
+ return ({BASELINE:'Baseline',PROGRESS:'Progress',MAINTAIN:'Maintain',MODIFY:'Modify',REASSESS:'Reassess',SAFETY_FIRST:'Safety First'})[a]||a||'';
+}
+function closedLoopActionPlan(action,plan=buildClinicalReasoningPlan()){
+ const A=action||'MAINTAIN';
+ if(A==='PROGRESS')return `현재 중재의 효과가 확인되면 ${plan.decision.progress}. Goal-specific exposure도 한 요소씩 높입니다.`;
+ if(A==='MODIFY'){
+   const second=plan.priorities?.[1]?.label;
+   return `${second?second+'을(를) 포함해 ':''}우선순위를 다시 조정하고, 운동 종류·용량·Goal exposure 중 한 변수를 변경한 뒤 반응을 재검합니다.`;
+ }
+ if(A==='REASSESS')return `Safety와 주요 pattern을 다시 확인하고, ${plan.decision.success} 기준이 충족되지 않은 원인을 재평가한 뒤 progression 여부를 결정합니다.`;
+ if(A==='SAFETY_FIRST')return '운동 progression을 보류하고 필요한 의학적 평가/확인을 우선합니다.';
+ return `현재 ${plan.decision.starter} 수준을 유지하면서 반응의 재현성과 다음날 회복을 한 회차 더 확인합니다.`;
+}
+function getClinicianLoopDecision(analysis=closedLoopAnalysis()){
+ const override=val('loop-clinician-action');
+ const rationale=val('loop-clinician-rationale').trim();
+ const finalAction=override||analysis.recommendation;
+ return {
+  recommendation:analysis.recommendation,
+  finalAction,
+  overridden:Boolean(override&&override!==analysis.recommendation),
+  rationale,
+  analysis
+ };
+}
+function closedLoopTrendText(analysis=closedLoopAnalysis()){
+ if(!analysis.available)return analysis.reason;
+ const m=analysis.metrics||{},parts=[];
+ if(m.goalDelta!==undefined)parts.push(`Goal ${m.goalPrev}→${m.goalCurrent} (${m.goalDelta>=0?'+':''}${m.goalDelta})`);
+ if(m.bodyScalePct!==null&&m.bodyScalePct!==undefined)parts.push(`기능점수 ${m.bodyPrev}→${m.bodyCurrent} (개선 방향 ${m.bodyScalePct>=0?'+':''}${m.bodyScalePct}% of scale)`);
+ if(m.nrsDelta!==null&&m.nrsDelta!==undefined)parts.push(`NRS ${m.nrsPrev}→${m.nrsCurrent} (${m.nrsDelta>=0?'+':''}${m.nrsDelta})`);
+ return parts.join(' · ');
+}
+function refreshClosedLoopReview(){
+ const box=document.getElementById('closed-loop-summary');if(!box)return;
+ const a=closedLoopAnalysis(),d=getClinicianLoopDecision(a),plan=buildClinicalReasoningPlan();
+ if(!a.available){
+   box.innerText=`[Baseline]\n${a.reason}\n이번 회차 저장 후 다음 회차부터 자동 비교가 시작됩니다.`;
+   return;
+ }
+ const lines=[
+   `[이전 회차] ${a.prevSession}회차 → 현재 ${currentSessionNum}회차`,
+   `[변화] ${closedLoopTrendText(a)}`,
+   `[알고리즘 제안] ${actionLabel(a.recommendation)} · confidence ${a.confidence}`,
+   `[판단 근거] ${a.reason}`,
+   ...(a.flags?.length?[`[주의/불일치] ${a.flags.join(' · ')}`]:[]),
+   `[다음 행동] ${closedLoopActionPlan(d.finalAction,plan)}`,
+   `[최종 판단] ${actionLabel(d.finalAction)}${d.overridden?' · clinician override':''}${d.rationale?` · ${d.rationale}`:''}`
+ ];
+ box.innerText=lines.join('\n');
+}
+function applyClosedLoopToSuggestion(){
+ const a=closedLoopAnalysis(),d=getClinicianLoopDecision(a),plan=buildClinicalReasoningPlan();
+ if(!a.available||d.finalAction==='BASELINE')return;
+ const action=d.finalAction;
+ const setIfBlank=(id,v)=>{const e=document.getElementById(id);if(e&&!String(e.value||'').trim())e.value=v};
+ if(action==='PROGRESS'){
+   setIfBlank('next-plan',`지난 회차 대비 기능적 향상이 확인되어 ${plan.decision.progress}. ${plan.exposure}`);
+ }else if(action==='MAINTAIN'){
+   setIfBlank('next-plan',`현재 단계의 반응을 한 회차 더 확인한 뒤 ${plan.decision.success} 여부에 따라 progression을 결정`);
+ }else if(action==='MODIFY'){
+   setIfBlank('next-plan',closedLoopActionPlan('MODIFY',plan));
+ }else if(action==='REASSESS'){
+   setIfBlank('next-plan',closedLoopActionPlan('REASSESS',plan));
+ }else if(action==='SAFETY_FIRST'){
+   setIfBlank('next-plan',closedLoopActionPlan('SAFETY_FIRST',plan));
+ }
+}
+function memberTrendMessage(){
+ const a=closedLoopAnalysis();
+ if(!a.available||!a.prevSession)return '';
+ const m=a.metrics||{};
+ if(a.recommendation==='PROGRESS'){
+   if((m.goalDelta||0)>=1)return `지난 ${a.prevSession}회차와 비교하면 목표 활동 수행 정도가 ${m.goalPrev}/10에서 ${m.goalCurrent}/10으로 좋아졌습니다.`;
+   return '지난 회차와 비교했을 때 기능적인 변화가 긍정적인 방향으로 확인되었습니다.';
+ }
+ if(a.recommendation==='MODIFY')return '통증의 변화만으로 판단하지 않고 실제 활동 기능이 함께 좋아지는지 확인하면서 관리 방향을 조금 조정하겠습니다.';
+ if(a.recommendation==='REASSESS')return '지난 회차와 비교해 몸의 반응이 기대와 다르게 나타난 부분이 있어, 이번에는 원인을 다시 확인하는 데 더 집중하겠습니다.';
+ if(a.recommendation==='MAINTAIN')return '지난 회차와 비교해 큰 악화는 없으며, 현재 단계에서 반응이 안정적으로 이어지는지 조금 더 확인하겠습니다.';
+ return '';
+}
 function getHistory(){try{return JSON.parse(localStorage.getItem(patientKey()))||{}}catch{return{}}}function setHistory(h){localStorage.setItem(patientKey(),JSON.stringify(h))}
 function loadPatientHistory(){renderSessionBadges();updateCharts()}
 function renderSessionBadges(){const h=getHistory(),c=document.getElementById('session-badges');c.innerHTML='';for(let i=1;i<=10;i++){const d=document.createElement('div');d.className='session-badge '+(i===currentSessionNum?'active':'');d.textContent=`${i}회차 ${h[i]?'✓':''}`;d.onclick=()=>switchSession(i);c.appendChild(d)}document.getElementById('sess-count-txt').innerText=currentSessionNum;document.getElementById('sess-progress-fill').style.width=`${currentSessionNum*10}%`}
-function switchSession(n){currentSessionNum=n;const h=getHistory();if(h[n]){const d=h[n];[['pt-goal-score','goalScore'],['pt-body-score','bodyScore'],['pt-tsk','tskScore'],['pt-pcs','pcsScore']].forEach(x=>{if(d[x[1]]!==undefined)document.getElementById(x[0]).value=d[x[1]]});if(d.preIntakeContext)preIntakeData={...preIntakeData,...d.preIntakeContext,bodyScoreMax:d.bodyScoreMax,instrumentTitle:d.instrumentTitle,instrumentType:d.instrumentType,screenVersion:d.screenVersion};if(d.interventions){const x=d.interventions;const setv=(id,v)=>{const e=document.getElementById(id);if(e)e.value=v??''};setv('manual-applied',x.manual?.applied);setv('manual-detail',x.manual?.detail);setv('tens-applied',x.tens?.applied);setv('tens-detail',x.tens?.detail);setv('etherapy-mode',x.etherapy?.mode);setv('etherapy-purpose',x.etherapy?.purpose);setv('etherapy-time',x.etherapy?.time);setv('etherapy-intensity',x.etherapy?.intensity);setv('active-detail',x.active);setv('home-exercise',x.homeExercise);setv('home-dose',x.homeDose);setv('home-frequency',x.homeFrequency);setv('selfmanagement-detail',x.selfManagement);setv('post-nrs',x.postNrs);setv('post-goal-score',x.postGoalScore);setv('session-response',x.response);setv('next-plan',x.nextPlan)}}renderSessionBadges();evaluatePlatform();updateCharts()}
+function switchSession(n){
+ currentSessionNum=n;const h=getHistory();
+ const setv=(id,v)=>{const e=document.getElementById(id);if(e)e.value=v??''};
+ if(h[n]){
+   const d=h[n];
+   [['pt-goal-score','goalScore'],['pt-body-score','bodyScore'],['pt-tsk','tskScore'],['pt-pcs','pcsScore']].forEach(x=>{if(d[x[1]]!==undefined)setv(x[0],d[x[1]])});
+   if(d.preIntakeContext)preIntakeData={...preIntakeData,...d.preIntakeContext,bodyScoreMax:d.bodyScoreMax,instrumentTitle:d.instrumentTitle,instrumentType:d.instrumentType,screenVersion:d.screenVersion};
+   if(d.oldcharts){
+     setv('oc-onset',d.oldcharts.onset);setv('oc-location',d.oldcharts.location);setv('oc-duration',d.oldcharts.duration);
+     setv('oc-character',d.oldcharts.character);setv('oc-agg',d.oldcharts.aggravating);setv('oc-relieve',d.oldcharts.relieving);
+     setv('oc-radiation',d.oldcharts.radiation);setv('oc-temporal',d.oldcharts.temporal);
+     setv('oc-severity',d.oldcharts.severity);setv('oc-worst-severity',d.oldcharts.worstSeverity);
+   }
+   if(d.interventions){
+     const x=d.interventions;
+     setv('manual-applied',x.manual?.applied);setv('manual-detail',x.manual?.detail);
+     setv('tens-applied',x.tens?.applied);setv('tens-detail',x.tens?.detail);
+     setv('etherapy-mode',x.etherapy?.mode);setv('etherapy-purpose',x.etherapy?.purpose);setv('etherapy-time',x.etherapy?.time);setv('etherapy-intensity',x.etherapy?.intensity);
+     setv('active-detail',x.active);setv('home-exercise',x.homeExercise);setv('home-dose',x.homeDose);setv('home-frequency',x.homeFrequency);
+     setv('selfmanagement-detail',x.selfManagement);setv('post-nrs',x.postNrs);setv('post-goal-score',x.postGoalScore);
+     setv('session-response',x.response);setv('next-plan',x.nextPlan);
+   }
+   setv('loop-clinician-action',d.closedLoop?.clinicianAction||'');
+   setv('loop-clinician-rationale',d.closedLoop?.clinicianRationale||'');
+ }else{
+   ['manual-applied','manual-detail','tens-applied','tens-detail','etherapy-mode','etherapy-purpose','etherapy-time','etherapy-intensity','active-detail','home-exercise','home-dose','home-frequency','selfmanagement-detail','post-nrs','post-goal-score','session-response','next-plan','loop-clinician-action','loop-clinician-rationale'].forEach(id=>setv(id,''));
+ }
+ renderSessionBadges();evaluatePlatform();updateCharts();refreshClosedLoopReview();
+}
 function chart(id,key,max){const h=getHistory(),c=document.getElementById(id);let out='';for(let i=1;i<=10;i++){const d=h[i],v=d?Number(d[key])||0:0,ht=d?Math.min(100,Math.max(5,v/max*100)):4;out+=`<div class="chart-bar-group"><div class="chart-bar" style="height:${ht}%;opacity:${d?1:.18}"></div><div class="chart-label">${i}<br>${d?v:'-'}</div></div>`}c.innerHTML=out}
-function updateCharts(){chart('goal-chart','goalScore',10);chart('score-chart','bodyScore',instrumentMeta().max||100);chart('tsk-chart','tskScore',44);chart('pcs-chart','pcsScore',52)}
+function updateCharts(){chart('goal-chart','goalScore',10);chart('score-chart','bodyScore',instrumentMeta().max||100);chart('tsk-chart','tskScore',44);chart('pcs-chart','pcsScore',52);refreshClosedLoopReview()}
 function updateCompletion(){const s=getSafety();const clinicalMissing=fullTree().filter(x=>!x.required&&(!userAnswers[x.id]||userAnswers[x.id]==='NT')).length;document.getElementById('completion-text').innerText=s.missing.length?`필수 Safety 미확인 ${s.missing.length}개`:`Safety 완료 · 임상검사 미시행/미확인 ${clinicalMissing}개`}
 
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
@@ -468,6 +745,21 @@ Required missing: ${esc(safety.missing.join(', ')||'none')}</div>
     p.pri.eligible?'Stop/deprioritize rule: '+p.pri.stopRule:'',
     'Evidence hierarchy rule: guideline-supported active rehabilitation remains the core; breathing is an optional adjunct and is retained only if immediate functional retest supports its use.'
   ].filter(Boolean).join('\\n')})())}</div>
+  <h2>6D. Longitudinal Closed-Loop Review</h2>
+  <div class="box mono">${esc((()=>{const a=closedLoopAnalysis(),d=getClinicianLoopDecision(a),p=buildClinicalReasoningPlan();return [
+    'Comparison available: '+(a.available?'Yes':'No / baseline'),
+    a.prevSession?'Previous session: '+a.prevSession:'',
+    a.available?'Trend: '+closedLoopTrendText(a):a.reason,
+    'Algorithm recommendation: '+actionLabel(a.recommendation),
+    'Confidence: '+a.confidence,
+    'Reason: '+a.reason,
+    a.flags?.length?'Discordance / flags: '+a.flags.join(' | '):'',
+    'Clinician final action: '+actionLabel(d.finalAction)+(d.overridden?' [OVERRIDE]':''),
+    d.rationale?'Clinician rationale: '+d.rationale:'',
+    'Next-action logic: '+closedLoopActionPlan(d.finalAction,p),
+    'Rule: recommendation supports, but does not replace, clinician judgment; safety concerns supersede progression.'
+  ].filter(Boolean).join('\n')})())}</div>
+
   <h2>7. Actual Session Interventions</h2>
   <div class="box mono">Manual therapy: ${yesText(d.manual.applied)}
 ${esc(d.manual.detail||'-')}
@@ -1121,6 +1413,8 @@ function applySmartSessionSuggestions(){
  `[근거] ${plan.decision.basis}`,
  ...(plan.pri.eligible?[`[PRI-inspired adjunct] ${plan.pri.rationale} → ${plan.pri.retest} · ${plan.pri.evidenceLevel}`]:[])
  ].join('\\n');
+ applyClosedLoopToSuggestion();
+ refreshClosedLoopReview();
  evaluatePlatform();
 }
 function holisticMemberInsight(c){
@@ -1194,8 +1488,14 @@ function personalizedHomeMessage(d,risk,phase){
  return [...new Set(lines)].slice(0,4);
 }
 function feedbackClosing(goal,phase){
- const g=goal||'원하시는 활동',n=Number(currentSessionNum)||1;
+ const g=goal||'원하시는 활동',n=Number(currentSessionNum)||1,a=closedLoopAnalysis();
  if(n===1)return `오늘은 현재 상태의 기준점을 잡는 데 집중했습니다. 다음부터는 통증뿐 아니라 ${josa(g,'이/가')} 얼마나 편해지는지도 함께 비교해 보겠습니다.`;
+ if(a.available){
+   if(a.recommendation==='PROGRESS')return `지난 회차의 긍정적인 변화를 바탕으로, 다음에는 ${josa(g,'에/에')} 필요한 부하를 한 단계씩 넓혀보겠습니다.`;
+   if(a.recommendation==='MODIFY')return `통증 변화뿐 아니라 실제 기능이 함께 좋아지도록 다음 회차에는 운동과 활동 과제의 구성을 조금 조정해 보겠습니다.`;
+   if(a.recommendation==='REASSESS')return `이번 반응은 이전과 다르게 나타난 부분이 있어, 다음에는 원인을 다시 확인하고 가장 적절한 방향을 정하겠습니다.`;
+   if(a.recommendation==='SAFETY_FIRST')return `오늘 확인된 부분은 운동 진행보다 안전 확인이 먼저이므로 안내드린 내용을 우선해 주세요.`;
+ }
  if(n<=4)return `초반 회차에서는 몸이 어떤 움직임에 잘 반응하는지 확인하면서 편안한 범위를 조금씩 넓혀가겠습니다.`;
  if(n<=7)return `이제 좋아진 움직임을 실제 ${g}에 필요한 힘과 반복 부하로 연결해 보겠습니다.`;
  if(n<=9)return `남은 회차에서는 실제 ${g}과 비슷한 조건에서 자신 있게 움직일 수 있도록 준비하겠습니다.`;
@@ -1232,6 +1532,9 @@ function generateClientReport(){
  if(goal)t+=`, ${goal} 수행 정도는 ${num('pt-goal-score')}/10`;
  t+=`으로 확인되었습니다.
 `;
+
+ const trendMsg=memberTrendMessage();
+ if(trendMsg)t+=`\n📈 지난 회차와 비교하면\n${trendMsg}\n`;
 
  const holistic=holisticMemberInsight(c);
  if(holistic.length){
@@ -1278,7 +1581,22 @@ REVOREM`;
 
  document.getElementById('client-report-preview').innerText=t;
 }
-function handleOneClickConfirm(printAfter=false){const s=getSafety();if(s.missing.length){alert(`⚠️ 저장 중단: 필수 Safety 항목 ${s.missing.length}개가 미확인입니다.\n\n${s.missing.join('\n')}`);return}const patterns=inferPatterns(val('pt-region'));const clinicalMissing=fullTree().filter(x=>!x.required&&(!userAnswers[x.id]||userAnswers[x.id]==='NT')).length;if(clinicalMissing>0&&!confirm(`임상검사 ${clinicalMissing}개가 미시행/미확인입니다. Safety 항목은 완료되었습니다. 이 상태로 저장할까요?`))return;const h=getHistory();h[currentSessionNum]={patientName:val('pt-name'),patientPhone:val('pt-phone'),episodeId:val('episode-id'),sessionNum:currentSessionNum,region:val('pt-region'),prom:currentAreaName,goal:val('pt-goal'),goalScore:num('pt-goal-score'),bodyScore:num('pt-body-score'),bodyScoreMax:instrumentMeta().max,bodyScorePercent:bodyScorePercent(),instrumentTitle:instrumentMeta().full,instrumentType:instrumentMeta().type,screenVersion:instrumentMeta().version||'',tskScore:num('pt-tsk'),pcsScore:num('pt-pcs'),preIntakeContext:{activityLimit:preIntakeData.activityLimit||'',environmentBarriers:preIntakeData.environmentBarriers||[],environmentNote:preIntakeData.environmentNote||'',safetyAttention:preIntakeData.safetyAttention||[],mentalScores:preIntakeData.mentalScores||null,responseQuality:preIntakeData.responseQuality||null,rfsDomainProfile:buildRfsDomainProfile()||null},interventions:sessionInterventionData(),oldcharts:{onset:val('oc-onset'),location:val('oc-location'),duration:val('oc-duration'),character:val('oc-character'),aggravating:val('oc-agg'),relieving:val('oc-relieve'),radiation:val('oc-radiation'),temporal:val('oc-temporal'),severity:num('oc-severity'),worstSeverity:num('oc-worst-severity')},answers:{...userAnswers},safety:s,patterns,etherapy:{mode:val('etherapy-mode'),purpose:val('etherapy-purpose'),time:val('etherapy-time'),intensity:val('etherapy-intensity')},assessment:document.getElementById('out-assessment').innerText,clientReport:document.getElementById('client-report-preview').innerText,savedAt:new Date().toISOString()};setHistory(h);renderSessionBadges();updateCharts();generateClientReport();alert(`✅ ${val('pt-name')||'회원'} · ${currentSessionNum}회차 저장 완료\n회원용 리포트와 전문가용 기록이 분리되어 준비되었습니다.`);if(printAfter)setTimeout(()=>printExpertReport(),150)}
+function handleOneClickConfirm(printAfter=false){const s=getSafety();if(s.missing.length){alert(`⚠️ 저장 중단: 필수 Safety 항목 ${s.missing.length}개가 미확인입니다.\n\n${s.missing.join('\n')}`);return}const patterns=inferPatterns(val('pt-region'));const clinicalMissing=fullTree().filter(x=>!x.required&&(!userAnswers[x.id]||userAnswers[x.id]==='NT')).length;if(clinicalMissing>0&&!confirm(`임상검사 ${clinicalMissing}개가 미시행/미확인입니다. Safety 항목은 완료되었습니다. 이 상태로 저장할까요?`))return;const loopAnalysis=closedLoopAnalysis(),loopDecision=getClinicianLoopDecision(loopAnalysis);const h=getHistory();h[currentSessionNum]={patientName:val('pt-name'),patientPhone:val('pt-phone'),episodeId:val('episode-id'),sessionNum:currentSessionNum,region:val('pt-region'),prom:currentAreaName,goal:val('pt-goal'),goalScore:num('pt-goal-score'),bodyScore:num('pt-body-score'),bodyScoreMax:instrumentMeta().max,bodyScorePercent:bodyScorePercent(),instrumentTitle:instrumentMeta().full,instrumentType:instrumentMeta().type,screenVersion:instrumentMeta().version||'',tskScore:num('pt-tsk'),pcsScore:num('pt-pcs'),preIntakeContext:{activityLimit:preIntakeData.activityLimit||'',environmentBarriers:preIntakeData.environmentBarriers||[],environmentNote:preIntakeData.environmentNote||'',safetyAttention:preIntakeData.safetyAttention||[],mentalScores:preIntakeData.mentalScores||null,responseQuality:preIntakeData.responseQuality||null,rfsDomainProfile:buildRfsDomainProfile()||null},interventions:sessionInterventionData(),oldcharts:{onset:val('oc-onset'),location:val('oc-location'),duration:val('oc-duration'),character:val('oc-character'),aggravating:val('oc-agg'),relieving:val('oc-relieve'),radiation:val('oc-radiation'),temporal:val('oc-temporal'),severity:num('oc-severity'),worstSeverity:num('oc-worst-severity')},answers:{...userAnswers},safety:s,patterns,etherapy:{mode:val('etherapy-mode'),purpose:val('etherapy-purpose'),time:val('etherapy-time'),intensity:val('etherapy-intensity')},assessment:document.getElementById('out-assessment').innerText,clientReport:document.getElementById('client-report-preview').innerText,
+closedLoop:{
+ recommendation:loopAnalysis.recommendation,
+ confidence:loopAnalysis.confidence,
+ reason:loopAnalysis.reason,
+ metrics:loopAnalysis.metrics,
+ flags:loopAnalysis.flags||[],
+ prevSession:loopAnalysis.prevSession,
+ clinicianAction:val('loop-clinician-action'),
+ clinicianRationale:val('loop-clinician-rationale').trim(),
+ finalAction:loopDecision.finalAction,
+ overridden:loopDecision.overridden,
+ nextActionText:closedLoopActionPlan(loopDecision.finalAction,buildClinicalReasoningPlan()),
+ generatedAt:new Date().toISOString()
+},
+savedAt:new Date().toISOString()};setHistory(h);renderSessionBadges();updateCharts();generateClientReport();alert(`✅ ${val('pt-name')||'회원'} · ${currentSessionNum}회차 저장 완료\n회원용 리포트와 전문가용 기록이 분리되어 준비되었습니다.`);if(printAfter)setTimeout(()=>printExpertReport(),150)}
 function setSelectByValueOrMap(id,value,mapFn){const el=document.getElementById(id);if(!el||value===undefined||value===null||value==='')return;let v=String(value).trim();if(mapFn)v=mapFn(v);const exact=[...el.options].find(o=>o.value===v||o.text===v);if(exact){el.value=exact.value;return}const partial=[...el.options].find(o=>o.value.includes(v)||v.includes(o.value));if(partial)el.value=partial.value}
 function mapOnset(v){if(v==='1주 이내')return'급성 (1주 이내)';if(v==='1주~1개월'||v==='1~3개월')return'아급성 (1주~3개월)';if(v==='3개월 이상')return'만성 (3개월 이상)';if(v.includes('재발'))return'반복/재발성';return v}
 function mapDuration(v){if(v.includes('간헐'))return'간헐적';if(v==='수분~수십분')return'수분~수십분';if(v==='수시간')return'수시간';if(v.includes('지속'))return'지속적';if(v.includes('활동')||v.includes('가변'))return'가변적';return v}
