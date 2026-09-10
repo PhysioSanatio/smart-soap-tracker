@@ -31,9 +31,49 @@
 #member-id,#episode-member-id,#episode-id{font-weight:800;letter-spacing:.04em;background:#f8fafc}
 .member-kpi{display:inline-block;margin:3px 8px 3px 0;padding:4px 8px;border-radius:999px;background:#eef2f7;font-size:12px}
 .member-table{width:100%;border-collapse:collapse;margin-top:8px}.member-table th,.member-table td{border-bottom:1px solid #e2e8f0;padding:6px;text-align:left;font-size:12px}
+
+/* REVOREM admin session control */
+.revorem-admin-bar{
+  max-width:1500px;
+  margin:0 auto 12px;
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  gap:8px;
+}
+.revorem-admin-label{
+  font-size:.68rem;
+  color:var(--sub);
+  letter-spacing:.08em;
+  font-weight:700;
+}
+.revorem-logout-btn{
+  border:1px solid var(--border);
+  background:#fff;
+  color:var(--primary-dark);
+  border-radius:6px;
+  padding:6px 10px;
+  font:inherit;
+  font-size:.72rem;
+  font-weight:800;
+  cursor:pointer;
+}
+.revorem-logout-btn:hover{
+  background:var(--accent-light);
+}
+@media print{
+  .revorem-admin-bar{display:none!important}
+}
+
 </style>
 </head>
 <body>
+
+<div class="revorem-admin-bar">
+  <span class="revorem-admin-label">ADMIN SESSION</span>
+  <button type="button" class="revorem-logout-btn" onclick="revoremLogout()">로그아웃</button>
+</div>
+
 <div class="header"><h1>REVOREM</h1><p>ICF FUNCTIONING MANAGEMENT PLATFORM & CLINICAL REASONING SUPPORT</p></div>
 <div class="layout">
 <div>
@@ -2046,7 +2086,7 @@ document.addEventListener('DOMContentLoaded',()=>{
  renderPersonalFactors();updateMemberStatusUI();refreshCrmAnalytics();
 });
 </script>
-  <!-- REVOREM Clinical 인증 가드 v3 -->
+  <!-- REVOREM Clinical 인증 가드 v4 · Session Login + Logout -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
   import {
@@ -2054,7 +2094,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     onAuthStateChanged,
     signOut,
     setPersistence,
-    browserLocalPersistence
+    browserSessionPersistence
   } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
   const firebaseConfig = {
@@ -2077,7 +2117,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.documentElement.style.visibility = "hidden";
 
   try {
-    await setPersistence(auth, browserLocalPersistence);
+    await setPersistence(auth, browserSessionPersistence);
   } catch (error) {
     console.error("REVOREM persistence error:", error);
   }
