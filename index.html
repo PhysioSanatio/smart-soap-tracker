@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>REVOREM v3.5 - Deep ICF Clinical Reasoning & Natural Member Feedback</title>
+<title>REVOREM v3.6 - Natural Korean ICF Feedback & Deep Clinical Reasoning</title>
 <style>
 :root{--primary:#8C7A6B;--primary-dark:#52463C;--accent:#CDB78E;--accent-light:#F7F4EE;--danger:#B91C1C;--danger-bg:#FEF2F2;--orange:#C2410C;--orange-bg:#FFF7ED;--warning:#D97706;--warning-bg:#FFFBEB;--success:#15803D;--success-bg:#F0FDF4;--info:#0369A1;--info-bg:#F0F9FF;--bg:#FAFAFA;--card:#fff;--border:#E5E0D8;--text:#222;--sub:#666}
 *{box-sizing:border-box}body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--bg);color:var(--text);margin:0;padding:15px;line-height:1.45}.header{text-align:center;margin-bottom:15px;padding:16px;background:var(--card);border-radius:8px;border:1px solid var(--border);border-bottom:3px solid var(--accent)}.header h1{font-size:1.35rem;margin:0;color:var(--primary);letter-spacing:4px;font-weight:800}.header p{font-size:.82rem;margin:4px 0 0;color:var(--sub);letter-spacing:1.5px;font-weight:600}.layout{display:grid;grid-template-columns:1.08fr .92fr;gap:15px;max-width:1500px;margin:0 auto}@media(max-width:950px){.layout{grid-template-columns:1fr}}.card{background:var(--card);border-radius:8px;padding:16px;border:1px solid var(--border);box-shadow:0 2px 4px rgba(0,0,0,.02);margin-bottom:15px}h2{font-size:1.05rem;color:var(--primary);margin:0 0 12px;border-bottom:2px solid var(--accent-light);padding:0 0 6px 8px;border-left:3.5px solid var(--accent)}h3{font-size:.9rem;color:var(--primary-dark);margin:10px 0 7px}.small{font-size:.75rem;color:var(--sub)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}@media(max-width:650px){.grid2,.grid3{grid-template-columns:1fr}}label{font-size:.75rem;font-weight:700;color:var(--primary);display:block;margin-bottom:3px}input,select,textarea{width:100%;padding:8px 9px;border:1px solid var(--border);border-radius:6px;background:#fff;font:inherit;font-size:.82rem;color:var(--text)}textarea{min-height:58px;resize:vertical}.prom-summary,.soft-box{background:var(--accent-light);border:1px solid var(--accent);border-radius:8px;padding:11px 13px;font-size:.82rem;margin-bottom:10px}.search-box-group{display:flex;gap:6px;margin-top:7px}.search-box-group input{flex:1}.btn{border:0;border-radius:6px;padding:8px 12px;background:var(--primary);color:#fff;font-weight:700;cursor:pointer;font-size:.8rem}.btn:hover{background:var(--primary-dark)}.btn.secondary{background:var(--primary-dark)}.oldcharts-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:var(--accent-light);padding:12px;border-radius:8px;border:1px solid var(--border);margin:10px 0}.banner{border-radius:8px;padding:11px 12px;font-weight:700;margin-bottom:10px;display:none;font-size:.83rem}.banner.red{background:var(--danger-bg);border:2px solid var(--danger);color:var(--danger)}.banner.orange{background:var(--orange-bg);border:2px solid var(--orange);color:var(--orange)}.banner.yellow{background:var(--warning-bg);border:2px solid var(--warning);color:var(--warning)}.banner.green{background:var(--success-bg);border:1.5px solid var(--success);color:var(--success)}.section-label{font-size:.78rem;font-weight:800;color:var(--primary-dark);padding:6px 8px;background:var(--accent-light);border-radius:6px;margin:8px 0}.algo-step{background:#FAFAFA;border:1px solid var(--border);border-left:4px solid var(--accent);padding:11px;border-radius:6px;margin-bottom:9px}.algo-step.red-step{border-left-color:var(--danger);background:var(--danger-bg)}.algo-step.orange-step{border-left-color:var(--orange);background:var(--orange-bg)}.algo-title{font-weight:800;font-size:.86rem;color:var(--primary-dark);margin-bottom:4px}.algo-q{font-size:.83rem;margin-bottom:7px}.btn-group{display:flex;gap:6px;flex-wrap:wrap}.choice{flex:1;min-width:95px;padding:7px;border:1.5px solid var(--border);background:#fff;border-radius:6px;font-size:.78rem;font-weight:700;cursor:pointer}.choice.pos{background:var(--primary);color:#fff;border-color:var(--primary)}.choice.neg{background:var(--success);color:#fff;border-color:var(--success)}.choice.nt{background:#6B7280;color:#fff;border-color:#6B7280}.out-box{background:var(--accent-light);border:1px solid var(--border);padding:12px;border-radius:6px;font-size:.8rem;white-space:pre-wrap;max-height:420px;overflow:auto}.status-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}.pill{padding:4px 8px;border-radius:999px;font-size:.72rem;font-weight:800;border:1px solid var(--border);background:#fff}.pill.red{color:var(--danger);border-color:#FCA5A5}.pill.orange{color:var(--orange);border-color:#FDBA74}.pill.green{color:var(--success);border-color:#86EFAC}.pill.gray{color:#6B7280}.collapse{border:1px solid var(--border);border-radius:8px;margin-bottom:9px;overflow:hidden}.collapse summary{cursor:pointer;padding:10px 12px;background:var(--accent-light);font-weight:800;color:var(--primary-dark);font-size:.84rem;list-style:none}.collapse summary::-webkit-details-marker{display:none}.collapse summary:before{content:'▶';display:inline-block;margin-right:7px;font-size:.7rem;transition:.15s}.collapse[open] summary:before{transform:rotate(90deg)}.collapse-body{padding:10px 12px}.step-card{background:#fff;border:1px solid var(--border);border-radius:6px;padding:8px 10px;margin-bottom:6px;font-size:.77rem}.step-title{font-weight:800;color:var(--primary-dark);margin-bottom:3px}.tag-neg{color:#0284C7;font-weight:800}.tag-pos{color:#EA580C;font-weight:800}.tag-ma{color:var(--success);font-weight:800}.tag-mod{color:var(--primary-dark);font-weight:800}.tag-warn{color:var(--warning);font-weight:800}.therapy-lock{padding:12px;text-align:center;background:var(--danger-bg);color:var(--danger);border:1px dashed var(--danger);border-radius:6px;font-weight:800}.fitt-table{width:100%;border-collapse:collapse;font-size:.75rem;margin:6px 0 11px}.fitt-table th,.fitt-table td{border:1px solid var(--border);padding:6px 7px;text-align:left;vertical-align:top}.fitt-table th{background:var(--accent-light);color:var(--primary)}.track-header{font-weight:800;color:var(--primary);font-size:.82rem;margin-top:10px;border-left:3px solid var(--accent);padding-left:6px}.tracking-card{background:#fff;border:2px solid var(--accent);border-radius:12px;padding:18px;margin-top:10px}.session-badge-group{display:flex;gap:6px;flex-wrap:wrap;margin:9px 0}.session-badge{padding:6px 11px;background:var(--accent-light);border:1px solid var(--border);border-radius:20px;font-size:.77rem;font-weight:800;cursor:pointer;color:var(--primary)}.session-badge.active{background:var(--primary);color:#fff}.progress-bar-bg{width:100%;background:var(--accent-light);height:10px;border-radius:5px;overflow:hidden;margin:7px 0;border:1px solid var(--border)}.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--primary));width:0;transition:.3s}.charts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}@media(max-width:950px){.charts{grid-template-columns:1fr 1fr}}@media(max-width:600px){.charts{grid-template-columns:1fr}}.chart-container{display:flex;align-items:flex-end;height:105px;gap:5px;background:var(--accent-light);padding:8px;border-radius:8px;border:1px solid var(--border)}.chart-bar-group{flex:1;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end}.chart-bar{width:100%;max-width:18px;background:var(--primary);border-radius:3px 3px 0 0}.chart-label{font-size:.62rem;color:var(--sub);margin-top:3px;text-align:center}.btn-save{width:100%;padding:14px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;border:0;border-radius:8px;font-weight:800;font-size:.95rem;cursor:pointer}.wave-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}@media(max-width:700px){.wave-grid{grid-template-columns:1fr}}.wave-card{border:1px solid var(--border);border-radius:7px;padding:7px;background:#fff}.wave-card img{width:100%;height:auto;display:block;border-radius:4px}.source-note{font-size:.72rem;color:var(--sub);background:var(--info-bg);border-left:3px solid var(--info);padding:7px 8px;margin:7px 0}.danger-note{font-size:.72rem;color:var(--danger);background:var(--danger-bg);border-left:3px solid var(--danger);padding:7px 8px;margin:7px 0}.yt-link{display:inline-block;background:#7A6A5C;color:#fff;padding:3px 7px;border-radius:4px;font-weight:700;font-size:.68rem;text-decoration:none}@media print{body{background:#fff;padding:0}.tracking-card,.btn-save,.search-box-group{display:none}.layout{display:block}.card{box-shadow:none;page-break-inside:avoid}}
@@ -325,13 +325,17 @@ function patientPatternText(name){
   return hit?hit[1]:'현재 증상과 목표 활동에 영향을 주는 움직임·부하 요인';
 }
 function memberTreatmentSummary(){
-  const d=sessionInterventionData(),lines=[];
-  if(d.manual.applied==='yes')lines.push(`• 수기 관리: ${d.manual.detail||'불편한 부위의 움직임과 긴장도를 확인하며 필요한 수기 관리를 적용했습니다.'}`);
-  if(d.tens.applied==='yes')lines.push(`• 전류테라피: ${d.tens.detail||'현재 상태와 반응을 확인하며 전류 관리를 적용했습니다.'}`);
-  if(d.etherapy.mode)lines.push(`• E‑Therapy: ${d.etherapy.mode}${d.etherapy.time?` · ${d.etherapy.time}분`:''}${d.etherapy.purpose?` · ${d.etherapy.purpose}`:''}`);
-  if(d.active)lines.push(`• 움직임/운동: ${d.active}`);
-  if(!lines.length)lines.push('• 이번 세션의 실제 시행 내용이 아직 입력되지 않았습니다.');
-  return lines.join('\n');
+ const d=sessionInterventionData(),a=[];
+ if(d.manual.applied==='yes')a.push(`• 핸즈온 관리: ${sentenceEnd(d.manual.detail||'검진에서 확인된 움직임과 증상 반응을 중심으로 직접 관리','하였습니다.')}`);
+ if(d.tens.applied==='yes')a.push(`• 전류테라피: ${sentenceEnd(d.tens.detail||'불편감과 근긴장 완화를 돕기 위해 보조적으로 적용','하였습니다.')}`);
+ if(d.etherapy.mode){
+   let x=`${d.etherapy.mode}`;
+   if(d.etherapy.purpose)x+=` · ${d.etherapy.purpose}`;
+   if(d.etherapy.time)x+=` · ${d.etherapy.time}`;
+   a.push(`• E-Therapy: ${sentenceEnd(x,'로 적용하였습니다.')}`);
+ }
+ if(d.active)a.push(`• 움직임/운동: ${sentenceEnd(d.active,'하였습니다.')}`);
+ return a.join('\n')||'';
 }
 function copyMemberReport(){
   generateClientReport();
@@ -502,6 +506,19 @@ function joinNatural(arr){
  if(x.length<=1)return x[0]||'';
  if(x.length===2)return `${x[0]}과 ${x[1]}`;
  return `${x.slice(0,-1).join(', ')}, 그리고 ${x[x.length-1]}`;
+}
+
+function naturalActivityText(text){
+ let x=String(text||'').trim();
+ x=x.replace(/어깨의 유연성을 요구하는 전반적인 스포츠\s*/g,'수영이나 역도처럼 어깨의 충분한 움직임이 필요한 스포츠 활동');
+ x=x.replace(/\s*등\s*$/,'');
+ return x;
+}
+function sentenceEnd(text, ending='했습니다.'){
+ let x=String(text||'').trim().replace(/[.\s]+$/,'');
+ if(!x)return '';
+ if(/[요다]$/.test(x))return x+'';
+ return x+ending;
 }
 function memberOutcomeLabel(meta){
  const code=currentAreaName;
@@ -765,9 +782,9 @@ function smartSelfManagement(c){
 function applySmartSessionSuggestions(){
  evaluatePlatform();const c=icfContext(),plan=buildClinicalReasoningPlan(),ex=plan.exercise;
  const fill=(id,v)=>{const e=document.getElementById(id);if(e&&!String(e.value||'').trim())e.value=v};
- fill('manual-detail',`${c.regionLabel}에서 ${plan.bodyFunction}을 중심으로 움직임과 증상 반응을 확인하며 핸즈온 적용`);
+ fill('manual-detail',`${c.regionLabel}에서 ${plan.bodyFunction}을 중심으로 움직임과 증상 반응을 확인하며 핸즈온 관리를 진행`);
  fill('tens-detail',`${c.regionLabel} 주변의 불편감과 근긴장 완화를 돕기 위해 전류테라피를 보조적으로 적용`);
- fill('active-detail',`${c.goal?`${c.goal}에 필요한 `:''}${plan.goalDemand}을 고려해 능동적 움직임과 단계적 부하를 적용`);
+ fill('active-detail',`${c.goal?`${c.goal}에 필요한 `:''}${plan.goalDemand}을 고려하여 능동적 움직임과 단계적인 부하 운동을 진행`);
  fill('home-exercise',ex.name);fill('home-dose',ex.dose);
  fill('home-frequency','하루 1회 · 다음날까지 불편감이 오래 남지 않는 범위');
  fill('selfmanagement-detail',smartSelfManagement(c));
@@ -787,11 +804,14 @@ function applySmartSessionSuggestions(){
 }
 function holisticMemberInsight(c){
  const a=[],plan=buildClinicalReasoningPlan();
- a.push(`이번 관리는 통증의 위치만 보는 것이 아니라 ${plan.bodyFunction}, 실제 활동에서의 불편함, 그리고 ${c.goal?`"${c.goal}"이라는 목표`:'평소 중요하게 생각하는 활동'}를 함께 기준으로 잡았습니다.`);
- if(c.env.length)a.push(`${c.env.slice(0,2).join(', ')} 같은 생활 여건도 몸의 회복에 영향을 줄 수 있어, 무리한 계획보다는 실제 생활에서 이어갈 수 있는 수준으로 조절하겠습니다.`);
- if(c.risk.highPainSensitivity)a.push('통증에 대한 경계가 커져 있는 시기에는 통증을 완전히 피하기보다, 안전하게 가능한 움직임을 조금씩 늘려가는 과정도 중요합니다.');
- if(c.risk.recoveryLoad)a.push('수면·피로·긴장처럼 회복에 영향을 주는 부분도 함께 살펴보겠습니다.');
- return a.slice(0,3);
+ if(c.env.length||c.risk.recoveryLoad){
+   let first='그리고 몸의 기능만큼 회복할 수 있는 생활 여건도 중요합니다.';
+   if(c.env.length)first+=` 현재 ${c.env.slice(0,2).join(', ')} 같은 부담이 있어, 실제 생활에서 무리 없이 이어갈 수 있는 관리량을 함께 고려했습니다.`;
+   a.push(first);
+ }
+ if(c.risk.recoveryLoad)a.push('수면과 피로, 긴장도 역시 오늘 상태와 함께 확인했으며 앞으로의 회복 과정에서도 계속 참고하겠습니다.');
+ if(c.risk.highPainSensitivity)a.push('또한 통증에 대한 경계가 커져 있는 경우에는 통증을 완전히 피하기보다, 안전하게 가능한 움직임을 확인하면서 활동 범위를 넓혀가는 방향이 도움이 됩니다.');
+ return a.slice(0,2);
 }
 function feedbackRiskProfile(){
   const pre=preIntakeData||{},m=pre.mentalScores||{};
@@ -842,13 +862,18 @@ function personalizedHomeMessage(d,risk,phase){
    if(d.homeDose)x+=` ${d.homeDose}`;
    if(d.homeFrequency)x+=` · ${d.homeFrequency}`;
    lines.push(`${x} 정도로 진행해 주세요.`);
- }else if(d.active) lines.push('오늘 함께 확인한 움직임을 짧게 반복해 주세요.');
- if(risk.highPainSensitivity) lines.push('통증 숫자 하나보다 “어디까지 편하게 움직였는지”와 “활동 후 얼마나 잘 가라앉는지”를 함께 관찰해 주세요.');
- else if(irr.level==='high') lines.push('오늘은 범위나 강도를 욕심내기보다, 시행 후 불편감이 오래 남지 않는 선에서 가볍게 반복해 주세요.');
- else lines.push(`목표 활동은 ${plan.exposure}.`);
- if(risk.recoveryLoad) lines.push('가능하다면 오늘은 수면과 휴식 시간을 조금 더 확보해 몸이 회복할 여유를 만들어 주세요.');
- if(d.selfManagement && !lines.some(x=>d.selfManagement.includes(x)||x.includes(d.selfManagement))) lines.push(d.selfManagement);
- return [...new Set(lines)].slice(0,4);
+ }
+ if(risk.highPainSensitivity){
+   lines.push('통증의 숫자만 확인하기보다 어디까지 편하게 움직일 수 있었는지, 활동 후에는 얼마나 잘 가라앉는지를 함께 살펴봐 주세요.');
+ }else if(irr.level==='high'){
+   lines.push('범위나 강도를 서둘러 높이기보다, 운동 후 불편감이 오래 남지 않는 정도에서 가볍게 반복해 주세요.');
+ }else{
+   lines.push(`${plan.exposure.replace(/[.\s]+$/,'')}해 주세요.`);
+ }
+ if(risk.recoveryLoad){
+   lines.push('가능하다면 오늘은 수면과 휴식 시간을 조금 더 확보해 몸이 회복할 여유를 만들어 주세요.');
+ }
+ return [...new Set(lines)].slice(0,3);
 }
 function feedbackClosing(goal,phase){
  const g=goal||'원하시는 활동',n=Number(currentSessionNum)||1;
@@ -862,7 +887,7 @@ function generateClientReport(){
  const safety=getSafety(),d=sessionInterventionData(),meta=instrumentMeta(),pct=bodyScorePercent();
  const c=icfContext(),risk=feedbackRiskProfile(),phase=feedbackPhase(),plan=buildClinicalReasoningPlan();
  const name=cleanMemberName(val('pt-name')),goal=val('pt-goal').trim(),treatment=memberTreatmentSummary(),response=sessionResponseText(d);
- const home=personalizedHomeMessage(d,risk,phase),outcome=memberOutcomeLabel(meta);
+ const home=personalizedHomeMessage(d,risk,phase),outcome=memberOutcomeLabel(meta),activity=naturalActivityText(c.activityLimit);
 
  let t=`안녕하세요, ${name}님 😊
 오늘도 함께해 주셔서 감사합니다. 오늘 관리는 어떠셨나요?
@@ -877,40 +902,44 @@ function generateClientReport(){
    t+=`${c.regionLabel}의 ${plan.bodyFunction}을 중심으로 현재 상태를 살펴봤습니다.
 `;
  }
-
- if(c.activityLimit){
-   t+=`특히 평소 불편하다고 말씀하신 "${c.activityLimit}"이 실제로 얼마나 편해지는지를 중요한 기준으로 보겠습니다.
+ if(activity){
+   t+=`또한 평소 불편하다고 말씀해 주신 "${activity}"이 실제 동작에서 어떤 영향을 받는지도 함께 확인했습니다.
 `;
  }
 
  t+=`
 현재 ${outcome}은 ${num('pt-body-score')}/${meta.max}${pct!==null?` (${pct}%)`:''}`;
- if(goal) t+=`, ${goal} 수행 정도는 ${num('pt-goal-score')}/10`;
+ if(goal)t+=`, ${goal} 수행 정도는 ${num('pt-goal-score')}/10`;
  t+=`으로 확인되었습니다.
-
-🌿 몸과 생활을 함께 봅니다
 `;
- holisticMemberInsight(c).forEach(x=>t+=`${x}
+
+ const holistic=holisticMemberInsight(c);
+ if(holistic.length){
+   t+=`
+🌿 회복에 영향을 주는 부분도 함께 확인했어요
+`;
+   holistic.forEach(x=>t+=`${x}
 `);
+ }
 
  t+=`
 👐 오늘의 관리
 `;
- if(treatment && !/기록된 실제 중재 없음|미기록/.test(treatment)) t+=`${treatment}
+ if(treatment)t+=`${treatment}
 `;
  else t+=`오늘 실제로 시행한 관리 내용을 기록하면 이 부분에 자동으로 정리됩니다.
 `;
 
  if(response){
    t+=`
-🌱 관리 후 반응
-${response}
+🌱 관리 후에는
+${sentenceEnd(response,'으로 확인되었습니다.')}
 `;
  }
 
  if(safety.red.length||safety.orange.length){
    t+=`
-⚠️ 오늘 확인 과정에서 추가 확인이 필요한 부분이 있어, 운동량을 늘리기보다 먼저 안내드린 안전 확인을 우선해 주세요.
+⚠️ 오늘 확인 과정에서 추가 확인이 필요한 부분이 있었습니다. 운동량을 늘리기보다는 먼저 안내드린 안전 확인을 우선해 주세요.
 `;
  }else{
    t+=`
@@ -924,7 +953,7 @@ ${response}
 💬 ${currentSessionNum}회차 한마디
 ${feedbackClosing(goal,phase)}
 
-오늘도 수고 많으셨습니다. 몸의 반응을 너무 급하게 판단하지 마시고, 다음 방문 때 오늘 이후의 변화를 함께 확인해볼게요. 😊
+오늘도 수고 많으셨습니다. 오늘 이후 몸의 반응을 편하게 살펴보시고, 다음 방문 때 함께 비교해 보겠습니다. 😊
 REVOREM`;
 
  document.getElementById('client-report-preview').innerText=t;
