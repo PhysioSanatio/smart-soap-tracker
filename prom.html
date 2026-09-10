@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>REVOREM Pre-Intake v3.0 - BPS & Function Screening</title>
+    <title>REVOREM Pre-Intake v3.2 - Patient Guidance</title>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <style>
         :root {
@@ -312,6 +312,7 @@ const scriptURL = 'https://script.google.com/macros/s/AKfycbxcTP1BwPcdhaBk6ck6I2
 const DATA_SURVEY = {
     NDI: {
         title: "목 기능 장애 지수 (NDI - 10문항)",
+        description: "목의 불편함이 통증, 일상생활, 집중, 수면과 활동에 어느 정도 영향을 주는지 확인하는 문항입니다. 최근의 평소 상태를 떠올리며 가장 가까운 답을 선택해 주세요.",
         opts: ["통증/지장 없음", "아주 조금 지장 있음", "보통 정도로 지장 있음", "상당히 지장 있음", "매우 심하게 지장 있음", "아파서 전혀 불가능함"],
         qs: [
             "현재 목의 통증 정도는 어떠신가요?",
@@ -328,6 +329,7 @@ const DATA_SURVEY = {
     },
     SPADI: {
         title: "어깨 통증 및 장애 지수 (SPADI - 13문항)",
+        description: "어깨 통증의 정도와 팔을 사용하는 일상 동작에서의 어려움을 함께 확인하는 문항입니다. 현재 상태를 기준으로 가장 가까운 정도를 선택해 주세요.",
         sections: [
             {
                 subTitle: "▶ 통증 척도 (Pain Scale - 5문항)",
@@ -343,6 +345,7 @@ const DATA_SURVEY = {
     },
     PRTEE: {
         title: "팔꿈치 장애 지수 (PRTEE - 15문항)",
+        description: "팔꿈치 통증과 손으로 잡기·들기·돌리기 같은 활동이 얼마나 불편한지 확인하는 문항입니다. 평소 실제로 느끼는 어려움에 가장 가까운 답을 선택해 주세요.",
         sections: [
             {
                 subTitle: "▶ 통증 척도 (Pain Scale - 5문항)",
@@ -381,6 +384,7 @@ const DATA_SURVEY = {
     },
     ODI: {
         title: "허리 기능 장애 지수 (ODI - 10문항)",
+        description: "허리 통증이 걷기, 앉기, 서기, 수면과 같은 일상생활에 어느 정도 영향을 주는지 확인하는 문항입니다. 현재 상태와 가장 가까운 문장을 하나씩 선택해 주세요.",
         qs: [
             { q: "제 1 항 - 통증 정도", opts: ["현재 통증이 전혀 없다.", "현재 매우 가벼운 통증이 있다.", "현재 통증이 조금 있다.", "현재 통증이 조금 심하다.", "현재 통증이 아주 심하다.", "현재 통증이 상상할 수 없이 심하다."] },
             { q: "제 2 항 - 개인 위생 (씻기, 옷 입기 등)", opts: ["별다른 통증 없이 나 자신을 챙길 수 있다.", "보통 나 자신을 챙길 수 있으나 통증이 있다.", "통증 때문에 고통스러워서 천천히 조심스럽게 해야 한다.", "통증 때문에 어느 정도 도움이 필요하거나, 혼자서 할 수는 있다.", "매일 도움이 없이는 나 자신을 챙기기 어렵다.", "옷을 입거나 씻는 게 어렵고 보통은 누워있다."] },
@@ -396,6 +400,7 @@ const DATA_SURVEY = {
     },
     HOOS: {
         title: "REVOREM Hip Function Screen (고관절 기능 스크리닝 - 15문항)",
+        description: "고관절의 불편함이 걷기, 계단, 앉았다 일어나기, 운동과 같은 움직임에 어느 정도 영향을 주는지 확인합니다. 평소 상태를 떠올리며 가장 가까운 답을 선택해 주세요.",
         customScreen: true,
         scoreMax: 60,
         scoreMeaning: "점수가 높을수록 현재 기능 제한이 큼",
@@ -420,6 +425,7 @@ const DATA_SURVEY = {
     },
     KOOS: {
         title: "REVOREM Knee Function Screen (무릎 기능 스크리닝 - 15문항)",
+        description: "무릎의 불편함이 걷기, 계단, 쪼그리기, 방향 전환과 같은 일상 및 운동 동작에 어느 정도 영향을 주는지 확인합니다. 평소 상태를 기준으로 답해 주세요.",
         customScreen: true,
         scoreMax: 60,
         scoreMeaning: "점수가 높을수록 현재 기능 제한이 큼",
@@ -444,6 +450,7 @@ const DATA_SURVEY = {
     },
     FAAM: {
         title: "REVOREM Ankle-Foot Function Screen (발목·발 기능 스크리닝 - 15문항)",
+        description: "발목과 발의 불편함이 걷기, 계단, 균형, 까치발과 운동 활동에 어느 정도 영향을 주는지 확인합니다. 평소 실제 수행 수준에 가장 가까운 답을 선택해 주세요.",
         customScreen: true,
         scoreMax: 60,
         scoreMeaning: "점수가 높을수록 현재 기능 제한이 큼",
@@ -468,6 +475,7 @@ const DATA_SURVEY = {
     },
     TSK: {
         title: "움직임 공포 문진 (TSK-11 기반 - 11문항)",
+        description: "통증이 있을 때 움직임이나 운동에 대해 어떤 생각과 걱정을 느끼는지 확인하는 문항입니다. 정답은 없으므로 평소 생각과 가장 가까운 답을 선택해 주세요.",
         labels: ["전혀 아님", "아닌 편임", "그러함", "매우 그러함"],
         qs: [
             "운동하거나 움직이다가 몸을 더 다칠까 봐 걱정된다.",
@@ -485,6 +493,7 @@ const DATA_SURVEY = {
     },
     PCS: {
         title: "통증 사고 반응 문진 (PCS 기반 - 13문항)",
+        description: "통증이 있을 때 반복해서 떠오르는 걱정이나 생각의 정도를 확인하는 문항입니다. 좋고 나쁜 답은 없으므로 실제 경험과 가장 가까운 답을 선택해 주세요.",
         labels: ["전혀 아님", "약간 그러함", "보통 그러함", "심하게 그러함", "매우 그러함"],
         qs: [
             "통증이 계속될까 봐 걱정이 된다.",
@@ -505,6 +514,7 @@ const DATA_SURVEY = {
     MENTAL: [
         {
             category: "지각된 스트레스 문진 (PSS-10 - 10문항)",
+            description: "최근 생활에서 느낀 스트레스와 대처 상태를 확인하는 문항입니다.",
             instruction: "지난 1개월 동안 다음과 같은 경험이 얼마나 자주 있었는지 선택해 주세요.",
             reverse: [3,4,6,7],
             labels: ["전혀 없음", "거의 없음", "가끔 있음", "자주 있음", "매우 자주 있음"],
@@ -523,6 +533,7 @@ const DATA_SURVEY = {
         },
         {
             category: "불안 증상 선별 (GAD-7 - 7문항)",
+            description: "최근 불안이나 걱정이 일상에 어느 정도 나타났는지 확인하는 문항입니다.",
             instruction: "지난 2주 동안 다음 문제로 얼마나 자주 불편함을 겪었는지 선택해 주세요.",
             labels: ["전혀 없었다", "며칠 동안", "7일 이상", "거의 매일"],
             qs: [
@@ -537,6 +548,7 @@ const DATA_SURVEY = {
         },
         {
             category: "우울 증상 선별 (PHQ-9 - 9문항)",
+            description: "최근 기분, 의욕, 수면과 에너지 상태를 확인하는 문항입니다.",
             instruction: "지난 2주 동안 다음 문제로 얼마나 자주 불편함을 겪었는지 선택해 주세요.",
             labels: ["전혀 없었다", "며칠 동안", "7일 이상", "거의 매일"],
             qs: [
@@ -588,9 +600,12 @@ function loadAreaQuestions() {
 
     const data = DATA_SURVEY[area];
     let html = `<div style="font-weight:800; color:var(--primary); margin: 20px 0 12px 0; font-size:16px;">[ ${data.title} ]</div>`;
+    if (data.description && !data.customScreen) {
+        html += `<div class="screen-note">${data.description}</div>`;
+    }
 
     if (data.customScreen && data.items) {
-        html += `<div class="screen-note">현재 불편함이 일상생활과 움직임에 어느 정도 영향을 주고 있는지 확인하는 문항입니다. 평소 상태를 떠올리며 가장 가까운 답을 선택해 주세요.</div>`;
+        html += `<div class="screen-note">${data.description || "현재 불편함이 일상생활과 움직임에 어느 정도 영향을 주고 있는지 확인하는 문항입니다. 평소 상태를 떠올리며 가장 가까운 답을 선택해 주세요."}</div>`;
         data.items.forEach((item, idx) => {
             html += createQuestionCard(`body_${idx}`, idx + 1, `<span style="font-size:11px;color:var(--text-sub);font-weight:700">[${item.domain}]</span><br>${item.q}`, data.opts);
         });
@@ -616,11 +631,13 @@ function loadAreaQuestions() {
 function loadPsychQuestions() {
     const container = document.getElementById('psych-survey-area');
     let html = `<div style="font-weight:800; color:#6D28D9; margin: 15px 0 10px 0;">[ ${DATA_SURVEY.TSK.title} ]</div>`;
+    if (DATA_SURVEY.TSK.description) html += `<div class="screen-note">${DATA_SURVEY.TSK.description}</div>`;
     DATA_SURVEY.TSK.qs.forEach((qText, idx) => {
         html += createQuestionCard(`tsk_${idx}`, idx + 1, qText, DATA_SURVEY.TSK.labels);
     });
 
     html += `<div style="font-weight:800; color:#6D28D9; margin: 28px 0 10px 0;">[ ${DATA_SURVEY.PCS.title} ]</div>`;
+    if (DATA_SURVEY.PCS.description) html += `<div class="screen-note">${DATA_SURVEY.PCS.description}</div>`;
     DATA_SURVEY.PCS.qs.forEach((qText, idx) => {
         html += createQuestionCard(`pcs_${idx}`, idx + 1, qText, DATA_SURVEY.PCS.labels);
     });
@@ -634,7 +651,9 @@ function loadMentalQuestions() {
 
     DATA_SURVEY.MENTAL.forEach((section, sIdx) => {
         html += `<div style="font-weight:800; color:#0284C7; margin: 22px 0 10px 0;">※ ${section.category}</div>`;
-        if (section.instruction) html += `<div class="screen-note">${section.instruction}</div>`;
+        if (section.description || section.instruction) {
+            html += `<div class="screen-note">${section.description ? section.description + "<br>" : ""}${section.instruction || ""}</div>`;
+        }
         section.qs.forEach((qText, idx) => {
             html += createQuestionCard(`mental_${sIdx}_${idx}`, idx + 1, qText, section.labels);
         });
