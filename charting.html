@@ -65,6 +65,57 @@
   .revorem-admin-bar{display:none!important}
 }
 
+
+/* REVOREM idle-session warning */
+#revorem-idle-warning{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  background:rgba(39,35,31,.28);
+  backdrop-filter:blur(4px);
+}
+#revorem-idle-warning.show{display:flex}
+.revorem-idle-warning-card{
+  width:min(390px,100%);
+  padding:24px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:#fff;
+  box-shadow:0 20px 60px rgba(0,0,0,.16);
+  text-align:center;
+}
+.revorem-idle-warning-card strong{
+  display:block;
+  margin-bottom:8px;
+  color:var(--primary-dark);
+  font-size:.95rem;
+}
+.revorem-idle-warning-card div{
+  margin-bottom:16px;
+  color:var(--sub);
+  font-size:.78rem;
+  line-height:1.6;
+}
+.revorem-idle-warning-card button{
+  border:0;
+  border-radius:7px;
+  padding:9px 14px;
+  background:var(--primary);
+  color:#fff;
+  font:inherit;
+  font-size:.78rem;
+  font-weight:800;
+  cursor:pointer;
+}
+.revorem-idle-warning-card button:hover{background:var(--primary-dark)}
+@media print{
+  #revorem-idle-warning{display:none!important}
+}
+
 </style>
 </head>
 <body>
@@ -2086,7 +2137,7 @@ document.addEventListener('DOMContentLoaded',()=>{
  renderPersonalFactors();updateMemberStatusUI();refreshCrmAnalytics();
 });
 </script>
-  <!-- REVOREM Clinical 인증 가드 v4 · Session Login + Logout -->
+  <!-- REVOREM Clinical 인증 가드 v5 · Session Login + Logout + 30min Idle Timeout -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
   import {
@@ -2150,6 +2201,95 @@ document.addEventListener('DOMContentLoaded',()=>{
 
     document.documentElement.style.visibility = "visible";
   });
+
+
+  // ─────────────────────────────────────────────
+  // REVOREM Idle Session Timeout
+  // 30분 동안 사용자 활동이 없으면 자동 로그아웃합니다.
+  // 경고는 종료 2분 전에 표시합니다.
+  // ─────────────────────────────────────────────
+  const IDLE_TIMEOUT_MS = 30 * 60 * 1000;
+  const IDLE_WARNING_MS = 2 * 60 * 1000;
+
+  let idleLogoutTimer = null;
+  let idleWarningTimer = null;
+  let lastActivityAt = Date.now();
+
+  const idleWarning = document.createElement("div");
+  idleWarning.id = "revorem-idle-warning";
+  idleWarning.setAttribute("role", "alert");
+  idleWarning.innerHTML = `
+    <div class="revorem-idle-warning-card">
+      <strong>세션 자동 종료 예정</strong>
+      <div>장시간 활동이 없어 약 2분 후 자동 로그아웃됩니다.</div>
+      <button type="button" id="revorem-session-continue">세션 계속 사용</button>
+    </div>
+  `;
+  document.body.appendChild(idleWarning);
+
+  function hideIdleWarning(){
+    idleWarning.classList.remove("show");
+  }
+
+  function showIdleWarning(){
+    idleWarning.classList.add("show");
+  }
+
+  function scheduleIdleTimeout(){
+    clearTimeout(idleWarningTimer);
+    clearTimeout(idleLogoutTimer);
+    hideIdleWarning();
+
+    idleWarningTimer = setTimeout(showIdleWarning, IDLE_TIMEOUT_MS - IDLE_WARNING_MS);
+
+    idleLogoutTimer = setTimeout(async () => {
+      try {
+        await signOut(auth);
+      } catch (error) {
+        console.error("REVOREM idle sign-out error:", error);
+      }
+      window.location.replace("login.html?reason=idle");
+    }, IDLE_TIMEOUT_MS);
+  }
+
+  function registerUserActivity(){
+    const now = Date.now();
+
+    // mousemove/scroll처럼 빈번한 이벤트가 타이머를 과도하게 재설정하지 않도록 제한
+    if (now - lastActivityAt < 1000) return;
+
+    lastActivityAt = now;
+    scheduleIdleTimeout();
+  }
+
+  ["pointerdown", "keydown", "touchstart", "scroll"].forEach(eventName => {
+    window.addEventListener(eventName, registerUserActivity, { passive: true });
+  });
+
+  document.getElementById("revorem-session-continue")?.addEventListener("click", () => {
+    lastActivityAt = Date.now();
+    scheduleIdleTimeout();
+  });
+
+  document.addEventListener("visibilitychange", async () => {
+    if (document.visibilityState !== "visible") return;
+
+    const elapsed = Date.now() - lastActivityAt;
+
+    if (elapsed >= IDLE_TIMEOUT_MS) {
+      try {
+        await signOut(auth);
+      } catch (error) {
+        console.error("REVOREM idle sign-out error:", error);
+      }
+      window.location.replace("login.html?reason=idle");
+      return;
+    }
+
+    scheduleIdleTimeout();
+  });
+
+  scheduleIdleTimeout();
 
   window.revoremLogout = async function () {
     await signOut(auth);
