@@ -61,11 +61,11 @@
     <textarea id="manual-detail" placeholder="예: 좌측 견갑흉곽·후방 어깨 연부조직, GH mobility, 증상 반응을 보며 overhead 가동성 확보" oninput="evaluatePlatform()"></textarea>
   </div>
   <div class="session-record">
-    <h3>⚡ 대경TENS 실제 적용</h3>
+    <h3>⚡ 전류테라피 적용</h3>
     <label>시행 여부</label>
     <select id="tens-applied" onchange="evaluatePlatform()"><option value="">미기록</option><option value="no">미시행</option><option value="yes">시행</option></select>
     <label style="margin-top:8px">적용 부위 / 단계 / 반응</label>
-    <textarea id="tens-detail" placeholder="예: 견관절/견갑 영역 적용, 환자 허용범위 내 강도 조절" oninput="evaluatePlatform()"></textarea>
+    <textarea id="tens-detail" placeholder="예: 좌측 견관절/견갑 영역 전류테라피 적용, 증상 및 근긴장 반응에 따라 강도 조절" oninput="evaluatePlatform()"></textarea>
   </div>
   <div class="session-record">
     <h3>🏋️ Active Intervention</h3>
@@ -307,7 +307,7 @@ function patientPatternText(name){
 function memberTreatmentSummary(){
   const d=sessionInterventionData(),lines=[];
   if(d.manual.applied==='yes')lines.push(`• 수기 관리: ${d.manual.detail||'불편한 부위의 움직임과 긴장도를 확인하며 필요한 수기 관리를 적용했습니다.'}`);
-  if(d.tens.applied==='yes')lines.push(`• 전류 관리(대경TENS): ${d.tens.detail||'현재 상태와 반응을 확인하며 전류 관리를 적용했습니다.'}`);
+  if(d.tens.applied==='yes')lines.push(`• 전류테라피: ${d.tens.detail||'현재 상태와 반응을 확인하며 전류 관리를 적용했습니다.'}`);
   if(d.etherapy.mode)lines.push(`• E‑Therapy: ${d.etherapy.mode}${d.etherapy.time?` · ${d.etherapy.time}분`:''}${d.etherapy.purpose?` · ${d.etherapy.purpose}`:''}`);
   if(d.active)lines.push(`• 움직임/운동: ${d.active}`);
   if(!lines.length)lines.push('• 이번 세션의 실제 시행 내용이 아직 입력되지 않았습니다.');
@@ -410,7 +410,7 @@ Required missing: ${esc(safety.missing.join(', ')||'none')}</div>
   <div class="box mono">Manual therapy: ${yesText(d.manual.applied)}
 ${esc(d.manual.detail||'-')}
 
-대경TENS: ${yesText(d.tens.applied)}
+전류테라피: ${yesText(d.tens.applied)}
 ${esc(d.tens.detail||'-')}
 
 E-Therapy: ${esc(d.etherapy.mode||'미시행/미기록')}
