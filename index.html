@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>REVOREM Clinical Engine 1.1 - Structured Personal Factors & Closed-Loop ICF Reasoning</title>
+<title>REVOREM Clinical Engine 1.3 - Visit, Registration & CRM Analytics Layer</title>
 <style>
 :root{--primary:#8C7A6B;--primary-dark:#52463C;--accent:#CDB78E;--accent-light:#F7F4EE;--danger:#B91C1C;--danger-bg:#FEF2F2;--orange:#C2410C;--orange-bg:#FFF7ED;--warning:#D97706;--warning-bg:#FFFBEB;--success:#15803D;--success-bg:#F0FDF4;--info:#0369A1;--info-bg:#F0F9FF;--bg:#FAFAFA;--card:#fff;--border:#E5E0D8;--text:#222;--sub:#666}
 *{box-sizing:border-box}body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--bg);color:var(--text);margin:0;padding:15px;line-height:1.45}.header{text-align:center;margin-bottom:15px;padding:16px;background:var(--card);border-radius:8px;border:1px solid var(--border);border-bottom:3px solid var(--accent)}.header h1{font-size:1.35rem;margin:0;color:var(--primary);letter-spacing:4px;font-weight:800}.header p{font-size:.82rem;margin:4px 0 0;color:var(--sub);letter-spacing:1.5px;font-weight:600}.layout{display:grid;grid-template-columns:1.08fr .92fr;gap:15px;max-width:1500px;margin:0 auto}@media(max-width:950px){.layout{grid-template-columns:1fr}}.card{background:var(--card);border-radius:8px;padding:16px;border:1px solid var(--border);box-shadow:0 2px 4px rgba(0,0,0,.02);margin-bottom:15px}h2{font-size:1.05rem;color:var(--primary);margin:0 0 12px;border-bottom:2px solid var(--accent-light);padding:0 0 6px 8px;border-left:3.5px solid var(--accent)}h3{font-size:.9rem;color:var(--primary-dark);margin:10px 0 7px}.small{font-size:.75rem;color:var(--sub)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}@media(max-width:650px){.grid2,.grid3{grid-template-columns:1fr}}label{font-size:.75rem;font-weight:700;color:var(--primary);display:block;margin-bottom:3px}input,select,textarea{width:100%;padding:8px 9px;border:1px solid var(--border);border-radius:6px;background:#fff;font:inherit;font-size:.82rem;color:var(--text)}textarea{min-height:58px;resize:vertical}.prom-summary,.soft-box{background:var(--accent-light);border:1px solid var(--accent);border-radius:8px;padding:11px 13px;font-size:.82rem;margin-bottom:10px}.search-box-group{display:flex;gap:6px;margin-top:7px}.search-box-group input{flex:1}.btn{border:0;border-radius:6px;padding:8px 12px;background:var(--primary);color:#fff;font-weight:700;cursor:pointer;font-size:.8rem}.btn:hover{background:var(--primary-dark)}.btn.secondary{background:var(--primary-dark)}.oldcharts-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:var(--accent-light);padding:12px;border-radius:8px;border:1px solid var(--border);margin:10px 0}.banner{border-radius:8px;padding:11px 12px;font-weight:700;margin-bottom:10px;display:none;font-size:.83rem}.banner.red{background:var(--danger-bg);border:2px solid var(--danger);color:var(--danger)}.banner.orange{background:var(--orange-bg);border:2px solid var(--orange);color:var(--orange)}.banner.yellow{background:var(--warning-bg);border:2px solid var(--warning);color:var(--warning)}.banner.green{background:var(--success-bg);border:1.5px solid var(--success);color:var(--success)}.section-label{font-size:.78rem;font-weight:800;color:var(--primary-dark);padding:6px 8px;background:var(--accent-light);border-radius:6px;margin:8px 0}.algo-step{background:#FAFAFA;border:1px solid var(--border);border-left:4px solid var(--accent);padding:11px;border-radius:6px;margin-bottom:9px}.algo-step.red-step{border-left-color:var(--danger);background:var(--danger-bg)}.algo-step.orange-step{border-left-color:var(--orange);background:var(--orange-bg)}.algo-title{font-weight:800;font-size:.86rem;color:var(--primary-dark);margin-bottom:4px}.algo-q{font-size:.83rem;margin-bottom:7px}.btn-group{display:flex;gap:6px;flex-wrap:wrap}.choice{flex:1;min-width:95px;padding:7px;border:1.5px solid var(--border);background:#fff;border-radius:6px;font-size:.78rem;font-weight:700;cursor:pointer}.choice.pos{background:var(--primary);color:#fff;border-color:var(--primary)}.choice.neg{background:var(--success);color:#fff;border-color:var(--success)}.choice.nt{background:#6B7280;color:#fff;border-color:#6B7280}.out-box{background:var(--accent-light);border:1px solid var(--border);padding:12px;border-radius:6px;font-size:.8rem;white-space:pre-wrap;max-height:420px;overflow:auto}.status-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}.pill{padding:4px 8px;border-radius:999px;font-size:.72rem;font-weight:800;border:1px solid var(--border);background:#fff}.pill.red{color:var(--danger);border-color:#FCA5A5}.pill.orange{color:var(--orange);border-color:#FDBA74}.pill.green{color:var(--success);border-color:#86EFAC}.pill.gray{color:#6B7280}.collapse{border:1px solid var(--border);border-radius:8px;margin-bottom:9px;overflow:hidden}.collapse summary{cursor:pointer;padding:10px 12px;background:var(--accent-light);font-weight:800;color:var(--primary-dark);font-size:.84rem;list-style:none}.collapse summary::-webkit-details-marker{display:none}.collapse summary:before{content:'▶';display:inline-block;margin-right:7px;font-size:.7rem;transition:.15s}.collapse[open] summary:before{transform:rotate(90deg)}.collapse-body{padding:10px 12px}.step-card{background:#fff;border:1px solid var(--border);border-radius:6px;padding:8px 10px;margin-bottom:6px;font-size:.77rem}.step-title{font-weight:800;color:var(--primary-dark);margin-bottom:3px}.tag-neg{color:#0284C7;font-weight:800}.tag-pos{color:#EA580C;font-weight:800}.tag-ma{color:var(--success);font-weight:800}.tag-mod{color:var(--primary-dark);font-weight:800}.tag-warn{color:var(--warning);font-weight:800}.therapy-lock{padding:12px;text-align:center;background:var(--danger-bg);color:var(--danger);border:1px dashed var(--danger);border-radius:6px;font-weight:800}.fitt-table{width:100%;border-collapse:collapse;font-size:.75rem;margin:6px 0 11px}.fitt-table th,.fitt-table td{border:1px solid var(--border);padding:6px 7px;text-align:left;vertical-align:top}.fitt-table th{background:var(--accent-light);color:var(--primary)}.track-header{font-weight:800;color:var(--primary);font-size:.82rem;margin-top:10px;border-left:3px solid var(--accent);padding-left:6px}.tracking-card{background:#fff;border:2px solid var(--accent);border-radius:12px;padding:18px;margin-top:10px}.session-badge-group{display:flex;gap:6px;flex-wrap:wrap;margin:9px 0}.session-badge{padding:6px 11px;background:var(--accent-light);border:1px solid var(--border);border-radius:20px;font-size:.77rem;font-weight:800;cursor:pointer;color:var(--primary)}.session-badge.active{background:var(--primary);color:#fff}.progress-bar-bg{width:100%;background:var(--accent-light);height:10px;border-radius:5px;overflow:hidden;margin:7px 0;border:1px solid var(--border)}.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--primary));width:0;transition:.3s}.charts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}@media(max-width:950px){.charts{grid-template-columns:1fr 1fr}}@media(max-width:600px){.charts{grid-template-columns:1fr}}.chart-container{display:flex;align-items:flex-end;height:105px;gap:5px;background:var(--accent-light);padding:8px;border-radius:8px;border:1px solid var(--border)}.chart-bar-group{flex:1;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end}.chart-bar{width:100%;max-width:18px;background:var(--primary);border-radius:3px 3px 0 0}.chart-label{font-size:.62rem;color:var(--sub);margin-top:3px;text-align:center}.btn-save{width:100%;padding:14px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;border:0;border-radius:8px;font-weight:800;font-size:.95rem;cursor:pointer}.wave-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}@media(max-width:700px){.wave-grid{grid-template-columns:1fr}}.wave-card{border:1px solid var(--border);border-radius:7px;padding:7px;background:#fff}.wave-card img{width:100%;height:auto;display:block;border-radius:4px}.source-note{font-size:.72rem;color:var(--sub);background:var(--info-bg);border-left:3px solid var(--info);padding:7px 8px;margin:7px 0}.danger-note{font-size:.72rem;color:var(--danger);background:var(--danger-bg);border-left:3px solid var(--danger);padding:7px 8px;margin:7px 0}.yt-link{display:inline-block;background:#7A6A5C;color:#fff;padding:3px 7px;border-radius:4px;font-weight:700;font-size:.68rem;text-decoration:none}@media print{body{background:#fff;padding:0}.tracking-card,.btn-save,.search-box-group{display:none}.layout{display:block}.card{box-shadow:none;page-break-inside:avoid}}
@@ -27,7 +27,11 @@
 .auto-panel-note{font-size:.7rem;color:var(--muted);line-height:1.45;margin-top:5px}
 .btn-auto{border:1px solid #bda987;background:#f4efe6;color:#51483f;border-radius:7px;padding:7px 10px;font-weight:700;cursor:pointer;font-size:.73rem}
 .icf-preview{background:#f8f6f1;border-left:4px solid #c8b28d;padding:10px 12px;margin-top:10px;border-radius:6px;font-size:.76rem;line-height:1.65;white-space:pre-wrap}
-#personal-factors-card .range-labels{display:flex;justify-content:space-between;font-size:11px;opacity:.7}#personal-factors-card input[type=range]{width:100%;margin-top:8px}#personal-factors-card .segmented,#personal-factors-card .chip-wrap{display:flex;flex-wrap:wrap;gap:7px}#personal-factors-card .segmented button,#personal-factors-card .chip-btn{border:1px solid #cbd5e1;background:#fff;border-radius:999px;padding:7px 11px;cursor:pointer;font-size:12px}#personal-factors-card .segmented button.active,#personal-factors-card .chip-btn.active{background:#e2e8f0;font-weight:700}.pill{font-size:11px;padding:2px 7px;border-radius:999px;background:#eef2f7}</style>
+#personal-factors-card .range-labels{display:flex;justify-content:space-between;font-size:11px;opacity:.7}#personal-factors-card input[type=range]{width:100%;margin-top:8px}#personal-factors-card .segmented,#personal-factors-card .chip-wrap{display:flex;flex-wrap:wrap;gap:7px}#personal-factors-card .segmented button,#personal-factors-card .chip-btn{border:1px solid #cbd5e1;background:#fff;border-radius:999px;padding:7px 11px;cursor:pointer;font-size:12px}#personal-factors-card .segmented button.active,#personal-factors-card .chip-btn.active{background:#e2e8f0;font-weight:700}.pill{font-size:11px;padding:2px 7px;border-radius:999px;background:#eef2f7}
+#member-id,#episode-member-id,#episode-id{font-weight:800;letter-spacing:.04em;background:#f8fafc}
+.member-kpi{display:inline-block;margin:3px 8px 3px 0;padding:4px 8px;border-radius:999px;background:#eef2f7;font-size:12px}
+.member-table{width:100%;border-collapse:collapse;margin-top:8px}.member-table th,.member-table td{border-bottom:1px solid #e2e8f0;padding:6px;text-align:left;font-size:12px}
+</style>
 </head>
 <body>
 <div class="header"><h1>REVOREM</h1><p>ICF FUNCTIONING MANAGEMENT PLATFORM & CLINICAL REASONING SUPPORT</p></div>
@@ -36,7 +40,17 @@
 <div class="card">
 <h2>1. Subjective, Patient Goal & OLDCHARTS</h2>
 <div id="prom-info" class="prom-summary"><b>📋 구글 스프레드시트 환자 사전 문진 검색</b><div class="search-box-group"><input id="search-keyword" placeholder="회원 이름 또는 연락처 뒤4자리" onkeyup="if(event.key==='Enter') searchGoogleProm()"><button class="btn" onclick="searchGoogleProm()">🔍 조회</button><button class="btn secondary" onclick="searchGoogleProm(true)">📥 최신건</button></div></div><div id="preintake-context" class="soft-box" style="display:none;margin-top:10px;font-size:.82rem;line-height:1.65"></div>
-<div class="grid2"><div><label>회원명</label><input id="pt-name" placeholder="회원명"></div><div><label>연락처</label><input id="pt-phone" type="tel" placeholder="숫자만"></div></div>
+<div class="grid3">
+  <div><label>회원번호</label><input id="member-id" value="" placeholder="저장 시 자동 발급" readonly><div class="small" id="member-id-note">사전문진만으로는 발급되지 않습니다. 실제 첫 방문 확인 또는 첫 회차 저장 시 자동 발급됩니다.</div></div>
+  <div><label>회원명</label><input id="pt-name" placeholder="회원명"></div>
+  <div><label>연락처</label><input id="pt-phone" type="tel" placeholder="숫자만"></div>
+</div>
+<div class="report-actions" style="margin-top:7px">
+  <button type="button" class="btn secondary" onclick="resolveMemberIdentity(false)">🔎 기존 회원 연결</button>
+  <button type="button" class="btn secondary" onclick="confirmActualVisitAndRegister()">✅ 실제 첫 방문 확인 / 회원번호 발급</button>
+  <button type="button" class="btn secondary" onclick="showMemberSummary()">👤 회원 이력</button>
+</div>
+<div id="member-summary" class="soft-box" style="display:none;margin-top:8px;font-size:.82rem;line-height:1.6"></div>
 <div style="margin-top:8px"><label>🎯 Primary Goal — 회복 후 가장 먼저 하고 싶은 활동</label><input id="pt-goal" placeholder="예: 아이를 안고 30분 걷기" oninput="evaluatePlatform()"></div>
 <div class="grid3" style="margin-top:8px"><div><label>현재 목표 수행능력 0–10</label><input type="number" id="pt-goal-score" min="0" max="10" value="3" oninput="evaluatePlatform()"></div><div><label>직업/주요 환경</label><select id="pt-job" onchange="evaluatePlatform()"><option value="사무직/컴퓨터사용">사무직 / 컴퓨터사용</option><option value="육아/가사노동">육아 / 가사노동</option><option value="현장/육체노동">현장 / 육체노동</option><option value="서비스/오래서있음">서비스 / 오래 서있음</option><option value="서비스/장시간서있음">서비스 / 장시간 서있음</option><option value="전문운전/고정자세">전문운전 / 고정자세</option><option value="헤어/미용/디자이너">헤어 / 미용 / 디자이너</option><option value="치과의사/의료보조">치과 / 의료계</option><option value="스포츠/운동선수">스포츠 / 운동선수</option><option value="기타">기타</option></select></div><div><label>주 평가 부위 / PROM</label><select id="pt-region" onchange="resetAndRun()"><option value="cervical">목 / 경추 (NDI)</option><option value="shoulder">어깨 / 견관절 (SPADI)</option><option value="lumbar">허리/요추 (ODI)</option><option value="elbow">팔꿈치 (PRTEE)</option><option value="hip">고관절/서혜부 (REVOREM Hip FS)</option><option value="knee">무릎 (REVOREM Knee FS)</option><option value="ankle">발목/족부 (REVOREM Ankle-Foot FS)</option></select></div></div>
 <div class="oldcharts-grid"><div><label>Onset (발병 시점)</label><select id="oc-onset" onchange="evaluatePlatform()"><option>급성 (1주 이내)</option><option selected>아급성 (1주~3개월)</option><option>만성 (3개월 이상)</option><option>반복/재발성</option></select></div><div><label>Location (주호소 부위 / C.C.)</label><input id="oc-location" placeholder="환자가 표현하는 주호소 위치" oninput="evaluatePlatform()"></div><div><label>Duration (증상 지속성)</label><select id="oc-duration" onchange="evaluatePlatform()"><option>간헐적</option><option>수분~수십분</option><option>수시간</option><option>지속적</option><option>가변적</option></select></div><div><label>Character (증상 양상)</label><select id="oc-character" onchange="evaluatePlatform()"><option>묵직함/뻐근함</option><option>찌릿함/전기통함/저림</option><option>날카로운 통증</option><option>화끈거림/감각이상</option><option>불안정/빠질 듯함</option><option>기타</option></select></div><div><label>Aggravating (악화 요인)</label><input id="oc-agg" placeholder="어떤 자세/활동/부하에서 악화?" oninput="evaluatePlatform()"></div><div><label>Relieving (완화 요인)</label><input id="oc-relieve" placeholder="어떤 자세/행동에서 완화?" oninput="evaluatePlatform()"></div><div><label>Radiation / Distribution</label><select id="oc-radiation" onchange="evaluatePlatform()"><option>없음 / 국소</option><option>있음 / 방향 미확인</option><option>팔/손으로 퍼짐</option><option>엉덩이/다리로 퍼짐</option><option>비전형적/광범위</option><option>잘 모르겠음</option></select></div><div><label>Temporal (시간적 양상)</label><select id="oc-temporal" onchange="evaluatePlatform()"><option>아침에 악화</option><option>오후/저녁에 악화</option><option>야간 증상</option><option>활동량에 비례</option><option>일정하지 않음</option></select></div><div><label>Severity (현재 NRS 0–10)</label><input type="number" id="oc-severity" min="0" max="10" value="5" oninput="evaluatePlatform()"></div><div><label>Worst NRS (최근 최고)</label><input type="number" id="oc-worst-severity" min="0" max="10" value="" placeholder="0–10" oninput="evaluatePlatform()"></div><div><label>Dominant complaint</label><select id="dominant-complaint" onchange="evaluatePlatform()"><option value="pain">통증/뻐근함</option><option value="neuro">저림/방사/감각</option><option value="stiffness">가동성/강직</option><option value="weakness">근력/지구력</option><option value="instability">불안정/조절</option><option value="mixed">혼합</option></select></div></div>
@@ -128,7 +142,75 @@
 </div>
 </div>
 
-<div class="layout" style="margin-top:0"><div style="grid-column:1/-1"><div class="tracking-card"><h2>📈 Episode of Care — 10회 Outcome Tracking</h2><div class="grid3"><div><label>Episode ID</label><input id="episode-id" value="Episode-1"></div><div><label>현재 회차</label><div style="padding:7px 0;font-weight:800"><span id="sess-count-txt">1</span> / 10</div></div><div><label>저장 전 확인</label><div id="completion-text" class="small">Safety screen을 완료하세요.</div></div></div><div class="progress-bar-bg"><div id="sess-progress-fill" class="progress-bar-fill"></div></div><div class="session-badge-group" id="session-badges"></div>
+
+<div class="layout" style="margin-top:0"><div style="grid-column:1/-1">
+<div class="tracking-card" id="crm-card">
+  <h2>🧾 Visit & Registration / Purchase</h2>
+  <div class="source-note">회원(Member), 임상 Episode, 방문(Visit), 상품 등록/결제(Registration/Purchase)를 분리합니다. <b>재등록은 새 Episode가 아니라 두 번째 이후 유료 Registration/Purchase를 기준</b>으로 집계합니다.</div>
+
+  <div class="grid3" style="margin-top:10px">
+    <div>
+      <label>오늘 방문 유형</label>
+      <select id="visit-type">
+        <option value="TRIAL">1회 체험</option>
+        <option value="REGULAR" selected>정규 관리</option>
+        <option value="FOLLOWUP">재방문 / Follow-up</option>
+        <option value="CONSULT">상담 / 평가</option>
+      </select>
+    </div>
+    <div>
+      <label>방문일</label>
+      <input id="visit-date" type="date">
+    </div>
+    <div>
+      <label>회원 상태</label>
+      <input id="member-status-view" value="미등록" readonly>
+    </div>
+  </div>
+
+  <div class="report-actions" style="margin-top:8px">
+    <button type="button" class="btn secondary" onclick="recordVisit()">📍 방문 기록</button>
+  </div>
+
+  <details class="collapse" style="margin-top:10px">
+    <summary>💳 다회권 / 정규 등록·결제 기록</summary>
+    <div class="collapse-body">
+      <div class="grid3">
+        <div><label>상품명</label><input id="purchase-plan" placeholder="예: 바디관리 10회권"></div>
+        <div><label>구매 회차</label><input id="purchase-sessions" type="number" min="1" placeholder="예: 10"></div>
+        <div><label>결제금액</label><input id="purchase-amount" type="number" min="0" step="1000" placeholder="원"></div>
+      </div>
+      <div class="grid3" style="margin-top:8px">
+        <div><label>등록일</label><input id="purchase-date" type="date"></div>
+        <div><label>상품 상태</label><select id="purchase-status"><option value="ACTIVE">Active</option><option value="COMPLETED">Completed</option><option value="CANCELLED">Cancelled</option></select></div>
+        <div><label>메모</label><input id="purchase-note" placeholder="할인/프로모션/상담 메모"></div>
+      </div>
+      <div class="report-actions" style="margin-top:8px">
+        <button type="button" class="btn" onclick="recordPurchase()">💾 등록/결제 저장</button>
+      </div>
+      <div class="small" style="margin-top:6px">첫 유료 등록은 신규등록, 두 번째 이후 유료 등록은 재등록으로 자동 분류합니다. Episode 변경 여부와는 독립적입니다.</div>
+    </div>
+  </details>
+
+  <div id="crm-analytics" class="soft-box" style="margin-top:10px;font-size:.82rem;line-height:1.65"></div>
+</div>
+</div></div>
+
+<div class="layout" style="margin-top:0"><div style="grid-column:1/-1"><div class="tracking-card"><h2>📈 Episode of Care — Outcome Tracking</h2>
+<div class="grid3">
+  <div><label>회원번호</label><input id="episode-member-id" value="" placeholder="Member ID" readonly></div>
+  <div><label>Episode ID</label><input id="episode-id" value="" placeholder="회원 연결 후 자동 생성" readonly></div>
+  <div><label>Episode 상태</label><select id="episode-status" onchange="updateEpisodeMetadata()"><option value="ACTIVE">Active</option><option value="COMPLETED">Completed</option><option value="DROPPED">Dropped / 중단</option></select></div>
+</div>
+<div class="grid3" style="margin-top:8px">
+  <div><label>현재 회차</label><div style="padding:7px 0;font-weight:800"><span id="sess-count-txt">1</span> / 10</div></div>
+  <div><label>Episode 시작일</label><input id="episode-start-date" type="date" onchange="updateEpisodeMetadata()"></div>
+  <div><label>저장 전 확인</label><div id="completion-text" class="small">Safety screen을 완료하세요.</div></div>
+</div>
+<div class="report-actions" style="margin-top:8px">
+  <button type="button" class="btn secondary" onclick="createNewEpisodeForCurrentMember()">➕ 새 Episode 시작</button>
+  <button type="button" class="btn secondary" onclick="showMemberSummary()">📊 회원 / 이용 이력</button>
+</div><div class="progress-bar-bg"><div id="sess-progress-fill" class="progress-bar-fill"></div></div><div class="session-badge-group" id="session-badges"></div>
 
 <div class="auto-panel" style="margin-top:14px">
   <div class="auto-panel-head">
@@ -321,7 +403,282 @@ if(region==='ankle'){add('Calf/peroneal/tibialis capacity + ROM','주 3–5회, 
 if(region==='hip'){add('Hip strength + task-specific loading','주 2–4회 progressive resistance','hip capacity');if(top.includes('movement coordination'))add('Single-leg / gait movement retraining','증상·Goal 과제에서 cue 사용','movement coordination');add('Goal-specific sit-to-stand/walk/carry exposure','실제 목표활동 중심','activity/participation')}
 if(region==='elbow'){add('Graded wrist/forearm tendon loading','주 3–5회, 등척성→등장성/원심성 등 단계화','grip/load capacity');if(top.includes('nerve')||top.includes('Cervical'))add('Neurodynamic / proximal contributor management','symptom irritability 기준','neural tolerance');add('Work/grip load modification + return exposure','작업량/도구/그립 전략 조절','work participation')}
 if(yellow)add('Pain education + graded exposure','짧은 교육 후 회피활동을 단계적으로 재노출','recovery confidence / fear reduction');const goal=val('pt-goal');if(goal)add(`🎯 Goal task: ${goal}`,`현재 ${num('pt-goal-score')}/10 → 환자와 다음 목표 수준 합의`,'Goal performance');e.innerHTML=`<div class="track-header">Active intervention candidates — clinical pattern + ICF Goal 기반</div><table class="fitt-table"><thead><tr><th>중재</th><th>용량/진행</th><th>ICF 목표</th></tr></thead><tbody>${rows.map(r=>`<tr><td><b>${r.n}</b></td><td>${r.d}</td><td>${r.t}</td></tr>`).join('')}</tbody></table><div class="source-note">전기/수기 치료는 adjunct/reference로 분리하고, 장기 outcome은 Goal-linked active intervention과 self-management를 중심으로 추적하도록 설계했습니다.</div>`}
-function patientKey(){const raw=(val('pt-phone')||val('pt-name')||'anonymous').replace(/\s/g,'');return `revorem_v2_${raw}_${val('episode-id')||'Episode-1'}`}
+
+// CRM data model: Pre-intake(no Member ID) → Member(actual visit) → Visit + Clinical Episode + Registration/Purchase
+const MEMBER_REGISTRY_KEY='revorem_member_registry_v1';
+const MEMBER_SEQUENCE_KEY='revorem_member_sequence_v1';
+
+function todayISO(){return new Date().toISOString().slice(0,10)}
+function normalizePhone(v){return String(v||'').replace(/\D/g,'')}
+function normalizeMemberName(v){return String(v||'').replace(/\([^)]*세\)/g,'').trim()}
+function getMemberRegistry(){try{return JSON.parse(localStorage.getItem(MEMBER_REGISTRY_KEY))||{}}catch{return{}}}
+function setMemberRegistry(r){localStorage.setItem(MEMBER_REGISTRY_KEY,JSON.stringify(r))}
+function normalizeMemberRecord(m){
+ if(!m)return m;
+ m.episodes=m.episodes||{};
+ m.visits=Array.isArray(m.visits)?m.visits:[];
+ m.purchases=Array.isArray(m.purchases)?m.purchases:[];
+ m.status=m.status||((m.purchases||[]).some(p=>p.status!=='CANCELLED')?'REGISTERED':((m.visits||[]).length?'TRIAL':'VISITOR'));
+ m.firstVisitDate=m.firstVisitDate||m.visits?.[0]?.visitDate||'';
+ return m;
+}
+
+function memberNumeric(id){const m=String(id||'').match(/^RV-(\d{6})$/);return m?Number(m[1]):0}
+function nextMemberId(){
+ const reg=getMemberRegistry();
+ const maxExisting=Math.max(0,...Object.keys(reg).map(memberNumeric));
+ const stored=Number(localStorage.getItem(MEMBER_SEQUENCE_KEY)||0);
+ const next=Math.max(maxExisting,stored)+1;
+ localStorage.setItem(MEMBER_SEQUENCE_KEY,String(next));
+ return `RV-${String(next).padStart(6,'0')}`;
+}
+function memberEpisodeId(memberId,episodeNo){return `EP-${String(memberId||'RV-000000').replace('RV-','')}-${String(episodeNo).padStart(2,'0')}`}
+function generateMemberUid(){try{return crypto.randomUUID()}catch{return 'm-'+Date.now()+'-'+Math.random().toString(36).slice(2,10)}}
+function currentMemberId(){return val('member-id').trim()}
+function syncMemberIdUI(id){
+ const m=document.getElementById('member-id'),e=document.getElementById('episode-member-id'),n=document.getElementById('member-id-note');
+ if(m)m.value=id||'';if(e)e.value=id||'';
+ if(n)n.innerText=id?'이 번호는 회원 고유번호이며 이름·연락처가 변경되어도 유지됩니다.':'사전문진만으로는 발급되지 않으며 실제 방문 확인 또는 첫 회차 저장 시 발급됩니다.';
+}
+function findMemberByCurrentIdentity(){
+ const reg=getMemberRegistry(),phone=normalizePhone(val('pt-phone')),name=normalizeMemberName(val('pt-name'));
+ const entries=Object.values(reg).map(normalizeMemberRecord);
+ if(phone){
+   const byPhone=entries.find(m=>normalizePhone(m.phone)===phone);
+   if(byPhone)return byPhone;
+ }
+ // 이름만으로는 동명이인 위험이 있어 자동 연결하지 않음
+ return null;
+}
+function registerNewMember(forceConfirm=false){
+ const name=normalizeMemberName(val('pt-name')),phone=normalizePhone(val('pt-phone'));
+ if(!name&&!phone){alert('회원명 또는 연락처를 먼저 입력해 주세요.');return null}
+ const existing=findMemberByCurrentIdentity();
+ if(existing){
+   syncMemberIdUI(existing.memberId);ensureEpisodeForMember(existing.memberId,false);showMemberSummary(false);
+   if(forceConfirm)alert(`기존 회원으로 확인되었습니다.\n${existing.memberId} · ${existing.name||''}`);
+   return existing;
+ }
+ if(forceConfirm&&!confirm('현재 회원을 신규 회원으로 등록하고 고유 회원번호를 발급할까요?'))return null;
+ const reg=getMemberRegistry(),memberId=nextMemberId();
+ const member={memberId,memberUid:generateMemberUid(),name,phone,status:'VISITOR',firstVisitDate:'',createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),episodes:{},visits:[],purchases:[]};
+ reg[memberId]=member;setMemberRegistry(reg);syncMemberIdUI(memberId);ensureEpisodeForMember(memberId,true);showMemberSummary(false);
+ return member;
+}
+function resolveMemberIdentity(silent=true){
+ const existing=findMemberByCurrentIdentity();
+ if(existing){
+   const reg=getMemberRegistry();normalizeMemberRecord(existing);existing.name=normalizeMemberName(val('pt-name'))||existing.name;existing.phone=normalizePhone(val('pt-phone'))||existing.phone;existing.updatedAt=new Date().toISOString();reg[existing.memberId]=existing;setMemberRegistry(reg);
+   syncMemberIdUI(existing.memberId);ensureEpisodeForMember(existing.memberId,false);showMemberSummary(false);loadPatientHistory();
+   if(!silent)alert(`기존 회원 연결 완료\n${existing.memberId} · ${existing.name||''}`);
+   return existing;
+ }
+ if(!silent){
+   if(confirm('일치하는 기존 회원번호가 없습니다.\n신규 회원번호를 발급할까요?'))return registerNewMember(false);
+   return null;
+ }
+ return null;
+}
+function getCurrentMember(){
+ const id=currentMemberId();if(!id)return null;
+ return normalizeMemberRecord(getMemberRegistry()[id]||null);
+}
+function ensureCurrentMember(){
+ let m=getCurrentMember();
+ if(m)return m;
+ m=resolveMemberIdentity(true);
+ if(m)return m;
+ return registerNewMember(false);
+}
+function activeEpisodeForMember(member){
+ if(!member?.episodes)return null;
+ const eps=Object.values(member.episodes).sort((a,b)=>(b.episodeNo||0)-(a.episodeNo||0));
+ return eps.find(e=>e.status==='ACTIVE')||null;
+}
+function ensureEpisodeForMember(memberId,createIfNone=true){
+ const reg=getMemberRegistry(),m=reg[memberId];if(!m)return null;
+ let ep=activeEpisodeForMember(m);
+ if(!ep&&createIfNone){
+   const nos=Object.values(m.episodes||{}).map(x=>Number(x.episodeNo)||0);
+   const episodeNo=(nos.length?Math.max(...nos):0)+1;
+   const episodeId=memberEpisodeId(memberId,episodeNo);
+   const prev=Object.values(m.episodes||{}).sort((a,b)=>(b.episodeNo||0)-(a.episodeNo||0))[0];
+   ep={episodeId,episodeNo,status:'ACTIVE',startDate:todayISO(),endDate:'',region:val('pt-region'),primaryGoal:val('pt-goal').trim(),previousEpisodeId:prev?.episodeId||'',createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};
+   m.episodes=m.episodes||{};m.episodes[episodeId]=ep;reg[memberId]=m;setMemberRegistry(reg);
+ }
+ if(ep)loadEpisodeUI(ep,memberId);
+ return ep;
+}
+function loadEpisodeUI(ep,memberId=currentMemberId()){
+ syncMemberIdUI(memberId);
+ const eid=document.getElementById('episode-id'),st=document.getElementById('episode-status'),sd=document.getElementById('episode-start-date');
+ if(eid)eid.value=ep?.episodeId||'';if(st)st.value=ep?.status||'ACTIVE';if(sd)sd.value=ep?.startDate||todayISO();
+}
+function updateEpisodeMetadata(){
+ const memberId=currentMemberId(),episodeId=val('episode-id');if(!memberId||!episodeId)return;
+ const reg=getMemberRegistry(),m=reg[memberId];if(!m?.episodes?.[episodeId])return;
+ const ep=m.episodes[episodeId];ep.status=val('episode-status')||ep.status;ep.startDate=val('episode-start-date')||ep.startDate;ep.region=val('pt-region');ep.primaryGoal=val('pt-goal').trim();ep.updatedAt=new Date().toISOString();
+ if(ep.status==='COMPLETED'||ep.status==='DROPPED'){if(!ep.endDate)ep.endDate=todayISO()}else ep.endDate='';
+ m.name=normalizeMemberName(val('pt-name'))||m.name;m.phone=normalizePhone(val('pt-phone'))||m.phone;m.updatedAt=new Date().toISOString();reg[memberId]=m;setMemberRegistry(reg);
+}
+function createNewEpisodeForCurrentMember(){
+ const m=ensureCurrentMember();if(!m)return;
+ const reg=getMemberRegistry(),fresh=reg[m.memberId],active=activeEpisodeForMember(fresh);
+ if(active&&active.episodeId===val('episode-id')){
+   if(!confirm(`현재 ${active.episodeId}가 Active 상태입니다.\n현재 Episode를 Completed로 종료하고 새 Episode를 시작할까요?`))return;
+   active.status='COMPLETED';active.endDate=todayISO();active.updatedAt=new Date().toISOString();
+ }
+ const nos=Object.values(fresh.episodes||{}).map(x=>Number(x.episodeNo)||0),episodeNo=(nos.length?Math.max(...nos):0)+1;
+ const previous=Object.values(fresh.episodes||{}).sort((a,b)=>(b.episodeNo||0)-(a.episodeNo||0))[0];
+ const episodeId=memberEpisodeId(fresh.memberId,episodeNo);
+ fresh.episodes[episodeId]={episodeId,episodeNo,status:'ACTIVE',startDate:todayISO(),endDate:'',region:val('pt-region'),primaryGoal:val('pt-goal').trim(),previousEpisodeId:previous?.episodeId||'',createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};
+ reg[fresh.memberId]=fresh;setMemberRegistry(reg);loadEpisodeUI(fresh.episodes[episodeId],fresh.memberId);currentSessionNum=1;renderSessionBadges();updateCharts();showMemberSummary(false);
+ alert(`새 Clinical Episode가 생성되었습니다.\n${fresh.memberId} → ${episodeId}\n재등록 여부는 유료 Registration/Purchase 기록으로 별도 추적됩니다.`);
+}
+
+function memberStatusLabel(status){
+ return {VISITOR:'방문자',TRIAL:'체험회원',REGISTERED:'정규등록',INACTIVE:'이용종료',RETURNED:'재등록/복귀'}[status]||status||'미등록';
+}
+function refreshMemberStatus(member){
+ if(!member)return 'VISITOR';
+ normalizeMemberRecord(member);
+ const paid=member.purchases.filter(p=>p.status!=='CANCELLED');
+ const active=paid.filter(p=>p.status==='ACTIVE');
+ if(paid.length>=2&&active.length)return member.status='RETURNED';
+ if(active.length)return member.status='REGISTERED';
+ if(paid.length)return member.status='INACTIVE';
+ if(member.visits.some(v=>v.visitType==='TRIAL'))return member.status='TRIAL';
+ if(member.visits.length)return member.status='VISITOR';
+ return member.status='VISITOR';
+}
+function updateMemberStatusUI(){
+ const m=getCurrentMember(),e=document.getElementById('member-status-view');
+ if(e)e.value=m?memberStatusLabel(refreshMemberStatus(m)):'미등록';
+ refreshCrmAnalytics();
+}
+function confirmActualVisitAndRegister(){
+ const existing=resolveMemberIdentity(true);
+ let m=existing;
+ if(!m){
+   if(!confirm('실제 방문이 확인된 신규 고객입니다.\n회원번호를 발급할까요?'))return null;
+   m=registerNewMember(false);
+ }
+ if(!m)return null;
+ recordVisit(true);
+ return m;
+}
+function visitId(memberId,date,index){return `V-${String(memberId).replace('RV-','')}-${String(date||todayISO()).replace(/-/g,'')}-${String(index).padStart(2,'0')}`}
+function recordVisit(silent=false){
+ let m=getCurrentMember();
+ if(!m){
+   m=resolveMemberIdentity(true);
+   if(!m){
+     if(!silent&&!confirm('회원번호가 없습니다. 실제 방문이 확인되었다면 지금 신규 회원번호를 발급할까요?'))return null;
+     m=registerNewMember(false);
+   }
+ }
+ if(!m)return null;
+ const reg=getMemberRegistry();m=normalizeMemberRecord(reg[m.memberId]);
+ const visitDate=val('visit-date')||todayISO(),visitType=val('visit-type')||'REGULAR';
+ const episodeId=val('episode-id')||'';
+ const existing=m.visits.find(v=>v.visitDate===visitDate&&v.episodeId===episodeId&&v.sessionNum===currentSessionNum);
+ if(existing){
+   existing.visitType=visitType;existing.updatedAt=new Date().toISOString();
+ }else{
+   const id=visitId(m.memberId,visitDate,m.visits.length+1);
+   m.visits.push({visitId:id,visitDate,visitType,episodeId,sessionNum:currentSessionNum,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()});
+ }
+ if(!m.firstVisitDate)m.firstVisitDate=visitDate;
+ refreshMemberStatus(m);m.updatedAt=new Date().toISOString();reg[m.memberId]=m;setMemberRegistry(reg);
+ updateMemberStatusUI();showMemberSummary(false);
+ if(!silent)alert(`방문 기록 저장 완료\n${m.memberId} · ${visitDate} · ${visitType}`);
+ return m.visits[m.visits.length-1];
+}
+function purchaseId(memberId,index){return `R-${String(memberId).replace('RV-','')}-${String(index).padStart(2,'0')}`}
+function recordPurchase(){
+ let m=getCurrentMember();
+ if(!m){alert('먼저 실제 방문을 확인하여 회원번호를 발급해 주세요.');return null}
+ const plan=val('purchase-plan').trim(),sessions=Number(val('purchase-sessions')||0),amount=Number(val('purchase-amount')||0),purchaseDate=val('purchase-date')||todayISO(),status=val('purchase-status')||'ACTIVE',note=val('purchase-note').trim();
+ if(!plan){alert('상품명을 입력해 주세요.');return null}
+ const reg=getMemberRegistry();m=normalizeMemberRecord(reg[m.memberId]);
+ const priorPaid=m.purchases.filter(p=>p.status!=='CANCELLED');
+ const registrationType=priorPaid.length?'REREGISTRATION':'NEW_REGISTRATION';
+ const id=purchaseId(m.memberId,m.purchases.length+1);
+ const previousPurchaseId=priorPaid.length?priorPaid[priorPaid.length-1].purchaseId:'';
+ m.purchases.push({purchaseId:id,purchaseDate,plan,sessions,amount,status,note,registrationType,previousPurchaseId,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()});
+ refreshMemberStatus(m);m.updatedAt=new Date().toISOString();reg[m.memberId]=m;setMemberRegistry(reg);
+ updateMemberStatusUI();showMemberSummary(false);
+ alert(`${registrationType==='NEW_REGISTRATION'?'신규등록':'재등록'} 저장 완료\n${m.memberId} · ${plan}`);
+ return m.purchases[m.purchases.length-1];
+}
+function trialConversionData(member){
+ const m=normalizeMemberRecord(member),trial=m.visits.filter(v=>v.visitType==='TRIAL').sort((a,b)=>String(a.visitDate).localeCompare(String(b.visitDate)))[0];
+ const paid=m.purchases.filter(p=>p.status!=='CANCELLED').sort((a,b)=>String(a.purchaseDate).localeCompare(String(b.purchaseDate)))[0];
+ if(!trial)return {hadTrial:false,converted:false,days:null};
+ if(!paid)return {hadTrial:true,converted:false,days:null};
+ const days=episodeDaysBetween(trial.visitDate,paid.purchaseDate);
+ return {hadTrial:true,converted:days===null?true:days>=0,days};
+}
+function crmAnalytics(){
+ const members=Object.values(getMemberRegistry()).map(normalizeMemberRecord);
+ const visitors=members.filter(m=>m.visits.length>0);
+ const trialMembers=visitors.filter(m=>m.visits.some(v=>v.visitType==='TRIAL'));
+ const converted=trialMembers.filter(m=>trialConversionData(m).converted);
+ const paidMembers=members.filter(m=>m.purchases.some(p=>p.status!=='CANCELLED'));
+ const reregistered=paidMembers.filter(m=>m.purchases.filter(p=>p.status!=='CANCELLED').length>=2);
+ const completedFirst=paidMembers.filter(m=>m.purchases.filter(p=>p.status!=='CANCELLED').length>=1);
+ const intervals=[];
+ reregistered.forEach(m=>{
+   const ps=m.purchases.filter(p=>p.status!=='CANCELLED').sort((a,b)=>String(a.purchaseDate).localeCompare(String(b.purchaseDate)));
+   for(let i=1;i<ps.length;i++){const d=episodeDaysBetween(ps[i-1].purchaseDate,ps[i].purchaseDate);if(d!==null&&d>=0)intervals.push(d)}
+ });
+ return {
+  memberCount:members.length,
+  actualVisitors:visitors.length,
+  trialMembers:trialMembers.length,
+  trialConvertedMembers:converted.length,
+  trialConversionRate:trialMembers.length?Math.round(converted.length/trialMembers.length*1000)/10:null,
+  paidMembers:paidMembers.length,
+  reRegisteredMembers:reregistered.length,
+  reRegistrationRate:completedFirst.length?Math.round(reregistered.length/completedFirst.length*1000)/10:null,
+  meanDaysToReRegister:intervals.length?Math.round(intervals.reduce((a,b)=>a+b,0)/intervals.length):null
+ };
+}
+function refreshCrmAnalytics(){
+ const box=document.getElementById('crm-analytics');if(!box)return;
+ const a=crmAnalytics(),m=getCurrentMember();
+ const personal=m?memberAnalytics(m):null;
+ box.innerHTML=`<b>CRM 지표</b> · 실제 방문자 ${a.actualVisitors}명 · 체험 ${a.trialMembers}명 · 체험→등록 ${a.trialConversionRate??'-'}% · 유료등록 회원 ${a.paidMembers}명 · 재등록 회원 ${a.reRegisteredMembers}명 · 재등록률 ${a.reRegistrationRate??'-'}%${a.meanDaysToReRegister!==null?` · 평균 재등록 간격 ${a.meanDaysToReRegister}일`:''}
+ ${personal?`<br><b>현재 회원</b> · ${m.memberId} · ${memberStatusLabel(refreshMemberStatus(m))} · 방문 ${m.visits.length}회 · 유료등록 ${m.purchases.filter(p=>p.status!=='CANCELLED').length}건 · Clinical Episode ${personal.episodeCount}개`:''}`;
+}
+function episodeDaysBetween(a,b){if(!a||!b)return null;const x=new Date(a+'T00:00:00'),y=new Date(b+'T00:00:00');return Math.round((y-x)/86400000)}
+function memberAnalytics(member){
+ const m=normalizeMemberRecord(member),eps=Object.values(m?.episodes||{}).sort((a,b)=>(a.episodeNo||0)-(b.episodeNo||0));
+ const purchases=m.purchases.filter(p=>p.status!=='CANCELLED').sort((a,b)=>String(a.purchaseDate).localeCompare(String(b.purchaseDate)));
+ const reregCount=Math.max(0,purchases.length-1);
+ const intervals=[];
+ for(let i=1;i<purchases.length;i++){const d=episodeDaysBetween(purchases[i-1].purchaseDate,purchases[i].purchaseDate);if(d!==null&&d>=0)intervals.push(d)}
+ return {episodeCount:eps.length,visitCount:m.visits.length,purchaseCount:purchases.length,reRegistrationCount:reregCount,hasReRegistered:reregCount>0,meanDaysToReRegister:intervals.length?Math.round(intervals.reduce((a,b)=>a+b,0)/intervals.length):null,episodes:eps,purchases,trial:trialConversionData(m)};
+}
+function showMemberSummary(toggle=true){
+ const box=document.getElementById('member-summary');if(!box)return;
+ if(toggle&&box.style.display!=='none'){box.style.display='none';return}
+ const m=getCurrentMember();
+ if(!m){box.innerHTML='아직 실제 방문으로 발급된 회원번호가 없습니다.';box.style.display='block';return}
+ const a=memberAnalytics(m);
+ const erows=a.episodes.map(e=>`<tr><td>${e.episodeId}</td><td>${e.startDate||'-'}</td><td>${e.endDate||'-'}</td><td>${REGION[e.region]?.label||e.region||'-'}</td><td>${e.status}</td></tr>`).join('');
+ const prows=a.purchases.map(p=>`<tr><td>${p.purchaseId}</td><td>${p.purchaseDate||'-'}</td><td>${p.plan||'-'}</td><td>${p.registrationType==='REREGISTRATION'?'재등록':'신규등록'}</td><td>${p.status}</td></tr>`).join('');
+ box.innerHTML=`<b>${m.memberId} · ${m.name||''}</b> · ${memberStatusLabel(refreshMemberStatus(m))}<br>
+ <span class="member-kpi">방문 ${a.visitCount}</span><span class="member-kpi">Episode ${a.episodeCount}</span><span class="member-kpi">유료등록 ${a.purchaseCount}</span><span class="member-kpi">재등록 ${a.reRegistrationCount}</span>${a.meanDaysToReRegister!==null?`<span class="member-kpi">평균 재등록 ${a.meanDaysToReRegister}일</span>`:''}
+ <div class="small" style="margin-top:6px"><b>Clinical Episodes</b></div>
+ <table class="member-table"><thead><tr><th>Episode</th><th>시작</th><th>종료</th><th>부위</th><th>상태</th></tr></thead><tbody>${erows||'<tr><td colspan="5">Episode 없음</td></tr>'}</tbody></table>
+ <div class="small" style="margin-top:8px"><b>Registration / Purchase</b></div>
+ <table class="member-table"><thead><tr><th>Registration</th><th>등록일</th><th>상품</th><th>구분</th><th>상태</th></tr></thead><tbody>${prows||'<tr><td colspan="5">유료 등록 없음</td></tr>'}</tbody></table>
+ <div class="small" style="margin-top:6px">사전문진은 회원번호 발급 조건이 아닙니다. 실제 방문부터 Member ID를 부여하며, 재등록은 두 번째 이후 유료 Registration/Purchase로 정의합니다.</div>`;
+ box.style.display='block';
+}
+function registryAnalytics(){return crmAnalytics()}
+function patientKey(){const mid=currentMemberId()||'UNREGISTERED';const eid=val('episode-id')||'NO_EPISODE';return `revorem_v3_${mid}_${eid}`}
 
 function historyEntries(){
  const h=getHistory();
@@ -1620,7 +1977,7 @@ REVOREM`;
 
  document.getElementById('client-report-preview').innerText=t;
 }
-function handleOneClickConfirm(printAfter=false){const s=getSafety();if(s.missing.length){alert(`⚠️ 저장 중단: 필수 Safety 항목 ${s.missing.length}개가 미확인입니다.\n\n${s.missing.join('\n')}`);return}const patterns=inferPatterns(val('pt-region'));const clinicalMissing=fullTree().filter(x=>!x.required&&(!userAnswers[x.id]||userAnswers[x.id]==='NT')).length;if(clinicalMissing>0&&!confirm(`임상검사 ${clinicalMissing}개가 미시행/미확인입니다. Safety 항목은 완료되었습니다. 이 상태로 저장할까요?`))return;const loopAnalysis=closedLoopAnalysis(),loopDecision=getClinicianLoopDecision(loopAnalysis);const h=getHistory();h[currentSessionNum]={patientName:val('pt-name'),patientPhone:val('pt-phone'),episodeId:val('episode-id'),sessionNum:currentSessionNum,region:val('pt-region'),prom:currentAreaName,goal:val('pt-goal'),goalScore:num('pt-goal-score'),bodyScore:num('pt-body-score'),bodyScoreMax:instrumentMeta().max,bodyScorePercent:bodyScorePercent(),instrumentTitle:instrumentMeta().full,instrumentType:instrumentMeta().type,screenVersion:instrumentMeta().version||'',tskScore:num('pt-tsk'),pcsScore:num('pt-pcs'),preIntakeContext:{activityLimit:preIntakeData.activityLimit||'',environmentBarriers:preIntakeData.environmentBarriers||[],environmentNote:preIntakeData.environmentNote||'',safetyAttention:preIntakeData.safetyAttention||[],mentalScores:preIntakeData.mentalScores||null,responseQuality:preIntakeData.responseQuality||null,rfsDomainProfile:buildRfsDomainProfile()||null},personalFactors:personalFactorsData(),interventions:sessionInterventionData(),oldcharts:{onset:val('oc-onset'),location:val('oc-location'),duration:val('oc-duration'),character:val('oc-character'),aggravating:val('oc-agg'),relieving:val('oc-relieve'),radiation:val('oc-radiation'),temporal:val('oc-temporal'),severity:num('oc-severity'),worstSeverity:num('oc-worst-severity')},answers:{...userAnswers},safety:s,patterns,etherapy:{mode:val('etherapy-mode'),purpose:val('etherapy-purpose'),time:val('etherapy-time'),intensity:val('etherapy-intensity')},assessment:document.getElementById('out-assessment').innerText,clientReport:document.getElementById('client-report-preview').innerText,
+function handleOneClickConfirm(printAfter=false){let member=getCurrentMember()||resolveMemberIdentity(true);if(!member)member=registerNewMember(false);if(!member)return;const episode=ensureEpisodeForMember(member.memberId,true);if(!episode)return;updateEpisodeMetadata();const s=getSafety();if(s.missing.length){alert(`⚠️ 저장 중단: 필수 Safety 항목 ${s.missing.length}개가 미확인입니다.\n\n${s.missing.join('\n')}`);return}const patterns=inferPatterns(val('pt-region'));const clinicalMissing=fullTree().filter(x=>!x.required&&(!userAnswers[x.id]||userAnswers[x.id]==='NT')).length;if(clinicalMissing>0&&!confirm(`임상검사 ${clinicalMissing}개가 미시행/미확인입니다. Safety 항목은 완료되었습니다. 이 상태로 저장할까요?`))return;const loopAnalysis=closedLoopAnalysis(),loopDecision=getClinicianLoopDecision(loopAnalysis);recordVisit(true);const h=getHistory();h[currentSessionNum]={memberId:currentMemberId(),memberUid:getCurrentMember()?.memberUid||'',patientName:val('pt-name'),patientPhone:val('pt-phone'),episodeId:val('episode-id'),episodeNo:getCurrentMember()?.episodes?.[val('episode-id')]?.episodeNo||1,episodeStatus:val('episode-status'),memberStatus:refreshMemberStatus(getCurrentMember()),registrationCount:(getCurrentMember()?.purchases||[]).filter(p=>p.status!=='CANCELLED').length,reRegistration:Boolean((getCurrentMember()?.purchases||[]).filter(p=>p.status!=='CANCELLED').length>=2),sessionNum:currentSessionNum,region:val('pt-region'),prom:currentAreaName,goal:val('pt-goal'),goalScore:num('pt-goal-score'),bodyScore:num('pt-body-score'),bodyScoreMax:instrumentMeta().max,bodyScorePercent:bodyScorePercent(),instrumentTitle:instrumentMeta().full,instrumentType:instrumentMeta().type,screenVersion:instrumentMeta().version||'',tskScore:num('pt-tsk'),pcsScore:num('pt-pcs'),preIntakeContext:{activityLimit:preIntakeData.activityLimit||'',environmentBarriers:preIntakeData.environmentBarriers||[],environmentNote:preIntakeData.environmentNote||'',safetyAttention:preIntakeData.safetyAttention||[],mentalScores:preIntakeData.mentalScores||null,responseQuality:preIntakeData.responseQuality||null,rfsDomainProfile:buildRfsDomainProfile()||null},personalFactors:personalFactorsData(),interventions:sessionInterventionData(),oldcharts:{onset:val('oc-onset'),location:val('oc-location'),duration:val('oc-duration'),character:val('oc-character'),aggravating:val('oc-agg'),relieving:val('oc-relieve'),radiation:val('oc-radiation'),temporal:val('oc-temporal'),severity:num('oc-severity'),worstSeverity:num('oc-worst-severity')},answers:{...userAnswers},safety:s,patterns,etherapy:{mode:val('etherapy-mode'),purpose:val('etherapy-purpose'),time:val('etherapy-time'),intensity:val('etherapy-intensity')},assessment:document.getElementById('out-assessment').innerText,clientReport:document.getElementById('client-report-preview').innerText,
 closedLoop:{
  recommendation:loopAnalysis.recommendation,
  confidence:loopAnalysis.confidence,
@@ -1677,10 +2034,16 @@ function renderPreIntakeContext(item){
 window.handleGooglePromData=function(res){let item=null,keyword=val('search-keyword').trim();if(res?.result==='success'&&Array.isArray(res.data)&&res.data.length){if(keyword)item=[...res.data].reverse().find(x=>String(x.patientName||x.name||'').includes(keyword)||String(x.patientPhone||x.phone||'').includes(keyword));item=item||res.data[res.data.length-1]}else if(res?.result==='success'&&(res.patientName||res.name)){item=res}else if(res&&(res.patientName||res.name)){item=res}if(!item){renderSearchBoxUI(keyword,res?.message||'일치하는 문진 내역이 없습니다.');return}preIntakeData=item;
 if(item.mentalScores&&typeof item.mentalScores==='string'){try{item.mentalScores=JSON.parse(item.mentalScores)}catch{}}
 if(item.responseQuality&&typeof item.responseQuality==='string'){try{item.responseQuality=JSON.parse(item.responseQuality)}catch{}}
-document.getElementById('pt-name').value=item.patientName||item.name||'';document.getElementById('pt-phone').value=item.phone||item.patientPhone||'';if(item.job)setSelectByValueOrMap('pt-job',item.job);if(item.primaryGoal||item.goal||item.patientGoal)document.getElementById('pt-goal').value=item.primaryGoal||item.goal||item.patientGoal;if(item.goalScore!==undefined&&item.goalScore!=='')document.getElementById('pt-goal-score').value=item.goalScore;document.getElementById('pt-body-score').value=item.bodyScore??item.bodyScore0??0;document.getElementById('pt-tsk').value=item.tskScore??item.tsk??0;document.getElementById('pt-pcs').value=item.pcsScore??item.pcs??0;const rawRegion=item.region||item.area||'NDI';const regionMap={NDI:'cervical',SPADI:'shoulder',ODI:'lumbar',PRTEE:'elbow',HOOS:'hip',KOOS:'knee',FAAM:'ankle',cervical:'cervical',shoulder:'shoulder',lumbar:'lumbar',elbow:'elbow',hip:'hip',psoas:'hip',knee:'knee',ankle:'ankle'};const mappedRegion=regionMap[rawRegion]||'cervical';document.getElementById('pt-region').value=mappedRegion;currentAreaName=REGION[mappedRegion]?.prom||rawRegion;const oc=item.oldcharts||{};setSelectByValueOrMap('oc-onset',oc.onset||item.ocOnset,mapOnset);document.getElementById('oc-location').value=oc.location||item.ocLocation||'';setSelectByValueOrMap('oc-duration',oc.duration||item.ocDuration,mapDuration);setSelectByValueOrMap('oc-character',oc.character||item.ocCharacter,mapCharacter);document.getElementById('oc-agg').value=oc.aggravating||item.ocAggravating||'';document.getElementById('oc-relieve').value=oc.relieving||item.ocRelieving||'';setSelectByValueOrMap('oc-radiation',oc.radiation||item.ocRadiation,mapRadiation);setSelectByValueOrMap('oc-temporal',oc.temporal||item.ocTemporal,mapTemporal);const sev=oc.severity??item.nrsCurrent;if(sev!==undefined&&sev!=='')document.getElementById('oc-severity').value=sev;const worst=oc.worstSeverity??item.nrsWorst;if(worst!==undefined&&worst!=='')document.getElementById('oc-worst-severity').value=worst;document.getElementById('dominant-complaint').value=inferDominantComplaint(oc.character||item.ocCharacter);renderPreIntakeContext(item);document.getElementById('prom-info').innerHTML=`<b style="color:var(--success)">✅ ${document.getElementById('pt-name').value} 사전문진 전체 데이터 반영 완료${item.apiVersion?` · ${item.apiVersion}`:''}</b><div class="search-box-group"><input id="search-keyword" value="${keyword}" placeholder="회원 이름 또는 연락처 뒤4자리"><button class="btn" onclick="searchGoogleProm()">재조회</button><button class="btn secondary" onclick="searchGoogleProm(true)">최신건</button></div>`;resetAndRun()}
+document.getElementById('pt-name').value=item.patientName||item.name||'';document.getElementById('pt-phone').value=item.phone||item.patientPhone||'';if(item.job)setSelectByValueOrMap('pt-job',item.job);if(item.primaryGoal||item.goal||item.patientGoal)document.getElementById('pt-goal').value=item.primaryGoal||item.goal||item.patientGoal;if(item.goalScore!==undefined&&item.goalScore!=='')document.getElementById('pt-goal-score').value=item.goalScore;document.getElementById('pt-body-score').value=item.bodyScore??item.bodyScore0??0;document.getElementById('pt-tsk').value=item.tskScore??item.tsk??0;document.getElementById('pt-pcs').value=item.pcsScore??item.pcs??0;const rawRegion=item.region||item.area||'NDI';const regionMap={NDI:'cervical',SPADI:'shoulder',ODI:'lumbar',PRTEE:'elbow',HOOS:'hip',KOOS:'knee',FAAM:'ankle',cervical:'cervical',shoulder:'shoulder',lumbar:'lumbar',elbow:'elbow',hip:'hip',psoas:'hip',knee:'knee',ankle:'ankle'};const mappedRegion=regionMap[rawRegion]||'cervical';document.getElementById('pt-region').value=mappedRegion;currentAreaName=REGION[mappedRegion]?.prom||rawRegion;const oc=item.oldcharts||{};setSelectByValueOrMap('oc-onset',oc.onset||item.ocOnset,mapOnset);document.getElementById('oc-location').value=oc.location||item.ocLocation||'';setSelectByValueOrMap('oc-duration',oc.duration||item.ocDuration,mapDuration);setSelectByValueOrMap('oc-character',oc.character||item.ocCharacter,mapCharacter);document.getElementById('oc-agg').value=oc.aggravating||item.ocAggravating||'';document.getElementById('oc-relieve').value=oc.relieving||item.ocRelieving||'';setSelectByValueOrMap('oc-radiation',oc.radiation||item.ocRadiation,mapRadiation);setSelectByValueOrMap('oc-temporal',oc.temporal||item.ocTemporal,mapTemporal);const sev=oc.severity??item.nrsCurrent;if(sev!==undefined&&sev!=='')document.getElementById('oc-severity').value=sev;const worst=oc.worstSeverity??item.nrsWorst;if(worst!==undefined&&worst!=='')document.getElementById('oc-worst-severity').value=worst;document.getElementById('dominant-complaint').value=inferDominantComplaint(oc.character||item.ocCharacter);renderPreIntakeContext(item);resolveMemberIdentity(true);document.getElementById('prom-info').innerHTML=`<b style="color:var(--success)">✅ ${document.getElementById('pt-name').value} 사전문진 전체 데이터 반영 완료${item.apiVersion?` · ${item.apiVersion}`:''}</b><div class="search-box-group"><input id="search-keyword" value="${keyword}" placeholder="회원 이름 또는 연락처 뒤4자리"><button class="btn" onclick="searchGoogleProm()">재조회</button><button class="btn secondary" onclick="searchGoogleProm(true)">최신건</button></div>`;resetAndRun()}
 function searchGoogleProm(isLatest=false){const keyword=isLatest?'':val('search-keyword').trim();if(!isLatest&&!keyword){alert('조회할 회원 성함이나 연락처 뒤4자리를 입력해 주세요.');return}const old=document.getElementById('jsonp-google-script');if(old)old.remove();document.getElementById('prom-info').innerHTML=`⏳ <b>구글 시트에서 ${keyword||'최신 제출건'} 연동 중...</b>`;const s=document.createElement('script');s.id='jsonp-google-script';let u=googleScriptApiUrl+(isLatest?'?action=getLatest':`?query=${encodeURIComponent(keyword)}`);u+=(u.includes('?')?'&':'?')+'callback=handleGooglePromData';s.src=u;s.onerror=()=>renderSearchBoxUI(keyword,'구글 서버 연동 오류');document.body.appendChild(s)}
 function renderSearchBoxUI(keyword,msg){document.getElementById('prom-info').innerHTML=`<b style="color:var(--danger)">⚠️ ${msg}</b><div class="search-box-group"><input id="search-keyword" value="${keyword}" placeholder="회원 이름 또는 연락처 뒤4자리"><button class="btn" onclick="searchGoogleProm()">조회</button><button class="btn secondary" onclick="searchGoogleProm(true)">최신건</button></div>`}
 function loadUrlParams(){const q=new URLSearchParams(location.search);const set=(id,k)=>{if(q.get(k)!==null)document.getElementById(id).value=decodeURIComponent(q.get(k))};set('pt-name','pName');set('pt-job','pJob');set('pt-goal','goal');set('pt-body-score','bodyScore');set('pt-tsk','tsk');set('pt-pcs','pcs');if(q.get('area')){const map={NDI:'cervical',SPADI:'shoulder',ODI:'lumbar',PRTEE:'elbow',HOOS:'hip',KOOS:'knee',FAAM:'ankle'};if(map[q.get('area')])document.getElementById('pt-region').value=map[q.get('area')]}}
-document.addEventListener('DOMContentLoaded',()=>{loadUrlParams();resetAndRun();renderSessionBadges();updateCharts();document.getElementById('episode-id').addEventListener('change',loadPatientHistory);document.getElementById('pt-phone').addEventListener('change',loadPatientHistory);document.getElementById('pt-name').addEventListener('change',loadPatientHistory)});
+document.addEventListener('DOMContentLoaded',()=>{
+ loadUrlParams();resetAndRun();renderSessionBadges();updateCharts();
+ const sd=document.getElementById('episode-start-date');if(sd&&!sd.value)sd.value=todayISO();const vd=document.getElementById('visit-date');if(vd&&!vd.value)vd.value=todayISO();const pd=document.getElementById('purchase-date');if(pd&&!pd.value)pd.value=todayISO();
+ document.getElementById('pt-phone').addEventListener('change',()=>{const m=resolveMemberIdentity(true);if(m)loadPatientHistory()});
+ document.getElementById('pt-name').addEventListener('change',()=>{const m=getCurrentMember();if(m)updateEpisodeMetadata()});
+ renderPersonalFactors();updateMemberStatusUI();refreshCrmAnalytics();
+});
 </script>
 </body></html>
