@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>REVOREM v3.1 - Dual Report & Clinical Record</title>
+<title>REVOREM v3.2 - Member Feedback Engine & Clinical Record</title>
 <style>
 :root{--primary:#8C7A6B;--primary-dark:#52463C;--accent:#CDB78E;--accent-light:#F7F4EE;--danger:#B91C1C;--danger-bg:#FEF2F2;--orange:#C2410C;--orange-bg:#FFF7ED;--warning:#D97706;--warning-bg:#FFFBEB;--success:#15803D;--success-bg:#F0FDF4;--info:#0369A1;--info-bg:#F0F9FF;--bg:#FAFAFA;--card:#fff;--border:#E5E0D8;--text:#222;--sub:#666}
 *{box-sizing:border-box}body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--bg);color:var(--text);margin:0;padding:15px;line-height:1.45}.header{text-align:center;margin-bottom:15px;padding:16px;background:var(--card);border-radius:8px;border:1px solid var(--border);border-bottom:3px solid var(--accent)}.header h1{font-size:1.35rem;margin:0;color:var(--primary);letter-spacing:4px;font-weight:800}.header p{font-size:.82rem;margin:4px 0 0;color:var(--sub);letter-spacing:1.5px;font-weight:600}.layout{display:grid;grid-template-columns:1.08fr .92fr;gap:15px;max-width:1500px;margin:0 auto}@media(max-width:950px){.layout{grid-template-columns:1fr}}.card{background:var(--card);border-radius:8px;padding:16px;border:1px solid var(--border);box-shadow:0 2px 4px rgba(0,0,0,.02);margin-bottom:15px}h2{font-size:1.05rem;color:var(--primary);margin:0 0 12px;border-bottom:2px solid var(--accent-light);padding:0 0 6px 8px;border-left:3.5px solid var(--accent)}h3{font-size:.9rem;color:var(--primary-dark);margin:10px 0 7px}.small{font-size:.75rem;color:var(--sub)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}@media(max-width:650px){.grid2,.grid3{grid-template-columns:1fr}}label{font-size:.75rem;font-weight:700;color:var(--primary);display:block;margin-bottom:3px}input,select,textarea{width:100%;padding:8px 9px;border:1px solid var(--border);border-radius:6px;background:#fff;font:inherit;font-size:.82rem;color:var(--text)}textarea{min-height:58px;resize:vertical}.prom-summary,.soft-box{background:var(--accent-light);border:1px solid var(--accent);border-radius:8px;padding:11px 13px;font-size:.82rem;margin-bottom:10px}.search-box-group{display:flex;gap:6px;margin-top:7px}.search-box-group input{flex:1}.btn{border:0;border-radius:6px;padding:8px 12px;background:var(--primary);color:#fff;font-weight:700;cursor:pointer;font-size:.8rem}.btn:hover{background:var(--primary-dark)}.btn.secondary{background:var(--primary-dark)}.oldcharts-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:var(--accent-light);padding:12px;border-radius:8px;border:1px solid var(--border);margin:10px 0}.banner{border-radius:8px;padding:11px 12px;font-weight:700;margin-bottom:10px;display:none;font-size:.83rem}.banner.red{background:var(--danger-bg);border:2px solid var(--danger);color:var(--danger)}.banner.orange{background:var(--orange-bg);border:2px solid var(--orange);color:var(--orange)}.banner.yellow{background:var(--warning-bg);border:2px solid var(--warning);color:var(--warning)}.banner.green{background:var(--success-bg);border:1.5px solid var(--success);color:var(--success)}.section-label{font-size:.78rem;font-weight:800;color:var(--primary-dark);padding:6px 8px;background:var(--accent-light);border-radius:6px;margin:8px 0}.algo-step{background:#FAFAFA;border:1px solid var(--border);border-left:4px solid var(--accent);padding:11px;border-radius:6px;margin-bottom:9px}.algo-step.red-step{border-left-color:var(--danger);background:var(--danger-bg)}.algo-step.orange-step{border-left-color:var(--orange);background:var(--orange-bg)}.algo-title{font-weight:800;font-size:.86rem;color:var(--primary-dark);margin-bottom:4px}.algo-q{font-size:.83rem;margin-bottom:7px}.btn-group{display:flex;gap:6px;flex-wrap:wrap}.choice{flex:1;min-width:95px;padding:7px;border:1.5px solid var(--border);background:#fff;border-radius:6px;font-size:.78rem;font-weight:700;cursor:pointer}.choice.pos{background:var(--primary);color:#fff;border-color:var(--primary)}.choice.neg{background:var(--success);color:#fff;border-color:var(--success)}.choice.nt{background:#6B7280;color:#fff;border-color:#6B7280}.out-box{background:var(--accent-light);border:1px solid var(--border);padding:12px;border-radius:6px;font-size:.8rem;white-space:pre-wrap;max-height:420px;overflow:auto}.status-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}.pill{padding:4px 8px;border-radius:999px;font-size:.72rem;font-weight:800;border:1px solid var(--border);background:#fff}.pill.red{color:var(--danger);border-color:#FCA5A5}.pill.orange{color:var(--orange);border-color:#FDBA74}.pill.green{color:var(--success);border-color:#86EFAC}.pill.gray{color:#6B7280}.collapse{border:1px solid var(--border);border-radius:8px;margin-bottom:9px;overflow:hidden}.collapse summary{cursor:pointer;padding:10px 12px;background:var(--accent-light);font-weight:800;color:var(--primary-dark);font-size:.84rem;list-style:none}.collapse summary::-webkit-details-marker{display:none}.collapse summary:before{content:'▶';display:inline-block;margin-right:7px;font-size:.7rem;transition:.15s}.collapse[open] summary:before{transform:rotate(90deg)}.collapse-body{padding:10px 12px}.step-card{background:#fff;border:1px solid var(--border);border-radius:6px;padding:8px 10px;margin-bottom:6px;font-size:.77rem}.step-title{font-weight:800;color:var(--primary-dark);margin-bottom:3px}.tag-neg{color:#0284C7;font-weight:800}.tag-pos{color:#EA580C;font-weight:800}.tag-ma{color:var(--success);font-weight:800}.tag-mod{color:var(--primary-dark);font-weight:800}.tag-warn{color:var(--warning);font-weight:800}.therapy-lock{padding:12px;text-align:center;background:var(--danger-bg);color:var(--danger);border:1px dashed var(--danger);border-radius:6px;font-weight:800}.fitt-table{width:100%;border-collapse:collapse;font-size:.75rem;margin:6px 0 11px}.fitt-table th,.fitt-table td{border:1px solid var(--border);padding:6px 7px;text-align:left;vertical-align:top}.fitt-table th{background:var(--accent-light);color:var(--primary)}.track-header{font-weight:800;color:var(--primary);font-size:.82rem;margin-top:10px;border-left:3px solid var(--accent);padding-left:6px}.tracking-card{background:#fff;border:2px solid var(--accent);border-radius:12px;padding:18px;margin-top:10px}.session-badge-group{display:flex;gap:6px;flex-wrap:wrap;margin:9px 0}.session-badge{padding:6px 11px;background:var(--accent-light);border:1px solid var(--border);border-radius:20px;font-size:.77rem;font-weight:800;cursor:pointer;color:var(--primary)}.session-badge.active{background:var(--primary);color:#fff}.progress-bar-bg{width:100%;background:var(--accent-light);height:10px;border-radius:5px;overflow:hidden;margin:7px 0;border:1px solid var(--border)}.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--primary));width:0;transition:.3s}.charts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}@media(max-width:950px){.charts{grid-template-columns:1fr 1fr}}@media(max-width:600px){.charts{grid-template-columns:1fr}}.chart-container{display:flex;align-items:flex-end;height:105px;gap:5px;background:var(--accent-light);padding:8px;border-radius:8px;border:1px solid var(--border)}.chart-bar-group{flex:1;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end}.chart-bar{width:100%;max-width:18px;background:var(--primary);border-radius:3px 3px 0 0}.chart-label{font-size:.62rem;color:var(--sub);margin-top:3px;text-align:center}.btn-save{width:100%;padding:14px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;border:0;border-radius:8px;font-weight:800;font-size:.95rem;cursor:pointer}.wave-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}@media(max-width:700px){.wave-grid{grid-template-columns:1fr}}.wave-card{border:1px solid var(--border);border-radius:7px;padding:7px;background:#fff}.wave-card img{width:100%;height:auto;display:block;border-radius:4px}.source-note{font-size:.72rem;color:var(--sub);background:var(--info-bg);border-left:3px solid var(--info);padding:7px 8px;margin:7px 0}.danger-note{font-size:.72rem;color:var(--danger);background:var(--danger-bg);border-left:3px solid var(--danger);padding:7px 8px;margin:7px 0}.yt-link{display:inline-block;background:#7A6A5C;color:#fff;padding:3px 7px;border-radius:4px;font-weight:700;font-size:.68rem;text-decoration:none}@media print{body{background:#fff;padding:0}.tracking-card,.btn-save,.search-box-group{display:none}.layout{display:block}.card{box-shadow:none;page-break-inside:avoid}}
@@ -68,9 +68,15 @@
     <textarea id="tens-detail" placeholder="예: 좌측 견관절/견갑 영역 전류테라피 적용, 증상 및 근긴장 반응에 따라 강도 조절" oninput="evaluatePlatform()"></textarea>
   </div>
   <div class="session-record">
-    <h3>🏋️ Active Intervention</h3>
+    <h3>🏋️ Active Intervention / Home Exercise</h3>
     <label>실제 시행한 운동·기능훈련</label>
     <textarea id="active-detail" placeholder="예: shoulder flexion control, external rotation loading, snatch overhead position graded exposure" oninput="evaluatePlatform()"></textarea>
+    <div class="grid2" style="margin-top:8px">
+      <div><label>홈 운동명</label><input id="home-exercise" placeholder="예: 밴드 외회전" oninput="evaluatePlatform()"></div>
+      <div><label>반복 × 세트</label><input id="home-dose" placeholder="예: 10회 × 2세트" oninput="evaluatePlatform()"></div>
+    </div>
+    <label style="margin-top:8px">빈도 / 수행 기준</label>
+    <input id="home-frequency" placeholder="예: 하루 1회 · 운동 후 불편감이 오래 남지 않는 범위" oninput="evaluatePlatform()">
   </div>
   <div class="session-record">
     <h3>🧭 교육 / Self-management</h3>
@@ -97,11 +103,10 @@
 </div>
 
 <div class="layout" style="margin-top:0"><div style="grid-column:1/-1"><div class="tracking-card"><h2>📈 Episode of Care — 10회 패키지 진행 & Outcome Tracking</h2><div class="grid3"><div><label>Episode ID</label><input id="episode-id" value="Episode-1"></div><div><label>현재 회차</label><div style="padding:7px 0;font-weight:800"><span id="sess-count-txt">1</span> / 10</div></div><div><label>저장 전 확인</label><div id="completion-text" class="small">Safety screen을 완료하세요.</div></div></div><div class="progress-bar-bg"><div id="sess-progress-fill" class="progress-bar-fill"></div></div><div class="session-badge-group" id="session-badges"></div><div class="charts"><div><b class="small">Goal Performance</b><div class="chart-container" id="goal-chart"></div></div><div><b class="small" id="score-chart-label">기능/장애 점수</b><div class="chart-container" id="score-chart"></div></div><div><b class="small">TSK-11</b><div class="chart-container" id="tsk-chart"></div></div><div><b class="small">PCS</b><div class="chart-container" id="pcs-chart"></div></div></div><div class="soft-box" style="margin-top:12px">
-<h3>📱 회원용 리포트</h3>
+<h3>💬 회원용 카카오톡 피드백</h3>
 <div class="member-report" id="client-report-preview"></div>
 <div class="report-actions">
-  <button class="btn" onclick="copyMemberReport()">📋 회원용 리포트 복사</button>
-  <button class="btn secondary" onclick="printMemberReport()">🖨 회원용 리포트 인쇄</button>
+  <button class="btn" onclick="copyMemberReport()">📋 카카오톡 피드백 복사</button>
 </div>
 <div style="height:14px"></div>
 <h3>🗂 전문가용 기록</h3>
@@ -266,7 +271,7 @@ function patientKey(){const raw=(val('pt-phone')||val('pt-name')||'anonymous').r
 function getHistory(){try{return JSON.parse(localStorage.getItem(patientKey()))||{}}catch{return{}}}function setHistory(h){localStorage.setItem(patientKey(),JSON.stringify(h))}
 function loadPatientHistory(){renderSessionBadges();updateCharts()}
 function renderSessionBadges(){const h=getHistory(),c=document.getElementById('session-badges');c.innerHTML='';for(let i=1;i<=10;i++){const d=document.createElement('div');d.className='session-badge '+(i===currentSessionNum?'active':'');d.textContent=`${i}회차 ${h[i]?'✓':''}`;d.onclick=()=>switchSession(i);c.appendChild(d)}document.getElementById('sess-count-txt').innerText=currentSessionNum;document.getElementById('sess-progress-fill').style.width=`${currentSessionNum*10}%`}
-function switchSession(n){currentSessionNum=n;const h=getHistory();if(h[n]){const d=h[n];[['pt-goal-score','goalScore'],['pt-body-score','bodyScore'],['pt-tsk','tskScore'],['pt-pcs','pcsScore']].forEach(x=>{if(d[x[1]]!==undefined)document.getElementById(x[0]).value=d[x[1]]});if(d.preIntakeContext)preIntakeData={...preIntakeData,...d.preIntakeContext,bodyScoreMax:d.bodyScoreMax,instrumentTitle:d.instrumentTitle,instrumentType:d.instrumentType,screenVersion:d.screenVersion};if(d.interventions){const x=d.interventions;const setv=(id,v)=>{const e=document.getElementById(id);if(e)e.value=v??''};setv('manual-applied',x.manual?.applied);setv('manual-detail',x.manual?.detail);setv('tens-applied',x.tens?.applied);setv('tens-detail',x.tens?.detail);setv('etherapy-mode',x.etherapy?.mode);setv('etherapy-purpose',x.etherapy?.purpose);setv('etherapy-time',x.etherapy?.time);setv('etherapy-intensity',x.etherapy?.intensity);setv('active-detail',x.active);setv('selfmanagement-detail',x.selfManagement);setv('post-nrs',x.postNrs);setv('post-goal-score',x.postGoalScore);setv('session-response',x.response);setv('next-plan',x.nextPlan)}}renderSessionBadges();evaluatePlatform();updateCharts()}
+function switchSession(n){currentSessionNum=n;const h=getHistory();if(h[n]){const d=h[n];[['pt-goal-score','goalScore'],['pt-body-score','bodyScore'],['pt-tsk','tskScore'],['pt-pcs','pcsScore']].forEach(x=>{if(d[x[1]]!==undefined)document.getElementById(x[0]).value=d[x[1]]});if(d.preIntakeContext)preIntakeData={...preIntakeData,...d.preIntakeContext,bodyScoreMax:d.bodyScoreMax,instrumentTitle:d.instrumentTitle,instrumentType:d.instrumentType,screenVersion:d.screenVersion};if(d.interventions){const x=d.interventions;const setv=(id,v)=>{const e=document.getElementById(id);if(e)e.value=v??''};setv('manual-applied',x.manual?.applied);setv('manual-detail',x.manual?.detail);setv('tens-applied',x.tens?.applied);setv('tens-detail',x.tens?.detail);setv('etherapy-mode',x.etherapy?.mode);setv('etherapy-purpose',x.etherapy?.purpose);setv('etherapy-time',x.etherapy?.time);setv('etherapy-intensity',x.etherapy?.intensity);setv('active-detail',x.active);setv('home-exercise',x.homeExercise);setv('home-dose',x.homeDose);setv('home-frequency',x.homeFrequency);setv('selfmanagement-detail',x.selfManagement);setv('post-nrs',x.postNrs);setv('post-goal-score',x.postGoalScore);setv('session-response',x.response);setv('next-plan',x.nextPlan)}}renderSessionBadges();evaluatePlatform();updateCharts()}
 function chart(id,key,max){const h=getHistory(),c=document.getElementById(id);let out='';for(let i=1;i<=10;i++){const d=h[i],v=d?Number(d[key])||0:0,ht=d?Math.min(100,Math.max(5,v/max*100)):4;out+=`<div class="chart-bar-group"><div class="chart-bar" style="height:${ht}%;opacity:${d?1:.18}"></div><div class="chart-label">${i}<br>${d?v:'-'}</div></div>`}c.innerHTML=out}
 function updateCharts(){chart('goal-chart','goalScore',10);chart('score-chart','bodyScore',instrumentMeta().max||100);chart('tsk-chart','tskScore',44);chart('pcs-chart','pcsScore',52)}
 function updateCompletion(){const s=getSafety();const clinicalMissing=fullTree().filter(x=>!x.required&&(!userAnswers[x.id]||userAnswers[x.id]==='NT')).length;document.getElementById('completion-text').innerText=s.missing.length?`필수 Safety 미확인 ${s.missing.length}개`:`Safety 완료 · 임상검사 미시행/미확인 ${clinicalMissing}개`}
@@ -278,6 +283,9 @@ function sessionInterventionData(){
     tens:{applied:val('tens-applied'),detail:val('tens-detail').trim()},
     etherapy:{mode:val('etherapy-mode'),purpose:val('etherapy-purpose'),time:val('etherapy-time'),intensity:val('etherapy-intensity')},
     active:val('active-detail').trim(),
+    homeExercise:val('home-exercise').trim(),
+    homeDose:val('home-dose').trim(),
+    homeFrequency:val('home-frequency').trim(),
     selfManagement:val('selfmanagement-detail').trim(),
     postNrs:val('post-nrs'),
     postGoalScore:val('post-goal-score'),
@@ -419,6 +427,9 @@ Purpose: ${esc(d.etherapy.purpose||'-')} | Time: ${esc(d.etherapy.time||'-')} | 
 Active intervention:
 ${esc(d.active||'-')}
 
+Home exercise prescription:
+${esc(d.homeExercise||'-')} | ${esc(d.homeDose||'-')} | ${esc(d.homeFrequency||'-')}
+
 Education / Self-management:
 ${esc(d.selfManagement||'-')}</div>
 
@@ -438,62 +449,131 @@ ${esc(d.response||'-')}</div>
 }
 function printExpertReport(){openPrintReport(buildExpertReportHtml())}
 
+
+function feedbackRiskProfile(){
+  const pre=preIntakeData||{},m=pre.mentalScores||{};
+  const tsk=num('pt-tsk'),pcs=num('pt-pcs');
+  const pss=Number(pre.pssScore??m.pssTotal??0);
+  const gad=Number(pre.gad7Score??m.gadTotal??0);
+  const phq=Number(pre.phq9Score??m.phqTotal??0);
+  const env=(pre.environmentBarriers||[]).map(String);
+  const highPainSensitivity=(tsk>=30)||(pcs>=30);
+  const recoveryLoad=(pss>=20)||(gad>=10)||(phq>=10)||env.some(x=>/수면|스트레스|피로|육아|가사|시간 부족/.test(x));
+  return {tsk,pcs,pss,gad,phq,highPainSensitivity,recoveryLoad,env};
+}
+function feedbackPhase(){
+  const n=Number(currentSessionNum)||1;
+  if(n<=2)return {name:'반응 확인 단계',message:'초반에는 몸이 어떤 움직임과 부하에 편안하게 반응하는지 확인하는 것이 중요합니다.'};
+  if(n<=4)return {name:'움직임 확장 단계',message:'이제 편안하게 허용되는 움직임의 범위를 조금씩 넓혀가는 단계입니다.'};
+  if(n<=7)return {name:'부하 적응 단계',message:'현재는 목표 활동에 필요한 힘과 반복 부하를 단계적으로 다시 받아들이는 과정입니다.'};
+  if(n<=9)return {name:'목표 활동 전환 단계',message:'이제 실제 목표 활동과 비슷한 조건에서 움직임과 부하를 연결해 보는 단계입니다.'};
+  return {name:'자기관리 전환 단계',message:'이번 과정에서 확인한 반응을 바탕으로 스스로 조절하고 유지할 수 있는 방법을 정리하는 단계입니다.'};
+}
+function goalRelationText(goal,region,patterns){
+  const g=String(goal||'').trim(),r=REGION[region]?.label||'해당 부위';
+  if(!g)return `${r}의 움직임과 부하 반응을 중심으로 현재 기능 상태를 확인했습니다.`;
+  const p=patterns[0]?patientPatternText(patterns[0].name):`${r}의 움직임과 부하를 받아들이는 능력`;
+  return `${g}을(를) 편하게 수행하려면 ${p}이(가) 함께 뒷받침되어야 합니다. 오늘은 이 부분이 현재 불편감과 어떻게 연결되는지 확인했습니다.`;
+}
+function sessionResponseText(d){
+  const a=[];
+  if(d.postNrs!=='' && val('oc-severity')!==''){
+    const before=Number(val('oc-severity')),after=Number(d.postNrs);
+    if(!isNaN(before)&&!isNaN(after)){
+      if(after<before)a.push(`불편감은 관리 전 ${before}/10에서 관리 후 ${after}/10으로 낮아졌습니다.`);
+      else if(after===before)a.push(`불편감의 숫자는 ${after}/10으로 비슷했으며, 움직임의 질과 허용 범위를 함께 관찰했습니다.`);
+      else a.push(`관리 직후 불편감은 ${after}/10으로 확인되어 이후 반응을 조금 더 관찰하는 것이 좋겠습니다.`);
+    }
+  }
+  if(d.postGoalScore!=='' && val('pt-goal-score')!==''){
+    const b=Number(val('pt-goal-score')),a2=Number(d.postGoalScore);
+    if(!isNaN(b)&&!isNaN(a2)&&a2>b)a.push(`목표 동작 수행감은 ${b}/10에서 ${a2}/10으로 좋아진 반응을 보였습니다.`);
+  }
+  if(d.response)a.push(d.response);
+  return a.join(' ');
+}
+function personalizedHomeMessage(d,risk,phase){
+  const lines=[];
+  if(d.homeExercise){
+    let x=`오늘 안내드린 ${d.homeExercise}`;
+    if(d.homeDose)x+=`을(를) ${d.homeDose}`;
+    if(d.homeFrequency)x+=`, ${d.homeFrequency}`;
+    x+=' 정도로 진행해 주세요.';
+    lines.push(x);
+  }else if(d.active){
+    lines.push('오늘 함께 확인한 움직임을 무리하지 않는 범위에서 짧게 반복해 주세요.');
+  }
+  if(risk.highPainSensitivity){
+    lines.push('통증의 숫자만 계속 확인하기보다는 “어디까지 움직일 수 있었는지, 하고 난 뒤 얼마나 잘 가라앉는지”를 함께 관찰해 주세요. 불편감이 조금 느껴졌다는 이유만으로 바로 활동을 중단할 필요는 없습니다.');
+  }else{
+    lines.push('불편감이 급격히 커지거나 오래 남지 않는 범위에서 평소 활동을 이어가며 목표 동작의 변화를 살펴봐 주세요.');
+  }
+  if(risk.recoveryLoad){
+    lines.push('몸의 회복에는 움직임뿐 아니라 수면과 긴장도도 영향을 줄 수 있습니다. 오늘은 짧게라도 몸의 긴장을 낮출 수 있는 조용한 시간과 충분한 휴식을 만들어 주세요.');
+  }
+  if(d.selfManagement)lines.push(d.selfManagement);
+  return lines;
+}
+function feedbackClosing(goal,phase){
+  const g=goal||'원하시는 활동';
+  const n=Number(currentSessionNum)||1;
+  if(n===1)return `첫 회차는 기준점을 확인하는 시간이었습니다. 앞으로 ${g}에 필요한 기능이 어떻게 달라지는지 한 회차씩 함께 확인해 보겠습니다.`;
+  if(n<10)return `${phase.message} 다음 방문에서는 오늘의 반응과 ${g} 수행 정도를 비교해 다음 단계를 조절하겠습니다.`;
+  return `${g}을(를) 보다 안정적으로 이어갈 수 있도록, 지금까지 좋아진 부분과 앞으로 스스로 관리할 부분을 함께 정리해 보겠습니다.`;
+}
 function generateClientReport(){
   const safety=getSafety(),patterns=inferPatterns(val('pt-region')),d=sessionInterventionData(),meta=instrumentMeta(),pct=bodyScorePercent();
-  const p=patterns[0]?patientPatternText(patterns[0].name):'현재 증상과 목표 활동에 영향을 주는 움직임·부하 요인';
-  const pre=preIntakeData||{};
-  let t=`[REVOREM · ${val('pt-name')||'회원'} · ${currentSessionNum}회차]
+  const pre=preIntakeData||{},risk=feedbackRiskProfile(),phase=feedbackPhase();
+  const name=val('pt-name')||'회원',goal=val('pt-goal')||'',region=val('pt-region');
+  const treatment=memberTreatmentSummary();
+  const response=sessionResponseText(d);
+  const home=personalizedHomeMessage(d,risk,phase);
+
+  let t=`안녕하세요, ${name}님 😊
+오늘도 방문해 주셔서 감사합니다. 오늘 관리는 어떠셨나요?
 
 `;
-  t+=`🎯 회복 목표
-${val('pt-goal')||'-'}
-현재 수행 수준: ${num('pt-goal-score')}/10${d.postGoalScore!==''?` → 세션 후 ${d.postGoalScore}/10`:''}
 
+  t+=`🎯 오늘 확인한 부분
 `;
-  t+=`📊 현재 상태
-• 주로 불편한 부위: ${val('oc-location')||REGION[val('pt-region')]?.label||'-'}
+  t+=`${goalRelationText(goal,region,patterns)}
 `;
-  t+=`• 현재 불편감: NRS ${num('oc-severity')}/10${val('oc-worst-severity')?` · 최근 최고 ${val('oc-worst-severity')}/10`:''}
-`;
-  t+=`• ${meta.full}: ${num('pt-body-score')}/${meta.max}${pct!==null?` (${pct}%)`:''}
-`;
-  if(pre.activityLimit)t+=`• 일상에서 가장 어려운 부분: ${pre.activityLimit}
+  if(pre.activityLimit)t+=`현재 말씀해 주신 "${pre.activityLimit}" 부분도 함께 고려해 관리 방향을 잡았습니다.
 `;
   t+=`
-🔎 오늘 확인한 기능 포인트
-• ${p}
+현재 ${meta.full}는 ${num('pt-body-score')}/${meta.max}${pct!==null?` (${pct}%)`:''}, 목표 활동 수행 정도는 ${num('pt-goal-score')}/10으로 확인되었습니다.
 `;
-  if(patterns[1])t+=`• ${patientPatternText(patterns[1].name)}
-`;
-  if(safety.red.length||safety.orange.length)t+=`• 현재는 안전성 확인이 우선되는 항목이 있어 필요한 확인을 먼저 진행했습니다.
-`;
+
   t+=`
-👐 오늘 시행한 관리
-${memberTreatmentSummary()}
+👐 오늘의 관리
+${treatment}
 `;
-  if(d.response||d.postNrs!==''){
+
+  if(response)t+=`
+🌿 관리 후 반응
+${response}
+`;
+
+  t+=`
+🏠 다음 방문 전에는
+`;
+  home.forEach(x=>t+=`• ${x}
+`);
+
+  t+=`
+💬 ${currentSessionNum}회차 한마디
+${feedbackClosing(goal,phase)}
+`;
+
+  if(safety.red.length||safety.orange.length){
     t+=`
-📉 관리 후 반응
-`;
-    if(d.postNrs!=='')t+=`• 세션 후 불편감: NRS ${d.postNrs}/10
-`;
-    if(d.response)t+=`• 관찰된 변화: ${d.response}
+※ 오늘 확인 과정에서 추가 확인이 필요한 항목이 있어 해당 부분은 안전을 우선해 안내드린 내용을 따라 주세요.
 `;
   }
+
   t+=`
-🏠 다음 방문 전 가이드
-`;
-  if(d.selfManagement)t+=`• ${d.selfManagement}
-`;
-  else t+=`• 불편감이 급격히 증가하지 않는 범위에서 일상 활동을 유지해 주세요.
-• 목표 활동의 수행 정도(0–10)가 어떻게 변하는지 관찰해 주세요.
-`;
-  if(d.nextPlan)t+=`
-📅 다음 세션에서는
-• ${d.nextPlan}
-`;
-  t+=`
-※ 이 리포트는 오늘의 기능 상태와 관리 내용을 이해하기 쉽게 정리한 요약입니다.`;
+오늘도 수고 많으셨습니다. 편안한 하루 보내세요 😊
+REVOREM`;
   document.getElementById('client-report-preview').innerText=t;
 }
 function handleOneClickConfirm(printAfter=false){const s=getSafety();if(s.missing.length){alert(`⚠️ 저장 중단: 필수 Safety 항목 ${s.missing.length}개가 미확인입니다.\n\n${s.missing.join('\n')}`);return}const patterns=inferPatterns(val('pt-region'));const clinicalMissing=fullTree().filter(x=>!x.required&&(!userAnswers[x.id]||userAnswers[x.id]==='NT')).length;if(clinicalMissing>0&&!confirm(`임상검사 ${clinicalMissing}개가 미시행/미확인입니다. Safety 항목은 완료되었습니다. 이 상태로 저장할까요?`))return;const h=getHistory();h[currentSessionNum]={patientName:val('pt-name'),patientPhone:val('pt-phone'),episodeId:val('episode-id'),sessionNum:currentSessionNum,region:val('pt-region'),prom:currentAreaName,goal:val('pt-goal'),goalScore:num('pt-goal-score'),bodyScore:num('pt-body-score'),bodyScoreMax:instrumentMeta().max,bodyScorePercent:bodyScorePercent(),instrumentTitle:instrumentMeta().full,instrumentType:instrumentMeta().type,screenVersion:instrumentMeta().version||'',tskScore:num('pt-tsk'),pcsScore:num('pt-pcs'),preIntakeContext:{activityLimit:preIntakeData.activityLimit||'',environmentBarriers:preIntakeData.environmentBarriers||[],environmentNote:preIntakeData.environmentNote||'',safetyAttention:preIntakeData.safetyAttention||[],mentalScores:preIntakeData.mentalScores||null,responseQuality:preIntakeData.responseQuality||null,rfsDomainProfile:buildRfsDomainProfile()||null},interventions:sessionInterventionData(),oldcharts:{onset:val('oc-onset'),location:val('oc-location'),duration:val('oc-duration'),character:val('oc-character'),aggravating:val('oc-agg'),relieving:val('oc-relieve'),radiation:val('oc-radiation'),temporal:val('oc-temporal'),severity:num('oc-severity'),worstSeverity:num('oc-worst-severity')},answers:{...userAnswers},safety:s,patterns,etherapy:{mode:val('etherapy-mode'),purpose:val('etherapy-purpose'),time:val('etherapy-time'),intensity:val('etherapy-intensity')},assessment:document.getElementById('out-assessment').innerText,clientReport:document.getElementById('client-report-preview').innerText,savedAt:new Date().toISOString()};setHistory(h);renderSessionBadges();updateCharts();generateClientReport();alert(`✅ ${val('pt-name')||'회원'} · ${currentSessionNum}회차 저장 완료\n회원용 리포트와 전문가용 기록이 분리되어 준비되었습니다.`);if(printAfter)setTimeout(()=>printExpertReport(),150)}
