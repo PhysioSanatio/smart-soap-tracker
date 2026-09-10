@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>REVOREM v3.2 - Member Feedback Engine & Clinical Record</title>
+<title>REVOREM v3.4 - Goal-Specific ICF Whole-Person Care Engine</title>
 <style>
 :root{--primary:#8C7A6B;--primary-dark:#52463C;--accent:#CDB78E;--accent-light:#F7F4EE;--danger:#B91C1C;--danger-bg:#FEF2F2;--orange:#C2410C;--orange-bg:#FFF7ED;--warning:#D97706;--warning-bg:#FFFBEB;--success:#15803D;--success-bg:#F0FDF4;--info:#0369A1;--info-bg:#F0F9FF;--bg:#FAFAFA;--card:#fff;--border:#E5E0D8;--text:#222;--sub:#666}
 *{box-sizing:border-box}body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--bg);color:var(--text);margin:0;padding:15px;line-height:1.45}.header{text-align:center;margin-bottom:15px;padding:16px;background:var(--card);border-radius:8px;border:1px solid var(--border);border-bottom:3px solid var(--accent)}.header h1{font-size:1.35rem;margin:0;color:var(--primary);letter-spacing:4px;font-weight:800}.header p{font-size:.82rem;margin:4px 0 0;color:var(--sub);letter-spacing:1.5px;font-weight:600}.layout{display:grid;grid-template-columns:1.08fr .92fr;gap:15px;max-width:1500px;margin:0 auto}@media(max-width:950px){.layout{grid-template-columns:1fr}}.card{background:var(--card);border-radius:8px;padding:16px;border:1px solid var(--border);box-shadow:0 2px 4px rgba(0,0,0,.02);margin-bottom:15px}h2{font-size:1.05rem;color:var(--primary);margin:0 0 12px;border-bottom:2px solid var(--accent-light);padding:0 0 6px 8px;border-left:3.5px solid var(--accent)}h3{font-size:.9rem;color:var(--primary-dark);margin:10px 0 7px}.small{font-size:.75rem;color:var(--sub)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}@media(max-width:650px){.grid2,.grid3{grid-template-columns:1fr}}label{font-size:.75rem;font-weight:700;color:var(--primary);display:block;margin-bottom:3px}input,select,textarea{width:100%;padding:8px 9px;border:1px solid var(--border);border-radius:6px;background:#fff;font:inherit;font-size:.82rem;color:var(--text)}textarea{min-height:58px;resize:vertical}.prom-summary,.soft-box{background:var(--accent-light);border:1px solid var(--accent);border-radius:8px;padding:11px 13px;font-size:.82rem;margin-bottom:10px}.search-box-group{display:flex;gap:6px;margin-top:7px}.search-box-group input{flex:1}.btn{border:0;border-radius:6px;padding:8px 12px;background:var(--primary);color:#fff;font-weight:700;cursor:pointer;font-size:.8rem}.btn:hover{background:var(--primary-dark)}.btn.secondary{background:var(--primary-dark)}.oldcharts-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:var(--accent-light);padding:12px;border-radius:8px;border:1px solid var(--border);margin:10px 0}.banner{border-radius:8px;padding:11px 12px;font-weight:700;margin-bottom:10px;display:none;font-size:.83rem}.banner.red{background:var(--danger-bg);border:2px solid var(--danger);color:var(--danger)}.banner.orange{background:var(--orange-bg);border:2px solid var(--orange);color:var(--orange)}.banner.yellow{background:var(--warning-bg);border:2px solid var(--warning);color:var(--warning)}.banner.green{background:var(--success-bg);border:1.5px solid var(--success);color:var(--success)}.section-label{font-size:.78rem;font-weight:800;color:var(--primary-dark);padding:6px 8px;background:var(--accent-light);border-radius:6px;margin:8px 0}.algo-step{background:#FAFAFA;border:1px solid var(--border);border-left:4px solid var(--accent);padding:11px;border-radius:6px;margin-bottom:9px}.algo-step.red-step{border-left-color:var(--danger);background:var(--danger-bg)}.algo-step.orange-step{border-left-color:var(--orange);background:var(--orange-bg)}.algo-title{font-weight:800;font-size:.86rem;color:var(--primary-dark);margin-bottom:4px}.algo-q{font-size:.83rem;margin-bottom:7px}.btn-group{display:flex;gap:6px;flex-wrap:wrap}.choice{flex:1;min-width:95px;padding:7px;border:1.5px solid var(--border);background:#fff;border-radius:6px;font-size:.78rem;font-weight:700;cursor:pointer}.choice.pos{background:var(--primary);color:#fff;border-color:var(--primary)}.choice.neg{background:var(--success);color:#fff;border-color:var(--success)}.choice.nt{background:#6B7280;color:#fff;border-color:#6B7280}.out-box{background:var(--accent-light);border:1px solid var(--border);padding:12px;border-radius:6px;font-size:.8rem;white-space:pre-wrap;max-height:420px;overflow:auto}.status-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}.pill{padding:4px 8px;border-radius:999px;font-size:.72rem;font-weight:800;border:1px solid var(--border);background:#fff}.pill.red{color:var(--danger);border-color:#FCA5A5}.pill.orange{color:var(--orange);border-color:#FDBA74}.pill.green{color:var(--success);border-color:#86EFAC}.pill.gray{color:#6B7280}.collapse{border:1px solid var(--border);border-radius:8px;margin-bottom:9px;overflow:hidden}.collapse summary{cursor:pointer;padding:10px 12px;background:var(--accent-light);font-weight:800;color:var(--primary-dark);font-size:.84rem;list-style:none}.collapse summary::-webkit-details-marker{display:none}.collapse summary:before{content:'▶';display:inline-block;margin-right:7px;font-size:.7rem;transition:.15s}.collapse[open] summary:before{transform:rotate(90deg)}.collapse-body{padding:10px 12px}.step-card{background:#fff;border:1px solid var(--border);border-radius:6px;padding:8px 10px;margin-bottom:6px;font-size:.77rem}.step-title{font-weight:800;color:var(--primary-dark);margin-bottom:3px}.tag-neg{color:#0284C7;font-weight:800}.tag-pos{color:#EA580C;font-weight:800}.tag-ma{color:var(--success);font-weight:800}.tag-mod{color:var(--primary-dark);font-weight:800}.tag-warn{color:var(--warning);font-weight:800}.therapy-lock{padding:12px;text-align:center;background:var(--danger-bg);color:var(--danger);border:1px dashed var(--danger);border-radius:6px;font-weight:800}.fitt-table{width:100%;border-collapse:collapse;font-size:.75rem;margin:6px 0 11px}.fitt-table th,.fitt-table td{border:1px solid var(--border);padding:6px 7px;text-align:left;vertical-align:top}.fitt-table th{background:var(--accent-light);color:var(--primary)}.track-header{font-weight:800;color:var(--primary);font-size:.82rem;margin-top:10px;border-left:3px solid var(--accent);padding-left:6px}.tracking-card{background:#fff;border:2px solid var(--accent);border-radius:12px;padding:18px;margin-top:10px}.session-badge-group{display:flex;gap:6px;flex-wrap:wrap;margin:9px 0}.session-badge{padding:6px 11px;background:var(--accent-light);border:1px solid var(--border);border-radius:20px;font-size:.77rem;font-weight:800;cursor:pointer;color:var(--primary)}.session-badge.active{background:var(--primary);color:#fff}.progress-bar-bg{width:100%;background:var(--accent-light);height:10px;border-radius:5px;overflow:hidden;margin:7px 0;border:1px solid var(--border)}.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--primary));width:0;transition:.3s}.charts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}@media(max-width:950px){.charts{grid-template-columns:1fr 1fr}}@media(max-width:600px){.charts{grid-template-columns:1fr}}.chart-container{display:flex;align-items:flex-end;height:105px;gap:5px;background:var(--accent-light);padding:8px;border-radius:8px;border:1px solid var(--border)}.chart-bar-group{flex:1;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end}.chart-bar{width:100%;max-width:18px;background:var(--primary);border-radius:3px 3px 0 0}.chart-label{font-size:.62rem;color:var(--sub);margin-top:3px;text-align:center}.btn-save{width:100%;padding:14px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;border:0;border-radius:8px;font-weight:800;font-size:.95rem;cursor:pointer}.wave-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}@media(max-width:700px){.wave-grid{grid-template-columns:1fr}}.wave-card{border:1px solid var(--border);border-radius:7px;padding:7px;background:#fff}.wave-card img{width:100%;height:auto;display:block;border-radius:4px}.source-note{font-size:.72rem;color:var(--sub);background:var(--info-bg);border-left:3px solid var(--info);padding:7px 8px;margin:7px 0}.danger-note{font-size:.72rem;color:var(--danger);background:var(--danger-bg);border-left:3px solid var(--danger);padding:7px 8px;margin:7px 0}.yt-link{display:inline-block;background:#7A6A5C;color:#fff;padding:3px 7px;border-radius:4px;font-weight:700;font-size:.68rem;text-decoration:none}@media print{body{background:#fff;padding:0}.tracking-card,.btn-save,.search-box-group{display:none}.layout{display:block}.card{box-shadow:none;page-break-inside:avoid}}
@@ -20,6 +20,13 @@
 .member-report{white-space:pre-wrap;background:#fff;padding:14px;border:1px solid var(--border);border-radius:8px;max-height:340px;overflow:auto;font-size:.82rem;line-height:1.7}
 .expert-note{font-size:.74rem;color:var(--muted);margin-top:7px;line-height:1.5}
 
+
+.auto-panel{margin:10px 0 12px;padding:12px;border:1px dashed #cdbd9f;border-radius:10px;background:#faf8f3}
+.auto-panel-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.auto-panel-title{font-size:.82rem;font-weight:800;color:var(--primary)}
+.auto-panel-note{font-size:.7rem;color:var(--muted);line-height:1.45;margin-top:5px}
+.btn-auto{border:1px solid #bda987;background:#f4efe6;color:#51483f;border-radius:7px;padding:7px 10px;font-weight:700;cursor:pointer;font-size:.73rem}
+.icf-preview{background:#f8f6f1;border-left:4px solid #c8b28d;padding:10px 12px;margin-top:10px;border-radius:6px;font-size:.76rem;line-height:1.65;white-space:pre-wrap}
 </style>
 </head>
 <body>
@@ -52,6 +59,11 @@
 <div class="card">
 <h2>7. Session Intervention Record — 실제 시행 내용</h2>
 <div class="source-note">아래에는 이번 세션에서 실제로 시행한 관리만 기록합니다. Procedural Reference를 펼쳐본 것과 실제 시행 기록은 구분됩니다.</div>
+<div class="auto-panel">
+<div class="auto-panel-head"><div class="auto-panel-title">✨ REVOREM ICF Smart Suggestion</div><button type="button" class="btn-auto" onclick="applySmartSessionSuggestions()">검진 결과로 자동 작성</button></div>
+<div class="auto-panel-note">Primary Goal · 기능평가 · OLDCHARTS · Clinical Pattern · 개인/환경요인을 종합해 기록과 홈가이드 초안을 만듭니다. 실제 시행 여부는 자동 선택하지 않으며 치료사가 확인·수정합니다.</div>
+<div id="smart-suggestion-summary" class="icf-preview">검진 입력 후 자동 작성 버튼을 누르면 ICF 관점의 추천 초안이 표시됩니다.</div>
+</div>
 <div class="session-record-grid">
   <div class="session-record">
     <h3>👐 수기 관리</h3>
@@ -414,6 +426,27 @@ Required missing: ${esc(safety.missing.join(', ')||'none')}</div>
   <h2>6. Clinical Examination Trace</h2>
   <table><thead><tr><th>Group</th><th>Item</th><th>Question / Finding</th><th>Response</th></tr></thead><tbody>${expertAnswersTable()}</tbody></table>
 
+  <h2>6A. ICF Contextual Formulation</h2>
+  <div class="box mono">${esc((()=>{const c=icfContext();return [
+    '[Body functions] '+(c.patterns.length?c.patterns.map(x=>x.name).join(' / '):c.regionLabel+' movement/load response'),
+    '[Activity] '+(c.activityLimit||c.goal||'-'),
+    '[Participation / Goal] '+(c.goal?c.goal+' · '+c.goalScore+'/10':'-'),
+    '[Environmental factors] '+(c.env.length?c.env.join(', '):'-'),
+    '[Personal / recovery modifiers] '+(c.risk.highPainSensitivity?'pain/movement sensitivity; ':'')+(c.risk.recoveryLoad?'sleep/stress/fatigue context':'no prominent modifier from current input')
+  ].join('\n')})())}</div>
+
+  <h2>6B. Goal-Specific ICF Reasoning Chain</h2>
+  <div class="box mono">${esc((()=>{const p=buildClinicalReasoningPlan();return [
+    'Body Function → '+p.bodyFunction,
+    'Activity → '+p.activity,
+    'Participation / Primary Goal → '+p.participation,
+    'Environment → '+p.environment,
+    'Personal / Recovery Modifiers → '+p.personal,
+    'Goal Demand → '+p.goalDemand,
+    'Intervention Strategy → Hands-on primary management + electrical therapy as adjunct + active exercise + goal-specific graded exposure',
+    'Functional Exposure → '+p.exposure
+  ].join('\n')})())}</div>
+
   <h2>7. Actual Session Interventions</h2>
   <div class="box mono">Manual therapy: ${yesText(d.manual.applied)}
 ${esc(d.manual.detail||'-')}
@@ -450,6 +483,156 @@ ${esc(d.response||'-')}</div>
 function printExpertReport(){openPrintReport(buildExpertReportHtml())}
 
 
+
+function icfContext(){
+ const pre=preIntakeData||{},patterns=inferPatterns(val('pt-region')),risk=feedbackRiskProfile();
+ return {goal:val('pt-goal').trim(),goalScore:num('pt-goal-score'),region:val('pt-region'),regionLabel:REGION[val('pt-region')]?.label||'해당 부위',
+ activityLimit:pre.activityLimit||'',job:val('pt-job').trim(),patterns,risk,env:pre.environmentBarriers||[],nrs:num('oc-severity'),
+ aggravating:val('oc-agg').trim(),relieving:val('oc-relieve').trim(),character:val('oc-character').trim()};
+}
+
+function goalCategory(goal){
+ const g=String(goal||'').toLowerCase();
+ if(/스내치|클린|저크|역도|웨이트|헬스|벤치|스쿼트|데드|크로스핏/.test(g))return 'strengthSport';
+ if(/달리|러닝|마라톤|조깅/.test(g))return 'running';
+ if(/등산|산행|트레킹|하이킹/.test(g))return 'hiking';
+ if(/축구|농구|배드민턴|테니스|골프|야구|수영|스포츠/.test(g))return 'sport';
+ if(/아이|아기|육아|안아|업어/.test(g))return 'caregiving';
+ if(/계단|걷기|보행|산책/.test(g))return 'walking';
+ if(/앉|서있|서 있|근무|업무|일하기|운전/.test(g))return 'workADL';
+ if(/옷|머리|씻|세수|양말|신발|집안일|청소/.test(g))return 'adl';
+ if(/잠|수면|자기/.test(g))return 'sleep';
+ return 'individualGoal';
+}
+function goalDemandText(c){
+ const cat=goalCategory(c.goal),g=c.goal||'원하시는 활동';
+ const map={
+ strengthSport:`${g}에 필요한 관절 가동범위, 힘 전달, 반복 부하 허용도와 동작 조절`,
+ running:`${g}에 필요한 반복 충격 허용도, 한발 지지 안정성과 지속적인 부하 적응`,
+ hiking:`${g}에 필요한 오르막·내리막의 반복 부하, 체중 지지와 피로 상황의 조절`,
+ sport:`${g}에 필요한 속도·방향전환·반복 부하와 해당 스포츠 동작의 조절`,
+ caregiving:`${g}에 필요한 들기·안기·이동 중 반복 부하와 실제 생활에서의 지속 가능성`,
+ walking:`${g}에 필요한 체중 지지, 반복 보행과 시간·거리 증가에 대한 적응`,
+ workADL:`${g}에 필요한 자세 유지, 반복 작업과 업무시간 동안의 부하 관리`,
+ adl:`${g}에 필요한 일상 동작 범위, 반복 사용과 편안한 움직임`,
+ sleep:`${g}와 관련된 자세 허용도, 야간 증상과 회복환경`,
+ individualGoal:`${g}에 실제로 필요한 움직임, 힘, 지속시간과 자신감`
+ };
+ return map[cat];
+}
+function patternFunctionalDeficits(c){
+ const names=c.patterns.map(x=>String(x.name).toLowerCase()).join(' ');
+ const a=[];
+ if(/directional|central|peripheral/.test(names))a.push('증상 반응에 맞는 움직임 방향');
+ if(/mobility|stiff|range|elevation/.test(names))a.push('가동범위와 움직임 여유');
+ if(/control|coordination|scap|sensor|instability/.test(names))a.push('움직임 조절과 안정성');
+ if(/tendon|load|patell|cuff|adductor|achilles/.test(names))a.push('부하 허용도와 근육·건 기능');
+ if(/nerve|radic|ulnar|radial/.test(names))a.push('신경계 증상 반응과 움직임 허용도');
+ if(!a.length)a.push(`${c.regionLabel}의 움직임과 부하 반응`);
+ return [...new Set(a)].slice(0,3);
+}
+function goalExposureSuggestion(c){
+ const cat=goalCategory(c.goal),g=c.goal||'목표 활동';
+ const map={
+ strengthSport:`${g} 동작을 가벼운 부하 또는 부분 범위에서 연습하고, 다음날까지 증상이 오래 남지 않으면 범위나 부하를 한 단계씩 증가`,
+ running:`걷기-빠른 걷기-짧은 러닝처럼 ${g}의 시간과 충격 부하를 단계적으로 증가`,
+ hiking:`평지 걷기에서 시작해 낮은 계단·경사면·실제 산행 순으로 체중지지 부하를 단계적으로 증가`,
+ sport:`저속·단순 동작에서 시작해 속도, 방향전환, 반복 횟수를 하나씩 추가하며 ${g} 복귀 준비`,
+ caregiving:`가벼운 물건 들기와 짧은 안기부터 시작해 실제 육아 동작의 무게와 시간을 단계적으로 증가`,
+ walking:`편안한 시간/거리부터 시작해 증상 회복 양상을 보며 걷는 시간이나 거리를 소폭 증가`,
+ workADL:`업무 동작을 짧은 시간 단위로 나누고 자세 변화와 미세 휴식을 섞어 실제 근무시간으로 확장`,
+ adl:`불편한 일상동작을 쉬운 범위에서 반복해 움직임의 여유와 자신감을 단계적으로 확장`,
+ sleep:`편안한 수면 자세와 지지 방법을 먼저 찾고 야간 증상과 다음날 회복 상태를 기록`,
+ individualGoal:`${g}을(를) 쉬운 조건·짧은 시간·낮은 부하에서 시작해 실제 상황에 가까워지도록 단계적으로 확장`
+ };
+ return map[cat];
+}
+function structuralSupportText(c){
+ const f=patternFunctionalDeficits(c);
+ return `핸즈온 관리는 ${f.slice(0,2).join(' 및 ')}을(를) 확인하고 개선을 돕는 주된 관리로 활용하고, 전류테라피는 불편감·근긴장 등 구조적/신체기능 측면의 부담 완화를 보조하는 수단으로 적용`;
+}
+function goalSpecificExercise(c){
+ const base=regionExerciseSuggestions(c),cat=goalCategory(c.goal);
+ let extra='';
+ if(cat==='strengthSport')extra=' + 목표 동작의 저부하 패턴 연습';
+ else if(cat==='running')extra=' + 한발 지지/보행-러닝 전환';
+ else if(cat==='hiking')extra=' + step-up/down';
+ else if(cat==='sport')extra=' + 스포츠 동작의 저속 연습';
+ else if(cat==='caregiving')extra=' + 들기/안기 패턴 연습';
+ else if(cat==='walking')extra=' + 단계적 걷기';
+ else if(cat==='workADL')extra=' + 업무 자세/동작 노출';
+ else if(cat==='adl')extra=' + 실제 일상동작 연습';
+ return {name:base.name+extra,dose:base.dose};
+}
+function buildClinicalReasoningPlan(){
+ const c=icfContext(),deficits=patternFunctionalDeficits(c),ex=goalSpecificExercise(c);
+ return {
+  bodyFunction:deficits.join(', '),
+  activity:c.activityLimit||c.goal||'불편한 활동 확인 필요',
+  participation:c.goal||'개인적으로 중요한 역할/활동 확인 필요',
+  environment:c.env.length?c.env.join(', '):'현재 보고된 뚜렷한 환경 장벽 없음',
+  personal:(c.risk.highPainSensitivity?'통증/움직임 민감도 고려; ':'')+(c.risk.recoveryLoad?'수면·스트레스·피로 등 회복여건 고려':'현재 입력에서 두드러진 회복부담 없음'),
+  goalDemand:goalDemandText(c),
+  handsOn:structuralSupportText(c),
+  exercise:ex,
+  exposure:goalExposureSuggestion(c)
+ };
+}
+function regionExerciseSuggestions(c){
+ const p=c.patterns.map(x=>String(x.name).toLowerCase()).join(' ');
+ const M={
+ cervical:[['directional','증상이 편해지는 방향의 경부 반복 움직임','8–10회 × 2세트'],['scap','경부-견갑 조절 운동','8–10회 × 2세트'],['default','편안한 범위의 경부 가동성 + 견갑 조절','8–10회 × 2세트']],
+ shoulder:[['rotator|cuff','밴드 어깨 외회전','10–12회 × 2세트'],['scap','견갑 조절 운동','10회 × 2세트'],['mobility|elevation|overhead','벽을 이용한 어깨 거상 운동','8–10회 × 2세트'],['instability','저강도 어깨 안정화 운동','8–10회 × 2세트'],['default','어깨 가동성 + 견갑 조절','10회 × 2세트']],
+ lumbar:[['central|directional','증상이 편해지는 방향의 요추 반복 움직임','8–10회 × 2세트'],['movement|control','복부-골반 조절 운동','8–10회 × 2세트'],['default','걷기 + 요추-고관절 움직임','5–10분 + 8회 × 2세트']],
+ elbow:[['lateral|medial|tendon','손목 등척성/저항 운동','20–30초 × 4회'],['nerve|ulnar|radial','편안한 범위의 신경 가동 운동','6–8회 × 2세트'],['default','전완부 저강도 부하 적응 운동','10회 × 2세트']],
+ hip:[['lateral|adductor|load','고관절 등척성/저강도 근력 운동','20–30초 × 4회'],['control|single','한발 지지 고관절 조절 운동','8–10회 × 2세트'],['mobility','고관절 가동성 운동','8–10회 × 2세트'],['default','고관절 가동성 + 저강도 부하 운동','10회 × 2세트']],
+ knee:[['patell|load','의자 스쿼트 또는 sit-to-stand','8–12회 × 2세트'],['movement|coordination','step-down 조절 운동','6–10회 × 2세트'],['default','무릎-고관절 연계 근력 운동','10회 × 2세트']],
+ ankle:[['achilles|tendon','양발 또는 보조 까치발','8–12회 × 2세트'],['sensor|instability','한발 균형 운동','20–30초 × 3회'],['mobility','발목 가동성 운동','8–10회 × 2세트'],['default','발목 가동성 + 균형 운동','10회 × 2세트']]
+ };
+ for(const x of (M[c.region]||[]))if(x[0]==='default'||new RegExp(x[0]).test(p))return {name:x[1],dose:x[2]};
+ return {name:'목표 활동에 필요한 기능 운동',dose:'8–10회 × 2세트'};
+}
+function smartManual(c){const p=c.patterns[0]?patientPatternText(c.patterns[0].name):`${c.regionLabel} 움직임`;return `${c.regionLabel}의 증상 반응과 ${p}을(를) 확인하며 목표 활동에 필요한 움직임을 돕는 범위에서 수기 관리 적용`;}
+function smartCurrent(c){return `${c.regionLabel} 주변에 전류테라피 적용, 편안한 감각 범위에서 강도를 조절하며 증상 및 근긴장 반응 확인`;}
+function smartActive(c){const g=c.goal||'목표 활동',p=c.patterns[0]?patientPatternText(c.patterns[0].name):`${c.regionLabel}의 움직임과 부하 허용도`;return `${g} 수행에 필요한 ${p}을(를) 확인하고 증상 반응에 따라 단계적으로 움직임과 부하 적용`;}
+function smartSelfManagement(c){
+ const a=[];
+ a.push(c.risk.highPainSensitivity?'통증 강도만으로 활동 가능 여부를 판단하기보다 움직임 허용범위와 활동 후 회복 양상을 함께 관찰':'불편감이 급격히 증가하거나 오래 남지 않는 범위에서 평소 활동과 목표 동작 유지');
+ if(c.risk.recoveryLoad)a.push('수면·피로·긴장도를 함께 살피고 짧게라도 회복을 위한 조용한 시간 확보');
+ if(c.env.length)a.push(`생활환경(${c.env.slice(0,2).join(', ')})을 고려해 지속 가능한 관리량으로 조절`);
+ return a.join('. ')+'.';
+}
+function applySmartSessionSuggestions(){
+ evaluatePlatform();const c=icfContext(),plan=buildClinicalReasoningPlan(),ex=plan.exercise;
+ const fill=(id,v)=>{const e=document.getElementById(id);if(e&&!String(e.value||'').trim())e.value=v};
+ fill('manual-detail',`${smartManual(c)}. ${plan.handsOn}`);
+ fill('tens-detail',`${c.regionLabel} 주변 전류테라피를 보조적으로 적용하여 불편감·근긴장 반응을 확인하고 핸즈온 및 능동적 움직임을 보완`);
+ fill('active-detail',`${smartActive(c)}. ${plan.exposure}`);
+ fill('home-exercise',ex.name);fill('home-dose',ex.dose);fill('home-frequency','하루 1회 · 시행 후 불편감이 오래 남지 않는 범위');
+ fill('selfmanagement-detail',`${smartSelfManagement(c)} ${plan.exposure}`);
+ fill('next-plan',`${c.goal||'목표 활동'} 수행 정도와 증상 반응을 재확인하고 ${plan.bodyFunction}의 변화에 따라 핸즈온·운동·기능적 부하 단계를 조절`);
+ const b=document.getElementById('smart-suggestion-summary');
+ if(b)b.innerText=[
+ `[신체기능] ${plan.bodyFunction}`,
+ `[활동] ${plan.activity}`,
+ `[참여/Primary Goal] ${plan.participation}${c.goal?' · 현재 '+c.goalScore+'/10':''}`,
+ `[환경] ${plan.environment}`,
+ `[개인/회복요인] ${plan.personal}`,
+ `[Goal demand] ${plan.goalDemand}`,
+ `[중재전략] Hands-on 중심 + 전류테라피 보조 + 능동운동/Goal-specific graded exposure`
+ ].join('\n');
+ evaluatePlatform();
+}
+function holisticMemberInsight(c){
+ const a=[],plan=buildClinicalReasoningPlan();
+ a.push(`현재 상태는 한 부위의 통증만으로 판단하지 않고, ${plan.bodyFunction} 같은 몸의 기능과 실제 생활에서의 활동을 함께 보고 있습니다.`);
+ if(c.goal)a.push(`${c.goal}을(를) 다시 편하게 하기 위해서는 ${plan.goalDemand}이(가) 중요해, 관리 과정에서도 이 목표와 연결해 변화를 확인하겠습니다.`);
+ if(c.activityLimit)a.push(`특히 말씀해 주신 "${c.activityLimit}"의 변화가 실제 생활에서 좋아지고 있는지를 중요한 기준으로 보겠습니다.`);
+ if(c.env.length)a.push(`${c.env.slice(0,2).join(', ')} 같은 생활환경도 회복 과정에 영향을 줄 수 있어, 현실적으로 지속 가능한 관리량을 함께 맞춰가겠습니다.`);
+ if(c.risk.highPainSensitivity)a.push('몸이 통증에 예민하게 반응하는 시기에는 통증을 완전히 피하기보다 안전하게 허용되는 움직임을 조금씩 확인하며 움직임에 대한 부담을 낮춰가는 과정도 중요합니다.');
+ if(c.risk.recoveryLoad)a.push('움직임뿐 아니라 수면, 피로와 긴장도 같은 회복 여건도 함께 살펴보겠습니다.');
+ return a;
+}
 function feedbackRiskProfile(){
   const pre=preIntakeData||{},m=pre.mentalScores||{};
   const tsk=num('pt-tsk'),pcs=num('pt-pcs');
@@ -512,6 +695,8 @@ function personalizedHomeMessage(d,risk,phase){
     lines.push('몸의 회복에는 움직임뿐 아니라 수면과 긴장도도 영향을 줄 수 있습니다. 오늘은 짧게라도 몸의 긴장을 낮출 수 있는 조용한 시간과 충분한 휴식을 만들어 주세요.');
   }
   if(d.selfManagement)lines.push(d.selfManagement);
+  const c=icfContext(),exposure=goalExposureSuggestion(c);
+  if(exposure&&!lines.some(x=>x.includes(exposure)))lines.push(`목표 활동 연습: ${exposure}.`);
   return lines;
 }
 function feedbackClosing(goal,phase){
@@ -542,6 +727,21 @@ function generateClientReport(){
 `;
   t+=`
 현재 ${meta.full}는 ${num('pt-body-score')}/${meta.max}${pct!==null?` (${pct}%)`:''}, 목표 활동 수행 정도는 ${num('pt-goal-score')}/10으로 확인되었습니다.
+`;
+
+  const holistic=holisticMemberInsight(icfContext());
+  if(holistic.length){
+    t+=`
+🌿 몸과 생활을 함께 보면
+`;
+    holistic.forEach(x=>t+=`${x}
+`);
+  }
+
+  const carePlan=buildClinicalReasoningPlan();
+  t+=`
+🧭 관리 방향
+오늘의 핸즈온 관리는 몸의 움직임과 불편한 부분을 직접 확인하고 조절하는 중심 관리로 진행합니다. 전류테라피는 불편감과 근긴장 같은 신체적인 부담을 낮추는 데 보조적으로 활용하고, 좋아진 움직임이 실제 생활과 ${goal||'목표 활동'}으로 이어지도록 운동과 단계적인 활동 연습을 함께 연결합니다.
 `;
 
   t+=`
