@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>REVOREM v3.6 - Natural Korean ICF Feedback & Deep Clinical Reasoning</title>
+<title>REVOREM v3.8 - CPG Decision Table & Adaptive Progression Engine</title>
 <style>
 :root{--primary:#8C7A6B;--primary-dark:#52463C;--accent:#CDB78E;--accent-light:#F7F4EE;--danger:#B91C1C;--danger-bg:#FEF2F2;--orange:#C2410C;--orange-bg:#FFF7ED;--warning:#D97706;--warning-bg:#FFFBEB;--success:#15803D;--success-bg:#F0FDF4;--info:#0369A1;--info-bg:#F0F9FF;--bg:#FAFAFA;--card:#fff;--border:#E5E0D8;--text:#222;--sub:#666}
 *{box-sizing:border-box}body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--bg);color:var(--text);margin:0;padding:15px;line-height:1.45}.header{text-align:center;margin-bottom:15px;padding:16px;background:var(--card);border-radius:8px;border:1px solid var(--border);border-bottom:3px solid var(--accent)}.header h1{font-size:1.35rem;margin:0;color:var(--primary);letter-spacing:4px;font-weight:800}.header p{font-size:.82rem;margin:4px 0 0;color:var(--sub);letter-spacing:1.5px;font-weight:600}.layout{display:grid;grid-template-columns:1.08fr .92fr;gap:15px;max-width:1500px;margin:0 auto}@media(max-width:950px){.layout{grid-template-columns:1fr}}.card{background:var(--card);border-radius:8px;padding:16px;border:1px solid var(--border);box-shadow:0 2px 4px rgba(0,0,0,.02);margin-bottom:15px}h2{font-size:1.05rem;color:var(--primary);margin:0 0 12px;border-bottom:2px solid var(--accent-light);padding:0 0 6px 8px;border-left:3.5px solid var(--accent)}h3{font-size:.9rem;color:var(--primary-dark);margin:10px 0 7px}.small{font-size:.75rem;color:var(--sub)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}@media(max-width:650px){.grid2,.grid3{grid-template-columns:1fr}}label{font-size:.75rem;font-weight:700;color:var(--primary);display:block;margin-bottom:3px}input,select,textarea{width:100%;padding:8px 9px;border:1px solid var(--border);border-radius:6px;background:#fff;font:inherit;font-size:.82rem;color:var(--text)}textarea{min-height:58px;resize:vertical}.prom-summary,.soft-box{background:var(--accent-light);border:1px solid var(--accent);border-radius:8px;padding:11px 13px;font-size:.82rem;margin-bottom:10px}.search-box-group{display:flex;gap:6px;margin-top:7px}.search-box-group input{flex:1}.btn{border:0;border-radius:6px;padding:8px 12px;background:var(--primary);color:#fff;font-weight:700;cursor:pointer;font-size:.8rem}.btn:hover{background:var(--primary-dark)}.btn.secondary{background:var(--primary-dark)}.oldcharts-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:var(--accent-light);padding:12px;border-radius:8px;border:1px solid var(--border);margin:10px 0}.banner{border-radius:8px;padding:11px 12px;font-weight:700;margin-bottom:10px;display:none;font-size:.83rem}.banner.red{background:var(--danger-bg);border:2px solid var(--danger);color:var(--danger)}.banner.orange{background:var(--orange-bg);border:2px solid var(--orange);color:var(--orange)}.banner.yellow{background:var(--warning-bg);border:2px solid var(--warning);color:var(--warning)}.banner.green{background:var(--success-bg);border:1.5px solid var(--success);color:var(--success)}.section-label{font-size:.78rem;font-weight:800;color:var(--primary-dark);padding:6px 8px;background:var(--accent-light);border-radius:6px;margin:8px 0}.algo-step{background:#FAFAFA;border:1px solid var(--border);border-left:4px solid var(--accent);padding:11px;border-radius:6px;margin-bottom:9px}.algo-step.red-step{border-left-color:var(--danger);background:var(--danger-bg)}.algo-step.orange-step{border-left-color:var(--orange);background:var(--orange-bg)}.algo-title{font-weight:800;font-size:.86rem;color:var(--primary-dark);margin-bottom:4px}.algo-q{font-size:.83rem;margin-bottom:7px}.btn-group{display:flex;gap:6px;flex-wrap:wrap}.choice{flex:1;min-width:95px;padding:7px;border:1.5px solid var(--border);background:#fff;border-radius:6px;font-size:.78rem;font-weight:700;cursor:pointer}.choice.pos{background:var(--primary);color:#fff;border-color:var(--primary)}.choice.neg{background:var(--success);color:#fff;border-color:var(--success)}.choice.nt{background:#6B7280;color:#fff;border-color:#6B7280}.out-box{background:var(--accent-light);border:1px solid var(--border);padding:12px;border-radius:6px;font-size:.8rem;white-space:pre-wrap;max-height:420px;overflow:auto}.status-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}.pill{padding:4px 8px;border-radius:999px;font-size:.72rem;font-weight:800;border:1px solid var(--border);background:#fff}.pill.red{color:var(--danger);border-color:#FCA5A5}.pill.orange{color:var(--orange);border-color:#FDBA74}.pill.green{color:var(--success);border-color:#86EFAC}.pill.gray{color:#6B7280}.collapse{border:1px solid var(--border);border-radius:8px;margin-bottom:9px;overflow:hidden}.collapse summary{cursor:pointer;padding:10px 12px;background:var(--accent-light);font-weight:800;color:var(--primary-dark);font-size:.84rem;list-style:none}.collapse summary::-webkit-details-marker{display:none}.collapse summary:before{content:'▶';display:inline-block;margin-right:7px;font-size:.7rem;transition:.15s}.collapse[open] summary:before{transform:rotate(90deg)}.collapse-body{padding:10px 12px}.step-card{background:#fff;border:1px solid var(--border);border-radius:6px;padding:8px 10px;margin-bottom:6px;font-size:.77rem}.step-title{font-weight:800;color:var(--primary-dark);margin-bottom:3px}.tag-neg{color:#0284C7;font-weight:800}.tag-pos{color:#EA580C;font-weight:800}.tag-ma{color:var(--success);font-weight:800}.tag-mod{color:var(--primary-dark);font-weight:800}.tag-warn{color:var(--warning);font-weight:800}.therapy-lock{padding:12px;text-align:center;background:var(--danger-bg);color:var(--danger);border:1px dashed var(--danger);border-radius:6px;font-weight:800}.fitt-table{width:100%;border-collapse:collapse;font-size:.75rem;margin:6px 0 11px}.fitt-table th,.fitt-table td{border:1px solid var(--border);padding:6px 7px;text-align:left;vertical-align:top}.fitt-table th{background:var(--accent-light);color:var(--primary)}.track-header{font-weight:800;color:var(--primary);font-size:.82rem;margin-top:10px;border-left:3px solid var(--accent);padding-left:6px}.tracking-card{background:#fff;border:2px solid var(--accent);border-radius:12px;padding:18px;margin-top:10px}.session-badge-group{display:flex;gap:6px;flex-wrap:wrap;margin:9px 0}.session-badge{padding:6px 11px;background:var(--accent-light);border:1px solid var(--border);border-radius:20px;font-size:.77rem;font-weight:800;cursor:pointer;color:var(--primary)}.session-badge.active{background:var(--primary);color:#fff}.progress-bar-bg{width:100%;background:var(--accent-light);height:10px;border-radius:5px;overflow:hidden;margin:7px 0;border:1px solid var(--border)}.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--primary));width:0;transition:.3s}.charts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}@media(max-width:950px){.charts{grid-template-columns:1fr 1fr}}@media(max-width:600px){.charts{grid-template-columns:1fr}}.chart-container{display:flex;align-items:flex-end;height:105px;gap:5px;background:var(--accent-light);padding:8px;border-radius:8px;border:1px solid var(--border)}.chart-bar-group{flex:1;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end}.chart-bar{width:100%;max-width:18px;background:var(--primary);border-radius:3px 3px 0 0}.chart-label{font-size:.62rem;color:var(--sub);margin-top:3px;text-align:center}.btn-save{width:100%;padding:14px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;border:0;border-radius:8px;font-weight:800;font-size:.95rem;cursor:pointer}.wave-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}@media(max-width:700px){.wave-grid{grid-template-columns:1fr}}.wave-card{border:1px solid var(--border);border-radius:7px;padding:7px;background:#fff}.wave-card img{width:100%;height:auto;display:block;border-radius:4px}.source-note{font-size:.72rem;color:var(--sub);background:var(--info-bg);border-left:3px solid var(--info);padding:7px 8px;margin:7px 0}.danger-note{font-size:.72rem;color:var(--danger);background:var(--danger-bg);border-left:3px solid var(--danger);padding:7px 8px;margin:7px 0}.yt-link{display:inline-block;background:#7A6A5C;color:#fff;padding:3px 7px;border-radius:4px;font-weight:700;font-size:.68rem;text-decoration:none}@media print{body{background:#fff;padding:0}.tracking-card,.btn-save,.search-box-group{display:none}.layout{display:block}.card{box-shadow:none;page-break-inside:avoid}}
@@ -451,6 +451,23 @@ Required missing: ${esc(safety.missing.join(', ')||'none')}</div>
     'Functional Exposure → '+p.exposure
   ].join('\n')})())}</div>
 
+  <h2>6C. CPG Decision Table — Exercise Selection & Progression</h2>
+  <div class="box mono">${esc((()=>{const p=buildClinicalReasoningPlan();return [
+    'Clinical priority: '+p.bodyFunction,
+    'Selected intervention class: '+p.decision.intervention,
+    'Entry exercise/task: '+p.decision.starter,
+    'Progression: '+p.decision.progress,
+    'Regression: '+p.decision.regress,
+    'Success criterion: '+p.decision.success,
+    'Load-response zone: '+p.loadRule.zone,
+    'Load rule: '+p.loadRule.rule,
+    'Progress rule: '+p.loadRule.progress,
+    'Evidence basis: '+p.decision.basis,
+    p.pri.eligible?'PRI-inspired respiratory adjunct: '+p.pri.rationale:'PRI-inspired respiratory adjunct: not indicated from current input',
+    p.pri.eligible?'Immediate retest: '+p.pri.retest:'',
+    p.pri.eligible?'Stop/deprioritize rule: '+p.pri.stopRule:'',
+    'Evidence hierarchy rule: guideline-supported active rehabilitation remains the core; breathing is an optional adjunct and is retained only if immediate functional retest supports its use.'
+  ].filter(Boolean).join('\\n')})())}</div>
   <h2>7. Actual Session Interventions</h2>
   <div class="box mono">Manual therapy: ${yesText(d.manual.applied)}
 ${esc(d.manual.detail||'-')}
@@ -510,7 +527,7 @@ function joinNatural(arr){
 
 function naturalActivityText(text){
  let x=String(text||'').trim();
- x=x.replace(/어깨의 유연성을 요구하는 전반적인 스포츠\s*/g,'수영이나 역도처럼 어깨의 충분한 움직임이 필요한 스포츠 활동');
+ x=x.replace(/어깨의 유연성을 요구하는 전반적인 스포츠\s*/g,'어깨의 충분한 움직임이 필요한 스포츠 활동');
  x=x.replace(/\s*등\s*$/,'');
  return x;
 }
@@ -598,61 +615,354 @@ function regionGoalDemand(c){
  };
  return base[r]?.[cat] || goalDemandText(c).replace(`${c.goal||'원하시는 활동'}에 필요한 `,'');
 }
-function chooseExerciseByPriority(c){
- const pri=clinicalPriorityProfile(c);
- const key=pri[0]?.key||'general';
- const R={
-  shoulder:{
-   mobility:['벽을 이용한 어깨 거상/가동성 운동','8–10회 × 2세트'],
-   control:['견갑-상완 조절 운동','8–10회 × 2세트'],
-   capacity:['어깨 외회전 또는 거상 저항운동','8–12회 × 2세트'],
-   neural:['경추-상지 신경계 반응을 고려한 가벼운 움직임','6–8회 × 2세트'],
-   general:['편안한 범위의 어깨 가동성 + 견갑 조절','8–10회 × 2세트']
-  },
-  cervical:{
-   neural:['편안한 범위의 경추 움직임 + 신경가동성 운동','6–8회 × 2세트'],
-   direction:['증상에 유리한 방향의 경추 반복 움직임','8–10회 × 2세트'],
-   control:['경부-견갑 조절 운동','8–10회 × 2세트'],
-   mobility:['편안한 범위의 경추 가동성 운동','8–10회 × 2세트'],
-   general:['경부 가동성 + 견갑 조절','8–10회 × 2세트']
-  },
-  lumbar:{
-   neural:['증상 반응을 고려한 요추 움직임 + 신경가동성','6–8회 × 2세트'],
-   direction:['증상에 유리한 방향의 요추 반복 움직임','8–10회 × 2세트'],
-   control:['복부-골반 조절 운동','8–10회 × 2세트'],
-   mobility:['요추-고관절 가동성 운동','8–10회 × 2세트'],
-   general:['걷기 + 편안한 요추-고관절 움직임','5–10분 + 8회 × 2세트']
-  },
-  elbow:{
-   neural:['상지 신경가동성 운동','6–8회 × 2세트'],
-   capacity:['손목/전완부 등척성 또는 저항운동','20–30초 × 4회'],
-   general:['전완부 저강도 부하 적응 운동','8–10회 × 2세트']
-  },
-  hip:{
-   control:['한발 지지 기반 고관절 조절 운동','8–10회 × 2세트'],
-   mobility:['고관절 가동성 운동','8–10회 × 2세트'],
-   capacity:['고관절 등척성 또는 저강도 근력운동','20–30초 × 4회'],
-   general:['고관절 가동성 + 저강도 부하 운동','8–10회 × 2세트']
-  },
-  knee:{
-   control:['step-down 또는 한발 지지 조절 운동','6–10회 × 2세트'],
-   capacity:['sit-to-stand 또는 스쿼트 기반 부하운동','8–12회 × 2세트'],
-   mobility:['무릎 가동성 + 저강도 기능운동','8–10회 × 2세트'],
-   general:['무릎-고관절 연계 근력운동','8–10회 × 2세트']
-  },
-  ankle:{
-   control:['한발 균형/안정성 운동','20–30초 × 3회'],
-   capacity:['까치발 또는 발목 저항운동','8–12회 × 2세트'],
-   mobility:['발목 가동성 운동','8–10회 × 2세트'],
-   neural:['편안한 범위의 신경가동성 운동','6–8회 × 2세트'],
-   general:['발목 가동성 + 균형운동','8–10회 × 2세트']
-  }
+
+const EVIDENCE_EXERCISE_LIBRARY={
+ shoulder:{
+  mobility:{label:'어깨 능동 가동성/운동조절 운동',basis:'2025 Rotator Cuff Tendinopathy CPG',source:'JOSPT 2025 / APTA-supported',strength:'CPG-supported'},
+  control:{label:'견갑-상완 운동조절 운동',basis:'2025 Rotator Cuff Tendinopathy CPG',source:'JOSPT 2025 / APTA-supported',strength:'CPG-supported'},
+  capacity:{label:'회전근개·견갑근 저항운동',basis:'2025 Rotator Cuff Tendinopathy CPG',source:'JOSPT 2025 / APTA-supported',strength:'CPG-supported'},
+  neural:{label:'증상 허용범위의 능동운동과 신경계 증상 모니터링',basis:'patient-centered active rehabilitation',source:'APTA CPG framework',strength:'CPG-consistent'},
+  general:{label:'어깨 능동 재활운동(운동조절/저항운동)',basis:'2025 Rotator Cuff Tendinopathy CPG',source:'JOSPT 2025 / APTA-supported',strength:'CPG-supported'}
+ },
+ cervical:{
+  neural:{label:'경추-견갑 능동운동 + 필요 시 상지 신경가동성',basis:'Neck Pain CPG framework',source:'APTA CPG library',strength:'CPG-consistent'},
+  direction:{label:'증상 반응에 따른 경추 반복 움직임',basis:'Neck Pain CPG framework',source:'APTA CPG library',strength:'CPG-consistent'},
+  control:{label:'경부-견갑 근지구력·운동조절 운동',basis:'Neck Pain CPG framework',source:'APTA CPG library',strength:'CPG-consistent'},
+  mobility:{label:'경추 능동 가동성 운동',basis:'Neck Pain CPG framework',source:'APTA CPG library',strength:'CPG-consistent'},
+  general:{label:'경부-견갑 능동운동',basis:'Neck Pain active management',source:'APTA CPG library',strength:'CPG-consistent'}
+ },
+ lumbar:{
+  neural:{label:'몸통근 활성화 + 움직임조절 운동',basis:'2021 Acute/Chronic Low Back Pain CPG',source:'JOSPT 2021 / APTA Orthopedics',strength:'CPG-supported'},
+  direction:{label:'증상 반응에 따른 몸통 가동성/반복운동',basis:'2021 Low Back Pain CPG',source:'JOSPT 2021 / APTA Orthopedics',strength:'CPG-supported'},
+  control:{label:'몸통근 활성화 및 움직임조절 운동',basis:'2021 Low Back Pain CPG',source:'JOSPT 2021 / APTA Orthopedics',strength:'CPG-supported'},
+  mobility:{label:'몸통 가동성 운동',basis:'2021 Low Back Pain CPG',source:'JOSPT 2021 / APTA Orthopedics',strength:'CPG-supported'},
+  capacity:{label:'몸통 근력·지구력 운동',basis:'2021 Low Back Pain CPG',source:'JOSPT 2021 / APTA Orthopedics',strength:'CPG-supported'},
+  general:{label:'몸통 근력·지구력 + 일반 유산소/기능운동',basis:'2021 Low Back Pain CPG',source:'JOSPT 2021 / APTA Orthopedics',strength:'CPG-supported'}
+ },
+ elbow:{
+  capacity:{label:'손목 신전근/전완부 점진적 저항운동',basis:'2022 Lateral Elbow Pain CPG',source:'JOSPT 2022 / APTA Orthopedics',strength:'CPG-supported'},
+  neural:{label:'검사 소견에 따른 상지 신경가동성 운동',basis:'impairment-based management',source:'APTA CPG framework',strength:'CPG-consistent'},
+  general:{label:'전완부 점진적 근력·부하 적응 운동',basis:'2022 Lateral Elbow Pain CPG',source:'JOSPT 2022 / APTA Orthopedics',strength:'CPG-supported'}
+ },
+ hip:{
+  mobility:{label:'고관절 유연성·가동성 운동',basis:'2025 Hip OA CPG',source:'APTA Orthopedics 2025',strength:'CPG-supported'},
+  capacity:{label:'개별화된 고관절 근력·지구력 운동',basis:'2025 Hip OA CPG',source:'APTA Orthopedics 2025',strength:'CPG-supported'},
+  control:{label:'기능적·보행·균형 훈련',basis:'2025 Hip OA CPG',source:'APTA Orthopedics 2025',strength:'CPG-supported'},
+  general:{label:'고관절 근력·유연성·지구력 운동',basis:'2025 Hip OA CPG',source:'APTA Orthopedics 2025',strength:'CPG-supported'}
+ },
+ knee:{
+  capacity:{label:'고관절 후외측근 + 무릎 타깃 근력운동',basis:'2019 Patellofemoral Pain CPG',source:'JOSPT 2019 / APTA Orthopedics',strength:'CPG-supported'},
+  control:{label:'고관절-무릎 연계 기능적 운동조절 훈련',basis:'2019 Patellofemoral Pain CPG',source:'JOSPT 2019 / APTA Orthopedics',strength:'CPG-supported'},
+  mobility:{label:'기능 제한에 맞춘 고관절-무릎 운동',basis:'2019 Patellofemoral Pain CPG',source:'JOSPT 2019 / APTA Orthopedics',strength:'CPG-consistent'},
+  general:{label:'고관절 + 무릎 복합 운동',basis:'2019 Patellofemoral Pain CPG',source:'JOSPT 2019 / APTA Orthopedics',strength:'CPG-supported'}
+ },
+ ankle:{
+  control:{label:'고유수용성·신경근·균형 훈련',basis:'2021 Lateral Ankle Sprain CPG',source:'JOSPT 2021 / APTA Orthopedics',strength:'CPG-supported'},
+  mobility:{label:'보호된 능동 ROM + 스트레칭',basis:'2021 Lateral Ankle Sprain CPG',source:'JOSPT 2021 / APTA Orthopedics',strength:'CPG-supported'},
+  capacity:{label:'점진적 체중부하 + 구조화된 기능운동',basis:'2021 Lateral Ankle Sprain CPG',source:'JOSPT 2021 / APTA Orthopedics',strength:'CPG-supported'},
+  neural:{label:'증상 허용범위의 능동운동',basis:'impairment-based active rehabilitation',source:'APTA CPG framework',strength:'CPG-consistent'},
+  achilles:{label:'아킬레스건 점진적 tendon-loading 운동',basis:'2024 Midportion Achilles Tendinopathy CPG',source:'JOSPT 2024 / APTA Orthopedics',strength:'CPG-supported'},
+  general:{label:'능동 ROM + 균형·신경근 운동',basis:'2021 Lateral Ankle Sprain CPG',source:'JOSPT 2021 / APTA Orthopedics',strength:'CPG-supported'}
+ }
+};
+function evidenceExercise(c,priority){
+ let key=priority;
+ const names=c.patterns.map(x=>String(x.name).toLowerCase()).join(' ');
+ if(c.region==='ankle'&&/achilles/.test(names))key='achilles';
+ return EVIDENCE_EXERCISE_LIBRARY[c.region]?.[key]||EVIDENCE_EXERCISE_LIBRARY[c.region]?.general||
+ {label:'개별화된 능동운동',basis:'APTA CPG framework',source:'APTA CPG library',strength:'CPG-consistent'};
+}
+function breathingAdjunctProfile(c){
+ const env=(c.env||[]).join(' ');
+ const names=c.patterns.map(x=>String(x.name).toLowerCase()).join(' ');
+ const thoracicScap=(c.region==='shoulder'||c.region==='cervical'||c.region==='lumbar') &&
+   /scap|mobility|control|coordination|overhead|movement/.test(names);
+ const recovery=c.risk.recoveryLoad||/수면|스트레스|피로|긴장/.test(env);
+ const goalOverhead=/스내치|저크|수영|머리 위|오버헤드/i.test(c.goal||'');
+ const eligible=thoracicScap||recovery||goalOverhead;
+ return {
+  eligible,
+  label:'호흡-흉곽/골반 조절 보조중재',
+  suggestion:'90/90 또는 편안한 지지 자세에서 코로 천천히 들이마시고 길게 내쉬면서 갈비뼈와 복부가 부드럽게 움직이도록 4–5호흡 시행',
+  rationale:'흉곽·복부의 긴장을 낮추고 다음 능동운동을 준비하기 위한 보조적 사용',
+  evidence:'PRI Postural Respiration 개념 참고',
+  evidenceLevel:'emerging / adjunct only'
  };
- const x=R[c.region]?.[key]||R[c.region]?.general||['목표 활동에 필요한 기능운동','8–10회 × 2세트'];
+}
+
+const CPG_DECISION_TABLE={
+ shoulder:{
+  mobility:{
+   findings:/mobility|elevation|overhead|range|stiff/i,
+   intervention:'어깨 능동 가동성 + 점진적 거상',
+   starter:'벽/테이블 보조 거상 또는 능동 보조 ROM',
+   progress:'보조 감소 → 능동 전범위 → 가벼운 외부부하를 추가한 거상',
+   regress:'범위 축소 → 중력 감소 자세 → 보조 거상',
+   success:'운동 후 증상이 허용범위에 머물고 목표 범위가 증가',
+   basis:'2025 Rotator Cuff Tendinopathy CPG'
+  },
+  control:{
+   findings:/scap|control|coordination|instability/i,
+   intervention:'견갑-상완 운동조절',
+   starter:'낮은 부하에서 견갑면 거상/벽 슬라이드의 질을 연습',
+   progress:'속도·범위 증가 → 저항 추가 → 목표 동작 방향으로 통합',
+   regress:'중력 감소 → 범위 축소 → 촉각/시각 피드백 사용',
+   success:'보상 움직임이 감소하고 동일 동작의 편안함/정확도가 증가',
+   basis:'2025 Rotator Cuff Tendinopathy CPG'
+  },
+  capacity:{
+   findings:/cuff|tendon|load|rotator|strength/i,
+   intervention:'회전근개·견갑근 점진적 저항운동',
+   starter:'허용범위의 외회전/견갑면 거상 저항운동',
+   progress:'반복수/저항 증가 → 긴 레버 → overhead/goal-specific loading',
+   regress:'등척성 또는 낮은 저항·짧은 레버',
+   success:'다음날까지 과도한 악화 없이 동일 부하의 수행능력이 증가',
+   basis:'2025 Rotator Cuff Tendinopathy CPG'
+  }
+ },
+ cervical:{
+  neural:{
+   findings:/nerve|radic|neural|ulnt/i,
+   intervention:'경추-견갑 능동운동 + 선택적 신경가동성',
+   starter:'증상을 말초로 확산시키지 않는 범위의 경추/상지 움직임',
+   progress:'범위 증가 → 신경 slider → 기능적 상지 동작',
+   regress:'말초 증상이 줄어드는 자세/범위로 축소',
+   success:'말초 증상 증가 없이 상지 움직임과 기능이 개선',
+   basis:'APTA Neck Pain CPG framework'
+  },
+  control:{
+   findings:/control|scap|endurance|coordination/i,
+   intervention:'경부-견갑 근지구력·운동조절',
+   starter:'저부하 경부-견갑 조절',
+   progress:'지속시간 → 저항 → 업무/스포츠 자세 통합',
+   regress:'지지면 증가·짧은 유지시간',
+   success:'지속 자세/반복 동작의 허용시간 증가',
+   basis:'APTA Neck Pain CPG framework'
+  },
+  mobility:{
+   findings:/mobility|range|stiff/i,
+   intervention:'경추 능동 가동성 운동',
+   starter:'편안한 범위의 능동 회전/굴신',
+   progress:'범위·반복 증가 → 기능적 시선/상지 과제와 통합',
+   regress:'범위 축소·지지 자세',
+   success:'증상 악화 없이 필요한 경추 범위가 증가',
+   basis:'APTA Neck Pain CPG framework'
+  }
+ },
+ lumbar:{
+  direction:{
+   findings:/directional|centralization|peripheralization/i,
+   intervention:'증상 반응에 맞춘 반복 움직임',
+   starter:'중심화 또는 증상 감소가 나타나는 방향의 반복운동',
+   progress:'반복수/범위 증가 → 체중부하 자세 → 목표 활동 통합',
+   regress:'증상 감소 자세에서 작은 범위',
+   success:'말초 증상이 증가하지 않고 기능적 움직임 허용도가 증가',
+   basis:'2021 Low Back Pain CPG'
+  },
+  control:{
+   findings:/movement|control|coordination|stability/i,
+   intervention:'몸통근 활성화 및 움직임조절 운동',
+   starter:'저부하 몸통-골반 조절',
+   progress:'사지 움직임 추가 → 저항 → 들기/업무/스포츠 과제',
+   regress:'지지면 증가·레버 축소',
+   success:'보상 감소와 함께 목표 활동의 부하 허용도가 증가',
+   basis:'2021 Low Back Pain CPG'
+  },
+  capacity:{
+   findings:/load|endurance|strength|decondition/i,
+   intervention:'몸통 근력·지구력 + 일반 운동',
+   starter:'허용 가능한 저강도 몸통 근력/걷기',
+   progress:'시간/저항 증가 → 기능적 들기·운반',
+   regress:'운동시간·저항 감소',
+   success:'다음날 과도한 악화 없이 작업량이 증가',
+   basis:'2021 Low Back Pain CPG'
+  }
+ },
+ elbow:{
+  capacity:{
+   findings:/lateral|medial|tendon|load|extensor/i,
+   intervention:'전완부/손목 점진적 저항운동',
+   starter:'등척성 또는 낮은 부하 손목 신전 저항',
+   progress:'등장성 → 저항/반복 증가 → 그립·업무·스포츠 부하',
+   regress:'등척성·짧은 레버·낮은 저항',
+   success:'그립/반복 사용 후 증상 회복이 빨라지고 작업량이 증가',
+   basis:'2022 Lateral Elbow Pain CPG'
+  },
+  neural:{
+   findings:/nerve|ulnar|radial|pin/i,
+   intervention:'증상 반응 기반 상지 신경가동성',
+   starter:'신경 slider 형태의 낮은 자극',
+   progress:'범위 증가 → 기능적 상지 사용과 결합',
+   regress:'범위·장력 감소',
+   success:'신경성 증상 증가 없이 기능적 상지 사용이 증가',
+   basis:'APTA impairment-based framework'
+  }
+ },
+ hip:{
+  capacity:{
+   findings:/load|lateral|adductor|strength|oa/i,
+   intervention:'고관절 근력·지구력 운동',
+   starter:'허용범위의 외전/신전 또는 sit-to-stand',
+   progress:'저항 증가 → 한발 지지 → 계단/달리기/스포츠',
+   regress:'양발 지지·등척성·저저항',
+   success:'체중부하 활동의 시간/반복수가 증가',
+   basis:'2025 Hip OA CPG; condition-specific matching required'
+  },
+  control:{
+   findings:/control|single|coordination|balance/i,
+   intervention:'기능적·균형·한발 지지 훈련',
+   starter:'지지 가능한 한발/분할 자세',
+   progress:'지지 감소 → reach/step → 목표 활동',
+   regress:'손 지지·양발 지지',
+   success:'한발 과제의 안정성과 기능 수행이 증가',
+   basis:'2025 Hip OA CPG; condition-specific matching required'
+  },
+  mobility:{
+   findings:/mobility|range|stiff/i,
+   intervention:'고관절 가동성·유연성 운동',
+   starter:'편안한 능동 ROM',
+   progress:'범위 증가 → 체중부하 가동성 → 기능 통합',
+   regress:'범위 축소·지지 자세',
+   success:'기능에 필요한 범위가 증상 악화 없이 증가',
+   basis:'2025 Hip OA CPG; condition-specific matching required'
+  }
+ },
+ knee:{
+  capacity:{
+   findings:/patell|load|strength|tendon/i,
+   intervention:'고관절 후외측근 + 무릎 타깃 근력운동',
+   starter:'sit-to-stand/부분 스쿼트 + 고관절 강화',
+   progress:'깊이/저항 증가 → step → 달리기/점프/스포츠',
+   regress:'높은 의자·얕은 범위·양발 지지',
+   success:'계단/스쿼트 등 기능부하의 허용량이 증가',
+   basis:'2019 Patellofemoral Pain CPG; pattern-specific'
+  },
+  control:{
+   findings:/movement|coordination|control|single/i,
+   intervention:'고관절-무릎 연계 기능적 운동조절',
+   starter:'sit-to-stand 또는 낮은 step-down',
+   progress:'step 높이/속도 → 한발 → 방향전환/착지',
+   regress:'양발·낮은 높이·외부 지지',
+   success:'기능과제에서 동작 조절과 증상 허용도가 증가',
+   basis:'2019 Patellofemoral Pain CPG; pattern-specific'
+  }
+ },
+ ankle:{
+  achilles:{
+   findings:/achilles|tendon/i,
+   intervention:'점진적 아킬레스건 tendon-loading',
+   starter:'양발 또는 보조 calf raise',
+   progress:'한발 → 외부부하 → 빠른 SSC/러닝·점프',
+   regress:'등척성 plantarflexion 또는 부분 체중부하',
+   success:'다음날 과도한 악화 없이 calf-raise/기능 부하가 증가',
+   basis:'2024 Midportion Achilles Tendinopathy CPG'
+  },
+  control:{
+   findings:/sensor|instability|balance|sprain/i,
+   intervention:'고유수용성·신경근·균형 훈련',
+   starter:'안정된 지면 한발 균형',
+   progress:'reach → 불안정/동적 과제 → hop/cut/스포츠',
+   regress:'손 지지·양발 또는 tandem',
+   success:'균형과 기능과제에서 불안정감이 감소',
+   basis:'2021 Lateral Ankle Sprain CPG'
+  },
+  mobility:{
+   findings:/mobility|range|dorsiflex/i,
+   intervention:'능동 ROM + 필요 시 종아리 유연성',
+   starter:'비체중부하 능동 ROM',
+   progress:'체중부하 dorsiflexion → step/squat',
+   regress:'범위 축소·비체중부하',
+   success:'기능에 필요한 ROM이 증상 악화 없이 증가',
+   basis:'2021 Lateral Ankle Sprain CPG'
+  }
+ }
+};
+function decisionKeyFor(c){
+ const names=c.patterns.map(x=>String(x.name).toLowerCase()).join(' ');
+ if(c.region==='ankle'&&/achilles/.test(names))return 'achilles';
+ const priorities=clinicalPriorityProfile(c);
+ for(const p of priorities){
+   if(CPG_DECISION_TABLE[c.region]?.[p.key])return p.key;
+ }
+ return Object.keys(CPG_DECISION_TABLE[c.region]||{})[0]||'general';
+}
+function cpgDecision(c){
+ const key=decisionKeyFor(c),row=CPG_DECISION_TABLE[c.region]?.[key];
+ const fallback=evidenceExercise(c,key);
+ if(!row)return {
+  key,intervention:fallback.label,starter:fallback.label,
+  progress:'증상 반응과 기능목표에 따라 범위·반복·저항·속도 중 한 요소씩 증가',
+  regress:'범위·반복·저항을 줄이고 지지면을 늘려 허용 가능한 수준으로 조절',
+  success:'다음날까지 과도한 악화 없이 목표 활동의 수행능력이 증가',
+  basis:fallback.basis
+ };
+ return {key,...row};
+}
+function loadResponseRule(){
+ const irr=symptomIrritability();
+ if(irr.level==='high')return {
+  zone:'protect/restore',
+  rule:'낮은 자극에서 시작하고 운동 중 말초화·급격한 통증 증가가 있으면 즉시 회귀',
+  progress:'현재 용량 후 증상이 비교적 빠르게 안정되고 다음날 기저선에 가깝다면 한 요소만 소폭 증가'
+ };
+ if(irr.level==='low')return {
+  zone:'build/perform',
+  rule:'목표 활동에 필요한 부하를 충분히 연습하되 다음날 회복 양상을 확인',
+  progress:'다음날 과도한 악화가 없고 수행 질이 유지되면 범위·저항·반복·속도 중 한 요소 증가'
+ };
+ return {
+  zone:'restore/build',
+  rule:'허용 가능한 증상 범위에서 반복하고 세션 후 및 다음날 회복을 확인',
+  progress:'반응이 안정적이면 한 번에 한 요소만 증가'
+ };
+}
+function priDecision(c){
+ const b=breathingAdjunctProfile(c);
+ if(!b.eligible)return {...b,stage:'not indicated',retest:''};
+ const regionRationale={
+  shoulder:'흉곽 움직임과 견갑-상완 운동을 연결하기 전 준비 단계',
+  cervical:'과도한 보조호흡/상부 흉곽 긴장이 의심될 때 경부-견갑 운동 전 준비 단계',
+  lumbar:'몸통-골반 조절운동 전 호흡과 복부-흉곽 움직임을 인지하는 준비 단계'
+ };
+ return {
+  ...b,
+  stage:'optional adjunct',
+  rationale:regionRationale[c.region]||b.rationale,
+  retest:c.region==='shoulder'?'호흡 후 어깨 거상/회전 또는 목표 overhead 동작을 즉시 재검':
+         c.region==='cervical'?'호흡 후 경추 회전/상지 움직임과 증상 반응을 재검':
+         c.region==='lumbar'?'호흡 후 편안한 몸통 움직임/목표 동작을 재검':'호흡 후 목표 동작을 재검',
+  stopRule:'어지럼, 호흡불편, 증상 악화 또는 기능적 재검에서 이득이 없으면 우선순위를 낮춤'
+ };
+}
+function evidencePrescription(c){
+ const pri=clinicalPriorityProfile(c),primary=pri[0]?.key||'general';
+ return {
+  primary,
+  exercise:evidenceExercise(c,primary),
+  breathing:breathingAdjunctProfile(c),
+  decision:cpgDecision(c),
+  loadRule:loadResponseRule(),
+  pri:priDecision(c)
+ };
+}
+function chooseExerciseByPriority(c){
+ const pri=clinicalPriorityProfile(c),key=pri[0]?.key||'general',ev=evidenceExercise(c,key),irr=symptomIrritability().level;
+ const R={
+  shoulder:{mobility:['벽 또는 테이블을 이용한 어깨 능동 거상','8–10회 × 2세트'],control:['낮은 부하의 견갑-상완 운동조절 운동','8–10회 × 2세트'],capacity:['밴드 외회전 또는 견갑면 거상 저항운동','8–12회 × 2세트'],neural:['증상 허용범위의 경추-상지 능동운동','6–8회 × 2세트'],general:['어깨 능동 가동성 + 저항운동','8–10회 × 2세트']},
+  cervical:{neural:['경추-견갑 능동운동 + 필요 시 신경가동성','6–8회 × 2세트'],direction:['증상에 유리한 방향의 경추 반복 움직임','8–10회 × 2세트'],control:['경부-견갑 근지구력/운동조절 운동','8–10회 × 2세트'],mobility:['경추 능동 가동성 운동','8–10회 × 2세트'],general:['경부-견갑 능동운동','8–10회 × 2세트']},
+  lumbar:{neural:['몸통근 활성화 + 움직임조절 운동','6–8회 × 2세트'],direction:['증상 반응에 따른 몸통 반복 움직임','8–10회 × 2세트'],control:['몸통근 활성화 및 움직임조절 운동','8–10회 × 2세트'],mobility:['몸통 가동성 운동','8–10회 × 2세트'],capacity:['몸통 근력·지구력 운동','8–12회 × 2세트'],general:['걷기 + 몸통 근력·지구력 운동','5–10분 + 8–10회 × 2세트']},
+  elbow:{neural:['증상 반응에 따른 상지 신경가동성 운동','6–8회 × 2세트'],capacity:['손목 신전근 등척성 또는 점진적 저항운동','20–30초 × 4회 또는 8–12회 × 2세트'],general:['전완부 점진적 저항운동','8–12회 × 2세트']},
+  hip:{control:['한발 지지 기반 균형/기능 훈련','20–30초 × 3회'],mobility:['고관절 능동 가동성/유연성 운동','8–10회 × 2세트'],capacity:['고관절 외전·신전 중심의 근력운동','8–12회 × 2세트'],general:['고관절 근력 + 유연성 운동','8–10회 × 2세트']},
+  knee:{control:['sit-to-stand 또는 step-down 기반 기능운동','8–10회 × 2세트'],capacity:['스쿼트 또는 무릎 신전 + 고관절 후외측근 강화','8–12회 × 2세트'],mobility:['고관절-무릎 기능운동','8–10회 × 2세트'],general:['고관절 + 무릎 복합 근력운동','8–12회 × 2세트']},
+  ankle:{control:['한발 균형/고유수용성 훈련','20–30초 × 3회'],capacity:['점진적 체중부하 기반 발목 기능운동','8–12회 × 2세트'],mobility:['발목 능동 ROM + 필요 시 종아리 스트레칭','8–10회 × 2세트'],neural:['증상 허용범위의 발목-하지 능동운동','6–8회 × 2세트'],achilles:['까치발 기반 점진적 아킬레스건 부하운동','8–12회 × 2–3세트'],general:['발목 능동 ROM + 균형운동','8–10회 × 2세트']}
+ };
+ let mapKey=key;
+ const names=c.patterns.map(x=>String(x.name).toLowerCase()).join(' ');
+ if(c.region==='ankle'&&/achilles/.test(names))mapKey='achilles';
+ const x=R[c.region]?.[mapKey]||R[c.region]?.general||['개별화된 능동운동','8–10회 × 2세트'];
  let dose=x[1];
- const irr=symptomIrritability().level;
- if(irr==='high') dose=dose.replace(/8–12|8–10|6–10|6–8/g,'5–8').replace('20–30초 × 4회','15–20초 × 3회');
- return {name:x[0],dose,priority:key};
+ if(irr==='high')dose=dose.replace(/8–12|8–10|6–8/g,'5–8').replace('20–30초 × 4회','15–20초 × 3회');
+ return {name:x[0],dose,priority:mapKey,evidence:ev};
 }
 function memberPatternPhrase(c){
  const pri=clinicalPriorityProfile(c).map(x=>x.label);
@@ -739,7 +1049,7 @@ function goalSpecificExercise(c){
  return {name:base.name+extra,dose:base.dose,priority:base.priority};
 }
 function buildClinicalReasoningPlan(){
- const c=icfContext(),pri=clinicalPriorityProfile(c),ex=goalSpecificExercise(c),irr=symptomIrritability();
+ const c=icfContext(),pri=clinicalPriorityProfile(c),ex=goalSpecificExercise(c),irr=symptomIrritability(),ev=evidencePrescription(c);
  return {
   priorities:pri,
   bodyFunction:joinNatural(pri.map(x=>x.label)),
@@ -752,6 +1062,11 @@ function buildClinicalReasoningPlan(){
   handsOn:`핸즈온을 중심으로 ${joinNatural(pri.slice(0,2).map(x=>x.label))}을 직접 확인하고 필요한 움직임 변화를 유도`,
   electrical:'전류테라피는 불편감과 근긴장 등 신체적 부담을 낮춰 핸즈온과 능동적 움직임을 보조',
   exercise:ex,
+  exerciseEvidence:ev.exercise,
+  decision:ev.decision,
+  loadRule:ev.loadRule,
+  breathing:ev.breathing,
+  pri:ev.pri,
   exposure:goalExposureSuggestion(c)
  };
 }
@@ -780,25 +1095,31 @@ function smartSelfManagement(c){
  return a.join('. ')+'.';
 }
 function applySmartSessionSuggestions(){
- evaluatePlatform();const c=icfContext(),plan=buildClinicalReasoningPlan(),ex=plan.exercise;
+ evaluatePlatform();const c=icfContext(),plan=buildClinicalReasoningPlan();
  const fill=(id,v)=>{const e=document.getElementById(id);if(e&&!String(e.value||'').trim())e.value=v};
  fill('manual-detail',`${c.regionLabel}에서 ${plan.bodyFunction}을 중심으로 움직임과 증상 반응을 확인하며 핸즈온 관리를 진행`);
  fill('tens-detail',`${c.regionLabel} 주변의 불편감과 근긴장 완화를 돕기 위해 전류테라피를 보조적으로 적용`);
- fill('active-detail',`${c.goal?`${c.goal}에 필요한 `:''}${plan.goalDemand}을 고려하여 능동적 움직임과 단계적인 부하 운동을 진행`);
- fill('home-exercise',ex.name);fill('home-dose',ex.dose);
- fill('home-frequency','하루 1회 · 다음날까지 불편감이 오래 남지 않는 범위');
- fill('selfmanagement-detail',smartSelfManagement(c));
- fill('next-plan',`${c.goal||'목표 활동'} 수행 정도와 오늘의 반응을 다시 확인한 뒤 ${plan.bodyFunction}의 변화에 따라 핸즈온, 운동, 실제 활동 부하를 조절`);
+ fill('active-detail',`${plan.decision.intervention}을 적용하고, ${plan.decision.starter}부터 시작하여 ${c.goal?c.goal+'에 필요한 ':''}${plan.goalDemand}으로 연결`);
+ fill('home-exercise',plan.decision.starter);
+ fill('home-dose',plan.exercise.dose);
+ fill('home-frequency','하루 1회 · 세션 후와 다음날 반응을 확인하면서 조절');
+ let selfText=`${plan.loadRule.rule}. 진행 기준: ${plan.loadRule.progress}.`;
+ if(plan.pri.eligible)selfText+=` 선택적 호흡 보조: ${plan.pri.suggestion}. ${plan.pri.retest}.`;
+ fill('selfmanagement-detail',selfText);
+ fill('next-plan',`${plan.decision.success} 여부를 확인하고, 충족 시 ${plan.decision.progress}; 충족하지 않으면 ${plan.decision.regress}`);
  const b=document.getElementById('smart-suggestion-summary');
  if(b)b.innerText=[
  `[신체기능 우선순위] ${plan.bodyFunction}`,
- `[활동 제한] ${plan.activity}`,
- `[참여/Primary Goal] ${plan.participation}${c.goal?' · 현재 '+c.goalScore+'/10':''}`,
- `[환경] ${plan.environment}`,
- `[개인/회복요인] ${plan.personal}`,
- `[목표 동작 요구도] ${plan.goalDemand}`,
- `[증상 민감도] ${plan.irritability}`,
- `[중재 방향] Hands-on 중심 → 전류테라피 보조 → 능동운동 → Goal-specific graded exposure`
+ `[활동/Goal] ${plan.activity} → ${plan.participation}`,
+ `[목표 요구도] ${plan.goalDemand}`,
+ `[CPG Decision] ${plan.decision.intervention}`,
+ `[시작] ${plan.decision.starter}`,
+ `[Progress] ${plan.decision.progress}`,
+ `[Regress] ${plan.decision.regress}`,
+ `[성공 기준] ${plan.decision.success}`,
+ `[Load-response zone] ${plan.loadRule.zone} · ${plan.loadRule.rule}`,
+ `[근거] ${plan.decision.basis}`,
+ ...(plan.pri.eligible?[`[PRI-inspired adjunct] ${plan.pri.rationale} → ${plan.pri.retest} · ${plan.pri.evidenceLevel}`]:[])
  ].join('\\n');
  evaluatePlatform();
 }
@@ -856,24 +1177,21 @@ function sessionResponseText(d){
   return a.join(' ');
 }
 function personalizedHomeMessage(d,risk,phase){
- const lines=[],c=icfContext(),plan=buildClinicalReasoningPlan(),irr=symptomIrritability();
+ const lines=[],c=icfContext(),plan=buildClinicalReasoningPlan();
  if(d.homeExercise){
    let x=`${d.homeExercise}`;
    if(d.homeDose)x+=` ${d.homeDose}`;
    if(d.homeFrequency)x+=` · ${d.homeFrequency}`;
    lines.push(`${x} 정도로 진행해 주세요.`);
- }
- if(risk.highPainSensitivity){
-   lines.push('통증의 숫자만 확인하기보다 어디까지 편하게 움직일 수 있었는지, 활동 후에는 얼마나 잘 가라앉는지를 함께 살펴봐 주세요.');
- }else if(irr.level==='high'){
-   lines.push('범위나 강도를 서둘러 높이기보다, 운동 후 불편감이 오래 남지 않는 정도에서 가볍게 반복해 주세요.');
  }else{
-   lines.push(`${plan.exposure.replace(/[.\s]+$/,'')}해 주세요.`);
+   lines.push(`${plan.decision.starter}을 편안한 범위에서 진행해 주세요.`);
  }
- if(risk.recoveryLoad){
-   lines.push('가능하다면 오늘은 수면과 휴식 시간을 조금 더 확보해 몸이 회복할 여유를 만들어 주세요.');
+ lines.push(`${plan.loadRule.progress}해 주세요.`);
+ if(plan.pri.eligible){
+   lines.push(`운동 전에는 ${plan.pri.suggestion.replace(/[.\s]+$/,'')}해 보세요. 호흡 후 움직임이 더 편해지는지 확인해 주세요.`);
  }
- return [...new Set(lines)].slice(0,3);
+ if(risk.recoveryLoad)lines.push('가능하다면 수면과 휴식 시간을 조금 더 확보해 몸이 회복할 여유를 만들어 주세요.');
+ return [...new Set(lines)].slice(0,4);
 }
 function feedbackClosing(goal,phase){
  const g=goal||'원하시는 활동',n=Number(currentSessionNum)||1;
@@ -903,7 +1221,9 @@ function generateClientReport(){
 `;
  }
  if(activity){
-   t+=`또한 평소 불편하다고 말씀해 주신 "${activity}"이 실제 동작에서 어떤 영향을 받는지도 함께 확인했습니다.
+   const overlap=(goalCategory(goal)==='strengthSport'&&/스포츠 활동|역도|웨이트|스내치/.test(activity)) ||
+                 (goalCategory(goal)==='sport'&&/스포츠 활동/.test(activity));
+   if(!overlap)t+=`또한 평소 불편하다고 말씀해 주신 "${activity}"이 실제 동작에서 어떤 영향을 받는지도 함께 확인했습니다.
 `;
  }
 
