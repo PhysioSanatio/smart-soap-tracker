@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- REVOREM v6.1 AUTH GATE: 인증 완료 전 임상 UI를 최초 페인트부터 차단 -->
+<style id="revorem-auth-gate">
+  html{visibility:hidden !important;}
+</style>
 <title>REVOREM Clinical Engine 1.3 - Secure Admin API Layer</title>
 <style>
 :root{--primary:#8C7A6B;--primary-dark:#52463C;--accent:#CDB78E;--accent-light:#F7F4EE;--danger:#B91C1C;--danger-bg:#FEF2F2;--orange:#C2410C;--orange-bg:#FFF7ED;--warning:#D97706;--warning-bg:#FFFBEB;--success:#15803D;--success-bg:#F0FDF4;--info:#0369A1;--info-bg:#F0F9FF;--bg:#FAFAFA;--card:#fff;--border:#E5E0D8;--text:#222;--sub:#666}
@@ -2235,6 +2239,8 @@ document.addEventListener('DOMContentLoaded',()=>{
       return;
     }
 
+    const authGate = document.getElementById("revorem-auth-gate");
+    if (authGate) authGate.remove();
     document.documentElement.style.visibility = "visible";
   });
 
