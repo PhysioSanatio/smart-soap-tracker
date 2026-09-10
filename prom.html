@@ -590,7 +590,7 @@ function loadAreaQuestions() {
     let html = `<div style="font-weight:800; color:var(--primary); margin: 20px 0 12px 0; font-size:16px;">[ ${data.title} ]</div>`;
 
     if (data.customScreen && data.items) {
-        html += `<div class="screen-note"><b>REVOREM Function Screen</b> — 진단명이 아니라 현재의 기능 제한을 빠르게 파악하기 위한 내부 스크리닝입니다. ${data.scoreMeaning}. 문항은 Mobility · Load tolerance · Daily activity · Participation · Control · Recovery confidence · Goal capacity를 섞어 배치해 반복 응답을 줄이도록 설계했습니다.</div>`;
+        html += `<div class="screen-note">현재 불편함이 일상생활과 움직임에 어느 정도 영향을 주고 있는지 확인하는 문항입니다. 평소 상태를 떠올리며 가장 가까운 답을 선택해 주세요.</div>`;
         data.items.forEach((item, idx) => {
             html += createQuestionCard(`body_${idx}`, idx + 1, `<span style="font-size:11px;color:var(--text-sub);font-weight:700">[${item.domain}]</span><br>${item.q}`, data.opts);
         });
