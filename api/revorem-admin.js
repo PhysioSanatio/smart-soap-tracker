@@ -6,7 +6,8 @@ const ALLOWED_GET_ACTIONS = new Set([
   "getMember",
   "memberSummary",
   "crmAnalytics",
-  "getLatest"
+  "getLatest",
+  "search"
 ]);
 
 const ALLOWED_POST_ACTIONS = new Set([
