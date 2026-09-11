@@ -1,4 +1,4 @@
-// REVOREM Public Intake API v1.0
+// REVOREM Public Intake API v1.1
 // Path: /api/revorem-intake.js
 //
 // Purpose:
@@ -52,17 +52,6 @@ function normalizeBody(req) {
   return {};
 }
 
-function getClientIp(req) {
-  const forwarded = String(req.headers["x-forwarded-for"] || "").trim();
-  if (forwarded) return forwarded.split(",")[0].trim();
-
-  return String(
-    req.headers["x-real-ip"] ||
-    req.socket?.remoteAddress ||
-    ""
-  ).trim();
-}
-
 function validateBasicPayload(payload) {
   const name = String(payload.name || "").trim();
   const phone = String(payload.phone || payload.patientPhone || "").trim();
@@ -92,32 +81,73 @@ function validateBasicPayload(payload) {
   return null;
 }
 
-async function verifyTurnstile(token, remoteip) {
-  const form = new URLSearchParams();
-  form.set("secret", turnstileSecret());
-  form.set("response", token);
+/*
+ * Cloudflare 공식 Siteverify API를 JSON 방식으로 호출합니다.
+ * remoteip은 선택값이므로 일단 제외해 네트워크/프록시 IP 형식 변수를 제거합니다.
+ * 실패 시 Secret/Token 자체는 로그에 남기지 않고 HTTP status와 error-codes만 기록합니다.
+ */
+async function verifyTurnstile(token) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000);
 
-  if (remoteip) {
-    form.set("remoteip", remoteip);
-  }
+  try {
+    const response = await fetch(
+      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          secret: turnstileSecret(),
+          response: token
+        }),
+        cache: "no-store",
+        signal: controller.signal
+      }
+    );
 
-  const response = await fetch(
-    "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: form.toString(),
-      cache: "no-store"
+    const raw = await response.text();
+
+    let result;
+    try {
+      result = JSON.parse(raw);
+    } catch {
+      console.error("REVOREM Turnstile invalid JSON response:", {
+        status: response.status,
+        statusText: response.statusText,
+        bodyPreview: raw.slice(0, 300)
+      });
+      throw new Error(`TURNSTILE_BAD_RESPONSE_${response.status}`);
     }
-  );
 
-  if (!response.ok) {
-    throw new Error("Turnstile verification request failed.");
+    if (!response.ok) {
+      console.error("REVOREM Turnstile HTTP error:", {
+        status: response.status,
+        statusText: response.statusText,
+        errorCodes: result?.["error-codes"] || []
+      });
+      throw new Error(`TURNSTILE_HTTP_${response.status}`);
+    }
+
+    if (!result.success) {
+      console.warn("REVOREM Turnstile verification rejected:", {
+        errorCodes: result?.["error-codes"] || [],
+        hostname: result?.hostname || "",
+        action: result?.action || ""
+      });
+    }
+
+    return result;
+  } catch (error) {
+    if (error?.name === "AbortError") {
+      throw new Error("TURNSTILE_TIMEOUT");
+    }
+    throw error;
+  } finally {
+    clearTimeout(timeoutId);
   }
-
-  return response.json();
 }
 
 async function forwardToAppsScript(payload) {
@@ -144,14 +174,29 @@ async function forwardToAppsScript(payload) {
   const text = await upstream.text();
 
   if (!upstream.ok) {
-    throw new Error(`Apps Script upstream error: ${upstream.status}`);
+    console.error("REVOREM Apps Script HTTP error:", {
+      status: upstream.status,
+      statusText: upstream.statusText,
+      bodyPreview: text.slice(0, 300)
+    });
+    throw new Error(`APPS_SCRIPT_HTTP_${upstream.status}`);
   }
 
   let parsed;
   try {
     parsed = JSON.parse(text);
   } catch {
-    throw new Error("Apps Script returned invalid JSON.");
+    console.error("REVOREM Apps Script invalid JSON:", {
+      bodyPreview: text.slice(0, 300)
+    });
+    throw new Error("APPS_SCRIPT_INVALID_JSON");
+  }
+
+  if (parsed?.result !== "success") {
+    console.error("REVOREM Apps Script application error:", {
+      result: parsed?.result || "",
+      message: parsed?.message || ""
+    });
   }
 
   return parsed;
@@ -180,31 +225,56 @@ export default async function handler(req, res) {
       return jsonError(res, 400, "Turnstile 인증 토큰이 없습니다.");
     }
 
+    if (turnstileToken.length > 2048) {
+      return jsonError(res, 400, "Turnstile 인증 토큰이 올바르지 않습니다.");
+    }
+
     const validationError = validateBasicPayload(body);
     if (validationError) {
       return jsonError(res, 400, validationError);
     }
 
-    const verification = await verifyTurnstile(
-      turnstileToken,
-      getClientIp(req)
-    );
+    const verification = await verifyTurnstile(turnstileToken);
 
     if (!verification.success) {
-      return jsonError(res, 403, "보안 확인에 실패했습니다. 다시 시도해 주세요.");
+      return jsonError(
+        res,
+        403,
+        "보안 확인에 실패했습니다. 보안 확인을 다시 완료한 뒤 제출해 주세요."
+      );
     }
 
-    const verifiedHostname = String(verification.hostname || "").toLowerCase();
+    const verifiedHostname = String(verification.hostname || "")
+      .trim()
+      .toLowerCase();
+
     if (!ALLOWED_HOSTNAMES.has(verifiedHostname)) {
-      return jsonError(res, 403, "허용되지 않은 도메인에서 생성된 인증입니다.");
+      console.warn("REVOREM Turnstile hostname rejected:", {
+        hostname: verifiedHostname
+      });
+
+      return jsonError(
+        res,
+        403,
+        "허용되지 않은 도메인에서 생성된 보안 인증입니다."
+      );
     }
 
     const upstreamResult = await forwardToAppsScript(body);
 
+    if (!upstreamResult || upstreamResult.result !== "success") {
+      return jsonError(
+        res,
+        502,
+        upstreamResult?.message || "사전문진 저장 단계에서 오류가 발생했습니다."
+      );
+    }
+
     return res.status(200).json(upstreamResult);
   } catch (error) {
     console.error("REVOREM public intake proxy error:", {
-      message: error?.message || "unknown"
+      message: error?.message || "unknown",
+      name: error?.name || ""
     });
 
     return jsonError(
