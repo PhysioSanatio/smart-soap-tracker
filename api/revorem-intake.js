@@ -1,4 +1,4 @@
-// REVOREM Public Intake API v1.1
+// REVOREM Public Intake API v1.2
 // Path: /api/revorem-intake.js
 //
 // Purpose:
@@ -82,11 +82,18 @@ function validateBasicPayload(payload) {
 }
 
 /*
- * Cloudflare 공식 Siteverify API를 JSON 방식으로 호출합니다.
- * remoteip은 선택값이므로 일단 제외해 네트워크/프록시 IP 형식 변수를 제거합니다.
- * 실패 시 Secret/Token 자체는 로그에 남기지 않고 HTTP status와 error-codes만 기록합니다.
+ * Cloudflare Turnstile Siteverify
+ *
+ * 진단 목적:
+ * - x-www-form-urlencoded 방식으로 전송
+ * - Cloudflare 응답 본문(error-codes 포함)을 읽고 로그에 남김
+ * - Secret/Token 값 자체는 로그에 남기지 않음
  */
 async function verifyTurnstile(token) {
+  const form = new URLSearchParams();
+  form.set("secret", turnstileSecret());
+  form.set("response", token);
+
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 10000);
 
@@ -96,54 +103,58 @@ async function verifyTurnstile(token) {
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
           "Accept": "application/json"
         },
-        body: JSON.stringify({
-          secret: turnstileSecret(),
-          response: token
-        }),
+        body: form.toString(),
         cache: "no-store",
         signal: controller.signal
       }
     );
 
-    const raw = await response.text();
+    const rawText = await response.text();
 
-    let result;
+    let parsed = null;
     try {
-      result = JSON.parse(raw);
+      parsed = JSON.parse(rawText);
     } catch {
       console.error("REVOREM Turnstile invalid JSON response:", {
         status: response.status,
         statusText: response.statusText,
-        bodyPreview: raw.slice(0, 300)
+        bodyPreview: rawText.slice(0, 500)
       });
-      throw new Error(`TURNSTILE_BAD_RESPONSE_${response.status}`);
+
+      throw new Error(
+        `TURNSTILE_INVALID_JSON_${response.status}: ${rawText.slice(0, 500)}`
+      );
     }
+
+    console.log("REVOREM Turnstile response:", {
+      status: response.status,
+      ok: response.ok,
+      success: parsed?.success === true,
+      errorCodes: parsed?.["error-codes"] || [],
+      hostname: parsed?.hostname || "",
+      action: parsed?.action || ""
+    });
 
     if (!response.ok) {
-      console.error("REVOREM Turnstile HTTP error:", {
-        status: response.status,
-        statusText: response.statusText,
-        errorCodes: result?.["error-codes"] || []
-      });
-      throw new Error(`TURNSTILE_HTTP_${response.status}`);
+      throw new Error(
+        `TURNSTILE_HTTP_${response.status}: ${JSON.stringify({
+          success: parsed?.success ?? null,
+          errorCodes: parsed?.["error-codes"] || [],
+          hostname: parsed?.hostname || "",
+          action: parsed?.action || ""
+        })}`
+      );
     }
 
-    if (!result.success) {
-      console.warn("REVOREM Turnstile verification rejected:", {
-        errorCodes: result?.["error-codes"] || [],
-        hostname: result?.hostname || "",
-        action: result?.action || ""
-      });
-    }
-
-    return result;
+    return parsed;
   } catch (error) {
     if (error?.name === "AbortError") {
       throw new Error("TURNSTILE_TIMEOUT");
     }
+
     throw error;
   } finally {
     clearTimeout(timeoutId);
@@ -153,12 +164,10 @@ async function verifyTurnstile(token) {
 async function forwardToAppsScript(payload) {
   const cleanPayload = { ...payload };
 
-  // Never trust a client-supplied server secret or Turnstile token.
   delete cleanPayload.publicSecret;
   delete cleanPayload.adminSecret;
   delete cleanPayload.turnstileToken;
 
-  // Inject the server-only public intake secret.
   cleanPayload.publicSecret = publicSecret();
 
   const upstream = await fetch(gasUrl(), {
@@ -177,8 +186,9 @@ async function forwardToAppsScript(payload) {
     console.error("REVOREM Apps Script HTTP error:", {
       status: upstream.status,
       statusText: upstream.statusText,
-      bodyPreview: text.slice(0, 300)
+      bodyPreview: text.slice(0, 500)
     });
+
     throw new Error(`APPS_SCRIPT_HTTP_${upstream.status}`);
   }
 
@@ -187,8 +197,9 @@ async function forwardToAppsScript(payload) {
     parsed = JSON.parse(text);
   } catch {
     console.error("REVOREM Apps Script invalid JSON:", {
-      bodyPreview: text.slice(0, 300)
+      bodyPreview: text.slice(0, 500)
     });
+
     throw new Error("APPS_SCRIPT_INVALID_JSON");
   }
 
@@ -221,6 +232,7 @@ export default async function handler(req, res) {
     const body = normalizeBody(req);
 
     const turnstileToken = String(body.turnstileToken || "").trim();
+
     if (!turnstileToken) {
       return jsonError(res, 400, "Turnstile 인증 토큰이 없습니다.");
     }
@@ -237,6 +249,12 @@ export default async function handler(req, res) {
     const verification = await verifyTurnstile(turnstileToken);
 
     if (!verification.success) {
+      console.warn("REVOREM Turnstile verification rejected:", {
+        errorCodes: verification?.["error-codes"] || [],
+        hostname: verification?.hostname || "",
+        action: verification?.action || ""
+      });
+
       return jsonError(
         res,
         403,
