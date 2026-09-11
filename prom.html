@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>REVOREM Pre-Intake v3.2 - Patient Guidance</title>
+    <title>REVOREM Pre-Intake v4.0 - Secure Patient Guidance</title>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <style>
         :root {
             --bg-main: #FAFAFA;
@@ -98,6 +99,26 @@
         .screen-note { font-size:12.5px; color:var(--text-sub); background:#F8FAFC; border:1px solid #E5E7EB; border-radius:8px; padding:11px 13px; margin:10px 0 14px; line-height:1.55; }
         .quality-note { display:none; font-size:12.5px; color:#92400E; background:#FFFBEB; border:1px solid #FDE68A; border-radius:8px; padding:11px 13px; margin:12px 0; line-height:1.55; }
 
+        .security-check {
+            margin-top: 28px;
+            padding: 18px;
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            background: #FBFAF8;
+        }
+        .security-check-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+        }
+        .security-check-note {
+            margin-top: 10px;
+            font-size: 11.5px;
+            color: var(--text-sub);
+            line-height: 1.55;
+        }
+
 
         .q-card { background: #fff; border: 1.5px solid var(--border-light); border-radius: 10px; padding: 18px; margin-bottom: 14px; transition: 0.2s; }
         .q-num { font-size: 12.5px; font-weight: 800; color: var(--primary); display: block; margin-bottom: 6px; }
@@ -172,9 +193,9 @@
 <div class="container">
     <div class="header">
         <div class="header-logo">REVOREM</div>
-        <span class="header-badge">🌿 100% Private BPS Precision Care</span>
-        <h1>1:1 맞춤 바디 밸런싱 사전 문진</h1>
-        <p>고급 세션 진행을 위한 전문 자가 컨디션 진단표입니다.</p>
+        <span class="header-badge">🌿 Private · BPS Function Care</span>
+        <h1>1:1 맞춤 기능 회복 사전 문진</h1>
+        <p>현재의 불편감과 기능, 회복 목표를 방문 전에 확인하기 위한 문진입니다.</p>
     </div>
 
     <!-- 설문지 폼 영역 -->
@@ -215,104 +236,116 @@
             </div>
         </div>
 
-        <div class="sec-title">🎯 회복 목표 & 현재 기능</div>
-        <div class="guide-box">통증의 크기뿐 아니라, 다시 하고 싶은 활동과 현재 수행 수준을 함께 확인합니다.</div>
+        <div class="sec-title">🎯 회복 목표와 현재 기능</div>
+        <div class="guide-box">현재의 불편감뿐 아니라, 다시 하고 싶은 활동과 그 활동을 지금 어느 정도 할 수 있는지도 함께 확인합니다.</div>
         <div class="full-width">
-            <input type="text" id="primaryGoal" placeholder="회복 후 가장 먼저 하고 싶은 활동 (예: 아이를 안고 30분 걷기)" required>
+            <input type="text" id="primaryGoal" placeholder="회복되면 가장 먼저 다시 하고 싶은 활동 (예: 아이를 안고 30분 걷기)" required>
         </div>
         <div class="range-wrap">
-            <div style="font-weight:700; margin-bottom:8px;">현재 그 활동을 어느 정도 할 수 있나요?</div>
+            <div style="font-weight:700; margin-bottom:8px;">현재 그 활동을 어느 정도 수행할 수 있나요?</div>
             <div class="range-row">
-                <span style="font-size:12px;">0 전혀 못함</span>
+                <span style="font-size:12px;">0 전혀 할 수 없음</span>
                 <input type="range" id="goalScore" min="0" max="10" value="5" oninput="document.getElementById('goalScoreView').textContent=this.value+'/10'">
                 <span class="range-value" id="goalScoreView">5/10</span>
             </div>
         </div>
         <div style="margin-top:12px">
-            <textarea id="activityLimit" placeholder="현재 증상 때문에 가장 어려워진 일상생활·업무·육아·운동·취미가 있다면 적어주세요."></textarea>
+            <textarea id="activityLimit" placeholder="현재 불편감 때문에 어려워진 일상생활·업무·육아·운동·취미가 있다면 적어주세요."></textarea>
         </div>
 
-        <div class="sec-title">📝 증상 정보 (OLDCHARTS)</div>
-        <div class="guide-box">방문 전 알고 있는 범위에서 작성해 주세요. 정확하지 않은 항목은 가장 가까운 답을 선택하면 됩니다.</div>
+        <div class="sec-title">📝 현재 증상 정보</div>
+        <div class="guide-box">알고 있는 범위에서 편하게 작성해 주세요. 정확히 기억나지 않는 항목은 가장 가까운 답을 선택하시면 됩니다.</div>
         <div class="input-grid">
             <div><select id="ocOnset" required><option value="">언제부터 시작됐나요?</option><option>1주 이내</option><option>1주~1개월</option><option>1~3개월</option><option>3개월 이상</option><option>반복적으로 재발</option></select></div>
-            <div><input type="text" id="ocLocation" placeholder="가장 불편한 위치" required></div>
-            <div><select id="ocDuration" required><option value="">한번 나타나면 얼마나 지속되나요?</option><option>간헐적 / 짧게</option><option>수분~수십분</option><option>수시간</option><option>거의 지속적</option><option>활동에 따라 변함</option></select></div>
+            <div><input type="text" id="ocLocation" placeholder="가장 불편한 부위 또는 위치" required></div>
+            <div><select id="ocDuration" required><option value="">증상이 한 번 나타나면 보통 얼마나 지속되나요?</option><option value="간헐적 / 짧게">잠깐 나타났다 사라짐</option><option value="수분~수십분">수분~수십 분</option><option value="수시간">수 시간</option><option value="거의 지속적">대부분 지속됨</option><option value="활동에 따라 변함">활동에 따라 달라짐</option></select></div>
             <div><select id="ocCharacter" required><option value="">주된 느낌</option><option>뻐근함/당김</option><option>찌름/날카로움</option><option>쑤심/욱신거림</option><option>화끈거림</option><option>저림/감각이상</option><option>힘 빠짐/불안정</option><option>뻣뻣함</option><option>기타</option></select></div>
-            <div class="full-width"><input type="text" id="ocAggravating" placeholder="심해지는 동작·자세·상황"></div>
-            <div class="full-width"><input type="text" id="ocRelieving" placeholder="편해지는 동작·자세·상황"></div>
-            <div><select id="ocRadiation"><option value="없음">다른 곳으로 퍼짐: 없음</option><option value="있음">다른 곳으로 퍼짐: 있음</option><option value="잘 모르겠음">잘 모르겠음</option></select></div>
-            <div><select id="ocTemporal"><option value="">심한 시간대/양상</option><option>아침</option><option>낮/활동 중</option><option>저녁</option><option>밤/수면 중</option><option>일정하지 않음</option></select></div>
-            <div><input type="number" id="nrsCurrent" min="0" max="10" placeholder="현재 통증 0~10" required></div>
-            <div><input type="number" id="nrsWorst" min="0" max="10" placeholder="최근 최고 통증 0~10" required></div>
+            <div class="full-width"><input type="text" id="ocAggravating" placeholder="불편감이 심해지는 동작·자세·상황"></div>
+            <div class="full-width"><input type="text" id="ocRelieving" placeholder="불편감이 줄어드는 동작·자세·상황"></div>
+            <div><select id="ocRadiation"><option value="없음">다른 부위로 퍼지지 않음</option><option value="있음">다른 부위로 퍼짐</option><option value="잘 모르겠음">퍼지는지 잘 모르겠음</option></select></div>
+            <div><select id="ocTemporal"><option value="">특히 심한 시간대가 있나요?</option><option>아침</option><option>낮/활동 중</option><option>저녁</option><option>밤/수면 중</option><option>일정하지 않음</option></select></div>
+            <div><input type="number" id="nrsCurrent" min="0" max="10" placeholder="현재 불편감 정도 0~10" required></div>
+            <div><input type="number" id="nrsWorst" min="0" max="10" placeholder="최근 가장 심했던 불편감 0~10" required></div>
         </div>
 
         <div class="sec-title">🛡️ 방문 전 안전 확인</div>
-        <div class="safety-note">아래 항목은 질환을 진단하기 위한 문항이 아니라, 방문 시 치료사가 먼저 확인해야 할 사항을 놓치지 않기 위한 사전 확인입니다. 해당되는 항목이 있어도 자동으로 특정 질환을 의미하지 않습니다.</div>
+        <div class="safety-note">아래 항목은 질환을 진단하기 위한 검사가 아니라, 방문 전에 우선 확인이 필요한 신호가 있는지 살펴보기 위한 문항입니다. 해당되는 항목이 있다고 해서 특정 질환을 의미하는 것은 아닙니다.</div>
         <div id="safety-survey-area"></div>
 
         <div class="sec-title">🌍 생활·환경 요인</div>
-        <div class="guide-box">회복에 영향을 줄 수 있는 생활환경을 선택해 주세요. 여러 개 선택할 수 있습니다.</div>
+        <div class="guide-box">회복에 영향을 줄 수 있는 생활·환경 요인을 선택해 주세요. 여러 항목을 선택할 수 있습니다.</div>
         <div class="check-grid" id="barrierGroup">
             <label class="check-label"><input type="checkbox" value="장시간 앉아서 근무">장시간 앉아서 근무</label>
             <label class="check-label"><input type="checkbox" value="반복적 육체노동">반복적인 육체노동</label>
             <label class="check-label"><input type="checkbox" value="육아/가사 부담">육아·가사 부담</label>
             <label class="check-label"><input type="checkbox" value="운동시간 부족">운동할 시간 부족</label>
             <label class="check-label"><input type="checkbox" value="수면 부족">수면 부족</label>
-            <label class="check-label"><input type="checkbox" value="업무조절 어려움">업무 조절 어려움</label>
+            <label class="check-label"><input type="checkbox" value="업무조절 어려움">업무량·근무환경 조절이 어려움</label>
             <label class="check-label"><input type="checkbox" value="특별히 없음">특별히 없음</label>
             <label class="check-label"><input type="checkbox" value="기타">기타</label>
         </div>
-        <div style="margin-top:12px"><textarea id="environmentNote" placeholder="그 밖에 회복에 방해되거나 도움이 될 만한 환경·상황이 있다면 적어주세요. (선택)"></textarea></div>
+        <div style="margin-top:12px"><textarea id="environmentNote" placeholder="그 밖에 회복에 영향을 줄 수 있는 생활환경이나 상황이 있다면 적어주세요. (선택)"></textarea></div>
 
-        <div class="sec-title">🎯 가장 불편한 신체 부위 기능 평가</div>
-        <div class="guide-box">현재 가장 불편하거나 기능 제한이 큰 부위 1곳을 선택해 주세요. 고관절·무릎·발목은 REVOREM 자체 기능 스크리닝으로 평가합니다.</div>
+        <div class="sec-title">🎯 가장 불편한 부위의 기능 평가</div>
+        <div class="guide-box">현재 가장 불편하거나 일상 기능에 가장 큰 영향을 주는 부위 1곳을 선택해 주세요. 고관절·무릎·발목은 REVOREM Function Screen으로 확인합니다.</div>
         <select id="areaSelect" onchange="loadAreaQuestions()" required style="font-weight: 700; border-color: var(--accent);">
-            <option value="">-- 불편하신 부위를 선택하세요 --</option>
+            <option value="">-- 가장 불편한 부위를 선택하세요 --</option>
             <option value="NDI">목 (뒷목, 목덜미, 두통)</option>
             <option value="SPADI">어깨 (통증 및 움직임 장애)</option>
-            <option value="PRTEE">팔꿈치 (테니스/골프 엘보, 저림)</option>
+            <option value="PRTEE">팔꿈치 (통증, 잡기·들기 불편)</option>
             <option value="ODI">허리 (요통, 다리 저림)</option>
             <option value="HOOS">고관절 (사타구니, 엉덩이 관절)</option>
             <option value="KOOS">무릎 (통증, 붓기, 소리)</option>
-            <option value="FAAM">발목 및 발바닥</option>
+            <option value="FAAM">발목·발 (걷기, 균형, 발바닥 불편)</option>
         </select>
 
         <div id="body-survey-area"></div>
 
-        <div class="sec-title psych">🧠 움직임 공포 & 통증 반응 (TSK-11 / PCS)</div>
+        <div class="sec-title psych">🧠 움직임에 대한 걱정과 통증 관련 생각</div>
         <div id="psych-survey-area"></div>
 
         <div class="sec-title mental">🌿 회복 관련 심리 컨디션</div>
-        <div class="guide-box">아래 항목은 회복 과정에 영향을 줄 수 있는 심리적 부담을 파악하기 위한 선별 정보입니다. 결과만으로 진단하지 않으며, 필요 시 적절한 전문 평가를 안내할 수 있습니다.</div>
+        <div class="guide-box">아래 문항은 회복 과정에 영향을 줄 수 있는 스트레스·불안·기분 상태를 살펴보기 위한 선별 문항입니다. 결과만으로 진단하지 않으며, 필요할 경우 추가 평가를 안내할 수 있습니다.</div>
         <div id="mental-survey-area"></div>
 
         <div id="responseQualityNote" class="quality-note"></div>
-        <button type="submit" id="submitBtn" class="submit-btn">문진 작성 완료 및 전송하기</button>
+
+        <div class="security-check">
+            <div class="security-check-title">🔒 안전한 제출을 위한 보안 확인</div>
+            <div class="cf-turnstile"
+                 data-sitekey="0x4AAAAAAEvs-MVvIduj_Ued"
+                 data-theme="light"
+                 data-language="ko"></div>
+            <div class="security-check-note">
+                자동화된 대량 제출을 방지하기 위한 보안 확인입니다. 대부분의 경우 별도의 조작 없이 자동으로 완료됩니다.
+            </div>
+        </div>
+
+        <button type="submit" id="submitBtn" class="submit-btn">사전 문진 제출하기</button>
     </form>
 
     <!-- 제출 완료 후 고객에게 보여지는 안내 화면 (차팅페이지로 안 넘어가고 여기서 차단됨) -->
     <div id="successScreen" class="success-screen">
         <div class="success-icon">✨</div>
-        <div class="success-title">사전 문진 제출이 완료되었습니다</div>
+        <div class="success-title">사전 문진이 접수되었습니다</div>
         <div class="success-desc">
-            <span id="userNameDisplay" style="font-weight: 700; color: var(--primary-dark);"></span>님의 소중한 컨디션 데이터가<br>
-            <strong>REVOREM</strong> 정밀 분석 시스템에 안전하게 접수되었습니다.<br><br>
-            편안한 마음으로 샵을 방문해 주시면,<br>체계적인 1:1 맞춤 세션으로 뵙겠습니다.
+            <span id="userNameDisplay" style="font-weight: 700; color: var(--primary-dark);"></span>님의 사전 문진이<br>
+            <strong>REVOREM</strong> 시스템에 안전하게 접수되었습니다.<br><br>
+            방문 시 작성해 주신 내용과 현재 상태를 함께 확인하여<br>개인별 회복 방향을 안내해 드리겠습니다.
         </div>
         <div style="font-size: 13px; color: var(--text-sub); background: var(--primary-light); padding: 12px; border-radius: 8px;">
-            본 창을 닫으셔도 안전하게 저장됩니다. 감사합니다.
+            제출이 완료되었습니다. 이제 이 창을 닫으셔도 됩니다. 감사합니다.
         </div>
     </div>
 </div>
 
 <script>
-const scriptURL = 'https://script.google.com/macros/s/AKfycbxcTP1BwPcdhaBk6ck6I25zCrUSQKS9hGaZcp9dw_jHW847mRFDAOnLAHIRhgF-KLSf/exec'; 
+const intakeApiUrl = '/api/revorem-intake';
 
 const DATA_SURVEY = {
     NDI: {
         title: "목 기능 장애 지수 (NDI - 10문항)",
-        description: "목의 불편함이 통증, 일상생활, 집중, 수면과 활동에 어느 정도 영향을 주는지 확인하는 문항입니다. 최근의 평소 상태를 떠올리며 가장 가까운 답을 선택해 주세요.",
+        description: "목의 불편함이 통증, 일상생활, 집중, 수면과 활동에 어느 정도 영향을 주는지 확인합니다. 최근 상태를 떠올리며 가장 가까운 답을 선택해 주세요.",
         opts: ["통증/지장 없음", "아주 조금 지장 있음", "보통 정도로 지장 있음", "상당히 지장 있음", "매우 심하게 지장 있음", "아파서 전혀 불가능함"],
         qs: [
             "현재 목의 통증 정도는 어떠신가요?",
@@ -345,7 +378,7 @@ const DATA_SURVEY = {
     },
     PRTEE: {
         title: "팔꿈치 장애 지수 (PRTEE - 15문항)",
-        description: "팔꿈치 통증과 손으로 잡기·들기·돌리기 같은 활동이 얼마나 불편한지 확인하는 문항입니다. 평소 실제로 느끼는 어려움에 가장 가까운 답을 선택해 주세요.",
+        description: "팔꿈치 통증과 잡기·들기·돌리기 같은 활동의 어려움을 함께 확인합니다. 평소 실제로 느끼는 정도에 가장 가까운 답을 선택해 주세요.",
         sections: [
             {
                 subTitle: "▶ 통증 척도 (Pain Scale - 5문항)",
@@ -359,7 +392,7 @@ const DATA_SURVEY = {
                 ]
             },
             {
-                subTitle: "▶ Specific Activities - 특정 동작 장애 (6문항)",
+                subTitle: "▶ 특정 동작의 어려움 (6문항)",
                 opts: ["0 (어려움 없음)", "1", "2", "3", "4", "5 (보통)", "6", "7", "8", "9", "10 (불가능)"],
                 qs: [
                     "문고리를 잡고 돌리는 동작",
@@ -371,7 +404,7 @@ const DATA_SURVEY = {
                 ]
             },
             {
-                subTitle: "▶ Usual Activities - 일상 생활 장애 (4문항)",
+                subTitle: "▶ 일상 활동의 어려움 (4문항)",
                 opts: ["0 (어려움 없음)", "1", "2", "3", "4", "5 (보통)", "6", "7", "8", "9", "10 (불가능)"],
                 qs: [
                     "개인 위생 관리 (씻기, 빗질, 옷 입기 등)",
@@ -406,21 +439,21 @@ const DATA_SURVEY = {
         scoreMeaning: "점수가 높을수록 현재 기능 제한이 큼",
         opts: ["전혀 어렵지 않음", "약간 어려움", "보통 정도 어려움", "많이 어려움", "할 수 없음"],
         items: [
-            {domain:"Mobility", q:"양말이나 신발을 신고 벗기 위해 다리를 구부리거나 돌리는 동작"},
-            {domain:"Load tolerance", q:"한쪽 다리에 체중을 싣고 서 있는 동작"},
-            {domain:"Daily activity", q:"의자에서 일어나거나 낮은 곳에 앉았다가 일어나는 동작"},
-            {domain:"Participation", q:"원하는 속도로 20분 이상 걷는 활동"},
-            {domain:"Mobility", q:"다리를 옆으로 벌리거나 방향을 바꾸는 동작"},
-            {domain:"Load tolerance", q:"계단을 오르내리는 활동"},
-            {domain:"Daily activity", q:"차에 타고 내리거나 침대에서 자세를 바꾸는 동작"},
-            {domain:"Participation", q:"빠르게 걷기·가벼운 달리기·운동 등 평소 원하는 신체활동"},
-            {domain:"Mobility", q:"쪼그려 앉거나 바닥 가까이 몸을 낮추는 동작"},
-            {domain:"Load tolerance", q:"물건을 들고 걷거나 몸을 비틀면서 이동하는 동작"},
-            {domain:"Daily activity", q:"10분 이상 서서 요리·정리·업무를 하는 활동"},
-            {domain:"Participation", q:"업무·육아·가사에서 필요한 동작을 반복해서 수행하는 활동"},
-            {domain:"Control", q:"걷거나 방향을 바꿀 때 고관절이 불안정하거나 힘이 빠지지 않도록 조절하는 것"},
-            {domain:"Recovery confidence", q:"통증이나 뻣뻣함이 있어도 허용 가능한 범위에서 활동을 이어가는 것"},
-            {domain:"Goal capacity", q:"내가 가장 회복하고 싶은 목표 활동을 현재 수준에서 수행하는 것"}
+            {domain:"Mobility", q:"양말이나 신발을 신고 벗을 때 다리를 구부리거나 돌리는 동작"},
+            {domain:"Load tolerance", q:"한쪽 다리에 체중을 싣고 서 있기"},
+            {domain:"Daily activity", q:"의자나 낮은 곳에 앉았다가 일어나기"},
+            {domain:"Participation", q:"원하는 속도로 20분 이상 걷기"},
+            {domain:"Mobility", q:"다리를 옆으로 벌리거나 몸의 방향을 바꾸기"},
+            {domain:"Load tolerance", q:"계단 오르내리기"},
+            {domain:"Daily activity", q:"차에 타고 내리거나 침대에서 자세 바꾸기"},
+            {domain:"Participation", q:"빠르게 걷기, 가벼운 달리기, 운동 등 평소 원하는 신체활동 하기"},
+            {domain:"Mobility", q:"쪼그려 앉거나 바닥 가까이 몸 낮추기"},
+            {domain:"Load tolerance", q:"물건을 들고 걷거나 몸을 돌리며 이동하기"},
+            {domain:"Daily activity", q:"10분 이상 서서 요리·정리·업무하기"},
+            {domain:"Participation", q:"업무·육아·가사에 필요한 동작을 반복해서 수행하기"},
+            {domain:"Control", q:"걷거나 방향을 바꿀 때 고관절을 안정적으로 조절하기"},
+            {domain:"Recovery confidence", q:"불편감이 있어도 감당 가능한 범위에서 활동을 이어가기"},
+            {domain:"Goal capacity", q:"내가 가장 회복하고 싶은 목표 활동을 현재 수준에서 수행하기"}
         ]
     },
     KOOS: {
@@ -431,21 +464,21 @@ const DATA_SURVEY = {
         scoreMeaning: "점수가 높을수록 현재 기능 제한이 큼",
         opts: ["전혀 어렵지 않음", "약간 어려움", "보통 정도 어려움", "많이 어려움", "할 수 없음"],
         items: [
-            {domain:"Mobility", q:"무릎을 끝까지 펴거나 충분히 굽히는 동작"},
-            {domain:"Load tolerance", q:"의자에서 일어나거나 다시 앉는 동작"},
-            {domain:"Daily activity", q:"평평한 곳을 원하는 속도로 걷는 활동"},
-            {domain:"Participation", q:"계단을 오르내리는 활동"},
-            {domain:"Control", q:"한쪽 다리로 서거나 체중을 옮길 때 무릎을 안정적으로 조절하는 것"},
-            {domain:"Load tolerance", q:"쪼그려 앉거나 낮은 자세를 취하는 동작"},
-            {domain:"Daily activity", q:"차에 타고 내리거나 침대·바닥에서 일어나는 동작"},
-            {domain:"Participation", q:"빠르게 걷기·가벼운 달리기·운동 등 평소 원하는 신체활동"},
-            {domain:"Mobility", q:"앉아 있다가 움직이기 시작할 때 무릎을 부드럽게 움직이는 것"},
-            {domain:"Load tolerance", q:"물건을 들고 걷거나 반복해서 앉았다 일어나는 활동"},
-            {domain:"Control", q:"방향 전환·멈추기·착지에서 무릎이 흔들리거나 힘이 빠지지 않도록 조절하는 것"},
-            {domain:"Daily activity", q:"10분 이상 서서 요리·정리·업무를 하는 활동"},
-            {domain:"Participation", q:"업무·육아·가사에서 필요한 무릎 사용을 반복하는 활동"},
-            {domain:"Recovery confidence", q:"불편감이 있어도 허용 가능한 범위에서 걷기나 운동을 이어가는 것"},
-            {domain:"Goal capacity", q:"내가 가장 회복하고 싶은 목표 활동을 현재 수준에서 수행하는 것"}
+            {domain:"Mobility", q:"무릎을 충분히 펴고 굽히기"},
+            {domain:"Load tolerance", q:"의자에서 일어나고 다시 앉기"},
+            {domain:"Daily activity", q:"평평한 곳을 원하는 속도로 걷기"},
+            {domain:"Participation", q:"계단 오르내리기"},
+            {domain:"Control", q:"한쪽 다리로 서거나 체중을 옮길 때 무릎을 안정적으로 조절하기"},
+            {domain:"Load tolerance", q:"쪼그려 앉거나 낮은 자세 취하기"},
+            {domain:"Daily activity", q:"차에 타고 내리거나 침대·바닥에서 일어나기"},
+            {domain:"Participation", q:"빠르게 걷기, 가벼운 달리기, 운동 등 평소 원하는 신체활동 하기"},
+            {domain:"Mobility", q:"앉아 있다가 움직이기 시작할 때 무릎을 자연스럽게 움직이기"},
+            {domain:"Load tolerance", q:"물건을 들고 걷거나 반복해서 앉았다 일어나기"},
+            {domain:"Control", q:"방향을 바꾸거나 멈추고 착지할 때 무릎을 안정적으로 조절하기"},
+            {domain:"Daily activity", q:"10분 이상 서서 요리·정리·업무하기"},
+            {domain:"Participation", q:"업무·육아·가사에서 필요한 무릎 동작을 반복해서 수행하기"},
+            {domain:"Recovery confidence", q:"불편감이 있어도 감당 가능한 범위에서 걷기나 운동을 이어가기"},
+            {domain:"Goal capacity", q:"내가 가장 회복하고 싶은 목표 활동을 현재 수준에서 수행하기"}
         ]
     },
     FAAM: {
@@ -456,21 +489,21 @@ const DATA_SURVEY = {
         scoreMeaning: "점수가 높을수록 현재 기능 제한이 큼",
         opts: ["전혀 어렵지 않음", "약간 어려움", "보통 정도 어려움", "많이 어려움", "할 수 없음"],
         items: [
-            {domain:"Mobility", q:"발목을 앞뒤로 충분히 움직여 걷기나 계단 동작을 만드는 것"},
-            {domain:"Load tolerance", q:"한쪽 발로 체중을 지지하며 서 있는 동작"},
-            {domain:"Daily activity", q:"평평한 길을 원하는 속도로 걷는 활동"},
-            {domain:"Participation", q:"계단을 오르내리는 활동"},
-            {domain:"Control", q:"울퉁불퉁한 길이나 경사진 곳에서 균형을 유지하며 걷는 것"},
-            {domain:"Load tolerance", q:"까치발로 올라가거나 반복해서 뒤꿈치를 드는 동작"},
-            {domain:"Daily activity", q:"보도 턱이나 낮은 장애물을 오르내리는 동작"},
-            {domain:"Participation", q:"빠르게 걷기·가벼운 달리기·운동 등 평소 원하는 신체활동"},
-            {domain:"Mobility", q:"쪼그려 앉거나 몸을 앞으로 이동할 때 발목이 자연스럽게 움직이는 것"},
-            {domain:"Load tolerance", q:"10분 이상 걷거나 서 있는 활동을 유지하는 것"},
-            {domain:"Control", q:"방향 전환·멈추기·착지에서 발목이 접질리거나 흔들리지 않도록 조절하는 것"},
-            {domain:"Daily activity", q:"신발을 신고 벗거나 일상적인 이동을 불편 없이 하는 것"},
-            {domain:"Participation", q:"업무·육아·가사에서 필요한 걷기와 서기를 반복하는 활동"},
-            {domain:"Recovery confidence", q:"불편감이 있어도 허용 가능한 범위에서 걷기나 운동을 이어가는 것"},
-            {domain:"Goal capacity", q:"내가 가장 회복하고 싶은 목표 활동을 현재 수준에서 수행하는 것"}
+            {domain:"Mobility", q:"걷거나 계단을 이용할 때 발목을 충분히 앞뒤로 움직이기"},
+            {domain:"Load tolerance", q:"한쪽 발로 체중을 지지하며 서 있기"},
+            {domain:"Daily activity", q:"평평한 길을 원하는 속도로 걷기"},
+            {domain:"Participation", q:"계단 오르내리기"},
+            {domain:"Control", q:"울퉁불퉁하거나 경사진 길에서 균형을 유지하며 걷기"},
+            {domain:"Load tolerance", q:"까치발로 올라가거나 뒤꿈치를 반복해서 들기"},
+            {domain:"Daily activity", q:"보도 턱이나 낮은 장애물 오르내리기"},
+            {domain:"Participation", q:"빠르게 걷기, 가벼운 달리기, 운동 등 평소 원하는 신체활동 하기"},
+            {domain:"Mobility", q:"쪼그려 앉거나 몸을 앞으로 이동할 때 발목을 자연스럽게 움직이기"},
+            {domain:"Load tolerance", q:"10분 이상 걷거나 서 있는 활동 유지하기"},
+            {domain:"Control", q:"방향을 바꾸거나 멈추고 착지할 때 발목을 안정적으로 조절하기"},
+            {domain:"Daily activity", q:"신발을 신고 벗고 일상적으로 이동하기"},
+            {domain:"Participation", q:"업무·육아·가사에 필요한 걷기와 서기를 반복해서 수행하기"},
+            {domain:"Recovery confidence", q:"불편감이 있어도 감당 가능한 범위에서 걷기나 운동을 이어가기"},
+            {domain:"Goal capacity", q:"내가 가장 회복하고 싶은 목표 활동을 현재 수준에서 수행하기"}
         ]
     },
     TSK: {
@@ -520,15 +553,15 @@ const DATA_SURVEY = {
             labels: ["전혀 없음", "거의 없음", "가끔 있음", "자주 있음", "매우 자주 있음"],
             qs: [
                 "예상치 못한 일 때문에 기분이 나빴던 적이 얼마나 자주 있었나요?",
-                "인생에서 중요한 일들을 제어할 수 없다고 느낀 적이 얼마나 자주 있었나요?",
-                "초조하거나 스트레스를 받고 있다고 느낀 적이 얼마나 자주 있었나요?",
+                "생활에서 중요한 일들을 내가 조절할 수 없다고 느낀 적이 얼마나 자주 있었나요?",
+                "긴장되거나 스트레스를 받고 있다고 느낀 적이 얼마나 자주 있었나요?",
                 "개인적인 문제들을 잘 처리하고 있다고 느낀 적이 얼마나 자주 있었나요?",
                 "일들이 내가 원하는 방향으로 잘 진행되고 있다고 느낀 적이 얼마나 자주 있었나요?",
-                "처리해야 할 일들이 너무 많이 쌓여서 해결할 수 없다고 느낀 적이 얼마나 자주 있었나요?",
-                "일상의 짜증스러움을 잘 통제할 수 있다고 느낀 적이 얼마나 자주 있었나요?",
+                "해야 할 일이 너무 많아 감당하기 어렵다고 느낀 적이 얼마나 자주 있었나요?",
+                "일상에서 생기는 짜증이나 불편한 감정을 잘 조절할 수 있다고 느낀 적이 얼마나 자주 있었나요?",
                 "내가 모든 일을 잘 해내고 있다고 느낀 적이 얼마나 자주 있었나요?",
-                "내가 컨트롤할 수 없는 일 때문에 화가 난 적이 얼마나 자주 있었나요?",
-                "어려운 일이 너무 많이 쌓여서 극복할 수 없다고 느낀 적이 얼마나 자주 있었나요?"
+                "내가 통제할 수 없는 일 때문에 화가 난 적이 얼마나 자주 있었나요?",
+                "어려운 일이 너무 많이 쌓여서 감당할 수 없다고 느낀 적이 얼마나 자주 있었나요?"
             ]
         },
         {
@@ -538,11 +571,11 @@ const DATA_SURVEY = {
             labels: ["전혀 없었다", "며칠 동안", "7일 이상", "거의 매일"],
             qs: [
                 "초조하거나 불안하거나 마음이 편하지 않았다.",
-                "걱정하는 것을 멈추거나 제어할 수가 없었다.",
-                "여러 가지 것들에 대해 걱정을 너무 많이 하였다.",
-                "편하게 있으기가 어려웠다.",
+                "걱정을 멈추거나 조절하기 어려웠다.",
+                "여러 가지 일에 대해 지나치게 많이 걱정했다.",
+                "편안하게 있기가 어려웠다.",
                 "너무 안절부절못하여 가만히 있기가 힘들었다.",
-                "쉽게 짜증이 나거나 성질이 났다.",
+                "쉽게 짜증이 나거나 화가 났다.",
                 "무서운 일이 일어날 것 같아 두려웠다."
             ]
         },
@@ -567,13 +600,13 @@ const DATA_SURVEY = {
 };
 
 const SAFETY_PRE = [
-    {id:"majorTrauma", q:"최근 큰 사고·낙상·충돌 이후 현재 증상이 시작되었나요?"},
-    {id:"systemic", q:"최근 원인을 설명하기 어려운 발열·오한·심한 몸살과 함께 통증이 있나요?"},
+    {id:"majorTrauma", q:"최근 큰 사고, 낙상 또는 충돌 이후에 현재 증상이 시작되었나요?"},
+    {id:"systemic", q:"최근 뚜렷한 이유 없이 발열·오한·심한 몸살과 함께 통증이 나타났나요?"},
     {id:"weightLoss", q:"최근 특별한 이유 없이 체중이 눈에 띄게 감소했나요?"},
-    {id:"progressiveNeuro", q:"최근 팔이나 다리의 힘이 새로 떨어지거나 점점 약해지고, 감각저하가 넓어지고 있나요?"},
-    {id:"gaitBalance", q:"최근 걷기나 균형이 이전과 다르게 갑자기 또는 점점 나빠지고 있나요?"},
-    {id:"bowelBladder", q:"최근 대소변을 조절하는 기능에 갑작스러운 변화가 생겼나요?"},
-    {id:"saddle", q:"최근 회음부·엉덩이 안쪽 주변의 감각이 둔하거나 이상하게 느껴지나요?"}
+    {id:"progressiveNeuro", q:"최근 팔이나 다리의 힘이 새로 떨어졌거나 점점 약해지고 있나요? 또는 감각이 둔한 범위가 넓어지고 있나요?"},
+    {id:"gaitBalance", q:"최근 걷거나 균형을 잡는 능력이 갑자기 또는 점차 나빠지고 있나요?"},
+    {id:"bowelBladder", q:"최근 소변이나 대변을 조절하는 데 갑작스러운 변화가 생겼나요?"},
+    {id:"saddle", q:"최근 회음부나 엉덩이 안쪽 주변의 감각이 둔해지거나 평소와 다르게 느껴지나요?"}
 ];
 
 function loadSafetyQuestions(){
@@ -727,7 +760,7 @@ function scoreMentalScales() {
     return {pssTotal, gadTotal:sum(gad), phqTotal:sum(phq)};
 }
 
-document.getElementById('wellnessForm').addEventListener('submit', function(e) {
+document.getElementById('wellnessForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
@@ -778,20 +811,31 @@ document.getElementById('wellnessForm').addEventListener('submit', function(e) {
 
     if (responseQuality.straightline || responseQuality.rapid) {
         const reasons=[];
-        if (responseQuality.straightline) reasons.push("같은 응답이 매우 길게 반복되었거나 한 응답에 지나치게 집중되어 있습니다");
-        if (responseQuality.rapid) reasons.push(`전체 문진 시간이 ${responseQuality.elapsedSec}초로 매우 짧습니다`);
+        if (responseQuality.straightline) reasons.push("같은 응답이 여러 문항에서 반복되어 답변을 한 번 더 확인하는 것이 좋습니다");
+        if (responseQuality.rapid) reasons.push(`전체 문진 시간이 ${responseQuality.elapsedSec}초로 짧아 답변을 한 번 더 확인하는 것이 좋습니다`);
         const note=document.getElementById('responseQualityNote');
-        note.innerHTML=`<b>응답 확인 안내</b><br>${reasons.join("<br>")}<br>현재 답변이 실제 상태와 맞는지 한 번 확인해 주세요. 이 안내는 응답을 무효 처리하지 않습니다.`;
+        note.innerHTML=`<b>응답 확인 안내</b><br>${reasons.join("<br>")}<br>현재 답변이 실제 상태와 맞는지 한 번 확인해 주세요. 답변이 맞다면 그대로 제출하셔도 됩니다.`;
         note.style.display='block';
         if (!confirm("응답 패턴을 한 번 더 확인해 주세요.\n\n" + reasons.join("\n") + "\n\n현재 답변이 맞다면 확인을 눌러 제출할 수 있습니다.")) {
             btn.disabled=false;
-            btn.innerText="문진 작성 완료 및 전송하기";
+            btn.innerText="사전 문진 제출하기";
             note.scrollIntoView({behavior:'smooth',block:'center'});
             return;
         }
     }
 
+    const turnstileToken =
+        document.querySelector('input[name="cf-turnstile-response"]')?.value?.trim() || "";
+
+    if (!turnstileToken) {
+        alert("보안 확인이 아직 완료되지 않았습니다. 잠시 기다린 뒤 다시 제출해 주세요.");
+        btn.disabled = false;
+        btn.innerText = "사전 문진 제출하기";
+        return;
+    }
+
     const payload = {
+        turnstileToken: turnstileToken,
         patientName: rawName ? `${rawName} (${rawAge}세)` : rawName,
         name: rawName,
         age: rawAge,
@@ -859,20 +903,38 @@ document.getElementById('wellnessForm').addEventListener('submit', function(e) {
         at: new Date().toLocaleString('ko-KR')
     };
 
-    // 구글 시트로 데이터 전송 (no-cors 방식)
-    fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) })
-    .then(() => {
-        // index.html로 안 넘어가고 설문 폼을 숨긴 뒤 완료 안내 화면(successScreen)을 띄움
+    // Vercel Public Intake API → Turnstile 서버 검증 → Apps Script v5.1
+    try {
+        const response = await fetch(intakeApiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        const result = await response.json().catch(() => ({
+            result: "error",
+            message: "서버 응답을 확인할 수 없습니다."
+        }));
+
+        if (!response.ok || result.result !== "success") {
+            throw new Error(result.message || "사전 문진을 전송하지 못했습니다.");
+        }
+
         document.getElementById('wellnessForm').style.display = 'none';
         document.getElementById('userNameDisplay').innerText = rawName;
         document.getElementById('successScreen').style.display = 'block';
         window.scrollTo({ top: 0, behavior: 'smooth' });
-    })
-    .catch(err => {
-        alert("전송 중 오류가 발생했습니다. 다시 시도해 주세요.");
+    } catch (err) {
+        console.error("REVOREM intake submit error:", err);
+
+        if (window.turnstile) {
+            try { window.turnstile.reset(); } catch (_) {}
+        }
+
+        alert(err?.message || "전송 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
         btn.disabled = false;
-        btn.innerText = "문진 작성 완료 및 전송하기";
-    });
+        btn.innerText = "사전 문진 제출하기";
+    }
 });
 
 document.addEventListener('DOMContentLoaded', () => {
