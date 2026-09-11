@@ -2139,8 +2139,12 @@ async function searchGoogleProm(isLatest=false){
     const token=await window.revoremGetIdToken();
     if(!token)throw new Error('관리자 로그인 세션이 만료되었습니다.');
     const params=new URLSearchParams();
-    if(isLatest)params.set('action','getLatest');
-    else params.set('query',keyword);
+    if(isLatest){
+      params.set('action','getLatest');
+    }else{
+      params.set('action','search');
+      params.set('query',keyword);
+    }
     const res=await fetch(`${googleScriptApiUrl}?${params.toString()}`,{
       method:'GET',
       headers:{'Authorization':`Bearer ${token}`},
